@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="330" viewBox="0 0 720 330" role="img"><title>Two ways to fine-tune the 0.5B model on GSM8K</title><desc>The same 900 steps of 8 problems. LoRA trains 1.8% of the weights.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="329" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">Two ways to fine-tune the 0.5B model on GSM8K</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">The same 900 steps of 8 problems. LoRA trains 1.8% of the weights.</text>
+<line class="s-s1" x1="64" y1="74" x2="80" y2="74" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="86" y="78" font-size="12" text-anchor="start">LoRA, rank 16</text>
+<line class="s-s2" x1="191.4" y1="74" x2="207.4" y2="74" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="213.4" y="78" font-size="12" text-anchor="start">every weight</text>
+<text class="f-ink" x="64" y="112" font-size="12" text-anchor="start" font-weight="600">Loss on held-out problems</text>
+<line class="s-grid" x1="64" y1="254" x2="344" y2="254" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="258" font-size="11" text-anchor="end">0.5</text>
+<line class="s-grid" x1="64" y1="221.5" x2="344" y2="221.5" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="225.5" font-size="11" text-anchor="end">0.6</text>
+<line class="s-grid" x1="64" y1="189" x2="344" y2="189" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="193" font-size="11" text-anchor="end">0.7</text>
+<line class="s-grid" x1="64" y1="156.5" x2="344" y2="156.5" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="160.5" font-size="11" text-anchor="end">0.8</text>
+<line class="s-grid" x1="64" y1="124" x2="344" y2="124" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="128" font-size="11" text-anchor="end">0.9</text>
+<line class="s-axis" x1="64" y1="254" x2="344" y2="254" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="64" y1="254" x2="64" y2="258" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="271" font-size="11" text-anchor="middle">0</text>
+<line class="s-axis" x1="157.3" y1="254" x2="157.3" y2="258" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="157.3" y="271" font-size="11" text-anchor="middle">300</text>
+<line class="s-axis" x1="250.7" y1="254" x2="250.7" y2="258" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="250.7" y="271" font-size="11" text-anchor="middle">600</text>
+<line class="s-axis" x1="344" y1="254" x2="344" y2="258" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="344" y="271" font-size="11" text-anchor="middle">900</text>
+<text class="f-muted" x="204" y="290" font-size="11" text-anchor="middle">training step</text>
+<path class="s-s1 " d="M64 146.5 L126.2 222.3 L188.4 224.2 L250.7 224.7 L312.9 226.6 L344 225.9" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s1 s-surface" cx="64" cy="146.5" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="126.2" cy="222.3" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="188.4" cy="224.2" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="250.7" cy="224.7" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="312.9" cy="226.6" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="344" cy="225.9" r="4" stroke-width="2"/>
+<text class="f-ink" x="344" y="245.9" font-size="12" text-anchor="end">0.586</text>
+<path class="s-s2 " d="M64 146.5 L126.2 212.4 L188.4 215.2 L250.7 219.5 L312.9 221.6 L344 221.4" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s2 s-surface" cx="64" cy="146.5" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="126.2" cy="212.4" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="188.4" cy="215.2" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="250.7" cy="219.5" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="312.9" cy="221.6" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="344" cy="221.4" r="4" stroke-width="2"/>
+<text class="f-ink" x="344" y="209.4" font-size="12" text-anchor="end">0.600</text>
+<text class="f-ink" x="420" y="108" font-size="12" text-anchor="start" font-weight="600">Weights trained</text>
+<path class="f-s1" d="M420 116 H421 a4 4 0 0 1 4 4 V122 a4 4 0 0 1 -4 4 H420 Z"/>
+<text class="f-ink2" x="433" y="125" font-size="11" text-anchor="start">8.8M</text>
+<path class="f-s2" d="M420 130 H606 a4 4 0 0 1 4 4 V136 a4 4 0 0 1 -4 4 H420 Z"/>
+<text class="f-ink2" x="618" y="139" font-size="11" text-anchor="start">494M</text>
+<text class="f-ink" x="420" y="158" font-size="12" text-anchor="start" font-weight="600">Minutes</text>
+<path class="f-s1" d="M420 166 H510.9 a4 4 0 0 1 4 4 V172 a4 4 0 0 1 -4 4 H420 Z"/>
+<text class="f-ink2" x="522.9" y="175" font-size="11" text-anchor="start">10</text>
+<path class="f-s2" d="M420 180 H606 a4 4 0 0 1 4 4 V186 a4 4 0 0 1 -4 4 H420 Z"/>
+<text class="f-ink2" x="618" y="189" font-size="11" text-anchor="start">20</text>
+<text class="f-ink" x="420" y="208" font-size="12" text-anchor="start" font-weight="600">Peak memory pool, GB</text>
+<path class="f-s1" d="M420 216 H525.9 a4 4 0 0 1 4 4 V222 a4 4 0 0 1 -4 4 H420 Z"/>
+<text class="f-ink2" x="537.9" y="225" font-size="11" text-anchor="start">14</text>
+<path class="f-s2" d="M420 230 H606 a4 4 0 0 1 4 4 V236 a4 4 0 0 1 -4 4 H420 Z"/>
+<text class="f-ink2" x="618" y="239" font-size="11" text-anchor="start">25</text>
+<text class="f-ink" x="420" y="258" font-size="12" text-anchor="start" font-weight="600">Saved file, MB</text>
+<path class="f-s1" d="M420 266 H422.7 a4 4 0 0 1 4 4 V272 a4 4 0 0 1 -4 4 H420 Z"/>
+<text class="f-ink2" x="434.7" y="275" font-size="11" text-anchor="start">35</text>
+<path class="f-s2" d="M420 280 H606 a4 4 0 0 1 4 4 V286 a4 4 0 0 1 -4 4 H420 Z"/>
+<text class="f-ink2" x="618" y="289" font-size="11" text-anchor="start">988</text>
+</svg>

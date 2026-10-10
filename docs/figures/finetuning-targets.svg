@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="262" viewBox="0 0 720 262" role="img"><title>What a fine-tuning step learns from</title><desc>One conversation, token by token. The model reads all of it and is trained only on the filled tokens.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="261" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">What a fine-tuning step learns from</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">One conversation, token by token. The model reads all of it and is trained only on the filled tokens.</text>
+<rect class=" s-axis" x="24.5" y="78.5" width="86.9" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="68" y="95" font-size="11" text-anchor="middle">&lt;|im_start|&gt;</text>
+<rect class=" s-axis" x="116.4" y="78.5" width="25.3" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="129.1" y="95" font-size="11" text-anchor="middle">us</text>
+<rect class=" s-axis" x="146.7" y="78.5" width="25.3" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="159.4" y="95" font-size="11" text-anchor="middle">er</text>
+<rect class=" s-axis" x="177.1" y="78.5" width="25.3" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="189.7" y="95" font-size="11" text-anchor="middle">\n</text>
+<rect class=" s-axis" x="207.4" y="78.5" width="19.2" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="217" y="95" font-size="11" text-anchor="middle">W</text>
+<rect class=" s-axis" x="231.5" y="78.5" width="19.2" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="241.1" y="95" font-size="11" text-anchor="middle">r</text>
+<rect class=" s-axis" x="255.7" y="78.5" width="31.5" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="271.4" y="95" font-size="11" text-anchor="middle">ite</text>
+<rect class=" s-axis" x="292.2" y="78.5" width="25.3" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="304.8" y="95" font-size="11" text-anchor="middle">·a</text>
+<rect class=" s-axis" x="322.5" y="78.5" width="50" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="347.5" y="95" font-size="11" text-anchor="middle">·short</text>
+<rect class=" s-axis" x="377.5" y="78.5" width="50" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="402.4" y="95" font-size="11" text-anchor="middle">·story</text>
+<rect class=" s-axis" x="432.4" y="78.5" width="50" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="457.4" y="95" font-size="11" text-anchor="middle">·using</text>
+<rect class=" s-axis" x="487.4" y="78.5" width="50" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="512.4" y="95" font-size="11" text-anchor="middle">·these</text>
+<rect class=" s-axis" x="542.3" y="78.5" width="50" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="567.3" y="95" font-size="11" text-anchor="middle">·words</text>
+<rect class=" s-axis" x="597.3" y="78.5" width="19.2" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="606.9" y="95" font-size="11" text-anchor="middle">:</text>
+<rect class=" s-axis" x="621.5" y="78.5" width="56.1" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="649.5" y="95" font-size="11" text-anchor="middle">·garden</text>
+<rect class=" s-axis" x="24.5" y="112.5" width="19.2" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="34.1" y="129" font-size="11" text-anchor="middle">,</text>
+<rect class=" s-axis" x="48.7" y="112.5" width="56.1" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="76.7" y="129" font-size="11" text-anchor="middle">·kitten</text>
+<rect class=" s-axis" x="109.8" y="112.5" width="19.2" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="119.4" y="129" font-size="11" text-anchor="middle">.</text>
+<rect class=" s-axis" x="133.9" y="112.5" width="74.6" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="171.2" y="129" font-size="11" text-anchor="middle">&lt;|im_end|&gt;</text>
+<rect class=" s-axis" x="213.5" y="112.5" width="25.3" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="226.2" y="129" font-size="11" text-anchor="middle">\n</text>
+<rect class=" s-axis" x="243.9" y="112.5" width="86.9" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="287.3" y="129" font-size="11" text-anchor="middle">&lt;|im_start|&gt;</text>
+<rect class=" s-axis" x="335.8" y="112.5" width="31.5" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="351.5" y="129" font-size="11" text-anchor="middle">ass</text>
+<rect class=" s-axis" x="372.3" y="112.5" width="31.5" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="388" y="129" font-size="11" text-anchor="middle">ist</text>
+<rect class=" s-axis" x="408.7" y="112.5" width="31.5" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="424.5" y="129" font-size="11" text-anchor="middle">ant</text>
+<rect class=" s-axis" x="445.2" y="112.5" width="25.3" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="457.9" y="129" font-size="11" text-anchor="middle">\n</text>
+<rect class="f-s1" x="475" y="112" width="38.6" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="494.4" y="129" font-size="11" text-anchor="middle" font-weight="600">Lily</text>
+<rect class="f-s1" x="517.7" y="112" width="51" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="543.2" y="129" font-size="11" text-anchor="middle" font-weight="600">·found</text>
+<rect class="f-s1" x="572.6" y="112" width="26.3" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="585.8" y="129" font-size="11" text-anchor="middle" font-weight="600">·a</text>
+<rect class="f-s1" x="603" y="112" width="57.1" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="631.5" y="129" font-size="11" text-anchor="middle" font-weight="600">·kitten</text>
+<rect class="f-s1" x="24" y="146" width="32.5" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="40.2" y="163" font-size="11" text-anchor="middle" font-weight="600">·in</text>
+<rect class="f-s1" x="60.5" y="146" width="38.6" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="79.8" y="163" font-size="11" text-anchor="middle" font-weight="600">·the</text>
+<rect class="f-s1" x="103.1" y="146" width="57.1" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="131.7" y="163" font-size="11" text-anchor="middle" font-weight="600">·garden</text>
+<rect class="f-s1" x="164.2" y="146" width="20.2" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="174.3" y="163" font-size="11" text-anchor="middle" font-weight="600">.</text>
+<rect class="f-s1" x="188.4" y="146" width="44.8" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="210.8" y="163" font-size="11" text-anchor="middle" font-weight="600">·They</text>
+<rect class="f-s1" x="237.2" y="146" width="57.1" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="265.8" y="163" font-size="11" text-anchor="middle" font-weight="600">·played</text>
+<rect class="f-s1" x="298.3" y="146" width="38.6" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="317.6" y="163" font-size="11" text-anchor="middle" font-weight="600">·all</text>
+<rect class="f-s1" x="341" y="146" width="38.6" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="360.3" y="163" font-size="11" text-anchor="middle" font-weight="600">·day</text>
+<rect class="f-s1" x="383.6" y="146" width="20.2" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="393.7" y="163" font-size="11" text-anchor="middle" font-weight="600">.</text>
+<rect class="f-s1" x="407.8" y="146" width="75.6" height="26" rx="5" fill-opacity="0.9"/>
+<text class="f-surface" x="445.6" y="163" font-size="11" text-anchor="middle" font-weight="600">&lt;|im_end|&gt;</text>
+<rect class=" s-axis" x="487.9" y="146.5" width="25.3" height="25" rx="5" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="500.5" y="163" font-size="11" text-anchor="middle">\n</text>
+<rect class=" s-axis" x="24.5" y="196.5" width="17" height="17" rx="4" fill="none" stroke-width="1"/>
+<text class="f-ink2" x="50" y="210" font-size="11" text-anchor="start">context: the instruction and the format around it</text>
+<rect class="f-s1" x="364" y="196" width="18" height="18" rx="4" fill-opacity="0.9"/>
+<text class="f-ink2" x="390" y="210" font-size="11" text-anchor="start">target: the reply, and the &lt;|im_end|&gt; that ends it</text>
+<text class="f-muted" x="24" y="242" font-size="11" text-anchor="start">A dot marks a leading space. 14 of the 40 tokens are targets, and the output layer is applied to those alone.</text>
+</svg>

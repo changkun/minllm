@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" role="img"><title>LoRA trains a thin update next to a frozen matrix</title><desc>One query projection of the 0.5B model. Each of the 168 linear layers in its 24 blocks gets such a pair.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="299" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">LoRA trains a thin update next to a frozen matrix</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">One query projection of the 0.5B model. Each of the 168 linear layers in its 24 blocks gets such a pair.</text>
+<rect class="f-grid s-axis" x="60" y="86" width="150" height="150" rx="4" stroke-width="1" fill-opacity="0.6"/>
+<text class="f-ink" x="135" y="156" font-size="22" text-anchor="middle" font-weight="600">W</text>
+<text class="f-ink2" x="135" y="178" font-size="11" text-anchor="middle">896 × 896</text>
+<text class="f-ink2" x="135" y="256" font-size="11" text-anchor="middle">frozen: 802,816 numbers</text>
+<text class="f-ink" x="246" y="168" font-size="24" text-anchor="middle">+</text>
+<rect class="f-s1" x="292" y="86" width="14" height="150" rx="3"/>
+<text class="f-ink" x="299" y="256" font-size="13" text-anchor="middle" font-weight="600">B</text>
+<text class="f-ink2" x="299" y="272" font-size="11" text-anchor="middle">896 × 16</text>
+<text class="f-ink" x="332" y="168" font-size="24" text-anchor="middle">·</text>
+<rect class="f-s1" x="358" y="86" width="150" height="14" rx="3"/>
+<text class="f-ink" x="433" y="122" font-size="13" text-anchor="middle" font-weight="600">A</text>
+<text class="f-ink2" x="433" y="138" font-size="11" text-anchor="middle">16 × 896</text>
+<text class="f-ink2" x="433" y="256" font-size="11" text-anchor="middle">trained: 28,672 numbers, 3.6%</text>
+<text class="f-ink2" x="532" y="104" font-size="11" text-anchor="start">B starts at zero, so training</text>
+<text class="f-ink2" x="532" y="121" font-size="11" text-anchor="start">starts from exactly the</text>
+<text class="f-ink2" x="532" y="138" font-size="11" text-anchor="start">pretrained model.</text>
+<text class="f-ink2" x="532" y="155" font-size="11" text-anchor="start"></text>
+<text class="f-ink2" x="532" y="172" font-size="11" text-anchor="start">Switched off, the model is</text>
+<text class="f-ink2" x="532" y="189" font-size="11" text-anchor="start">the pretrained one again.</text>
+<text class="f-ink2" x="532" y="206" font-size="11" text-anchor="start">Merged into W, it is an</text>
+<text class="f-ink2" x="532" y="223" font-size="11" text-anchor="start">ordinary model.</text>
+</svg>
