@@ -34,6 +34,7 @@ class Config:
     rope_theta: float = 10000.0
     norm_eps: float = 1e-6
     tie_embeddings: bool = True  # the input embedding and the output layer share one matrix
+    qkv_bias: bool = False  # Qwen2.5 adds a bias to the query, key and value projections
 
 
 class RMSNorm(nn.Module):
@@ -77,9 +78,9 @@ class Attention(nn.Module):
         assert cfg.dim % cfg.n_heads == 0 and cfg.n_heads % cfg.n_kv_heads == 0
         self.n_heads, self.n_kv_heads = cfg.n_heads, cfg.n_kv_heads
         self.head_dim = cfg.dim // cfg.n_heads
-        self.q_proj = nn.Linear(cfg.dim, cfg.n_heads * self.head_dim, bias=False)
-        self.k_proj = nn.Linear(cfg.dim, cfg.n_kv_heads * self.head_dim, bias=False)
-        self.v_proj = nn.Linear(cfg.dim, cfg.n_kv_heads * self.head_dim, bias=False)
+        self.q_proj = nn.Linear(cfg.dim, cfg.n_heads * self.head_dim, bias=cfg.qkv_bias)
+        self.k_proj = nn.Linear(cfg.dim, cfg.n_kv_heads * self.head_dim, bias=cfg.qkv_bias)
+        self.v_proj = nn.Linear(cfg.dim, cfg.n_kv_heads * self.head_dim, bias=cfg.qkv_bias)
         self.o_proj = nn.Linear(cfg.n_heads * self.head_dim, cfg.dim, bias=False)
 
     def forward(self, x, cos, sin, mask=None, cache=None):
@@ -153,6 +154,8 @@ class Transformer(nn.Module):
             if p.dim() >= 2:
                 residual = name.endswith(("o_proj.weight", "down_proj.weight"))
                 nn.init.normal_(p, std=0.02 / (2 * cfg.n_layers) ** 0.5 if residual else 0.02)
+            elif name.endswith("bias"):
+                nn.init.zeros_(p)
 
     def num_params(self):
         return sum(p.numel() for p in self.parameters())

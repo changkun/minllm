@@ -116,6 +116,17 @@ def test_overfits_one_batch():
     assert loss.item() < 0.1
 
 
+def test_bias_on_queries_keys_and_values():
+    from dataclasses import replace
+
+    plain, biased = Transformer(TINY), Transformer(replace(TINY, qkv_bias=True))
+    head_dim = TINY.dim // TINY.n_heads
+    per_layer = head_dim * (TINY.n_heads + 2 * TINY.n_kv_heads)
+    assert biased.num_params() == plain.num_params() + TINY.n_layers * per_layer
+    assert all(p.abs().sum() == 0 for name, p in biased.named_parameters() if name.endswith("bias"))
+    assert biased.layers[0].attn.o_proj.bias is None
+
+
 def test_generate():
     torch.manual_seed(0)
     model = Transformer(TINY).eval()
