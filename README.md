@@ -6,11 +6,13 @@ pretrained model, an inference engine, a fine-tuned chat model, and a model
 post-trained with reinforcement learning, first from human preferences (RLHF)
 and then from verifiable rewards (RLVR).
 
+![The ten stages of the pipeline](docs/figures/pipeline.svg)
+
 The only machine learning dependency is PyTorch, for tensors and automatic
 differentiation. Everything on top of it is written here, in a few hundred
-lines per stage: the tokenizer, the model and the training loop so far, and
-the inference engine, the fine-tuning and the RL algorithms as the stages
-below get built. There is no `transformers`, `tokenizers`, `peft`, `trl` or
+lines per stage: the tokenizer, the model, the training loop and the
+inference engine so far, and the fine-tuning and the RL algorithms as the
+stages below get built. There is no `transformers`, `tokenizers`, `peft`, `trl` or
 `vllm` underneath.
 
 ## Stages
@@ -23,13 +25,13 @@ that check what the note claims.
 | 1 | [Tokenizer](docs/01-tokenizer.md) | Byte-level BPE: training, encoding, decoding, special tokens | done |
 | 2 | [Model](docs/02-model.md) | Decoder-only transformer with RMSNorm, RoPE, SwiGLU and grouped-query attention | done |
 | 3 | [Pretraining](docs/03-pretraining.md) | Data pipeline, AdamW, learning rate schedule, checkpoints: a model that writes stories | done |
-| 4 | Inference | KV cache, sampling strategies, batching, stop conditions, a small server | next |
-| 5 | Pretrained weights | Load an open 0.5B model into the same model code and match its reference outputs | planned |
+| 4 | [Inference](docs/04-inference.md) | KV cache, sampling strategies, batches of unequal prompts, stop conditions | done |
+| 5 | Pretrained weights | Load an open 0.5B model into the same model code and match its reference outputs | next |
 | 6 | Fine-tuning | Chat format, loss masking, full fine-tuning and LoRA | planned |
 | 7 | Evaluation | Batched generation over a task, scoring, and comparing two models | planned |
 | 8 | RLHF | Preference data, a reward model trained on pairwise comparisons, and three ways to use it: rejection sampling, policy gradients with a KL penalty (PPO), and DPO, which skips the reward model | planned |
 | 9 | RLVR | The reward model replaced by a program that checks the answer: rollouts, verifiers, policy-gradient updates with GRPO | planned |
-| 10 | The practitioner's stack | Export the model and run it in vLLM, llama.cpp and MLX; map each stage to the library used for it in practice | planned |
+| 10 | The practitioner's stack | Export the model, serve it, and run it in vLLM, llama.cpp and MLX; map each stage to the library used for it in practice | planned |
 
 ## Quick start
 
@@ -77,8 +79,8 @@ will measure.
 minllm/      the library, one concept per file
 scripts/     one entry point per step of the pipeline
 tests/       checks for the claims the notes make
-docs/        one note per stage
-runs/        logs of the reference runs quoted in the notes
+docs/        one note per stage, with figures drawn by scripts/make_figures.py
+runs/        logs and benchmarks, the source of every number and figure in the notes
 data/, out/  downloads and checkpoints, not in git
 ```
 
