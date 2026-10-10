@@ -22,7 +22,7 @@ from minllm.pretrained import SYSTEM_PROMPT
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", default=None, help="qwen, or the directory of a trained model")
-parser.add_argument("--task", choices=["words", "gsm8k"])
+parser.add_argument("--task", choices=["words", "taste", "gsm8k"])
 parser.add_argument("--n", type=int, default=None, help="number of test examples; all of them by default")
 parser.add_argument("--batch-size", type=int, default=None)
 parser.add_argument("--temperature", type=float, default=0.0, help="0 is greedy, which makes the evaluation repeatable")
