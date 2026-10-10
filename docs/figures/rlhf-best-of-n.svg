@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" role="img"><title>Rejection sampling: keep the best of n stories</title><desc>Mean taste of the story that is kept, over 300 held-out prompts. Taste is the annotator&#x27;s hidden standard.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="299" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">Rejection sampling: keep the best of n stories</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Mean taste of the story that is kept, over 300 held-out prompts. Taste is the annotator&#x27;s hidden standard.</text>
+<line class="s-s1" x1="64" y1="74" x2="80" y2="74" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="86" y="78" font-size="12" text-anchor="start">the reward model picks</text>
+<line class="s-s2" x1="251.8" y1="74" x2="267.8" y2="74" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="273.8" y="78" font-size="12" text-anchor="start">the annotator would pick</text>
+<line class="s-grid" x1="64" y1="244" x2="654" y2="244" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="248" font-size="11" text-anchor="end">0</text>
+<line class="s-grid" x1="64" y1="197.3" x2="654" y2="197.3" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="201.3" font-size="11" text-anchor="end">+0.5</text>
+<line class="s-grid" x1="64" y1="150.7" x2="654" y2="150.7" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="154.7" font-size="11" text-anchor="end">+1.0</text>
+<line class="s-grid" x1="64" y1="104" x2="654" y2="104" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="108" font-size="11" text-anchor="end">+1.5</text>
+<line class="s-axis" x1="64" y1="244" x2="654" y2="244" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="94.9" y1="244" x2="94.9" y2="248" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="94.9" y="261" font-size="11" text-anchor="middle">1</text>
+<line class="s-axis" x1="226.8" y1="244" x2="226.8" y2="248" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="226.8" y="261" font-size="11" text-anchor="middle">2</text>
+<line class="s-axis" x1="358.7" y1="244" x2="358.7" y2="248" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="358.7" y="261" font-size="11" text-anchor="middle">4</text>
+<line class="s-axis" x1="490.6" y1="244" x2="490.6" y2="248" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="490.6" y="261" font-size="11" text-anchor="middle">8</text>
+<line class="s-axis" x1="622.5" y1="244" x2="622.5" y2="248" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="622.5" y="261" font-size="11" text-anchor="middle">16</text>
+<text class="f-muted" x="359" y="280" font-size="11" text-anchor="middle">stories written per prompt</text>
+<path class="s-s2 " d="M94.9 222.9 L226.8 183.8 L358.7 155.8 L490.6 132.5 L622.5 120.5" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s2 s-surface" cx="94.9" cy="222.9" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="226.8" cy="183.8" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="358.7" cy="155.8" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="490.6" cy="132.5" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="622.5" cy="120.5" r="4" stroke-width="2"/>
+<text class="f-ink" x="632.5" y="118.5" font-size="12" text-anchor="start">+1.32</text>
+<path class="s-s1 " d="M94.9 222.9 L226.8 187.6 L358.7 163.8 L490.6 142.8 L622.5 131.4" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s1 s-surface" cx="94.9" cy="222.9" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="226.8" cy="187.6" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="358.7" cy="163.8" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="490.6" cy="142.8" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="622.5" cy="131.4" r="4" stroke-width="2"/>
+<text class="f-ink" x="632.5" y="141.4" font-size="12" text-anchor="start">+1.21</text>
+<text class="f-ink2" x="104.9" y="239.1" font-size="12" text-anchor="start">+0.22, any one story</text>
+</svg>

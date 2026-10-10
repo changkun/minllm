@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="344" viewBox="0 0 720 344" role="img"><title>From comparisons to a better model</title><desc>A reward model generalizes the annotator&#x27;s choices, and two methods put it to use. DPO does without it.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="343" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">From comparisons to a better model</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">A reward model generalizes the annotator&#x27;s choices, and two methods put it to use. DPO does without it.</text>
+<rect class="f-surface s-axis" x="24" y="78" width="190" height="50" rx="6" stroke-width="1"/>
+<text class="f-ink" x="119" y="100" font-size="12" text-anchor="middle" font-weight="600">Two stories</text>
+<text class="f-ink2" x="119" y="116" font-size="11" text-anchor="middle">per prompt, from the model</text>
+<path class="s-muted " d="M214 103 L244 103" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M237.7 100 L244 103 L237.7 106" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="246" y="78" width="190" height="50" rx="6" stroke-width="1"/>
+<text class="f-ink" x="341" y="100" font-size="12" text-anchor="middle" font-weight="600">Annotator</text>
+<text class="f-ink2" x="341" y="116" font-size="11" text-anchor="middle">picks the one they prefer</text>
+<path class="s-muted " d="M436 103 L466 103" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M459.7 100 L466 103 L459.7 106" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="468" y="78" width="228" height="50" rx="6" stroke-width="1"/>
+<text class="f-ink" x="582" y="100" font-size="12" text-anchor="middle" font-weight="600">Comparisons</text>
+<text class="f-ink2" x="582" y="116" font-size="11" text-anchor="middle">4,000 of them</text>
+<path class="s-muted " d="M582 128 L582 160" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M585 153.7 L582 160 L579 153.7" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-s1 s-axis" x="468" y="162" width="228" height="50" rx="6" stroke-width="1" fill-opacity="0.1"/>
+<text class="f-ink" x="582" y="184" font-size="12" text-anchor="middle" font-weight="600">Reward model</text>
+<text class="f-ink2" x="582" y="200" font-size="11" text-anchor="middle">a score for any story</text>
+<path class="s-muted " d="M601 212 L601 246" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M604 239.7 L601 246 L598 239.7" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="506" y="248" width="190" height="50" rx="6" stroke-width="1"/>
+<text class="f-ink" x="601" y="270" font-size="12" text-anchor="middle" font-weight="600">PPO</text>
+<text class="f-ink2" x="601" y="286" font-size="11" text-anchor="middle">train the model on rewards</text>
+<path class="s-muted " d="M500 212 L500 228 L375 228 L375 246" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M378 239.7 L375 246 L372 239.7" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="280" y="248" width="190" height="50" rx="6" stroke-width="1"/>
+<text class="f-ink" x="375" y="270" font-size="12" text-anchor="middle" font-weight="600">Rejection sampling</text>
+<text class="f-ink2" x="375" y="286" font-size="11" text-anchor="middle">write n stories, keep the best</text>
+<path class="s-muted " d="M490 128 L490 144 L119 144 L119 246" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M122 239.7 L119 246 L116 239.7" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-s2 s-axis" x="24" y="248" width="190" height="50" rx="6" stroke-width="1" fill-opacity="0.1"/>
+<text class="f-ink" x="119" y="270" font-size="12" text-anchor="middle" font-weight="600">DPO</text>
+<text class="f-ink2" x="119" y="286" font-size="11" text-anchor="middle">train the model on comparisons</text>
+<text class="f-muted" x="131" y="200" font-size="11" text-anchor="start">without a</text>
+<text class="f-muted" x="131" y="214" font-size="11" text-anchor="start">reward model</text>
+<text class="f-muted" x="24" y="326" font-size="11" text-anchor="start">Both training methods hold the new model near the one that wrote the stories. That constraint is what keeps them honest.</text>
+</svg>

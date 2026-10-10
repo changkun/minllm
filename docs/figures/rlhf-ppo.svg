@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="470" viewBox="0 0 720 470" role="img"><title>PPO against the reward model, with and without a leash</title><desc>Each panel has its own scale. The reward model&#x27;s reward is what training sees. The taste is what the annotator wants.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="469" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">PPO against the reward model, with and without a leash</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Each panel has its own scale. The reward model&#x27;s reward is what training sees. The taste is what the annotator wants.</text>
+<line class="s-s1" x1="64" y1="74" x2="80" y2="74" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="86" y="78" font-size="12" text-anchor="start">with the KL penalty</text>
+<line class="s-s2" x1="231.7" y1="74" x2="247.7" y2="74" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="253.7" y="78" font-size="12" text-anchor="start">without it</text>
+<text class="f-ink" x="64" y="112" font-size="12" text-anchor="start" font-weight="600">Reward from the reward model</text>
+<line class="s-grid" x1="64" y1="224" x2="344" y2="224" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="228" font-size="11" text-anchor="end">-1</text>
+<line class="s-grid" x1="64" y1="199" x2="344" y2="199" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="203" font-size="11" text-anchor="end">0</text>
+<line class="s-grid" x1="64" y1="174" x2="344" y2="174" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="178" font-size="11" text-anchor="end">1</text>
+<line class="s-grid" x1="64" y1="149" x2="344" y2="149" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="153" font-size="11" text-anchor="end">2</text>
+<line class="s-grid" x1="64" y1="124" x2="344" y2="124" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="128" font-size="11" text-anchor="end">3</text>
+<line class="s-axis" x1="64" y1="224" x2="344" y2="224" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="64" y1="224" x2="64" y2="228" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="241" font-size="11" text-anchor="middle">0</text>
+<line class="s-axis" x1="157.3" y1="224" x2="157.3" y2="228" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="157.3" y="241" font-size="11" text-anchor="middle">20</text>
+<line class="s-axis" x1="250.7" y1="224" x2="250.7" y2="228" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="250.7" y="241" font-size="11" text-anchor="middle">40</text>
+<line class="s-axis" x1="344" y1="224" x2="344" y2="228" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="344" y="241" font-size="11" text-anchor="middle">60</text>
+<path class="s-s1 " d="M68.7 202.3 L73.3 191.7 L78 181.6 L82.7 178.1 L87.3 166.3 L92 164.7 L96.7 159.8 L101.3 157.4 L106 157.1 L110.7 150.4 L115.3 152 L120 143.8 L124.7 145 L129.3 145.3 L134 147.5 L138.7 141.6 L143.3 146.8 L148 143.3 L152.7 141.2 L157.3 138.1 L162 137.8 L166.7 138.9 L171.3 137.1 L176 138.5 L180.7 138.6 L185.3 138.7 L190 139.4 L194.7 138.3 L199.3 137.7 L204 136.1 L208.7 136.1 L213.3 141.6 L218 136.4 L222.7 134 L227.3 139.2 L232 136.4 L236.7 138.5 L241.3 140 L246 136.4 L250.7 136.4 L255.3 134.7 L260 137.5 L264.7 138.4 L269.3 135.9 L274 135 L278.7 136 L283.3 135.3 L288 138.5 L292.7 136.5 L297.3 134.2 L302 136.1 L306.7 132.4 L311.3 133.6 L316 138.3 L320.7 136.4 L325.3 139.6 L330 135.9 L334.7 134.9 L339.3 136.3 L344 134.7" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-s2 " d="M68.7 202.3 L73.3 184.5 L78 186.2 L82.7 172.4 L87.3 166.4 L92 157.9 L96.7 150.4 L101.3 147.1 L106 142.4 L110.7 143 L115.3 140.4 L120 137.8 L124.7 134.3 L129.3 136.8 L134 134.5 L138.7 133.8 L143.3 131.9 L148 133.5 L152.7 130.5 L157.3 131 L162 130.6 L166.7 131.2 L171.3 130.1 L176 130.1 L180.7 129.7 L185.3 134.9 L190 135.8 L194.7 133 L199.3 131.3 L204 132 L208.7 134.5 L213.3 132.3 L218 131.3 L222.7 134 L227.3 130.9 L232 131.2 L236.7 132.3 L241.3 129.5 L246 131.5 L250.7 133.6 L255.3 129.6 L260 131.7 L264.7 129.6 L269.3 128.5 L274 128.5 L278.7 128.8 L283.3 128.6 L288 128.4 L292.7 130.9 L297.3 129.9 L302 128.1 L306.7 128.2 L311.3 130.7 L316 132.2 L320.7 129.5 L325.3 136 L330 133.5 L334.7 131.9 L339.3 132 L344 135.4" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink" x="404" y="112" font-size="12" text-anchor="start" font-weight="600">The annotator&#x27;s taste</text>
+<line class="s-grid" x1="404" y1="224" x2="684" y2="224" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="228" font-size="11" text-anchor="end">0</text>
+<line class="s-grid" x1="404" y1="190.7" x2="684" y2="190.7" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="194.7" font-size="11" text-anchor="end">0.5</text>
+<line class="s-grid" x1="404" y1="157.3" x2="684" y2="157.3" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="161.3" font-size="11" text-anchor="end">1</text>
+<line class="s-grid" x1="404" y1="124" x2="684" y2="124" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="128" font-size="11" text-anchor="end">1.5</text>
+<line class="s-axis" x1="404" y1="224" x2="684" y2="224" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="404" y1="224" x2="404" y2="228" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="404" y="241" font-size="11" text-anchor="middle">0</text>
+<line class="s-axis" x1="497.3" y1="224" x2="497.3" y2="228" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="497.3" y="241" font-size="11" text-anchor="middle">20</text>
+<line class="s-axis" x1="590.7" y1="224" x2="590.7" y2="228" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="590.7" y="241" font-size="11" text-anchor="middle">40</text>
+<line class="s-axis" x1="684" y1="224" x2="684" y2="228" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="684" y="241" font-size="11" text-anchor="middle">60</text>
+<path class="s-s1 " d="M408.7 210.3 L413.3 200.4 L418 191.3 L422.7 184.8 L427.3 174.5 L432 170.8 L436.7 164.6 L441.3 163.4 L446 159.8 L450.7 156 L455.3 158.5 L460 147.4 L464.7 149.5 L469.3 148.6 L474 151.4 L478.7 145.2 L483.3 152.1 L488 145.4 L492.7 148.1 L497.3 142.9 L502 145.5 L506.7 142.4 L511.3 141.2 L516 145.1 L520.7 144.7 L525.3 143.5 L530 143 L534.7 144.6 L539.3 144.1 L544 139.2 L548.7 143.6 L553.3 149.1 L558 140 L562.7 137.5 L567.3 143.6 L572 142.3 L576.7 141.6 L581.3 144.4 L586 138.6 L590.7 138.5 L595.3 138.8 L600 141.4 L604.7 142.8 L609.3 139.4 L614 138.3 L618.7 140.5 L623.3 140.2 L628 144.4 L632.7 141.8 L637.3 136.4 L642 137.5 L646.7 135 L651.3 138.2 L656 143.6 L660.7 141.8 L665.3 145.4 L670 141.9 L674.7 139.4 L679.3 141.4 L684 138.8" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-s2 " d="M408.7 210.3 L413.3 191.4 L418 195.6 L422.7 180.9 L427.3 172.4 L432 165.8 L436.7 154.9 L441.3 148.7 L446 146.7 L450.7 148.9 L455.3 144.2 L460 137.7 L464.7 136.8 L469.3 139.6 L474 135.1 L478.7 133.5 L483.3 129.7 L488 133.2 L492.7 130.3 L497.3 129.7 L502 129.1 L506.7 130.7 L511.3 129.8 L516 128.3 L520.7 129.6 L525.3 138.7 L530 139 L534.7 135.4 L539.3 133.3 L544 132 L548.7 135.5 L553.3 132.4 L558 131 L562.7 136.9 L567.3 129.5 L572 131.3 L576.7 132.7 L581.3 129.6 L586 131.7 L590.7 135.4 L595.3 127.7 L600 131.4 L604.7 130.2 L609.3 126.1 L614 126.4 L618.7 129.2 L623.3 129.8 L628 129.5 L632.7 131.8 L637.3 131.1 L642 127.2 L646.7 128.7 L651.3 133.7 L656 134.2 L660.7 130.9 L665.3 138.5 L670 135 L674.7 136 L679.3 135.7 L684 139.6" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink" x="64" y="282" font-size="12" text-anchor="start" font-weight="600">KL divergence from the starting model</text>
+<line class="s-grid" x1="64" y1="394" x2="344" y2="394" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="398" font-size="11" text-anchor="end">0</text>
+<line class="s-grid" x1="64" y1="360.7" x2="344" y2="360.7" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="364.7" font-size="11" text-anchor="end">0.5</text>
+<line class="s-grid" x1="64" y1="327.3" x2="344" y2="327.3" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="331.3" font-size="11" text-anchor="end">1</text>
+<line class="s-grid" x1="64" y1="294" x2="344" y2="294" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="298" font-size="11" text-anchor="end">1.5</text>
+<line class="s-axis" x1="64" y1="394" x2="344" y2="394" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="64" y1="394" x2="64" y2="398" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="411" font-size="11" text-anchor="middle">0</text>
+<line class="s-axis" x1="157.3" y1="394" x2="157.3" y2="398" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="157.3" y="411" font-size="11" text-anchor="middle">20</text>
+<line class="s-axis" x1="250.7" y1="394" x2="250.7" y2="398" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="250.7" y="411" font-size="11" text-anchor="middle">40</text>
+<line class="s-axis" x1="344" y1="394" x2="344" y2="398" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="344" y="411" font-size="11" text-anchor="middle">60</text>
+<text class="f-muted" x="204" y="430" font-size="11" text-anchor="middle">iteration</text>
+<path class="s-s1 " d="M68.7 391.7 L73.3 392.2 L78 391.5 L82.7 390.9 L87.3 390.2 L92 389.6 L96.7 388.9 L101.3 388.3 L106 387.6 L110.7 387.3 L115.3 386.5 L120 386.1 L124.7 385.5 L129.3 384.9 L134 384.6 L138.7 384.7 L143.3 383.4 L148 383.1 L152.7 382.8 L157.3 383.1 L162 383.1 L166.7 382.3 L171.3 382.6 L176 381.9 L180.7 381.7 L185.3 382.8 L190 381.7 L194.7 381.2 L199.3 382.1 L204 381.8 L208.7 381.7 L213.3 380.4 L218 380.9 L222.7 381.4 L227.3 381 L232 381.2 L236.7 379.6 L241.3 380.5 L246 379.6 L250.7 381.2 L255.3 379.8 L260 379.2 L264.7 380 L269.3 381 L274 381.1 L278.7 379.5 L283.3 379.3 L288 378.1 L292.7 379.1 L297.3 378.7 L302 379.9 L306.7 380.4 L311.3 379 L316 377.5 L320.7 378.6 L325.3 377.7 L330 378.2 L334.7 379 L339.3 376.5 L344 377.3" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-s2 " d="M68.7 391.6 L73.3 392 L78 391.2 L82.7 390.2 L87.3 389 L92 387.7 L96.7 386.4 L101.3 385 L106 383.4 L110.7 381.5 L115.3 379.8 L120 378.1 L124.7 376.1 L129.3 373.4 L134 371.1 L138.7 369.8 L143.3 367 L148 363.6 L152.7 363.7 L157.3 359.6 L162 354.1 L166.7 353.9 L171.3 349.2 L176 344.8 L180.7 349.8 L185.3 336.5 L190 339.1 L194.7 334.4 L199.3 336.2 L204 333.1 L208.7 330.2 L213.3 331.3 L218 327.6 L222.7 318.7 L227.3 332.4 L232 323.2 L236.7 325.7 L241.3 324.9 L246 336.2 L250.7 327.6 L255.3 327.2 L260 321.1 L264.7 326 L269.3 338.4 L274 338.4 L278.7 337.8 L283.3 330.4 L288 338.1 L292.7 317.4 L297.3 325 L302 326.5 L306.7 321.3 L311.3 324.3 L316 306.9 L320.7 311.2 L325.3 309.9 L330 315.3 L334.7 307.8 L339.3 312.4 L344 297.8" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink" x="404" y="282" font-size="12" text-anchor="start" font-weight="600">Tokens per story</text>
+<line class="s-grid" x1="404" y1="394" x2="684" y2="394" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="398" font-size="11" text-anchor="end">100</text>
+<line class="s-grid" x1="404" y1="369" x2="684" y2="369" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="373" font-size="11" text-anchor="end">120</text>
+<line class="s-grid" x1="404" y1="344" x2="684" y2="344" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="348" font-size="11" text-anchor="end">140</text>
+<line class="s-grid" x1="404" y1="319" x2="684" y2="319" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="323" font-size="11" text-anchor="end">160</text>
+<line class="s-grid" x1="404" y1="294" x2="684" y2="294" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="298" font-size="11" text-anchor="end">180</text>
+<line class="s-axis" x1="404" y1="394" x2="684" y2="394" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="404" y1="394" x2="404" y2="398" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="404" y="411" font-size="11" text-anchor="middle">0</text>
+<line class="s-axis" x1="497.3" y1="394" x2="497.3" y2="398" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="497.3" y="411" font-size="11" text-anchor="middle">20</text>
+<line class="s-axis" x1="590.7" y1="394" x2="590.7" y2="398" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="590.7" y="411" font-size="11" text-anchor="middle">40</text>
+<line class="s-axis" x1="684" y1="394" x2="684" y2="398" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="684" y="411" font-size="11" text-anchor="middle">60</text>
+<text class="f-muted" x="544" y="430" font-size="11" text-anchor="middle">iteration</text>
+<path class="s-s1 " d="M408.7 314.2 L413.3 320.9 L418 320.2 L422.7 325.9 L427.3 323.5 L432 329.3 L436.7 336.6 L441.3 330.7 L446 332.6 L450.7 332.5 L455.3 337.1 L460 339.4 L464.7 339.3 L469.3 335.3 L474 332.2 L478.7 339.5 L483.3 338.2 L488 342.7 L492.7 339.1 L497.3 344.1 L502 344.4 L506.7 339.8 L511.3 339.4 L516 337.6 L520.7 338.5 L525.3 334.7 L530 337 L534.7 338.2 L539.3 341.2 L544 338.9 L548.7 335.9 L553.3 339.4 L558 345 L562.7 340.4 L567.3 346.9 L572 343.9 L576.7 342.6 L581.3 340.7 L586 347.3 L590.7 349.4 L595.3 341 L600 340.5 L604.7 340.4 L609.3 344.8 L614 343.6 L618.7 339.2 L623.3 341.2 L628 333 L632.7 340.1 L637.3 342.1 L642 345.1 L646.7 346.9 L651.3 341.6 L656 339.1 L660.7 340 L665.3 336.6 L670 339.4 L674.7 340.3 L679.3 338.1 L684 344.3" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-s2 " d="M408.7 314.2 L413.3 323.4 L418 319.1 L422.7 327.5 L427.3 323.4 L432 324.1 L436.7 333.1 L441.3 336.9 L446 343.8 L450.7 344.9 L455.3 342.8 L460 349.4 L464.7 350.6 L469.3 350.7 L474 352.7 L478.7 361.4 L483.3 360.9 L488 353 L492.7 359.1 L497.3 364.1 L502 360.2 L506.7 364.1 L511.3 356.1 L516 359.4 L520.7 357.6 L525.3 351 L530 352.8 L534.7 360.6 L539.3 357.7 L544 363.4 L548.7 365.2 L553.3 371.5 L558 367.4 L562.7 361.5 L567.3 369.9 L572 369.6 L576.7 370.4 L581.3 373.9 L586 374.7 L590.7 371.1 L595.3 376.8 L600 372.4 L604.7 372.5 L609.3 375.9 L614 371.7 L618.7 361.7 L623.3 360.2 L628 359.4 L632.7 359.6 L637.3 358.1 L642 367.6 L646.7 359.8 L651.3 361.9 L656 359.7 L660.7 366.5 L665.3 355.4 L670 361.1 L674.7 358.7 L679.3 358.5 L684 357.9" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>
