@@ -1,0 +1,10 @@
+{
+ "family": "qwen",
+ "base": "qwen",
+ "task": "gsm8k",
+ "step": 900,
+ "val_loss": 0.6002301007509232,
+ "minutes": 19.750669117768606,
+ "trainable_parameters": 494032768,
+ "memory_gb": 24.995849609375
+}

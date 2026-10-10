@@ -1,0 +1,14 @@
+{
+ "family": "qwen",
+ "base": "qwen",
+ "task": "gsm8k",
+ "lora": {
+  "r": 16,
+  "alpha": 32
+ },
+ "step": 900,
+ "val_loss": 0.5863762468099594,
+ "minutes": 9.860989264647166,
+ "trainable_parameters": 8798208,
+ "memory_gb": 14.456787109375
+}

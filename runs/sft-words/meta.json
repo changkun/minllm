@@ -1,0 +1,10 @@
+{
+ "family": "small",
+ "base": "out/base",
+ "task": "words",
+ "memory_gb": 8.7747802734375,
+ "step": 2000,
+ "val_loss": 1.2230190575122832,
+ "minutes": 10.8149112145106,
+ "trainable_parameters": 14162304
+}
