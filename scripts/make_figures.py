@@ -178,6 +178,18 @@ class Axes:
         self.fig.text(self.x(x) + dx, self.y(y) + dy, s, anchor=anchor, fill=fill)
 
 
+def nice_ticks(lo, hi, count=3):
+    """Round numbers that span lo to hi, about count of them."""
+    raw = (hi - lo) / count
+    magnitude = 10 ** math.floor(math.log10(raw))
+    step = min((1, 2, 5, 10), key=lambda m: abs(m * magnitude - raw)) * magnitude
+    ticks, t = [], math.ceil(lo / step - 1e-9) * step
+    while t <= hi + 1e-9:
+        ticks.append(round(t, 10))
+        t += step
+    return ticks
+
+
 def thousands(v):
     return f"{v / 1000:g}K" if v >= 1000 else f"{v:g}"
 
@@ -651,7 +663,7 @@ def spread(values):
 def rlhf_reward():
     meta = load("runs/rlhf/reward.json")
     tastes, rewards = meta["held_out_tastes"], meta["held_out_rewards"]
-    fig = Figure(720, 350, "The reward model against the taste it never saw", f"{len(tastes):,} held-out stories. Trained on {meta['pairs']:,} comparisons, it orders {meta['agrees_with_taste']:.0%} of held-out pairs as the annotator's taste does.")
+    fig = Figure(720, 360, "The reward model against the taste it never saw", f"{len(tastes):,} held-out stories. Trained on {meta['pairs']:,} comparisons, it orders {meta['agrees_with_taste']:.0%} of held-out pairs as the annotator's taste does.")
     lo, hi = math.floor(min(tastes)), math.ceil(max(tastes))
     rlo, rhi = math.floor(min(rewards)), math.ceil(max(rewards))
     ax = Axes(fig, 64, 84, 330, 200, (lo, hi), (rlo, rhi))
@@ -661,7 +673,7 @@ def rlhf_reward():
     for t, r in zip(tastes, rewards):
         fig.point(ax.x(t), ax.y(r), "s1")
 
-    curve = sorted((load(f"runs/rlhf/{name}") for name in os.listdir("runs/rlhf") if name.startswith("reward")), key=lambda m: m["pairs"])
+    curve = sorted((load(f"runs/rlhf/{name}") for name in os.listdir("runs/rlhf") if name.startswith("reward") and name.endswith(".json")), key=lambda m: m["pairs"])
     xs, ys = [m["pairs"] for m in curve], [m["agrees_with_taste"] for m in curve]
     right = Axes(fig, 470, 84, 220, 200, (min(xs) * 0.7, max(xs) * 1.4), (0.5, 1.0), xlog=True)
     right.title("Agreement with the taste")
@@ -671,7 +683,7 @@ def rlhf_reward():
     right.dots(xs, ys, "s1")
     right.label(xs[-1], ys[-1], f"{ys[-1]:.0%}", dx=0, dy=-12, anchor="middle", fill="ink")
     right.label(xs[0], ys[0], f"{ys[0]:.0%}", dx=0, dy=-12, anchor="middle")
-    fig.text(470, 330, "50% is guessing.", size=11, fill="muted")
+    fig.text(470, 340, "50% would be guessing.", size=11, fill="muted")
     fig.save("rlhf-reward")
 
 
@@ -688,7 +700,7 @@ def rlhf_best_of_n():
     for key, color in [("picked_by_taste", "s2"), ("picked_by_reward_model", "s1")]:
         ax.line(xs, r[key], color)
         ax.dots(xs, r[key], color)
-        ax.label(xs[-1], r[key][-1], f"{r[key][-1]:+.2f}", dx=10, dy=4, fill="ink")
+        ax.label(xs[-1], r[key][-1], f"{r[key][-1]:+.2f}", dx=10, dy=-2 if color == "s2" else 10, fill="ink")
     ax.label(xs[0], r["any"], f"{r['any']:+.2f}, any one story", dx=10, dy=16)
     fig.save("rlhf-best-of-n")
 
@@ -702,12 +714,12 @@ def rlhf_ppo():
     for i, (key, title) in enumerate(panels):
         col, row = i % 2, i // 2
         values = [r[key] for _, _, log in runs for r in log]
-        lo, hi = min(values), max(values)
-        pad = (hi - lo) * 0.1 or 0.1
-        ax = Axes(fig, 64 + col * 340, 124 + row * 170, 280, 100, (0, steps), (lo - pad, hi + pad))
+        ticks = nice_ticks(min(values), max(values))
+        step = ticks[1] - ticks[0]
+        lo, hi = min(ticks[0], math.floor(min(values) / step) * step), max(ticks[-1], math.ceil(max(values) / step) * step)
+        ax = Axes(fig, 64 + col * 340, 124 + row * 170, 280, 100, (0, steps), (lo, hi))
         ax.title(title)
-        fmt = (lambda t: f"{t:.0f}") if key == "tokens" else (lambda t: f"{t:.2f}")
-        ax.yticks([lo, (lo + hi) / 2, hi], fmt)
+        ax.yticks(nice_ticks(lo, hi), lambda t: f"{t:g}")
         ax.xticks(range(0, steps + 1, 20), str, "iteration" if row else "")
         for name, color, log in runs:
             ax.line([r["iteration"] for r in log], [r[key] for r in log], color)
@@ -715,16 +727,28 @@ def rlhf_ppo():
 
 
 def rlhf_comparison():
-    bon = load("runs/rlhf/best_of_n.json")
-    rows = []
-    for name, path in [("fine-tuned, the start", "runs/eval/taste-sft-words.json"), ("PPO", "runs/eval/taste-ppo.json"), ("PPO without KL", "runs/eval/taste-ppo-no-kl.json"), ("DPO", "runs/eval/taste-dpo.json")]:
-        r = load(path)
-        rows.append((name, r["mean"], r["error"]))
-    rows.insert(1, ("best of 8, reward model", *spread(bon["tastes_of_best_of_8"])))
-    fig = Figure(720, 290, "By the annotator's hidden taste", "Mean taste of sampled stories on held-out prompts, with 95% intervals. No method saw the taste, only comparisons.")
-    peak = max(m + e for _, m, e in rows) * 1.25
-    scored_bars(fig, 220, 84, 330, rows, peak, lambda v: f"{v:+.2f}")
-    fig.text(24, 272, "Rejection sampling writes 8 stories for each one it returns. The trained models write one.", size=11, fill="muted")
+    stories = load("runs/rlhf/stories.json")
+    rows = [("fine-tuned, the start", "sft-words"), ("PPO", "ppo"), ("PPO without KL", "ppo-no-kl"), ("DPO", "dpo")]
+    panels = [
+        ("The annotator's taste", "taste", lambda v: f"{v:+.2f}", "higher is better"),
+        ("Requested words used", "words_used", lambda v: f"{v:.0%}", "higher is better"),
+        ("Strangeness", "strangeness", lambda v: f"{v:.2f}", "lower is better"),
+    ]
+    fig = Figure(720, 290, "What each method did to the stories", "1,000 sampled stories per model on held-out prompts. Training saw comparisons only, and none of these three measures.")
+    for i, (title, key, fmt, note) in enumerate(panels):
+        left, top, width = 170 + i * 186, 108, 100
+        fig.text(left, top - 20, title, fill="ink", weight=600)
+        fig.line(left, top - 8, left, top + 34 * len(rows) - 12, stroke="axis")
+        peak = max(stories[name][key] for _, name in rows)
+        for j, (label, name) in enumerate(rows):
+            y = top + j * 34
+            if i == 0:
+                fig.text(left - 10, y + 14, label, anchor="end", fill="ink")
+            value = stories[name][key]
+            bar(fig, left, y, width * value / peak, 18, "s1")
+            fig.text(left + width * value / peak + 8, y + 14, fmt(value), fill="ink")
+        fig.text(left, top + 34 * len(rows) + 8, note, size=11, fill="muted")
+    fig.text(24, 272, "Strangeness is the loss of the pretrained story model on the stories, in nats per token: how unlike a story they read.", size=11, fill="muted")
     fig.save("rlhf-comparison")
 
 
@@ -830,4 +854,9 @@ if os.path.exists("runs/sft-gsm8k/meta.json"):
     finetuning_gsm8k()
 if os.path.exists("runs/eval/gsm8k-sft-gsm8k.json"):
     evaluation_scores()
+if os.path.exists("runs/rlhf/dpo.jsonl"):
+    rlhf_reward()
+    rlhf_best_of_n()
+    rlhf_ppo()
+    rlhf_comparison()
 pipeline(done={1, 2, 3, 4, 5})
