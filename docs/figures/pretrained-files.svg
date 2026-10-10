@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="372" viewBox="0 0 720 372" role="img"><title>A published model is three files</title><desc>Qwen2.5-0.5B-Instruct, and what each file becomes in this repository.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="371" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">A published model is three files</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Qwen2.5-0.5B-Instruct, and what each file becomes in this repository.</text>
+<rect class="f-surface s-axis" x="24" y="74" width="220" height="44" rx="6" stroke-width="1"/>
+<text class="f-ink" x="134" y="93" font-size="12" text-anchor="middle" font-weight="600">config.json</text>
+<text class="f-ink2" x="134" y="109" font-size="11" text-anchor="middle">659 bytes</text>
+<path class="s-muted " d="M244 96 L286 96" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M279.7 93 L286 96 L279.7 99" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-s1 s-axis" x="288" y="74" width="408" height="44" rx="6" stroke-width="1" fill-opacity="0.1"/>
+<text class="f-ink" x="492" y="93" font-size="12" text-anchor="middle" font-weight="600">Config</text>
+<text class="f-ink2" x="492" y="109" font-size="11" text-anchor="middle">24 layers · dim 896 · 14 heads on 2 key/value heads</text>
+<rect class="f-surface s-axis" x="24" y="132" width="220" height="44" rx="6" stroke-width="1"/>
+<text class="f-ink" x="134" y="151" font-size="12" text-anchor="middle" font-weight="600">model.safetensors</text>
+<text class="f-ink2" x="134" y="167" font-size="11" text-anchor="middle">988 MB</text>
+<path class="s-muted " d="M244 154 L286 154" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M279.7 151 L286 154 L279.7 157" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-s1 s-axis" x="288" y="132" width="408" height="44" rx="6" stroke-width="1" fill-opacity="0.1"/>
+<text class="f-ink" x="492" y="151" font-size="12" text-anchor="middle" font-weight="600">the weights of Transformer</text>
+<text class="f-ink2" x="492" y="167" font-size="11" text-anchor="middle">290 tensors · 494,032,768 numbers · names translated</text>
+<rect class="f-surface s-axis" x="24" y="190" width="220" height="44" rx="6" stroke-width="1"/>
+<text class="f-ink" x="134" y="209" font-size="12" text-anchor="middle" font-weight="600">vocab.json, merges.txt</text>
+<text class="f-ink2" x="134" y="225" font-size="11" text-anchor="middle">4.4 MB</text>
+<path class="s-muted " d="M244 212 L286 212" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M279.7 209 L286 212 L279.7 215" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-s1 s-axis" x="288" y="190" width="408" height="44" rx="6" stroke-width="1" fill-opacity="0.1"/>
+<text class="f-ink" x="492" y="209" font-size="12" text-anchor="middle" font-weight="600">Tokenizer</text>
+<text class="f-ink2" x="492" y="225" font-size="11" text-anchor="middle">151,643 tokens from 151,387 merges · 22 special tokens</text>
+<text class="f-ink" x="24" y="272" font-size="12" text-anchor="start" font-weight="600">Inside model.safetensors</text>
+<rect class="f-surface s-axis" x="24" y="286" width="92" height="44" rx="6" stroke-width="1"/>
+<text class="f-ink" x="70" y="305" font-size="12" text-anchor="middle" font-weight="600">8 bytes</text>
+<text class="f-ink2" x="70" y="321" font-size="11" text-anchor="middle">the number n</text>
+<rect class="f-surface s-axis" x="120" y="286" width="210" height="44" rx="6" stroke-width="1"/>
+<text class="f-ink" x="225" y="305" font-size="12" text-anchor="middle" font-weight="600">n = 32,280 bytes of JSON</text>
+<text class="f-ink2" x="225" y="321" font-size="11" text-anchor="middle">name → dtype, shape, byte range</text>
+<rect class="f-s1 s-axis" x="334" y="286" width="360" height="44" rx="6" stroke-width="1" fill-opacity="0.1"/>
+<text class="f-ink" x="514" y="305" font-size="12" text-anchor="middle" font-weight="600">988 MB of raw numbers</text>
+<text class="f-ink2" x="514" y="321" font-size="11" text-anchor="middle">the tensors, one after another, in bfloat16</text>
+<text class="f-muted" x="24" y="354" font-size="10" text-anchor="start">&quot;model.layers.0.self_attn.q_proj.weight&quot;: {&quot;dtype&quot;: &quot;BF16&quot;, &quot;shape&quot;: [896, 896], &quot;data_offsets&quot;: [300258816, 301864448]}</text>
+</svg>
