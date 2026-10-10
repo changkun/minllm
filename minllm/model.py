@@ -82,18 +82,24 @@ class Attention(nn.Module):
         self.v_proj = nn.Linear(cfg.dim, cfg.n_kv_heads * self.head_dim, bias=False)
         self.o_proj = nn.Linear(cfg.n_heads * self.head_dim, cfg.dim, bias=False)
 
-    def forward(self, x, cos, sin):
+    def forward(self, x, cos, sin, mask=None, cache=None):
         B, T, _ = x.shape
         # (B, T, dim) -> (B, heads, T, head_dim)
         q = self.q_proj(x).view(B, T, self.n_heads, self.head_dim).transpose(1, 2)
         k = self.k_proj(x).view(B, T, self.n_kv_heads, self.head_dim).transpose(1, 2)
         v = self.v_proj(x).view(B, T, self.n_kv_heads, self.head_dim).transpose(1, 2)
         q, k = apply_rope(q, cos, sin), apply_rope(k, cos, sin)
+        if cache is not None:
+            # Generation: x holds only the new tokens. Store their keys and
+            # values, and attend over those of every token so far.
+            k, v = cache.append(k, v)
         # Each key/value head serves a group of n_heads / n_kv_heads query heads.
         groups = self.n_heads // self.n_kv_heads
         k, v = k.repeat_interleave(groups, dim=1), v.repeat_interleave(groups, dim=1)
-        # softmax(q k^T / sqrt(head_dim)) v, where a token sees only itself and the past
-        y = F.scaled_dot_product_attention(q, k, v, is_causal=True)
+        # softmax(q k^T / sqrt(head_dim)) v, where a token sees only itself and
+        # the past. Without an explicit mask the queries and keys line up one to
+        # one, and the library applies the causal mask itself.
+        y = F.scaled_dot_product_attention(q, k, v, attn_mask=mask, is_causal=mask is None and T > 1)
         return self.o_proj(y.transpose(1, 2).reshape(B, T, -1))
 
 
@@ -118,10 +124,10 @@ class Block(nn.Module):
         self.mlp_norm = RMSNorm(cfg.dim, cfg.norm_eps)
         self.mlp = MLP(cfg)
 
-    def forward(self, x, cos, sin):
+    def forward(self, x, cos, sin, mask=None, cache=None):
         # Each sublayer reads a normalized copy of the residual stream and adds
         # its result back, so the stream itself is never squashed.
-        x = x + self.attn(self.attn_norm(x), cos, sin)
+        x = x + self.attn(self.attn_norm(x), cos, sin, mask, cache)
         x = x + self.mlp(self.mlp_norm(x))
         return x
 
@@ -151,18 +157,28 @@ class Transformer(nn.Module):
     def num_params(self):
         return sum(p.numel() for p in self.parameters())
 
-    def forward(self, idx, targets=None):
+    def forward(self, idx, targets=None, cache=None, mask=None):
         """
         idx and targets are (batch, seq) token ids. Returns the logits
         (batch, seq, vocab) and, given targets, the mean cross-entropy loss.
         Positions whose target is -100 do not count towards the loss.
+
+        With a cache (minllm/inference.py), idx holds only the tokens that
+        come after the ones already cached. mask, if given, is boolean and
+        broadcasts to (batch, heads, new tokens, all tokens): True where a
+        token may attend.
         """
         T = idx.shape[1]
-        assert T <= self.cfg.max_seq_len, f"sequence of {T} tokens exceeds max_seq_len {self.cfg.max_seq_len}"
+        pos = cache.pos if cache is not None else 0  # tokens that came before idx
+        assert pos + T <= self.cfg.max_seq_len, f"{pos + T} tokens exceed max_seq_len {self.cfg.max_seq_len}"
+        if mask is None and pos > 0 and T > 1:
+            # Several new tokens after cached ones: each sees the whole cache,
+            # and of the new tokens only itself and the earlier ones.
+            mask = torch.ones(T, pos + T, dtype=torch.bool, device=idx.device).tril(pos)
         x = self.embed(idx)
-        cos, sin = self.rope_cos[:T], self.rope_sin[:T]
-        for layer in self.layers:
-            x = layer(x, cos, sin)
+        cos, sin = self.rope_cos[pos : pos + T], self.rope_sin[pos : pos + T]
+        for i, layer in enumerate(self.layers):
+            x = layer(x, cos, sin, mask, cache.layers[i] if cache is not None else None)
         logits = self.lm_head(self.norm(x))
         if targets is None:
             return logits, None
@@ -174,7 +190,8 @@ class Transformer(nn.Module):
         """
         Append max_new_tokens sampled tokens to idx (batch, seq). This is the
         simplest correct sampler: it reruns the whole sequence for every new
-        token. The inference stage replaces it with one that caches its work.
+        token. minllm/inference.py does the same with a cache, and the tests
+        use this one as the reference it has to match.
         """
         for _ in range(max_new_tokens):
             logits, _ = self(idx[:, -self.cfg.max_seq_len :])
