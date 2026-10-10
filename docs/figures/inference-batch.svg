@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" role="img"><title>Generating many sequences at once</title><desc>Tokens per second on the GPU, with a cache, 200 tokens per sequence. Both scales are logarithmic.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="299" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">Generating many sequences at once</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Tokens per second on the GPU, with a cache, 200 tokens per sequence. Both scales are logarithmic.</text>
+<line class="s-grid" x1="72" y1="234" x2="652" y2="234" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="238" font-size="11" text-anchor="end">300</text>
+<line class="s-grid" x1="72" y1="197.1" x2="652" y2="197.1" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="201.1" font-size="11" text-anchor="end">1K</text>
+<line class="s-grid" x1="72" y1="163.4" x2="652" y2="163.4" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="167.4" font-size="11" text-anchor="end">3K</text>
+<line class="s-grid" x1="72" y1="126.5" x2="652" y2="126.5" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="130.5" font-size="11" text-anchor="end">10K</text>
+<line class="s-grid" x1="72" y1="92.8" x2="652" y2="92.8" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="96.8" font-size="11" text-anchor="end">30K</text>
+<line class="s-axis" x1="72" y1="234" x2="652" y2="234" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="94.2" y1="234" x2="94.2" y2="238" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="94.2" y="251" font-size="11" text-anchor="middle">1</text>
+<line class="s-axis" x1="200.9" y1="234" x2="200.9" y2="238" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="200.9" y="251" font-size="11" text-anchor="middle">4</text>
+<line class="s-axis" x1="307.7" y1="234" x2="307.7" y2="238" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="307.7" y="251" font-size="11" text-anchor="middle">16</text>
+<line class="s-axis" x1="414.4" y1="234" x2="414.4" y2="238" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="414.4" y="251" font-size="11" text-anchor="middle">64</text>
+<line class="s-axis" x1="521.2" y1="234" x2="521.2" y2="238" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="521.2" y="251" font-size="11" text-anchor="middle">256</text>
+<line class="s-axis" x1="627.9" y1="234" x2="627.9" y2="238" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="627.9" y="251" font-size="11" text-anchor="middle">1,024</text>
+<text class="f-muted" x="362" y="270" font-size="11" text-anchor="middle">sequences in the batch</text>
+<path class="s-s1 " d="M94.2 220.8 L200.9 179.9 L307.7 144.2 L414.4 114.1 L521.2 106.6 L627.9 102.3" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s1 s-surface" cx="94.2" cy="220.8" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="200.9" cy="179.9" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="307.7" cy="144.2" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="414.4" cy="114.1" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="521.2" cy="106.6" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="627.9" cy="102.3" r="4" stroke-width="2"/>
+<text class="f-ink2" x="94.2" y="208.8" font-size="12" text-anchor="middle">461</text>
+<text class="f-ink2" x="200.9" y="167.9" font-size="12" text-anchor="middle">1,750</text>
+<text class="f-ink2" x="307.7" y="132.2" font-size="12" text-anchor="middle">5,605</text>
+<text class="f-ink2" x="414.4" y="102.1" font-size="12" text-anchor="middle">14,995</text>
+<text class="f-ink2" x="521.2" y="94.6" font-size="12" text-anchor="middle">19,164</text>
+<text class="f-ink2" x="627.9" y="90.3" font-size="12" text-anchor="middle">22,054</text>
+</svg>

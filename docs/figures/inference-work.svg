@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="352" viewBox="0 0 720 352" role="img"><title>What generating the eighth token costs</title><desc>Each cell is one query reading one key. Rows are tokens, columns are the tokens they attend to.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="351" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">What generating the eighth token costs</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Each cell is one query reading one key. Rows are tokens, columns are the tokens they attend to.</text>
+<text class="f-ink" x="70" y="82" font-size="12" text-anchor="start" font-weight="600">Without a cache</text>
+<text class="f-ink2" x="70" y="99" font-size="11" text-anchor="start">all 8 rows are computed again: 36 cells</text>
+<rect class="f-s2" x="70" y="112" width="22" height="22" rx="3"/>
+<text class="f-muted" x="62" y="127" font-size="11" text-anchor="end">1</text>
+<rect class="f-s2" x="70" y="136" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="94" y="136" width="22" height="22" rx="3"/>
+<text class="f-muted" x="62" y="151" font-size="11" text-anchor="end">2</text>
+<rect class="f-s2" x="70" y="160" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="94" y="160" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="118" y="160" width="22" height="22" rx="3"/>
+<text class="f-muted" x="62" y="175" font-size="11" text-anchor="end">3</text>
+<rect class="f-s2" x="70" y="184" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="94" y="184" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="118" y="184" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="142" y="184" width="22" height="22" rx="3"/>
+<text class="f-muted" x="62" y="199" font-size="11" text-anchor="end">4</text>
+<rect class="f-s2" x="70" y="208" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="94" y="208" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="118" y="208" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="142" y="208" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="166" y="208" width="22" height="22" rx="3"/>
+<text class="f-muted" x="62" y="223" font-size="11" text-anchor="end">5</text>
+<rect class="f-s2" x="70" y="232" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="94" y="232" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="118" y="232" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="142" y="232" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="166" y="232" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="190" y="232" width="22" height="22" rx="3"/>
+<text class="f-muted" x="62" y="247" font-size="11" text-anchor="end">6</text>
+<rect class="f-s2" x="70" y="256" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="94" y="256" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="118" y="256" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="142" y="256" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="166" y="256" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="190" y="256" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="214" y="256" width="22" height="22" rx="3"/>
+<text class="f-muted" x="62" y="271" font-size="11" text-anchor="end">7</text>
+<rect class="f-s2" x="70" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="94" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="118" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="142" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="166" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="190" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="214" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s2" x="238" y="280" width="22" height="22" rx="3"/>
+<text class="f-muted" x="62" y="295" font-size="11" text-anchor="end">8</text>
+<text class="f-ink" x="410" y="82" font-size="12" text-anchor="start" font-weight="600">With a cache</text>
+<text class="f-ink2" x="410" y="99" font-size="11" text-anchor="start">only the new row is computed: 8 cells</text>
+<rect class=" s-axis" x="410.5" y="112.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<text class="f-muted" x="402" y="127" font-size="11" text-anchor="end">1</text>
+<rect class=" s-axis" x="410.5" y="136.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="434.5" y="136.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<text class="f-muted" x="402" y="151" font-size="11" text-anchor="end">2</text>
+<rect class=" s-axis" x="410.5" y="160.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="434.5" y="160.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="458.5" y="160.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<text class="f-muted" x="402" y="175" font-size="11" text-anchor="end">3</text>
+<rect class=" s-axis" x="410.5" y="184.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="434.5" y="184.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="458.5" y="184.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="482.5" y="184.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<text class="f-muted" x="402" y="199" font-size="11" text-anchor="end">4</text>
+<rect class=" s-axis" x="410.5" y="208.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="434.5" y="208.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="458.5" y="208.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="482.5" y="208.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="506.5" y="208.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<text class="f-muted" x="402" y="223" font-size="11" text-anchor="end">5</text>
+<rect class=" s-axis" x="410.5" y="232.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="434.5" y="232.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="458.5" y="232.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="482.5" y="232.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="506.5" y="232.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="530.5" y="232.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<text class="f-muted" x="402" y="247" font-size="11" text-anchor="end">6</text>
+<rect class=" s-axis" x="410.5" y="256.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="434.5" y="256.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="458.5" y="256.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="482.5" y="256.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="506.5" y="256.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="530.5" y="256.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<rect class=" s-axis" x="554.5" y="256.5" width="21" height="21" rx="3" fill="none" stroke-width="1"/>
+<text class="f-muted" x="402" y="271" font-size="11" text-anchor="end">7</text>
+<rect class="f-s1" x="410" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s1" x="434" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s1" x="458" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s1" x="482" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s1" x="506" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s1" x="530" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s1" x="554" y="280" width="22" height="22" rx="3"/>
+<rect class="f-s1" x="578" y="280" width="22" height="22" rx="3"/>
+<text class="f-muted" x="402" y="295" font-size="11" text-anchor="end">8</text>
+<text class="f-muted" x="520" y="160" font-size="11" text-anchor="start">outlined: computed at earlier</text>
+<text class="f-muted" x="520" y="174" font-size="11" text-anchor="start">steps, keys and values kept</text>
+<text class="f-muted" x="24" y="334" font-size="11" text-anchor="start">For token t that is t(t + 1)/2 cells against t, in every layer. Over n tokens: about n³/6 cells against n²/2.</text>
+</svg>
