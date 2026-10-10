@@ -160,11 +160,11 @@ class Transformer(nn.Module):
     def num_params(self):
         return sum(p.numel() for p in self.parameters())
 
-    def forward(self, idx, targets=None, cache=None, mask=None):
+    def hidden(self, idx, cache=None, mask=None):
         """
-        idx and targets are (batch, seq) token ids. Returns the logits
-        (batch, seq, vocab) and, given targets, the mean cross-entropy loss.
-        Positions whose target is -100 do not count towards the loss.
+        Everything but the output layer: the final vector of every position,
+        (batch, seq, dim). Fine-tuning calls this directly, so that it can
+        apply the output layer only at the positions it trains on.
 
         With a cache (minllm/inference.py), idx holds only the tokens that
         come after the ones already cached. mask, if given, is boolean and
@@ -182,7 +182,15 @@ class Transformer(nn.Module):
         cos, sin = self.rope_cos[pos : pos + T], self.rope_sin[pos : pos + T]
         for i, layer in enumerate(self.layers):
             x = layer(x, cos, sin, mask, cache.layers[i] if cache is not None else None)
-        logits = self.lm_head(self.norm(x))
+        return self.norm(x)
+
+    def forward(self, idx, targets=None, cache=None, mask=None):
+        """
+        idx and targets are (batch, seq) token ids. Returns the logits
+        (batch, seq, vocab) and, given targets, the mean cross-entropy loss.
+        Positions whose target is -100 do not count towards the loss.
+        """
+        logits = self.lm_head(self.hidden(idx, cache, mask))
         if targets is None:
             return logits, None
         loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.reshape(-1), ignore_index=-100)
