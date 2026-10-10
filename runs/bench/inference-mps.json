@@ -1,0 +1,104 @@
+{
+ "device": "mps",
+ "parameters": 14162304,
+ "length": [
+  {
+   "batch": 1,
+   "new_tokens": 16,
+   "uncached_seconds": 0.035408973693847656,
+   "cached_seconds": 0.03420305252075195
+  },
+  {
+   "batch": 1,
+   "new_tokens": 32,
+   "uncached_seconds": 0.07205486297607422,
+   "cached_seconds": 0.07236719131469727
+  },
+  {
+   "batch": 1,
+   "new_tokens": 64,
+   "uncached_seconds": 0.1249079704284668,
+   "cached_seconds": 0.16126585006713867
+  },
+  {
+   "batch": 1,
+   "new_tokens": 128,
+   "uncached_seconds": 0.23235416412353516,
+   "cached_seconds": 0.3235132694244385
+  },
+  {
+   "batch": 1,
+   "new_tokens": 255,
+   "uncached_seconds": 0.5432500839233398,
+   "cached_seconds": 0.6347348690032959
+  },
+  {
+   "batch": 64,
+   "new_tokens": 16,
+   "uncached_seconds": 0.08004999160766602,
+   "cached_seconds": 0.07388997077941895
+  },
+  {
+   "batch": 64,
+   "new_tokens": 32,
+   "uncached_seconds": 0.2868690490722656,
+   "cached_seconds": 0.16248774528503418
+  },
+  {
+   "batch": 64,
+   "new_tokens": 64,
+   "uncached_seconds": 1.4089939594268799,
+   "cached_seconds": 0.28440093994140625
+  },
+  {
+   "batch": 64,
+   "new_tokens": 128,
+   "uncached_seconds": 5.334891080856323,
+   "cached_seconds": 0.57448410987854
+  },
+  {
+   "batch": 64,
+   "new_tokens": 255,
+   "uncached_seconds": 25.560606956481934,
+   "cached_seconds": 1.5643680095672607
+  }
+ ],
+ "batch": [
+  {
+   "batch": 1,
+   "new_tokens": 200,
+   "seconds": 0.4338672161102295,
+   "tokens_per_second": 460.97052870938154
+  },
+  {
+   "batch": 4,
+   "new_tokens": 200,
+   "seconds": 0.4571514129638672,
+   "tokens_per_second": 1749.9672478606803
+  },
+  {
+   "batch": 16,
+   "new_tokens": 200,
+   "seconds": 0.5709433555603027,
+   "tokens_per_second": 5604.7591566410965
+  },
+  {
+   "batch": 64,
+   "new_tokens": 200,
+   "seconds": 0.8536117076873779,
+   "tokens_per_second": 14995.108296579036
+  },
+  {
+   "batch": 256,
+   "new_tokens": 200,
+   "seconds": 2.671698808670044,
+   "tokens_per_second": 19163.836819423166
+  },
+  {
+   "batch": 1024,
+   "new_tokens": 200,
+   "seconds": 9.286303997039795,
+   "tokens_per_second": 22053.98402478363
+  }
+ ]
+}
