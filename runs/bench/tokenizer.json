@@ -1,0 +1,47 @@
+{
+ "train_megabytes": 64,
+ "sizes": [
+  {
+   "vocab_size": 512,
+   "train_seconds": 4.098329067230225,
+   "bytes_per_token": 2.4199639356911975,
+   "last_merge": " star",
+   "last_merge_count": 30653
+  },
+  {
+   "vocab_size": 1024,
+   "train_seconds": 4.632617950439453,
+   "bytes_per_token": 3.206897707363,
+   "last_merge": " wo",
+   "last_merge_count": 5845
+  },
+  {
+   "vocab_size": 2048,
+   "train_seconds": 5.235528945922852,
+   "bytes_per_token": 3.7297959997643186,
+   "last_merge": "irthday",
+   "last_merge_count": 1334
+  },
+  {
+   "vocab_size": 4096,
+   "train_seconds": 7.554033994674683,
+   "bytes_per_token": 4.043918772825732,
+   "last_merge": " film",
+   "last_merge_count": 358
+  },
+  {
+   "vocab_size": 8192,
+   "train_seconds": 7.218973159790039,
+   "bytes_per_token": 4.177162052960501,
+   "last_merge": " months",
+   "last_merge_count": 30
+  },
+  {
+   "vocab_size": 16384,
+   "train_seconds": 10.326619863510132,
+   "bytes_per_token": 4.197197077730651,
+   "last_merge": " punctual",
+   "last_merge_count": 3
+  }
+ ]
+}
