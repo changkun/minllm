@@ -5,7 +5,8 @@ Draw the figures of the notes into docs/figures/, from the logs in runs/.
 
 The figures are SVG, written out by hand. Drawing them needs no plotting
 library, they stay sharp at any size, and they follow the reader's light or
-dark theme. Every chart reads its numbers from a file in runs/.
+dark theme. Every chart reads its numbers from a file in runs/; the diagrams
+are drawn from constants.
 """
 
 import argparse
@@ -311,12 +312,12 @@ def pretraining_loss():
     fig.save("pretraining-loss")
 
 
-def pretraining_speed():
-    bench = load("runs/bench/train-mps.json")
+def speed_bars(source, name, title, where):
+    bench = load(source)
     configs = bench["configs"]
-    fig = Figure(720, 232, "Two switches make a training step about four times faster", f"Tokens per second on an M5 Pro: forward, backward and optimizer step, {bench['batch_size']} × {bench['seq_len']} tokens.")
+    fig = Figure(720, 232, title, f"Tokens per second {where}: forward, backward and optimizer step, {bench['batch_size']} × {bench['seq_len']} tokens.")
     top, row, bar = 78, 34, 18
-    left, width = 214, 420
+    left, width = 214, 380
     peak = max(c["tokens_per_second"] for c in configs)
     slowest = min(c["tokens_per_second"] for c in configs)
     fig.line(left, top - 4, left, top + row * len(configs) - 8, stroke="axis")
@@ -325,12 +326,14 @@ def pretraining_speed():
         fig.text(left - 10, y + bar / 2 + 4, c["name"], anchor="end", fill="ink")
         # Square at the baseline, rounded at the end that carries the value.
         fig.path(f"M{left} {y} H{n(left + w - 4)} a4 4 0 0 1 4 4 V{y + bar - 4} a4 4 0 0 1 -4 4 H{left} Z", fill="s1")
-        value = f"{c['tokens_per_second'] / 1000:.0f}K"
+        k = c["tokens_per_second"] / 1000
+        value = f"{k:.0f}K" if k >= 10 else f"{k:.1f}K"
         fig.text(left + w + 8, y + bar / 2 + 4, value, fill="ink")
-        if c["tokens_per_second"] > slowest:
-            ratio = f"{c['tokens_per_second'] / slowest:.1f}×"
-            fig.text(left + w + 16 + text_width(value, 12), y + bar / 2 + 4, ratio, fill="muted")
-    fig.save("pretraining-speed")
+        notes = [f"{c['tokens_per_second'] / slowest:.1f}×"] if c["tokens_per_second"] > slowest else []
+        if bench.get("model") == "qwen" and c.get("memory_gb"):
+            notes.append(f"{c['memory_gb']:.0f} GB")
+        fig.text(left + w + 16 + text_width(value, 12), y + bar / 2 + 4, " · ".join(notes), fill="muted")
+    fig.save(name)
 
 
 # ------------------------------------------------------------------ 4 inference
@@ -403,6 +406,66 @@ def inference_batch():
     fig.save("inference-batch")
 
 
+# ----------------------------------------------------------------- 5 pretrained
+
+
+def pretrained_files():
+    fig = Figure(720, 372, "A published model is three files", "Qwen2.5-0.5B-Instruct, and what each file becomes in this repository.")
+    rows = [
+        ("config.json", "659 bytes", "Config", "24 layers · dim 896 · 14 heads on 2 key/value heads"),
+        ("model.safetensors", "988 MB", "the weights of Transformer", "290 tensors · 494,032,768 numbers · names translated"),
+        ("vocab.json, merges.txt", "4.4 MB", "Tokenizer", "151,643 tokens from 151,387 merges · 22 special tokens"),
+    ]
+    for i, (file, size, target, note) in enumerate(rows):
+        y = 74 + i * 58
+        fig.box(24, y, 220, 44, file, size)
+        fig.arrow([(244, y + 22), (286, y + 22)])
+        fig.box(288, y, 408, 44, target, note, fill="s1", opacity=0.1)
+
+    y = 286
+    fig.text(24, y - 14, "Inside model.safetensors", fill="ink", weight=600)
+    for x, w, title, note, fill in [
+        (24, 94, "8 bytes", "the number n", None),
+        (120, 212, "n = 32,280 bytes of JSON", "name → dtype, shape, byte range", None),
+        (334, 362, "988 MB of raw numbers", "the tensors, one after another, in bfloat16", "s1"),
+    ]:
+        fig.box(x, y, w - 2, 44, title, note, fill=fill or "surface", opacity=0.1 if fill else None)
+    fig.text(24, y + 68, '"model.layers.0.self_attn.q_proj.weight": {"dtype": "BF16", "shape": [896, 896], "data_offsets": [300258816, 301864448]}', size=10, fill="muted")
+    fig.save("pretrained-files")
+
+
+def pretrained_generation():
+    bench = load("runs/bench/inference-qwen-mps.json")
+    fig = Figure(720, 330, "Generating with the 0.5B model", "Qwen2.5-0.5B-Instruct on the GPU with 16-bit weights. All scales are logarithmic.")
+    fig.legend(64, 78, [("s1", "1 sequence", "line"), ("s2", "16 sequences", "line")])
+
+    left = Axes(fig, 64, 124, 270, 130, (22, 3000), (0.3, 40), xlog=True, ylog=True)
+    left.title("Speedup from the cache, 48 new tokens")
+    left.yticks([1, 3, 10, 30], lambda t: f"{t}×")
+    left.xticks([32, 512, 2048], lambda t: f"{t:,}", "tokens in the prompt")
+    for batch, color in [(1, "s1"), (16, "s2")]:
+        rows = [r for r in bench["length"] if r["batch"] == batch]
+        xs = [r["prompt_tokens"] for r in rows]
+        ys = [r["uncached_seconds"] / r["cached_seconds"] for r in rows]
+        left.line(xs, ys, color)
+        left.dots(xs, ys, color)
+        left.label(xs[0], ys[0], f"{ys[0]:.1f}×", dx=10, dy=4 if batch == 16 else 16)
+        left.label(xs[-1], ys[-1], f"{ys[-1]:.0f}×", dx=0, dy=-12, anchor="middle", fill="ink")
+
+    rows = bench["batch"]
+    xs, ys = [r["batch"] for r in rows], [r["tokens_per_second"] for r in rows]
+    right = Axes(fig, 420, 124, 270, 130, (0.75, 180), (50, 6000), xlog=True, ylog=True)
+    right.title("Tokens per second, with the cache")
+    right.yticks([100, 300, 1000, 3000], thousands)
+    right.xticks(xs, str, "sequences in the batch")
+    right.line(xs, ys, "s1")
+    right.dots(xs, ys, "s1")
+    for i, (x, y) in enumerate(zip(xs, ys)):
+        below = i == len(xs) - 2  # the last two points sit close together
+        right.label(x, y, f"{y:,.0f}", dx=0, dy=20 if below else -12, anchor="middle")
+    fig.save("pretrained-generation")
+
+
 # ---------------------------------------------------------------------- readme
 
 
@@ -431,8 +494,11 @@ tokenizer_vocab()
 model_architecture()
 model_attention()
 pretraining_loss()
-pretraining_speed()
+speed_bars("runs/bench/train-mps.json", "pretraining-speed", "Two switches make a training step about four times faster", "on an M5 Pro")
 inference_work()
 inference_cache()
 inference_batch()
-pipeline(done={1, 2, 3, 4})
+pretrained_files()
+pretrained_generation()
+speed_bars("runs/bench/train-qwen-mps.json", "pretrained-speed", "Training steps of the 0.5B model", "and memory in use")
+pipeline(done={1, 2, 3, 4, 5})
