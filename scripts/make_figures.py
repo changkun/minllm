@@ -1,0 +1,438 @@
+"""
+Draw the figures of the notes into docs/figures/, from the logs in runs/.
+
+    uv run scripts/make_figures.py
+
+The figures are SVG, written out by hand. Drawing them needs no plotting
+library, they stay sharp at any size, and they follow the reader's light or
+dark theme. Every chart reads its numbers from a file in runs/.
+"""
+
+import argparse
+import json
+import math
+import os
+from html import escape
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--out", default="docs/figures")
+parser.add_argument("--dark", action="store_true", help="draw the dark theme unconditionally, to preview it")
+args = parser.parse_args()
+
+# Colors by role: the surface, three inks, the grid, and the series hues in a
+# fixed order. Each has a light and a dark value.
+LIGHT = dict(surface="#fcfcfb", ink="#0b0b0b", ink2="#52514e", muted="#898781", grid="#e1e0d9", axis="#c3c2b7")
+LIGHT |= dict(s1="#2a78d6", s2="#eb6834", s3="#1baf7a")
+DARK = dict(surface="#1a1a19", ink="#f0efec", ink2="#c3c2b7", muted="#898781", grid="#2c2c2a", axis="#383835")
+DARK |= dict(s1="#3987e5", s2="#d95926", s3="#199e70")
+
+
+def stylesheet():
+    rules = lambda colors: "".join(f".f-{k}{{fill:{v}}}.s-{k}{{stroke:{v}}}" for k, v in colors.items())
+    font = "text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}"
+    if args.dark:
+        return font + rules(DARK)
+    return font + rules(LIGHT) + "@media(prefers-color-scheme:dark){" + rules(DARK) + "}"
+
+
+def n(value):
+    """A coordinate, written compactly."""
+    return f"{value:.1f}".rstrip("0").rstrip(".")
+
+
+def text_width(s, size):
+    return len(s) * size * 0.56  # close enough for a system sans
+
+
+class Figure:
+    def __init__(self, width, height, title, subtitle=""):
+        self.width, self.height, self.title, self.subtitle = width, height, title, subtitle
+        self.parts = []
+        self.rect(0.5, 0.5, width - 1, height - 1, fill="surface", stroke="grid", rx=8)
+        self.text(24, 31, title, size=14, weight=600, fill="ink")
+        if subtitle:
+            self.text(24, 50, subtitle, fill="ink2")
+
+    def rect(self, x, y, w, h, fill=None, stroke=None, rx=0, opacity=None, width=1):
+        cls = f"f-{fill}" if fill else ""
+        cls += f" s-{stroke}" if stroke else ""
+        extra = "" if fill else ' fill="none"'
+        extra += f' stroke-width="{width}"' if stroke else ""
+        extra += f' fill-opacity="{opacity}"' if opacity is not None else ""
+        self.parts.append(f'<rect class="{cls}" x="{n(x)}" y="{n(y)}" width="{n(w)}" height="{n(h)}" rx="{rx}"{extra}/>')
+
+    def line(self, x1, y1, x2, y2, stroke="grid", width=1):
+        self.parts.append(
+            f'<line class="s-{stroke}" x1="{n(x1)}" y1="{n(y1)}" x2="{n(x2)}" y2="{n(y2)}" stroke-width="{width}" stroke-linecap="round"/>'
+        )
+
+    def path(self, d, stroke=None, fill=None, width=2, opacity=None):
+        cls = (f"s-{stroke} " if stroke else "") + (f"f-{fill}" if fill else "")
+        extra = "" if fill else ' fill="none"'
+        extra += f' stroke-width="{width}" stroke-linejoin="round" stroke-linecap="round"' if stroke else ""
+        extra += f' fill-opacity="{opacity}"' if opacity is not None else ""
+        self.parts.append(f'<path class="{cls}" d="{d}"{extra}/>')
+
+    def polyline(self, points, stroke, width=2):
+        self.path("M" + " L".join(f"{n(x)} {n(y)}" for x, y in points), stroke=stroke, width=width)
+
+    def dot(self, x, y, fill, r=4):
+        # The ring in the surface color keeps a dot legible where it crosses a line.
+        self.parts.append(f'<circle class="f-{fill} s-surface" cx="{n(x)}" cy="{n(y)}" r="{r}" stroke-width="2"/>')
+
+    def text(self, x, y, s, size=12, fill="ink2", anchor="start", weight=400, rotate=None):
+        extra = f' transform="rotate({rotate} {n(x)} {n(y)})"' if rotate else ""
+        extra += f' font-weight="{weight}"' if weight != 400 else ""
+        self.parts.append(
+            f'<text class="f-{fill}" x="{n(x)}" y="{n(y)}" font-size="{size}" text-anchor="{anchor}"{extra}>{escape(s)}</text>'
+        )
+
+    def arrow(self, points, stroke="muted"):
+        """A polyline that ends in an arrowhead."""
+        self.polyline(points, stroke, width=1.5)
+        (x0, y0), (x1, y1) = points[-2], points[-1]
+        a = math.atan2(y1 - y0, x1 - x0)
+        wing = lambda da: (x1 - 7 * math.cos(a + da), y1 - 7 * math.sin(a + da))
+        (ax, ay), (bx, by) = wing(0.45), wing(-0.45)
+        self.path(f"M{n(ax)} {n(ay)} L{n(x1)} {n(y1)} L{n(bx)} {n(by)}", stroke=stroke, width=1.5)
+
+    def box(self, x, y, w, h, title, note="", fill="surface", opacity=None, stroke="axis"):
+        """A labeled box for diagrams."""
+        self.rect(x, y, w, h, fill=fill, stroke=stroke, rx=6, opacity=opacity)
+        if note:
+            self.text(x + w / 2, y + h / 2 - 3, title, fill="ink", anchor="middle", weight=600)
+            self.text(x + w / 2, y + h / 2 + 13, note, size=11, anchor="middle")
+        else:
+            self.text(x + w / 2, y + h / 2 + 4, title, fill="ink", anchor="middle", weight=600)
+
+    def legend(self, x, y, entries):
+        """A row of keys: [(color, label, "line" or "dot"), ...]."""
+        for color, label, kind in entries:
+            if kind == "line":
+                self.line(x, y - 4, x + 16, y - 4, stroke=color, width=2)
+            else:
+                self.dot(x + 8, y - 4, color)
+            self.text(x + 22, y, label)
+            x += 22 + text_width(label, 12) + 18
+
+    def save(self, name):
+        os.makedirs(args.out, exist_ok=True)
+        head = (
+            f'<svg xmlns="http://www.w3.org/2000/svg" width="{self.width}" height="{self.height}" '
+            f'viewBox="0 0 {self.width} {self.height}" role="img">'
+            f"<title>{escape(self.title)}</title><desc>{escape(self.subtitle)}</desc><style>{stylesheet()}</style>"
+        )
+        with open(f"{args.out}/{name}.svg", "w") as f:
+            f.write(head + "\n" + "\n".join(self.parts) + "\n</svg>\n")
+        print(f"{args.out}/{name}.svg")
+
+
+class Axes:
+    """A plot area inside a figure, with a linear or logarithmic scale per axis."""
+
+    def __init__(self, fig, left, top, width, height, xlim, ylim, xlog=False, ylog=False):
+        self.fig, self.left, self.top, self.width, self.height = fig, left, top, width, height
+        self.xlim, self.ylim, self.xlog, self.ylog = xlim, ylim, xlog, ylog
+
+    @staticmethod
+    def _scale(v, lim, log):
+        if log:
+            return (math.log(v) - math.log(lim[0])) / (math.log(lim[1]) - math.log(lim[0]))
+        return (v - lim[0]) / (lim[1] - lim[0])
+
+    def x(self, v):
+        return self.left + self.width * self._scale(v, self.xlim, self.xlog)
+
+    def y(self, v):
+        return self.top + self.height * (1 - self._scale(v, self.ylim, self.ylog))
+
+    def yticks(self, ticks, fmt=str):
+        for t in ticks:
+            self.fig.line(self.left, self.y(t), self.left + self.width, self.y(t))
+            self.fig.text(self.left - 8, self.y(t) + 4, fmt(t), size=11, fill="muted", anchor="end")
+
+    def xticks(self, ticks, fmt=str, title=""):
+        bottom = self.top + self.height
+        self.fig.line(self.left, bottom, self.left + self.width, bottom, stroke="axis")
+        for t in ticks:
+            self.fig.line(self.x(t), bottom, self.x(t), bottom + 4, stroke="axis")
+            self.fig.text(self.x(t), bottom + 17, fmt(t), size=11, fill="muted", anchor="middle")
+        if title:
+            self.fig.text(self.left + self.width / 2, bottom + 36, title, size=11, fill="muted", anchor="middle")
+
+    def title(self, s):
+        self.fig.text(self.left, self.top - 12, s, fill="ink", weight=600)
+
+    def line(self, xs, ys, color, width=2):
+        self.fig.polyline([(self.x(a), self.y(b)) for a, b in zip(xs, ys)], color, width)
+
+    def dots(self, xs, ys, color, r=4):
+        for a, b in zip(xs, ys):
+            self.fig.dot(self.x(a), self.y(b), color, r)
+
+    def label(self, x, y, s, dx=8, dy=4, anchor="start", fill="ink2"):
+        self.fig.text(self.x(x) + dx, self.y(y) + dy, s, anchor=anchor, fill=fill)
+
+
+def thousands(v):
+    return f"{v / 1000:g}K" if v >= 1000 else f"{v:g}"
+
+
+def load(path):
+    with open(path) as f:
+        return json.load(f)
+
+
+# ------------------------------------------------------------------ 1 tokenizer
+
+
+def tokenizer_vocab():
+    sizes = load("runs/bench/tokenizer.json")["sizes"]
+    vocab = [s["vocab_size"] for s in sizes]
+    fig = Figure(720, 330, "What a larger vocabulary buys, and what it costs", "Tokenizers trained on the same 64 MB of TinyStories. The model here uses 4,096 tokens.")
+    chosen = vocab.index(4096)
+
+    left = Axes(fig, 64, 108, 270, 150, (400, 21000), (2, 4.5), xlog=True)
+    left.title("Bytes per token, held-out stories")
+    left.yticks([2, 3, 4], str)
+    left.xticks(vocab, lambda t: f"{t:,}", "vocabulary size")
+    ys = [s["bytes_per_token"] for s in sizes]
+    left.line(vocab, ys, "s1")
+    left.dots(vocab, ys, "s1")
+    left.label(vocab[chosen], ys[chosen], f"{ys[chosen]:.2f}", dx=0, dy=-12, anchor="middle", fill="ink")
+    left.label(vocab[0], ys[0], f"{ys[0]:.2f}", dx=10, dy=4)
+    left.label(vocab[-1], ys[-1], f"{ys[-1]:.2f}", dx=0, dy=-12, anchor="middle")
+
+    right = Axes(fig, 420, 108, 270, 150, (400, 21000), (1, 100000), xlog=True, ylog=True)
+    right.title("Occurrences of the rarest token in training")
+    right.yticks([1, 10, 100, 1000, 10000, 100000], lambda t: f"{t:,}")
+    right.xticks(vocab, lambda t: f"{t:,}", "vocabulary size")
+    ys = [s["last_merge_count"] for s in sizes]
+    right.line(vocab, ys, "s1")
+    right.dots(vocab, ys, "s1")
+    right.label(vocab[chosen], ys[chosen], f"{ys[chosen]:,}", dx=10, dy=-6, fill="ink")
+    right.label(vocab[0], ys[0], f"{ys[0]:,}", dx=10, dy=4)
+    right.label(vocab[-1], ys[-1], f"{ys[-1]:,}", dx=10, dy=4)
+    fig.save("tokenizer-vocab")
+
+
+# ---------------------------------------------------------------------- 2 model
+
+
+def model_architecture():
+    fig = Figure(720, 520, "The model", "Every block reads the residual stream, computes, and adds its result back.")
+    sx = 150  # the residual stream runs down this x
+
+    fig.text(sx, 84, "token ids  (B, T)", anchor="middle")
+    fig.arrow([(sx, 92), (sx, 108)])
+    fig.box(sx - 70, 110, 140, 36, "Embedding")
+    fig.line(sx, 146, sx, 420, stroke="s1", width=3)
+    fig.text(sx - 14, 170, "residual stream", anchor="end", size=11, fill="muted")
+    fig.text(sx - 14, 184, "(B, T, dim)", anchor="end", size=11, fill="muted")
+
+    fig.rect(40, 196, 652, 196, stroke="grid", rx=10)
+    fig.text(692, 188, "Block, repeated 8 times", anchor="end", size=11, fill="muted")
+
+    def sublayer(y, title, note, role):
+        # Branch off the stream, through the norm and the sublayer, and back in.
+        fig.arrow([(sx, y), (232, y)])
+        fig.box(234, y - 18, 96, 36, "RMSNorm")
+        fig.arrow([(330, y), (368, y)])
+        fig.box(370, y - 24, 232, 48, title, note, fill="s1", opacity=0.1)
+        fig.arrow([(602, y), (650, y), (650, y + 52), (sx + 13, y + 52)])
+        fig.parts.append(f'<circle class="f-surface s-s1" cx="{sx}" cy="{y + 52}" r="11" stroke-width="2"/>')
+        fig.text(sx, y + 57, "+", anchor="middle", fill="ink", size=15, weight=600)
+        fig.text(370, y + 41, role, size=11, fill="muted")
+
+    sublayer(238, "Attention", "RoPE · causal mask · grouped-query", "tokens exchange information")
+    sublayer(322, "MLP", "SwiGLU: down(silu(gate(x)) · up(x))", "each token is processed alone")
+
+    fig.arrow([(sx, 420), (sx, 428)])
+    fig.box(sx - 70, 430, 140, 32, "RMSNorm")
+    fig.arrow([(sx + 70, 446), (268, 446)])
+    fig.box(270, 430, 300, 32, "Output layer  ·  the embedding matrix again")
+    fig.arrow([(570, 446), (598, 446)])
+    fig.text(604, 442, "logits", fill="ink", weight=600)
+    fig.text(604, 457, "(B, T, vocab)", size=11)
+    fig.text(24, 496, "B sequences of T tokens. The numbers are those of the default configuration: dim 384, vocabulary 4,096.", size=11, fill="muted")
+    fig.save("model-architecture")
+
+
+def model_attention():
+    data = load("runs/base/attention.json")
+    tokens = ["<eot>" if t == "<|endoftext|>" else t.strip() or t for t in data["tokens"]]
+    T, cell = len(tokens), 11
+    fig = Figure(720, 446, "Two attention heads of the trained model", "Each row is a token, and the color shows how much it reads from each token before it. Stronger is more.")
+    notes = {
+        (1, 2): "“She” and “her” look back to “Lily” and “girl”",
+        (5, 5): "Tokens tend to look at the one just before",
+    }
+    for i, head in enumerate(data["heads"]):
+        left, top = 84 + i * 340, 104
+        fig.text(left, top - 26, f"Layer {head['layer']}, head {head['head']}", fill="ink", weight=600)
+        fig.text(left, top - 10, notes.get((head["layer"], head["head"]), ""), size=11)
+        for r in range(T):
+            fig.text(left - 6, top + r * cell + 9, tokens[r], size=9, fill="muted", anchor="end")
+            fig.text(left + r * cell + 8, top + T * cell + 6, tokens[r], size=9, fill="muted", anchor="end", rotate=-90)
+            for c in range(r + 1):
+                # One hue; the weight sets how far the cell stands out from the surface.
+                fig.rect(left + c * cell, top + r * cell, cell - 1, cell - 1, fill="grid", opacity=0.6)
+                weight = head["weights"][r][c]
+                if weight >= 0.02:
+                    fig.rect(left + c * cell, top + r * cell, cell - 1, cell - 1, fill="s1", opacity=round(weight, 2))
+    fig.text(24, 428, "The upper right is empty: a token cannot attend to the tokens after it. Head numbers count from zero.", size=11, fill="muted")
+    fig.save("model-attention")
+
+
+# ---------------------------------------------------------------- 3 pretraining
+
+
+def pretraining_loss():
+    log = [json.loads(line) for line in open("runs/base/log.jsonl")]
+    train = [(r["step"], r["train_loss"]) for r in log if "train_loss" in r]
+    valid = [(r["step"], r["val_loss"]) for r in log if "val_loss" in r]
+    rates = [(r["step"], r["lr"]) for r in log if "lr" in r]
+    steps = max(s for s, _ in valid)
+    fig = Figure(720, 470, "The reference run", "Loss on a logarithmic scale. The first 500 steps do most of the work, and the rest is slow and matters.")
+    fig.legend(24, 76, [("s1", "training loss, mean of 50 steps", "line"), ("s2", "validation loss, every 500 steps", "dot")])
+
+    ax = Axes(fig, 64, 96, 600, 220, (0, steps), (1.3, 9), ylog=True)
+    ax.yticks([1.5, 2, 3, 4, 6, 8], lambda t: f"{t:g}")
+    ax.line(*zip(*train), "s1")
+    ax.dots(*zip(*valid), "s2")
+    ax.label(valid[0][0], valid[0][1], f"{valid[0][1]:.2f}, a uniform guess over 4,096 tokens", dx=12)
+    ax.label(valid[-1][0], valid[-1][1], f"{valid[-1][1]:.3f}", dx=-4, dy=-12, anchor="end", fill="ink")
+
+    lr = Axes(fig, 64, 352, 600, 60, (0, steps), (0, 0.00105))
+    lr.title("Learning rate")
+    lr.yticks([0, 0.001], lambda t: f"{t:g}")
+    lr.xticks(range(0, steps + 1, 1000), lambda t: f"{t:,}", "training step")
+    lr.line(*zip(*rates), "s1")
+    fig.save("pretraining-loss")
+
+
+def pretraining_speed():
+    bench = load("runs/bench/train-mps.json")
+    configs = bench["configs"]
+    fig = Figure(720, 232, "Two switches make a training step about four times faster", f"Tokens per second on an M5 Pro: forward, backward and optimizer step, {bench['batch_size']} × {bench['seq_len']} tokens.")
+    top, row, bar = 78, 34, 18
+    left, width = 214, 420
+    peak = max(c["tokens_per_second"] for c in configs)
+    slowest = min(c["tokens_per_second"] for c in configs)
+    fig.line(left, top - 4, left, top + row * len(configs) - 8, stroke="axis")
+    for i, c in enumerate(configs):
+        y, w = top + i * row, width * c["tokens_per_second"] / peak
+        fig.text(left - 10, y + bar / 2 + 4, c["name"], anchor="end", fill="ink")
+        # Square at the baseline, rounded at the end that carries the value.
+        fig.path(f"M{left} {y} H{n(left + w - 4)} a4 4 0 0 1 4 4 V{y + bar - 4} a4 4 0 0 1 -4 4 H{left} Z", fill="s1")
+        value = f"{c['tokens_per_second'] / 1000:.0f}K"
+        fig.text(left + w + 8, y + bar / 2 + 4, value, fill="ink")
+        if c["tokens_per_second"] > slowest:
+            ratio = f"{c['tokens_per_second'] / slowest:.1f}×"
+            fig.text(left + w + 16 + text_width(value, 12), y + bar / 2 + 4, ratio, fill="muted")
+    fig.save("pretraining-speed")
+
+
+# ------------------------------------------------------------------ 4 inference
+
+
+def inference_work():
+    fig = Figure(720, 352, "What generating the eighth token costs", "Each cell is one query reading one key. Rows are tokens, columns are the tokens they attend to.")
+    T, cell = 8, 24
+
+    def triangle(left, top, title, note, color, cached):
+        fig.text(left, top - 30, title, fill="ink", weight=600)
+        fig.text(left, top - 13, note, size=11)
+        for r in range(T):
+            for c in range(r + 1):
+                x, y = left + c * cell, top + r * cell
+                if cached and r < T - 1:
+                    fig.rect(x + 0.5, y + 0.5, cell - 3, cell - 3, stroke="axis", rx=3)
+                else:
+                    fig.rect(x, y, cell - 2, cell - 2, fill=color, rx=3)
+            fig.text(left - 8, top + r * cell + 15, str(r + 1), size=11, fill="muted", anchor="end")
+
+    triangle(70, 112, "Without a cache", "all 8 rows are computed again: 36 cells", "s2", cached=False)
+    triangle(410, 112, "With a cache", "only the new row is computed: 8 cells", "s1", cached=True)
+    fig.text(410 + 4 * cell + 14, 112 + 2 * cell, "outlined: computed at earlier", size=11, fill="muted")
+    fig.text(410 + 4 * cell + 14, 112 + 2 * cell + 14, "steps, keys and values kept", size=11, fill="muted")
+    fig.text(24, 334, "For token t that is t(t + 1)/2 cells against t, in every layer. Over n tokens: about n³/6 cells against n²/2.", size=11, fill="muted")
+    fig.save("inference-work")
+
+
+def inference_cache():
+    mps = load("runs/bench/inference-mps.json")["length"]
+    cpu = load("runs/bench/inference-cpu.json")["length"]
+    panels = [
+        ("GPU, 1 sequence", [r for r in mps if r["batch"] == 1]),
+        ("GPU, 64 sequences", [r for r in mps if r["batch"] == 64]),
+        ("CPU, 1 sequence", [r for r in cpu if r["batch"] == 1]),
+    ]
+    fig = Figure(720, 330, "When the cache pays", "Seconds to generate with the 14M model. Each panel has its own scale.")
+    fig.legend(24, 76, [("s2", "without a cache", "line"), ("s1", "with a cache", "line")])
+    for i, (title, rows) in enumerate(panels):
+        xs = [r["new_tokens"] for r in rows]
+        slow, fast = [r["uncached_seconds"] for r in rows], [r["cached_seconds"] for r in rows]
+        top = max(slow + fast)
+        step = next(s for s in [0.2, 0.5, 1, 2, 5, 10, 20] if top / s <= 4)
+        ax = Axes(fig, 56 + i * 226, 124, 170, 130, (0, 262), (0, step * math.ceil(top / step)))
+        ax.title(title)
+        ax.yticks([step * k for k in range(math.ceil(top / step) + 1)], lambda t: f"{t:g}")
+        ax.xticks([0, 64, 128, 255], str, "tokens generated")
+        ax.line(xs, slow, "s2")
+        ax.line(xs, fast, "s1")
+        ax.dots(xs[-1:], slow[-1:], "s2")
+        ax.dots(xs[-1:], fast[-1:], "s1")
+        ratio = slow[-1] / fast[-1]
+        note = f"{ratio:.0f}× faster" if ratio >= 1.5 else "no gain"
+        ax.label(xs[-1], max(slow[-1], fast[-1]), note, dx=-10, dy=-10, anchor="end", fill="ink")
+    fig.save("inference-cache")
+
+
+def inference_batch():
+    rows = load("runs/bench/inference-mps.json")["batch"]
+    xs, ys = [r["batch"] for r in rows], [r["tokens_per_second"] for r in rows]
+    fig = Figure(720, 300, "Generating many sequences at once", "Tokens per second on the GPU, with a cache, 200 tokens per sequence. Both scales are logarithmic.")
+    ax = Axes(fig, 72, 84, 580, 150, (0.75, 1400), (300, 40000), xlog=True, ylog=True)
+    ax.yticks([300, 1000, 3000, 10000, 30000], thousands)
+    ax.xticks(xs, lambda t: f"{t:,}", "sequences in the batch")
+    ax.line(xs, ys, "s1")
+    ax.dots(xs, ys, "s1")
+    for x, y in zip(xs, ys):
+        ax.label(x, y, f"{y:,.0f}", dx=0, dy=-12, anchor="middle")
+    fig.save("inference-batch")
+
+
+# ---------------------------------------------------------------------- readme
+
+
+def pipeline(done):
+    fig = Figure(720, 250, "The pipeline", "Ten stages, each with a note, code and tests. Filled stages are built.")
+    rows = [
+        ("From scratch: a 14M model, trained here", [(1, "Tokenizer"), (2, "Model"), (3, "Pretraining"), (4, "Inference")]),
+        ("Post-training: that model, and an open 0.5B one", [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
+    ]
+    for r, (label, stages) in enumerate(rows):
+        y = 94 + r * 82
+        fig.text(24, y - 12, label, size=11, fill="muted")
+        w, gap = 98, 16
+        for i, (number, name) in enumerate(stages):
+            x = 24 + i * (w + gap)
+            built = number in done
+            fig.rect(x, y, w, 40, fill="s1" if built else "surface", stroke="s1" if built else "axis", rx=6, opacity=0.12 if built else None)
+            fig.text(x + 12, y + 25, str(number), fill="muted", size=11)
+            fig.text(x + 12 + (16 if number >= 10 else 12), y + 25, name, fill="ink", weight=600 if built else 400)
+            if i:
+                fig.arrow([(x - gap + 2, y + 20), (x - 2, y + 20)])
+    fig.save("pipeline")
+
+
+tokenizer_vocab()
+model_architecture()
+model_attention()
+pretraining_loss()
+pretraining_speed()
+inference_work()
+inference_cache()
+inference_batch()
+pipeline(done={1, 2, 3, 4})
