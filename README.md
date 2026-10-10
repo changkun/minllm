@@ -26,8 +26,8 @@ that check what the note claims.
 | 2 | [Model](docs/02-model.md) | Decoder-only transformer with RMSNorm, RoPE, SwiGLU and grouped-query attention | done |
 | 3 | [Pretraining](docs/03-pretraining.md) | Data pipeline, AdamW, learning rate schedule, checkpoints: a model that writes stories | done |
 | 4 | [Inference](docs/04-inference.md) | KV cache, sampling strategies, batches of unequal prompts, stop conditions | done |
-| 5 | Pretrained weights | Load an open 0.5B model into the same model code and match its reference outputs | next |
-| 6 | Fine-tuning | Chat format, loss masking, full fine-tuning and LoRA | planned |
+| 5 | [Pretrained weights](docs/05-pretrained.md) | Qwen2.5-0.5B-Instruct loaded into the same model code: a safetensors reader, its tokenizer, the chat format, and tests against the reference implementation | done |
+| 6 | Fine-tuning | Loss masking, full fine-tuning and LoRA | next |
 | 7 | Evaluation | Batched generation over a task, scoring, and comparing two models | planned |
 | 8 | RLHF | Preference data, a reward model trained on pairwise comparisons, and three ways to use it: rejection sampling, policy gradients with a KL penalty (PPO), and DPO, which skips the reward model | planned |
 | 9 | RLVR | The reward model replaced by a program that checks the answer: rollouts, verifiers, policy-gradient updates with GRPO | planned |
@@ -47,11 +47,16 @@ uv run scripts/train_tokenizer.py    # stage 1, 5 seconds
 uv run scripts/encode_data.py        # text to token ids, 35 seconds
 uv run scripts/train.py              # stage 3, 20 minutes
 uv run scripts/sample.py             # read what it writes
+
+uv run scripts/download_qwen.py      # stage 5: an open 0.5B model, 1 GB
+uv run scripts/chat.py               # talk to it, on this repository's model code
 ```
 
 Timings are from a MacBook Pro with an M5 Pro and 64 GB of memory, using the
 Apple GPU. The code picks an NVIDIA GPU, the Apple GPU or the CPU, in that
-order; set `MINLLM_DEVICE=cpu` to override. CUDA has not been tested yet.
+order; set `MINLLM_DEVICE=cpu` to override. CUDA has not been tested yet. On
+an Apple GPU the process is capped at half of the recommended memory, so that
+a batch that is too large fails instead of swapping the machine.
 
 ## Two models
 
@@ -64,14 +69,13 @@ minutes of training it writes fluent children's stories. It carries stages 1
 to 4 and stays the testbed afterwards: each post-training method is tried on
 it first, where an experiment takes minutes.
 
-The second is an open pretrained model of about 0.5B parameters from the Qwen
-family, loaded into the same code from stage 5 on. Post-training on a real
+The second is Qwen2.5-0.5B-Instruct, an open pretrained model with 494M
+parameters, loaded into the same code from stage 5 on. Post-training on a real
 task needs a model that already knows something: RLVR improves a model on a
 task it sometimes gets right, and a model trained on a laptop from children's
-stories does not solve arithmetic word problems at any rate worth reinforcing.
-A 0.5B model gets a meaningful share of them right, and at that size sampling
-and gradient steps should both still be practical on a laptop, which stage 5
-will measure.
+stories does not do arithmetic at any rate worth reinforcing. The 0.5B model
+gets some of it right. On the laptop it generates 3,100 tokens per second in
+a batch and trains at 4,000, which is enough for the stages that follow.
 
 ## Layout
 
