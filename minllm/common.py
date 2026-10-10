@@ -8,13 +8,15 @@ from minllm.model import Config, Transformer
 
 def pick_device():
     """The fastest device available: an NVIDIA GPU, then Apple's GPU, then the CPU."""
-    if device := os.environ.get("MINLLM_DEVICE"):
-        return device
-    if torch.cuda.is_available():
-        return "cuda"
-    if torch.backends.mps.is_available():
-        return "mps"
-    return "cpu"
+    device = os.environ.get("MINLLM_DEVICE")
+    if not device:
+        device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+    if device == "mps":
+        # An Apple GPU shares its memory with the rest of the machine. Without
+        # a limit, a batch that is too large does not fail: it pushes every
+        # other program into swap. With one, it raises an out-of-memory error.
+        torch.mps.set_per_process_memory_fraction(float(os.environ.get("MINLLM_MEMORY_FRACTION", 0.5)))
+    return device
 
 
 def fetch(url, path, max_bytes=None):
