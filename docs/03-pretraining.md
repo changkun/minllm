@@ -107,16 +107,22 @@ How much a model learns in a given time is tokens per second times time, so
 speed is model quality. Two switches matter, and neither changes what is
 computed:
 
+![Tokens per second of a training step under four configurations](figures/pretraining-speed.svg)
+
 | Default model, batch of 64 × 256 tokens | Tokens per second |
 |---|---|
-| Plain PyTorch, 32-bit floats | 28k |
-| With `autocast` to bfloat16 | 37k |
-| With `torch.compile` | 51k |
-| With both (the default) | 120k |
+| Plain PyTorch, 32-bit floats | 27k |
+| With `autocast` to bfloat16 | 35k |
+| With `torch.compile` | 42k |
+| With both (the default) | 100k |
 
 These are the forward pass, backward pass and optimizer step alone, on an M5
-Pro. The full loop with data loading, gradient clipping and logging ran at
-76k to 96k tokens per second over the reference run, with a median of 84k.
+Pro, measured by `scripts/bench_train.py`. A laptop is not a steady
+instrument: over three runs of this benchmark the plain version measured 23k
+to 28k and the default 91k to 120k, and the factor between them stayed
+between 3.7 and 4.3. The full loop with data loading, gradient clipping and
+logging ran at 76k to 96k tokens per second over the reference run, with a
+median of 84k.
 
 `torch.compile` traces the model and fuses its operations. Run one at a time,
 each small operation (a norm, a rotation, an addition) reads and writes
@@ -140,6 +146,8 @@ uv run scripts/train.py
 ```
 
 6,000 steps of 16,384 tokens each, 98M tokens in all, took 19.9 minutes.
+
+![Training and validation loss of the reference run, with the learning rate below](figures/pretraining-loss.svg)
 
 | Step | Tokens seen | Minutes | Validation loss | Perplexity |
 |---|---|---|---|---|

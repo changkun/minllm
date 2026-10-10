@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="470" viewBox="0 0 720 470" role="img"><title>The reference run</title><desc>Loss on a logarithmic scale. The first 500 steps do most of the work, and the rest is slow and matters.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="469" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">The reference run</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Loss on a logarithmic scale. The first 500 steps do most of the work, and the rest is slow and matters.</text>
+<line class="s-s1" x1="24" y1="72" x2="40" y2="72" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="46" y="76" font-size="12" text-anchor="start">training loss, mean of 50 steps</text>
+<circle class="f-s2 s-surface" cx="280.3" cy="72" r="4" stroke-width="2"/>
+<text class="f-ink2" x="294.3" y="76" font-size="12" text-anchor="start">validation loss, every 500 steps</text>
+<line class="s-grid" x1="64" y1="299.7" x2="664" y2="299.7" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="303.7" font-size="11" text-anchor="end">1.5</text>
+<line class="s-grid" x1="64" y1="267" x2="664" y2="267" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="271" font-size="11" text-anchor="end">2</text>
+<line class="s-grid" x1="64" y1="220.9" x2="664" y2="220.9" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="224.9" font-size="11" text-anchor="end">3</text>
+<line class="s-grid" x1="64" y1="188.2" x2="664" y2="188.2" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="192.2" font-size="11" text-anchor="end">4</text>
+<line class="s-grid" x1="64" y1="142.1" x2="664" y2="142.1" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="146.1" font-size="11" text-anchor="end">6</text>
+<line class="s-grid" x1="64" y1="109.4" x2="664" y2="109.4" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="113.4" font-size="11" text-anchor="end">8</text>
+<path class="s-s1 " d="M69 128.3 L74 178.4 L79 204.3 L84 219.4 L89 228 L94 236.4 L99 241.7 L104 246.1 L109 250.3 L114 253.4 L119 256.1 L124 258.4 L129 260.1 L134 261.7 L139 263.6 L144 265.6 L149 266.7 L154 267.4 L159 268.6 L164 269.9 L169 270.7 L174 272.2 L179 272.6 L184 273.5 L189 273.8 L194 274.8 L199 275.5 L204 276.9 L209 276.1 L214 277.3 L219 278.1 L224 278.5 L229 280 L234 280.5 L239 281.4 L244 281.6 L249 281.5 L254 281.8 L259 282.4 L264 282.6 L269 283.4 L274 283.8 L279 284.7 L284 285.1 L289 285.1 L294 285.1 L299 286.5 L304 286.7 L309 287.3 L314 287.6 L319 287.5 L324 287.5 L329 288.2 L334 289.2 L339 289.8 L344 289.6 L349 289.3 L354 289.6 L359 291 L364 291.3 L369 291.4 L374 292.1 L379 291.1 L384 292.1 L389 292.9 L394 293 L399 293.1 L404 293.3 L409 293.6 L414 294.1 L419 294.4 L424 294.8 L429 294.9 L434 295.2 L439 296 L444 295.8 L449 295.9 L454 296.2 L459 296.6 L464 296.7 L469 297.4 L474 297.7 L479 298.2 L484 298.4 L489 298.2 L494 298.3 L499 298.9 L504 298.5 L509 299.8 L514 299.6 L519 299.1 L524 299.4 L529 300.3 L534 299.8 L539 300.5 L544 300.8 L549 300.7 L554 300.8 L559 300.8 L564 301.2 L569 301.5 L574 301.9 L579 302.5 L584 301.4 L589 301.2 L594 302.5 L599 302.3 L604 301.9 L609 301.8 L614 302.8 L619 302.8 L624 303.2 L629 303.1 L634 303.3 L639 303.3 L644 302.6 L649 303.1 L654 303.5 L659 302.8 L664 303.8" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s2 s-surface" cx="64" cy="103.7" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="114" cy="255.2" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="164" cy="271" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="214" cy="278.3" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="264" cy="283.4" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="314" cy="287.5" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="364" cy="290.6" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="414" cy="293.6" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="464" cy="296.3" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="514" cy="298.5" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="564" cy="300.4" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="614" cy="301.7" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="664" cy="302.4" r="4" stroke-width="2"/>
+<text class="f-ink2" x="76" y="107.7" font-size="12" text-anchor="start">8.41, a uniform guess over 4,096 tokens</text>
+<text class="f-ink" x="660" y="290.4" font-size="12" text-anchor="end">1.465</text>
+<text class="f-ink" x="64" y="340" font-size="12" text-anchor="start" font-weight="600">Learning rate</text>
+<line class="s-grid" x1="64" y1="412" x2="664" y2="412" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="416" font-size="11" text-anchor="end">0</text>
+<line class="s-grid" x1="64" y1="354.9" x2="664" y2="354.9" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="358.9" font-size="11" text-anchor="end">0.001</text>
+<line class="s-axis" x1="64" y1="412" x2="664" y2="412" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="64" y1="412" x2="64" y2="416" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="429" font-size="11" text-anchor="middle">0</text>
+<line class="s-axis" x1="164" y1="412" x2="164" y2="416" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="164" y="429" font-size="11" text-anchor="middle">1,000</text>
+<line class="s-axis" x1="264" y1="412" x2="264" y2="416" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="264" y="429" font-size="11" text-anchor="middle">2,000</text>
+<line class="s-axis" x1="364" y1="412" x2="364" y2="416" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="364" y="429" font-size="11" text-anchor="middle">3,000</text>
+<line class="s-axis" x1="464" y1="412" x2="464" y2="416" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="464" y="429" font-size="11" text-anchor="middle">4,000</text>
+<line class="s-axis" x1="564" y1="412" x2="564" y2="416" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="564" y="429" font-size="11" text-anchor="middle">5,000</text>
+<line class="s-axis" x1="664" y1="412" x2="664" y2="416" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="664" y="429" font-size="11" text-anchor="middle">6,000</text>
+<text class="f-muted" x="364" y="448" font-size="11" text-anchor="middle">training step</text>
+<path class="s-s1 " d="M69 397.7 L74 383.4 L79 369.1 L84 354.9 L89 354.9 L94 354.9 L99 354.9 L104 355 L109 355.1 L114 355.2 L119 355.3 L124 355.5 L129 355.6 L134 355.8 L139 356 L144 356.2 L149 356.4 L154 356.7 L159 356.9 L164 357.2 L169 357.5 L174 357.8 L179 358.2 L184 358.5 L189 358.9 L194 359.3 L199 359.7 L204 360.1 L209 360.5 L214 361 L219 361.4 L224 361.9 L229 362.4 L234 362.9 L239 363.4 L244 363.9 L249 364.5 L254 365 L259 365.6 L264 366.1 L269 366.7 L274 367.3 L279 367.9 L284 368.5 L289 369.1 L294 369.8 L299 370.4 L304 371 L309 371.7 L314 372.3 L319 373 L324 373.7 L329 374.4 L334 375 L339 375.7 L344 376.4 L349 377.1 L354 377.8 L359 378.5 L364 379.2 L369 379.9 L374 380.6 L379 381.3 L384 381.9 L389 382.6 L394 383.3 L399 384 L404 384.7 L409 385.4 L414 386.1 L419 386.8 L424 387.4 L429 388.1 L434 388.8 L439 389.4 L444 390.1 L449 390.7 L454 391.4 L459 392 L464 392.6 L469 393.2 L474 393.8 L479 394.4 L484 395 L489 395.6 L494 396.1 L499 396.7 L504 397.2 L509 397.7 L514 398.2 L519 398.7 L524 399.2 L529 399.7 L534 400.2 L539 400.6 L544 401 L549 401.4 L554 401.8 L559 402.2 L564 402.6 L569 402.9 L574 403.3 L579 403.6 L584 403.9 L589 404.2 L594 404.5 L599 404.7 L604 404.9 L609 405.1 L614 405.3 L619 405.5 L624 405.7 L629 405.8 L634 405.9 L639 406 L644 406.1 L649 406.2 L654 406.2 L659 406.3 L664 406.3" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>
