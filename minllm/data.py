@@ -9,6 +9,9 @@ write fluent English from it, which makes it the right corpus for a laptop.
 import os
 import urllib.request
 
+import numpy as np
+import torch
+
 URL = "https://huggingface.co/datasets/roneneldan/TinyStories/resolve/main/TinyStoriesV2-GPT4-{split}.txt"
 EOT = "<|endoftext|>"  # separates the stories in the raw files
 # The chat markers are reserved from the start, so that the vocabulary, and with
@@ -57,3 +60,20 @@ def read_stories(path, max_bytes=None):
                 return
     if rest.strip():
         yield rest.strip()
+
+
+def load_tokens(path):
+    """An encoded split: one long array of token ids, read from disk on demand."""
+    return np.memmap(path, dtype=np.uint16, mode="r")
+
+
+def get_batch(tokens, batch_size, seq_len, device, generator=None):
+    """
+    Cut random windows out of the token stream. The model reads x and has to
+    predict y, which is x shifted left by one token: at every position, the
+    target is the token that comes next.
+    """
+    starts = torch.randint(len(tokens) - seq_len - 1, (batch_size,), generator=generator)
+    windows = np.stack([tokens[s : s + seq_len + 1] for s in starts.tolist()])
+    windows = torch.from_numpy(windows.astype(np.int64)).to(device)
+    return windows[:, :-1], windows[:, 1:]
