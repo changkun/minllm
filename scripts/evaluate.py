@@ -5,8 +5,8 @@ Evaluate a model on a task, or compare two evaluations.
     uv run scripts/evaluate.py --model qwen --task gsm8k
     uv run scripts/evaluate.py --compare runs/eval/gsm8k-qwen.json runs/eval/gsm8k-sft-gsm8k-lora.json
 
-Writes runs/eval/<task>-<model>.json, with every score and a few replies.
-See docs/07-evaluation.md.
+Writes runs/eval/<task>-<model>.json, with every score and a few replies, and
+all replies to out/eval/, for a closer look. See docs/07-evaluation.md.
 """
 
 import argparse
@@ -26,6 +26,7 @@ parser.add_argument("--task", choices=["words", "taste", "gsm8k"])
 parser.add_argument("--n", type=int, default=None, help="number of test examples; all of them by default")
 parser.add_argument("--batch-size", type=int, default=None)
 parser.add_argument("--temperature", type=float, default=0.0, help="0 is greedy, which makes the evaluation repeatable")
+parser.add_argument("--max-new-tokens", type=int, default=None, help="the limit on a reply's length; the task's own by default")
 parser.add_argument("--seed", type=int, default=0)
 parser.add_argument("--out", default=None)
 parser.add_argument("--compare", nargs=2, metavar="RESULT", help="two result files of the same task and examples")
@@ -49,19 +50,26 @@ batch_size = args.batch_size or (256 if meta["family"] == "small" else 64)
 
 start = time.time()
 show = lambda done, total: print(f"\r{done}/{total}", end="", flush=True)
-replies = evaluate.replies(model, tok, examples, tasks.MAX_NEW_TOKENS[args.task], batch_size, args.temperature, progress=show)
+limit = args.max_new_tokens or tasks.MAX_NEW_TOKENS[args.task]
+replies = evaluate.replies(model, tok, examples, limit, batch_size, args.temperature, progress=show)
 seconds = time.time() - start
 scores = [tasks.SCORE[args.task](e, r) for e, r in zip(examples, replies)]
 mean, error = evaluate.mean_and_error(scores)
-print(f"\r{args.model} on {args.task}: {mean:.1%} ± {error:.1%} over {len(scores)} examples, {seconds:.0f}s")
+# A reply that ran into the token limit was cut off, and is scored on what it got to say.
+cut_off = sum(len(tok.encode_ordinary(r)) >= limit - 2 for r in replies)
+print(f"\r{args.model} on {args.task}: {mean:.1%} ± {error:.1%} over {len(scores)} examples, {seconds:.0f}s, {cut_off} replies cut off")
 
 name = os.path.basename(args.model.rstrip("/"))
 out = args.out or f"runs/eval/{args.task}-{name}.json"
 os.makedirs(os.path.dirname(out), exist_ok=True)
 samples = [{"prompt": e["messages"][-1]["content"], "reply": r, "score": s} for e, r, s in list(zip(examples, replies, scores))[:10]]
-result = {"model": args.model, "task": args.task, "temperature": args.temperature, "n": len(scores)}
+result = {"model": args.model, "task": args.task, "temperature": args.temperature, "max_new_tokens": limit, "n": len(scores), "cut_off": cut_off}
 if "words" in examples[0]:
     result["requested_words"] = [len(e["words"]) for e in examples]  # to break the score down by difficulty
 with open(out, "w") as f:
     json.dump(result | {"mean": mean, "error": error, "seconds": seconds, "scores": scores, "samples": samples}, f, indent=1)
+os.makedirs("out/eval", exist_ok=True)
+with open(f"out/eval/{os.path.basename(out)}l", "w", encoding="utf-8") as f:
+    for e, r, s in zip(examples, replies, scores):
+        f.write(json.dumps({"prompt": e["messages"][-1]["content"], "reply": r, "score": s}, ensure_ascii=False) + "\n")
 print(f"wrote {out}")
