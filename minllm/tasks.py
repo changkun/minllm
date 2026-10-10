@@ -11,6 +11,7 @@ import random
 import re
 from collections import Counter
 
+from minllm import preferences
 from minllm.common import fetch
 from minllm.data import read_stories
 
@@ -111,12 +112,14 @@ def gsm8k_score(example, reply):
 
 # ------------------------------------------------------------- evaluation
 
-SCORE = {"words": words_score, "gsm8k": gsm8k_score}
-MAX_NEW_TOKENS = {"words": 220, "gsm8k": 320}  # room for a whole reply
+# "taste" scores the stories of the words task by the simulated annotator's
+# hidden standard (minllm/preferences.py), which stage 8 tries to learn.
+SCORE = {"words": words_score, "gsm8k": gsm8k_score, "taste": lambda example, reply: preferences.taste(reply)}
+MAX_NEW_TOKENS = {"words": 220, "taste": 220, "gsm8k": 320}  # room for a whole reply
 
 
 def test_examples(task, n=None, system_prompt=""):
     """Examples the models were never trained on: held-out stories, and GSM8K's test split."""
-    if task == "words":
+    if task in ("words", "taste"):
         return list(words_examples("data/tinystories/valid.txt", content_words(), n or 1000, seed=7))
     return gsm8k_examples("test", system_prompt)[:n]
