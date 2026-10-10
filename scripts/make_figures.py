@@ -81,6 +81,9 @@ class Figure:
         # The ring in the surface color keeps a dot legible where it crosses a line.
         self.parts.append(f'<circle class="f-{fill} s-surface" cx="{n(x)}" cy="{n(y)}" r="{r}" stroke-width="2"/>')
 
+    def point(self, x, y, fill, r=2, opacity=0.35):
+        self.parts.append(f'<circle class="f-{fill}" cx="{n(x)}" cy="{n(y)}" r="{r}" fill-opacity="{opacity}"/>')
+
     def text(self, x, y, s, size=12, fill="ink2", anchor="start", weight=400, rotate=None):
         extra = f' transform="rotate({rotate} {n(x)} {n(y)})"' if rotate else ""
         extra += f' font-weight="{weight}"' if weight != 400 else ""
@@ -466,6 +469,324 @@ def pretrained_generation():
     fig.save("pretrained-generation")
 
 
+# ---------------------------------------------------------------- 6 fine-tuning
+
+
+def finetuning_targets():
+    # One training example of the words task, as the tokenizer of stage 1 cuts it.
+    context = ["<|im_start|>", "us", "er", "\\n", "W", "r", "ite", " a", " short", " story", " using", " these", " words", ":"]
+    context += [" garden", ",", " kitten", ".", "<|im_end|>", "\\n", "<|im_start|>", "ass", "ist", "ant", "\\n"]
+    reply = ["Lily", " found", " a", " kitten", " in", " the", " garden", ".", " They", " played", " all", " day", ".", "<|im_end|>"]
+    tokens = [(t, False) for t in context] + [(t, True) for t in reply] + [("\\n", False)]
+
+    fig = Figure(720, 262, "What a fine-tuning step learns from", "One conversation, token by token. The model reads all of it and is trained only on the filled tokens.")
+    x, y, height, gap = 24, 78, 26, 4
+    for token, learned in tokens:
+        label = token.replace(" ", "·") if token.startswith(" ") else token
+        w = max(18, text_width(label, 11) + 14)
+        if x + w > 696:
+            x, y = 24, y + height + 8
+        if learned:
+            fig.rect(x, y, w, height, fill="s1", rx=5, opacity=0.9)
+            fig.text(x + w / 2, y + 17, label, size=11, fill="surface", anchor="middle", weight=600)
+        else:
+            fig.rect(x + 0.5, y + 0.5, w - 1, height - 1, stroke="axis", rx=5)
+            fig.text(x + w / 2, y + 17, label, size=11, fill="ink2", anchor="middle")
+        x += w + gap
+    fig.rect(24.5, 196.5, 17, 17, stroke="axis", rx=4)
+    fig.text(50, 210, "context: the instruction and the format around it", size=11)
+    fig.rect(364, 196, 18, 18, fill="s1", rx=4, opacity=0.9)
+    fig.text(390, 210, "target: the reply, and the <|im_end|> that ends it", size=11)
+    fig.text(24, 242, "A dot marks a leading space. 14 of the 40 tokens are targets, and the output layer is applied to those alone.", size=11, fill="muted")
+    fig.save("finetuning-targets")
+
+
+def finetuning_lora():
+    fig = Figure(720, 300, "LoRA trains a thin update next to a frozen matrix", "One query projection of the 0.5B model. Each of the 168 linear layers in its 24 blocks gets such a pair.")
+    # the frozen matrix
+    fig.rect(60, 86, 150, 150, fill="grid", stroke="axis", rx=4, opacity=0.6)
+    fig.text(135, 156, "W", size=22, fill="ink", anchor="middle", weight=600)
+    fig.text(135, 178, "896 × 896", size=11, anchor="middle")
+    fig.text(135, 256, "frozen: 802,816 numbers", size=11, anchor="middle")
+    fig.text(246, 168, "+", size=24, fill="ink", anchor="middle")
+    # B: tall and thin, A: wide and thin
+    fig.rect(292, 86, 14, 150, fill="s1", rx=3)
+    fig.text(299, 256, "B", size=13, fill="ink", anchor="middle", weight=600)
+    fig.text(299, 272, "896 × 16", size=11, anchor="middle")
+    fig.text(332, 168, "·", size=24, fill="ink", anchor="middle")
+    fig.rect(358, 86, 150, 14, fill="s1", rx=3)
+    fig.text(433, 122, "A", size=13, fill="ink", anchor="middle", weight=600)
+    fig.text(433, 138, "16 × 896", size=11, anchor="middle")
+    fig.text(433, 256, "trained: 28,672 numbers, 3.6%", size=11, anchor="middle")
+    # what it buys
+    notes = ["B starts at zero, so training", "starts from exactly the", "pretrained model.", ""]
+    notes += ["Switched off, the model is", "the pretrained one again.", "Merged into W, it is an", "ordinary model."]
+    for i, line in enumerate(notes):
+        fig.text(532, 104 + i * 17, line, size=11)
+    fig.save("finetuning-lora")
+
+
+def jsonl(path):
+    return [json.loads(line) for line in open(path)]
+
+
+def bar(fig, x, y, w, height, color):
+    """A horizontal bar, square at its baseline and rounded at its data end."""
+    w = max(w, 5)
+    fig.path(f"M{n(x)} {n(y)} H{n(x + w - 4)} a4 4 0 0 1 4 4 V{n(y + height - 4)} a4 4 0 0 1 -4 4 H{n(x)} Z", fill=color)
+
+
+def finetuning_gsm8k():
+    runs = [("LoRA, rank 16", "s1", "runs/sft-gsm8k-lora"), ("every weight", "s2", "runs/sft-gsm8k")]
+    fig = Figure(720, 330, "Two ways to fine-tune the 0.5B model on GSM8K", "The same 900 steps of 8 problems. LoRA trains 1.8% of the weights.")
+    fig.legend(64, 78, [(color, name, "line") for name, color, _ in runs])
+
+    ax = Axes(fig, 64, 124, 280, 130, (0, 900), (0.5, 0.9))
+    ax.title("Loss on held-out problems")
+    ax.yticks([0.5, 0.6, 0.7, 0.8, 0.9], lambda t: f"{t:g}")
+    ax.xticks([0, 300, 600, 900], str, "training step")
+    metas = []
+    for name, color, path in runs:
+        log = [r for r in jsonl(f"{path}/log.jsonl") if "val_loss" in r]
+        xs, ys = [r["step"] for r in log], [r["val_loss"] for r in log]
+        ax.line(xs, ys, color)
+        ax.dots(xs, ys, color)
+        ax.label(xs[-1], ys[-1], f"{ys[-1]:.3f}", dx=0, dy=-12 if color == "s2" else 20, anchor="end", fill="ink")
+        metas.append(load(f"{path}/meta.json"))
+
+    # What each run costs, one small pair of bars per measure.
+    measures = [
+        ("Weights trained", [m["trainable_parameters"] / 1e6 for m in metas], lambda v: f"{v:,.1f}M" if v < 100 else f"{v:,.0f}M"),
+        ("Minutes", [m["minutes"] for m in metas], lambda v: f"{v:.0f}"),
+        ("Peak memory pool, GB", [m["memory_gb"] for m in metas], lambda v: f"{v:.0f}"),
+        ("Saved file, MB", [35, 988], lambda v: f"{v:,.0f}"),
+    ]
+    left, width, top = 420, 190, 108
+    for i, (title, values, fmt) in enumerate(measures):
+        y = top + i * 50
+        fig.text(left, y, title, fill="ink", weight=600)
+        for j, (value, (_, color, _)) in enumerate(zip(values, runs)):
+            bar(fig, left, y + 8 + j * 14, width * value / max(values), 10, color)
+            fig.text(left + max(width * value / max(values), 5) + 8, y + 17 + j * 14, fmt(value), size=11)
+    fig.save("finetuning-gsm8k")
+
+
+# ---------------------------------------------------------------- 7 evaluation
+
+
+def evaluation_scores():
+    fig = Figure(720, 300, "What fine-tuning bought", "Greedy replies to held-out prompts, with 95% confidence intervals.")
+    panels = [
+        ("Words: requested words used", [("14M base", "runs/eval/words-base.json"), ("fine-tuned", "runs/eval/words-sft-words.json")]),
+        ("GSM8K: problems solved", [("0.5B as published", "runs/eval/gsm8k-qwen.json"), ("LoRA", "runs/eval/gsm8k-sft-gsm8k-lora.json"), ("every weight", "runs/eval/gsm8k-sft-gsm8k.json")]),
+    ]
+    for i, (title, rows) in enumerate(panels):
+        left, top, width = 150 + i * 350, 100, 150
+        fig.text(left - 126, top - 22, title, fill="ink", weight=600)
+        fig.line(left, top - 8, left, top + 40 * len(rows) - 8, stroke="axis")
+        for j, (name, path) in enumerate(rows):
+            r = load(path)
+            y = top + j * 40
+            scale = lambda v: width * v / 0.6
+            fig.text(left - 10, y + 14, name, anchor="end", fill="ink")
+            bar(fig, left, y, scale(r["mean"]), 18, "s1")
+            # the confidence interval, as a thin line through the bar's end
+            fig.line(left + scale(r["mean"] - r["error"]), y + 9, left + scale(r["mean"] + r["error"]), y + 9, stroke="ink", width=1.5)
+            fig.text(left + scale(r["mean"] + r["error"]) + 8, y + 14, f"{r['mean']:.1%}", fill="ink")
+            fig.text(left + scale(r["mean"] + r["error"]) + 8 + text_width(f"{r['mean']:.1%}", 12) + 6, y + 14, f"± {r['error']:.1%}", fill="muted", size=11)
+        fig.text(left - 126, top + 40 * len(rows) + 18, f"{load(rows[0][1])['n']:,} examples", size=11, fill="muted")
+    fig.save("evaluation-scores")
+
+
+# --------------------------------------------------------------------- 8 rlhf
+
+
+def rlhf_pipeline():
+    fig = Figure(720, 344, "From comparisons to a better model", "A reward model generalizes the annotator's choices, and two methods put it to use. DPO does without it.")
+    fig.box(24, 78, 190, 50, "Two stories", "per prompt, from the model")
+    fig.arrow([(214, 103), (244, 103)])
+    fig.box(246, 78, 190, 50, "Annotator", "picks the one they prefer")
+    fig.arrow([(436, 103), (466, 103)])
+    fig.box(468, 78, 228, 50, "Comparisons", "4,000 of them")
+
+    fig.arrow([(582, 128), (582, 160)])
+    fig.box(468, 162, 228, 50, "Reward model", "a score for any story", fill="s1", opacity=0.1)
+    fig.arrow([(601, 212), (601, 246)])
+    fig.box(506, 248, 190, 50, "PPO", "train the model on rewards")
+    fig.arrow([(500, 212), (500, 228), (375, 228), (375, 246)])
+    fig.box(280, 248, 190, 50, "Rejection sampling", "write n stories, keep the best")
+
+    fig.arrow([(490, 128), (490, 144), (119, 144), (119, 246)])
+    fig.box(24, 248, 190, 50, "DPO", "train the model on comparisons", fill="s2", opacity=0.1)
+    fig.text(131, 200, "without a", size=11, fill="muted")
+    fig.text(131, 214, "reward model", size=11, fill="muted")
+    fig.text(24, 326, "Both training methods hold the new model near the one that wrote the stories. That constraint is what keeps them honest.", size=11, fill="muted")
+    fig.save("rlhf-pipeline")
+
+
+def scored_bars(fig, left, top, width, rows, peak, fmt, color="s1"):
+    """Horizontal bars with a 95% interval, one per (name, mean, error) row."""
+    fig.line(left, top - 8, left, top + 36 * len(rows) - 12, stroke="axis")
+    scale = lambda v: width * max(v, 0) / peak
+    for j, (name, mean, error) in enumerate(rows):
+        y = top + j * 36
+        fig.text(left - 10, y + 14, name, anchor="end", fill="ink")
+        bar(fig, left, y, scale(mean), 18, color)
+        end = scale(mean)
+        if error:
+            fig.line(left + scale(mean - error), y + 9, left + scale(mean + error), y + 9, stroke="ink", width=1.5)
+            end = scale(mean + error)
+        fig.text(left + end + 8, y + 14, fmt(mean), fill="ink")
+        if error:
+            fig.text(left + end + 14 + text_width(fmt(mean), 12), y + 14, f"± {fmt(error).lstrip('+')}", fill="muted", size=11)
+
+
+def spread(values):
+    """Mean and the half-width of its 95% interval."""
+    mean = sum(values) / len(values)
+    variance = sum((v - mean) ** 2 for v in values) / (len(values) - 1)
+    return mean, 1.96 * math.sqrt(variance / len(values))
+
+
+def rlhf_reward():
+    meta = load("runs/rlhf/reward.json")
+    tastes, rewards = meta["held_out_tastes"], meta["held_out_rewards"]
+    fig = Figure(720, 350, "The reward model against the taste it never saw", f"{len(tastes):,} held-out stories. Trained on {meta['pairs']:,} comparisons, it orders {meta['agrees_with_taste']:.0%} of held-out pairs as the annotator's taste does.")
+    lo, hi = math.floor(min(tastes)), math.ceil(max(tastes))
+    rlo, rhi = math.floor(min(rewards)), math.ceil(max(rewards))
+    ax = Axes(fig, 64, 84, 330, 200, (lo, hi), (rlo, rhi))
+    ax.title("Reward given, by true taste")
+    ax.yticks(range(rlo, rhi + 1, max(1, (rhi - rlo) // 5)), lambda t: f"{t:+d}" if t else "0")
+    ax.xticks(range(lo, hi + 1), lambda t: f"{t:+d}" if t else "0", "the annotator's taste, hidden from training")
+    for t, r in zip(tastes, rewards):
+        fig.point(ax.x(t), ax.y(r), "s1")
+
+    curve = sorted((load(f"runs/rlhf/{name}") for name in os.listdir("runs/rlhf") if name.startswith("reward")), key=lambda m: m["pairs"])
+    xs, ys = [m["pairs"] for m in curve], [m["agrees_with_taste"] for m in curve]
+    right = Axes(fig, 470, 84, 220, 200, (min(xs) * 0.7, max(xs) * 1.4), (0.5, 1.0), xlog=True)
+    right.title("Agreement with the taste")
+    right.yticks([0.5, 0.6, 0.7, 0.8, 0.9, 1.0], lambda t: f"{t:.0%}")
+    right.xticks(xs, lambda t: f"{t:,}", "comparisons trained on")
+    right.line(xs, ys, "s1")
+    right.dots(xs, ys, "s1")
+    right.label(xs[-1], ys[-1], f"{ys[-1]:.0%}", dx=0, dy=-12, anchor="middle", fill="ink")
+    right.label(xs[0], ys[0], f"{ys[0]:.0%}", dx=0, dy=-12, anchor="middle")
+    fig.text(470, 330, "50% is guessing.", size=11, fill="muted")
+    fig.save("rlhf-reward")
+
+
+def rlhf_best_of_n():
+    r = load("runs/rlhf/best_of_n.json")
+    xs = r["n"]
+    fig = Figure(720, 300, "Rejection sampling: keep the best of n stories", f"Mean taste of the story that is kept, over {r['prompts']} held-out prompts. Taste is the annotator's hidden standard.")
+    fig.legend(64, 78, [("s1", "the reward model picks", "line"), ("s2", "the annotator would pick", "line")])
+    top = max(r["picked_by_taste"])
+    ax = Axes(fig, 64, 104, 590, 140, (0.85, max(xs) * 1.18), (math.floor(r["any"] * 2) / 2, math.ceil(top * 2) / 2), xlog=True)
+    ticks = [ax.ylim[0] + 0.5 * k for k in range(int((ax.ylim[1] - ax.ylim[0]) * 2) + 1)]
+    ax.yticks(ticks, lambda t: f"{t:+.1f}" if t else "0")
+    ax.xticks(xs, str, "stories written per prompt")
+    for key, color in [("picked_by_taste", "s2"), ("picked_by_reward_model", "s1")]:
+        ax.line(xs, r[key], color)
+        ax.dots(xs, r[key], color)
+        ax.label(xs[-1], r[key][-1], f"{r[key][-1]:+.2f}", dx=10, dy=4, fill="ink")
+    ax.label(xs[0], r["any"], f"{r['any']:+.2f}, any one story", dx=10, dy=16)
+    fig.save("rlhf-best-of-n")
+
+
+def rlhf_ppo():
+    runs = [("with the KL penalty", "s1", jsonl("runs/rlhf/ppo.jsonl")), ("without it", "s2", jsonl("runs/rlhf/ppo-no-kl.jsonl"))]
+    fig = Figure(720, 470, "PPO against the reward model, with and without a leash", "Each panel has its own scale. The reward model's reward is what training sees. The taste is what the annotator wants.")
+    fig.legend(64, 78, [(color, name, "line") for name, color, _ in runs])
+    panels = [("reward", "Reward from the reward model"), ("taste", "The annotator's taste"), ("kl", "KL divergence from the starting model"), ("tokens", "Tokens per story")]
+    steps = max(r["iteration"] for r in runs[0][2])
+    for i, (key, title) in enumerate(panels):
+        col, row = i % 2, i // 2
+        values = [r[key] for _, _, log in runs for r in log]
+        lo, hi = min(values), max(values)
+        pad = (hi - lo) * 0.1 or 0.1
+        ax = Axes(fig, 64 + col * 340, 124 + row * 170, 280, 100, (0, steps), (lo - pad, hi + pad))
+        ax.title(title)
+        fmt = (lambda t: f"{t:.0f}") if key == "tokens" else (lambda t: f"{t:.2f}")
+        ax.yticks([lo, (lo + hi) / 2, hi], fmt)
+        ax.xticks(range(0, steps + 1, 20), str, "iteration" if row else "")
+        for name, color, log in runs:
+            ax.line([r["iteration"] for r in log], [r[key] for r in log], color)
+    fig.save("rlhf-ppo")
+
+
+def rlhf_comparison():
+    bon = load("runs/rlhf/best_of_n.json")
+    rows = []
+    for name, path in [("fine-tuned, the start", "runs/eval/taste-sft-words.json"), ("PPO", "runs/eval/taste-ppo.json"), ("PPO without KL", "runs/eval/taste-ppo-no-kl.json"), ("DPO", "runs/eval/taste-dpo.json")]:
+        r = load(path)
+        rows.append((name, r["mean"], r["error"]))
+    rows.insert(1, ("best of 8, reward model", *spread(bon["tastes_of_best_of_8"])))
+    fig = Figure(720, 290, "By the annotator's hidden taste", "Mean taste of sampled stories on held-out prompts, with 95% intervals. No method saw the taste, only comparisons.")
+    peak = max(m + e for _, m, e in rows) * 1.25
+    scored_bars(fig, 220, 84, 330, rows, peak, lambda v: f"{v:+.2f}")
+    fig.text(24, 272, "Rejection sampling writes 8 stories for each one it returns. The trained models write one.", size=11, fill="muted")
+    fig.save("rlhf-comparison")
+
+
+# --------------------------------------------------------------------- 9 rlvr
+
+
+def rlvr_loop():
+    fig = Figure(720, 336, "One step of GRPO", "The model answers the same prompt several times, and its answers are compared with each other.")
+    fig.box(24, 142, 120, 56, "Prompt", "a problem")
+    fig.arrow([(144, 170), (176, 170)])
+    # a group of replies, each with its reward
+    rewards = [1, 0, 0, 1, 0, 0, 0, 1]
+    fig.text(178, 76, "8 replies, sampled", size=11, fill="muted")
+    for i, r in enumerate(rewards):
+        y = 84 + i * 22
+        fig.rect(178, y, 150, 18, fill="s1" if r else "surface", stroke=None if r else "axis", rx=4, opacity=0.9 if r else None)
+        fig.text(188, y + 13, f"reply {i + 1}", size=11, fill="surface" if r else "ink2")
+        fig.text(318, y + 13, "right" if r else "wrong", size=11, fill="surface" if r else "muted", anchor="end")
+    fig.arrow([(328, 170), (366, 170)])
+    fig.box(368, 142, 130, 56, "Verifier", "a program: 1 or 0")
+    fig.arrow([(498, 170), (536, 170)])
+    fig.rect(538, 112, 158, 116, fill="surface", stroke="axis", rx=6)
+    fig.text(617, 134, "Advantage", fill="ink", anchor="middle", weight=600)
+    for i, line in enumerate(["reward minus the group's", "mean, over its spread", "", "right:  +1.2", "wrong:  −0.7"]):
+        fig.text(550, 156 + i * 15, line, size=11, fill="ink2" if i < 3 else "ink")
+    fig.arrow([(617, 228), (617, 280), (84, 280), (84, 200)])
+    fig.text(350, 298, "one policy-gradient step: the right replies become likelier", size=11, fill="muted", anchor="middle")
+    fig.text(24, 320, "A group in which every reply earned the same reward has no advantages, and teaches nothing.", size=11, fill="muted")
+    fig.save("rlvr-loop")
+
+
+def rlvr_curves(name, title, subtitle, runs, unit):
+    """Held-out score and the share of informative groups over training, for one or two GRPO runs."""
+    fig = Figure(720, 400, title, subtitle)
+    if len(runs) > 1:
+        fig.legend(64, 78, [(color, label, "line") for label, color, _ in runs])
+    logs = [(label, color, jsonl(path)) for label, color, path in runs]
+    steps = max(r["iteration"] for r in logs[0][2])
+    held = [r["held_out"] for _, _, log in logs for r in log if "held_out" in r]
+    lo, hi = math.floor(min(held) * 10) / 10, math.ceil(max(held) * 10) / 10
+    ax = Axes(fig, 64, 124, 600, 130, (0, steps), (lo, hi))
+    ax.title(f"{unit}, held-out prompts, greedy")
+    ax.yticks([lo + (hi - lo) * k / 4 for k in range(5)], lambda t: f"{t:.0%}")
+    for label, color, log in logs:
+        points = [(r["iteration"], r["held_out"]) for r in log if "held_out" in r]
+        ax.line(*zip(*points), color)
+        ax.dots(*zip(*points), color)
+        ax.label(points[-1][0], points[-1][1], f"{points[-1][1]:.0%}", dx=-2, dy=-12, anchor="end", fill="ink")
+        ax.label(points[0][0], points[0][1], f"{points[0][1]:.0%}", dx=8, dy=16 if color == "s1" else -8)
+    low = Axes(fig, 64, 300, 600, 50, (0, steps), (0, 1))
+    low.title("Groups in which the replies differ in reward")
+    low.yticks([0, 0.5, 1], lambda t: f"{t:.0%}")
+    low.xticks(range(0, steps + 1, max(10, steps // 6 // 10 * 10)), str, "iteration")
+    for label, color, log in logs:
+        rows = [r for r in log if "informative_groups" in r]
+        # a running mean over 5 iterations: single iterations are noisy
+        xs = [r["iteration"] for r in rows]
+        ys = [sum(q["informative_groups"] for q in rows[max(0, i - 4) : i + 1]) / len(rows[max(0, i - 4) : i + 1]) for i in range(len(rows))]
+        low.line(xs, ys, color)
+    fig.save(name)
+
+
 # ---------------------------------------------------------------------- readme
 
 
@@ -501,4 +822,12 @@ inference_batch()
 pretrained_files()
 pretrained_generation()
 speed_bars("runs/bench/train-qwen-mps.json", "pretrained-speed", "Training steps of the 0.5B model", "and memory in use")
+finetuning_targets()
+finetuning_lora()
+rlhf_pipeline()
+rlvr_loop()
+if os.path.exists("runs/sft-gsm8k/meta.json"):
+    finetuning_gsm8k()
+if os.path.exists("runs/eval/gsm8k-sft-gsm8k.json"):
+    evaluation_scores()
 pipeline(done={1, 2, 3, 4, 5})
