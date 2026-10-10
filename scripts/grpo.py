@@ -17,7 +17,7 @@ import time
 
 import torch
 
-from minllm import checkpoint, evaluate, lora, rl, tasks
+from minllm import chat, checkpoint, evaluate, lora, rl, tasks
 from minllm.common import free_memory, pick_device
 from minllm.pretrained import SYSTEM_PROMPT
 
@@ -31,6 +31,7 @@ parser.add_argument("--samples", type=int, default=8, help="replies per prompt: 
 parser.add_argument("--lr", type=float, default=None)
 parser.add_argument("--kl", type=float, default=0.0, help="weight of a KL penalty towards the starting model")
 parser.add_argument("--lora", type=int, default=0, help="add fresh LoRA adapters of this rank instead of training every weight")
+parser.add_argument("--must-finish", action="store_true", help="no reward for a reply that ran into the token limit instead of ending")
 parser.add_argument("--eval-every", type=int, default=None)
 parser.add_argument("--eval-n", type=int, default=None, help="held-out examples per evaluation")
 parser.add_argument("--seed", type=int, default=0)
@@ -88,6 +89,7 @@ else:
     draw = lambda: rng.sample(pool, args.prompts)
 score = tasks.SCORE[args.task]
 max_new_tokens = tasks.MAX_NEW_TOKENS[args.task]
+end = tok.special_tokens[chat.IM_END]
 
 
 def held_out_score():
@@ -114,6 +116,9 @@ for iteration in range(1, args.iterations + 1):
         prompts, replies, texts = rl.rollout(model, tok, [e["messages"] for e in examples], args.samples, max_new_tokens)
     # 2. Verify: a program scores every reply. No human and no learned model is involved.
     rewards = torch.tensor([score(examples[i // args.samples], text) for i, text in enumerate(texts)], device=device)
+    finished = torch.tensor([reply[-1] == end for reply in replies], device=device)
+    if args.must_finish:
+        rewards = rewards * finished
     # 3. Compare within each prompt's group, and 4. take one policy-gradient step.
     advantages = rl.group_advantages(rewards, args.samples)
     stats = rl.update(model, optimizer, prompts, replies, advantages, device, kl_coef=args.kl, reference=reference, chunk=64 if small else 8, hidden=hidden)
@@ -125,6 +130,7 @@ for iteration in range(1, args.iterations + 1):
         "reward": rewards.mean().item(),
         "informative_groups": (groups.std(dim=1) > 0).float().mean().item(),  # groups whose replies differ in reward
         "tokens": sum(len(r) for r in replies) / len(replies),
+        "finished": finished.float().mean().item(),  # replies that ended by themselves
         "kl": stats["kl"],
         "elapsed": time.time() - start,
     }
@@ -133,7 +139,7 @@ for iteration in range(1, args.iterations + 1):
     log.write(json.dumps(record) + "\n")
     log.flush()
     if "held_out" in record or iteration % 5 == 0 or iteration == 1:
-        line = f"iteration {iteration:3d} | reward {record['reward']:.3f} | informative groups {record['informative_groups']:.0%} | {record['tokens']:.0f} tokens"
+        line = f"iteration {iteration:3d} | reward {record['reward']:.3f} | informative groups {record['informative_groups']:.0%} | {record['tokens']:.0f} tokens, {record['finished']:.0%} finished"
         print(line + (f" | held-out {record['held_out']:.3f}" if "held_out" in record else ""))
 
 minutes = (time.time() - start) / 60
