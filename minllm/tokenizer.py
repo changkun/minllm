@@ -16,6 +16,7 @@ docs/01-tokenizer.md.
 """
 
 import json
+import unicodedata
 from collections import Counter, defaultdict
 
 import regex
@@ -44,22 +45,32 @@ def merge(ids, pair, new_id):
 
 class Tokenizer:
     """
-    Token ids are laid out as
+    A tokenizer trained here lays its token ids out as
         [0, 256)              raw bytes
         [256, 256 + merges)   learned merges, in the order they were learned
         the rest              special tokens such as <|endoftext|>
+
+    A published vocabulary numbers its tokens its own way. For those,
+    `byte_ids` gives the id of each of the 256 bytes, the merges carry their
+    own ids, and `special_tokens` is a dict from string to id. `normalize` is
+    a Unicode normalization form to apply to text before encoding it.
     """
 
-    def __init__(self, merges=None, special_tokens=None, pattern=SPLIT_PATTERN):
-        self.merges = dict(merges or {})  # (id, id) -> id
-        self.pattern = pattern
-        self.vocab = {i: bytes([i]) for i in range(256)}  # id -> bytes
+    def __init__(self, merges=None, special_tokens=None, pattern=SPLIT_PATTERN, byte_ids=None, normalize=None):
+        self.merges = dict(merges or {})  # (id, id) -> id, in the order learned
+        self.pattern, self.normalize = pattern, normalize
+        self.byte_ids = list(byte_ids) if byte_ids else list(range(256))
+        self.vocab = {i: bytes([b]) for b, i in enumerate(self.byte_ids)}  # id -> bytes
         for (a, b), new_id in self.merges.items():
             self.vocab[new_id] = self.vocab[a] + self.vocab[b]
-        self.special_tokens = {}  # str -> id
-        for s in special_tokens or []:
-            self.special_tokens[s] = len(self.vocab)
-            self.vocab[len(self.vocab)] = s.encode("utf-8")
+        if not isinstance(special_tokens, dict):
+            special_tokens = {s: len(self.vocab) + i for i, s in enumerate(special_tokens or [])}
+        self.special_tokens = dict(special_tokens)  # str -> id
+        for s, i in self.special_tokens.items():
+            self.vocab[i] = s.encode("utf-8")
+        # A merge's rank is its place in the order of learning. Encoding
+        # applies the merge of lowest rank first.
+        self._rank = {pair: rank for rank, pair in enumerate(self.merges)}
 
         self._split = regex.compile(pattern)
         # Longest first, so that a special token never loses to its own prefix.
@@ -141,11 +152,11 @@ class Tokenizer:
     def _encode_chunk(self, chunk):
         ids = self._cache.get(chunk)
         if ids is None:
-            ids = list(chunk.encode("utf-8"))
+            ids = [self.byte_ids[b] for b in chunk.encode("utf-8")]
             while len(ids) >= 2:
                 # Replay training: of all the pairs present, the one learned
-                # earliest (the lowest new id) is merged first.
-                pair = min(zip(ids, ids[1:]), key=lambda p: self.merges.get(p, float("inf")))
+                # earliest is merged first.
+                pair = min(zip(ids, ids[1:]), key=lambda p: self._rank.get(p, float("inf")))
                 if pair not in self.merges:
                     break
                 ids = merge(ids, pair, self.merges[pair])
@@ -154,6 +165,8 @@ class Tokenizer:
 
     def encode_ordinary(self, text):
         """Encode text, treating special tokens as the plain characters they are spelled with."""
+        if self.normalize:
+            text = unicodedata.normalize(self.normalize, text)
         ids = []
         for chunk in self._split.findall(text):
             ids.extend(self._encode_chunk(chunk))
@@ -182,6 +195,8 @@ class Tokenizer:
     # ------------------------------------------------------------------- disk
 
     def save(self, path):
+        standard = self.byte_ids == list(range(256)) and list(self.merges.values()) == list(range(256, 256 + len(self.merges)))
+        assert standard and not self.normalize, "only a tokenizer trained here can be saved; a published one keeps its own files"
         with open(path, "w") as f:
             json.dump(
                 {

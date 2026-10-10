@@ -103,3 +103,27 @@ def test_save_load(tmp_path):
     assert loaded.merges == tok.merges and loaded.special_tokens == tok.special_tokens
     text = TEXT + "<|endoftext|>"
     assert loaded.encode(text) == tok.encode(text)
+
+
+def test_published_vocabulary_layout():
+    # A published vocabulary numbers its tokens its own way: here the bytes
+    # are numbered backwards, and the merge learned first has the larger id.
+    byte_ids = list(range(255, -1, -1))
+    a, b, c = byte_ids[ord("a")], byte_ids[ord("b")], byte_ids[ord("c")]
+    merges = {(a, b): 301, (301, c): 300}  # "ab" was learned before "abc"
+    tok = Tokenizer(merges, {"<|x|>": 400}, byte_ids=byte_ids)
+    assert tok.encode("abc") == [300]
+    assert tok.encode("ab<|x|>c") == [301, 400, c]
+    assert tok.decode(tok.encode("cab abc")) == "cab abc"
+
+    # Learned in the other order, "bc" merges first and "abc" can no longer form.
+    assert Tokenizer({(b, c): 300, (a, b): 301}, byte_ids=byte_ids).encode("abc") == [a, 300]
+
+    with pytest.raises(AssertionError):
+        tok.save("unused.json")
+
+
+def test_normalization():
+    # The same character, typed as one code point and as a letter plus an accent.
+    assert Tokenizer(normalize="NFC").encode("\u00e9") == Tokenizer(normalize="NFC").encode("e\u0301")
+    assert Tokenizer().encode("\u00e9") != Tokenizer().encode("e\u0301")
