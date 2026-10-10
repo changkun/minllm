@@ -191,6 +191,6 @@ while True:
         interval_start, interval_loss, interval_tokens = now, 0.0, 0
 
 minutes = (time.time() - start) / 60
-meta |= {"step": step, "val_loss": val_loss, "minutes": minutes, "trainable_parameters": n_trainable, "memory_gb": peak_memory}
+meta |= {"step": step, "val_loss": val_loss, "minutes": minutes, "trainable_parameters": n_trainable, "memory_gb": peak_memory, "args": vars(args)}
 checkpoint.save(args.out, model, meta)
 print(f"done in {minutes:.1f} minutes, saved to {args.out}")
