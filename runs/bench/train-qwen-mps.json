@@ -1,0 +1,37 @@
+{
+ "device": "mps",
+ "model": "qwen",
+ "parameters": 494032768,
+ "batch_size": 8,
+ "seq_len": 256,
+ "configs": [
+  {
+   "name": "Plain PyTorch, 32-bit floats",
+   "compile": false,
+   "amp": false,
+   "tokens_per_second": 1548.8583964811978,
+   "memory_gb": 21.461624145507812
+  },
+  {
+   "name": "bfloat16 autocast",
+   "compile": false,
+   "amp": true,
+   "tokens_per_second": 2758.702453208485,
+   "memory_gb": 20.960647583007812
+  },
+  {
+   "name": "torch.compile",
+   "compile": true,
+   "amp": false,
+   "tokens_per_second": 1757.1355469591404,
+   "memory_gb": 17.92742919921875
+  },
+  {
+   "name": "Both, the default",
+   "compile": true,
+   "amp": true,
+   "tokens_per_second": 4036.401472287473,
+   "memory_gb": 14.97821044921875
+  }
+ ]
+}
