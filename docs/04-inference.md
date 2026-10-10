@@ -119,8 +119,9 @@ length: with 64 sequences on the GPU, and already for one sequence on the CPU.
 Note also that for a single sequence the CPU, with a cache, is faster than the
 GPU. Small models and small batches do not need a GPU.
 
-The cache is not optional for the 0.5B model of the next stage, where one
-pass over a long context is real work.
+The same holds for larger models, with the thresholds moved: stage 5 repeats
+the measurement on a 0.5B model, where the cache starts to pay for a single
+sequence once the context reaches a few hundred tokens.
 
 ## Many sequences at once
 
