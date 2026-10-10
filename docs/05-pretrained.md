@@ -80,6 +80,11 @@ The algorithm is the one from stage 1. The differences are bookkeeping:
 - **Special tokens.** 22 of them, among them the `<|endoftext|>`,
   `<|im_start|>` and `<|im_end|>` that stage 1 reserved under the same names.
 
+Three numbers appear for the size of this vocabulary, and all are right. The
+merges and the bytes give 151,643 tokens. With the 22 special tokens the
+tokenizer knows 151,665. The model's embedding table has 151,936 rows: the
+last 271 are spare, never produced by the tokenizer and never trained.
+
 ## The chat format
 
 Qwen is the same kind of next-token predictor as the story model. It is a chat
