@@ -53,3 +53,12 @@ def test_only_the_adapters_learn():
     lora.merge(model)
     assert not lora.modules(model) and "layers.0.attn.q_proj.weight" in model.state_dict()
     assert torch.allclose(model(idx)[0], adapted, atol=1e-5)
+
+
+def test_adapters_are_not_stacked():
+    import pytest
+
+    model, _, _ = setup()
+    lora.add(model, r=2, alpha=4)
+    with pytest.raises(AssertionError):
+        lora.add(model, r=2, alpha=4)

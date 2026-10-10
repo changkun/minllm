@@ -48,6 +48,7 @@ def modules(model):
 
 def add(model, r=16, alpha=32, names=LINEARS):
     """Freeze the model and wrap the named linear layers of every block. Returns the new parameters."""
+    assert not modules(model), "the model already has adapters: train those, or merge them first"
     model.requires_grad_(False)
     for layer in model.layers:
         for part in (layer.attn, layer.mlp):
