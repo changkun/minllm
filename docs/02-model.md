@@ -20,6 +20,8 @@ norm                     (B, T, dim)
 lm_head                  (B, T, V)      a score (logit) for every possible next token
 ```
 
+![The model: embedding, eight blocks on a residual stream, and the output layer](figures/model-architecture.svg)
+
 The tensor of shape `(B, T, dim)` that runs through the blocks is the
 *residual stream*. A block never replaces it. It reads a normalized copy,
 computes something, and adds the result back:
@@ -52,6 +54,16 @@ prediction moves.
 
 The computation runs in `n_heads` independent copies on slices of width
 `head_dim = dim / n_heads`, so different heads can attend to different things.
+Here are two heads of the model trained in the next stage, on one sentence:
+
+![Attention weights of two heads of the trained model on one sentence](figures/model-attention.svg)
+
+Nobody told these heads what to do. In layer 1, head 2, the word "She" puts
+96% of its attention on "Lily", and "her" looks back to "Lily" and "girl":
+the head finds whom a pronoun refers to. Layer 5, head 5 tends to look at the
+token just before. Both patterns came out of predicting the next token.
+(`scripts/dump_attention.py` extracts the weights.)
+
 `Attention.forward` calls PyTorch's `scaled_dot_product_attention` for speed;
 `test_attention_matches_the_formula` spells the same computation out with
 explicit loops and checks that the results agree.

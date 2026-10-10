@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520" viewBox="0 0 720 520" role="img"><title>The model</title><desc>Every block reads the residual stream, computes, and adds its result back.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="519" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">The model</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Every block reads the residual stream, computes, and adds its result back.</text>
+<text class="f-ink2" x="150" y="84" font-size="12" text-anchor="middle">token ids  (B, T)</text>
+<path class="s-muted " d="M150 92 L150 108" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M153 101.7 L150 108 L147 101.7" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="80" y="110" width="140" height="36" rx="6" stroke-width="1"/>
+<text class="f-ink" x="150" y="132" font-size="12" text-anchor="middle" font-weight="600">Embedding</text>
+<line class="s-s1" x1="150" y1="146" x2="150" y2="420" stroke-width="3" stroke-linecap="round"/>
+<text class="f-muted" x="136" y="170" font-size="11" text-anchor="end">residual stream</text>
+<text class="f-muted" x="136" y="184" font-size="11" text-anchor="end">(B, T, dim)</text>
+<rect class=" s-grid" x="40" y="196" width="652" height="196" rx="10" fill="none" stroke-width="1"/>
+<text class="f-muted" x="692" y="188" font-size="11" text-anchor="end">Block, repeated 8 times</text>
+<path class="s-muted " d="M150 238 L232 238" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M225.7 235 L232 238 L225.7 241" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="234" y="220" width="96" height="36" rx="6" stroke-width="1"/>
+<text class="f-ink" x="282" y="242" font-size="12" text-anchor="middle" font-weight="600">RMSNorm</text>
+<path class="s-muted " d="M330 238 L368 238" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M361.7 235 L368 238 L361.7 241" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-s1 s-axis" x="370" y="214" width="232" height="48" rx="6" stroke-width="1" fill-opacity="0.1"/>
+<text class="f-ink" x="486" y="235" font-size="12" text-anchor="middle" font-weight="600">Attention</text>
+<text class="f-ink2" x="486" y="251" font-size="11" text-anchor="middle">RoPE · causal mask · grouped-query</text>
+<path class="s-muted " d="M602 238 L650 238 L650 290 L163 290" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M169.3 293 L163 290 L169.3 287" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-surface s-s1" cx="150" cy="290" r="11" stroke-width="2"/>
+<text class="f-ink" x="150" y="295" font-size="15" text-anchor="middle" font-weight="600">+</text>
+<text class="f-muted" x="370" y="279" font-size="11" text-anchor="start">tokens exchange information</text>
+<path class="s-muted " d="M150 322 L232 322" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M225.7 319 L232 322 L225.7 325" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="234" y="304" width="96" height="36" rx="6" stroke-width="1"/>
+<text class="f-ink" x="282" y="326" font-size="12" text-anchor="middle" font-weight="600">RMSNorm</text>
+<path class="s-muted " d="M330 322 L368 322" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M361.7 319 L368 322 L361.7 325" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-s1 s-axis" x="370" y="298" width="232" height="48" rx="6" stroke-width="1" fill-opacity="0.1"/>
+<text class="f-ink" x="486" y="319" font-size="12" text-anchor="middle" font-weight="600">MLP</text>
+<text class="f-ink2" x="486" y="335" font-size="11" text-anchor="middle">SwiGLU: down(silu(gate(x)) · up(x))</text>
+<path class="s-muted " d="M602 322 L650 322 L650 374 L163 374" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M169.3 377 L163 374 L169.3 371" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-surface s-s1" cx="150" cy="374" r="11" stroke-width="2"/>
+<text class="f-ink" x="150" y="379" font-size="15" text-anchor="middle" font-weight="600">+</text>
+<text class="f-muted" x="370" y="363" font-size="11" text-anchor="start">each token is processed alone</text>
+<path class="s-muted " d="M150 420 L150 428" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M153 421.7 L150 428 L147 421.7" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="80" y="430" width="140" height="32" rx="6" stroke-width="1"/>
+<text class="f-ink" x="150" y="450" font-size="12" text-anchor="middle" font-weight="600">RMSNorm</text>
+<path class="s-muted " d="M220 446 L268 446" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M261.7 443 L268 446 L261.7 449" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="270" y="430" width="300" height="32" rx="6" stroke-width="1"/>
+<text class="f-ink" x="420" y="450" font-size="12" text-anchor="middle" font-weight="600">Output layer  ·  the embedding matrix again</text>
+<path class="s-muted " d="M570 446 L598 446" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M591.7 443 L598 446 L591.7 449" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink" x="604" y="442" font-size="12" text-anchor="start" font-weight="600">logits</text>
+<text class="f-ink2" x="604" y="457" font-size="11" text-anchor="start">(B, T, vocab)</text>
+<text class="f-muted" x="24" y="496" font-size="11" text-anchor="start">B sequences of T tokens. The numbers are those of the default configuration: dim 384, vocabulary 4,096.</text>
+</svg>
