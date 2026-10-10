@@ -1,0 +1,21 @@
+{
+ "family": "small",
+ "base": "out/sft-words",
+ "method": "ppo",
+ "step": 60,
+ "val_loss": 0.0,
+ "minutes": 6.942058316866556,
+ "args": {
+  "model": "out/sft-words",
+  "reward": "out/reward",
+  "out": "out/ppo",
+  "iterations": 60,
+  "prompts": 128,
+  "epochs": 3,
+  "minibatch": 64,
+  "lr": 0.0001,
+  "clip": 0.2,
+  "kl": 0.1,
+  "seed": 0
+ }
+}

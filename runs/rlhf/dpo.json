@@ -1,0 +1,18 @@
+{
+ "family": "small",
+ "base": "out/sft-words",
+ "method": "dpo",
+ "step": 109,
+ "val_loss": 0.0,
+ "minutes": 1.2897785862286886,
+ "args": {
+  "model": "out/sft-words",
+  "train": "data/preferences/train.jsonl",
+  "out": "out/dpo",
+  "epochs": 1,
+  "batch_size": 32,
+  "lr": 5e-05,
+  "beta": 0.1,
+  "seed": 0
+ }
+}

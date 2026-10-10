@@ -1,0 +1,7 @@
+{
+ "model": "out/sft-words",
+ "comparisons": 4000,
+ "held_out": 500,
+ "mean_taste": 0.22683125,
+ "annotator_consistency": 0.82425
+}
