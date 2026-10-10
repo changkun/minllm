@@ -1,0 +1,24 @@
+[project]
+name = "minllm"
+version = "0.0.0"
+description = "A minimal LLM training pipeline that runs on a laptop, written from scratch: tokenizer, pretraining, inference, fine-tuning, and RL with verifiable rewards."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.5.3",
+    "regex>=2026.9.29",
+    "torch>=2.14.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
