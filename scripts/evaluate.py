@@ -59,9 +59,9 @@ examples = tasks.test_examples(args.task, args.n, SYSTEM_PROMPT)
 batch_size = args.batch_size or (256 if meta["family"] == "small" else 64)
 
 start = time.time()
-show = lambda done, total: print(f"\r{done}/{total}", end="", flush=True)
+progress = lambda done, total: print(f"\r{done}/{total}", end="", flush=True)
 limit = args.max_new_tokens or tasks.MAX_NEW_TOKENS[args.task]
-replies = evaluate.replies(model, tok, examples, limit, batch_size, args.temperature, progress=show)
+replies = evaluate.replies(model, tok, examples, limit, batch_size, args.temperature, progress=progress)
 seconds = time.time() - start
 scores = [tasks.SCORE[args.task](e, r) for e, r in zip(examples, replies)]
 mean, error = evaluate.mean_and_error(scores)
