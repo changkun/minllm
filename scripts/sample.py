@@ -14,7 +14,7 @@ import torch
 
 from minllm.common import load_checkpoint, pick_device
 from minllm.data import EOT
-from minllm.inference import generate, stream
+from minllm.inference import generate, stream_text
 from minllm.tokenizer import Tokenizer
 
 parser = argparse.ArgumentParser()
@@ -42,16 +42,9 @@ prompt = [eot] + tok.encode_ordinary(args.prompt)
 sampling = dict(temperature=args.temperature, top_k=args.top_k, top_p=args.top_p, stop=[eot])
 
 if args.n == 1:
-    ids, shown = [], ""
     print(args.prompt, end="", flush=True)
-    for step in stream(model, [prompt], args.max_tokens, **sampling):
-        if step[0] < 0:
-            break
-        ids.append(step[0].item())
-        text = tok.decode(ids)
-        if not text.endswith("�"):  # hold back half of a multi-byte character
-            print(text[len(shown) :], end="", flush=True)
-            shown = text
+    for piece in stream_text(model, tok, prompt, args.max_tokens, **sampling):
+        print(piece, end="", flush=True)
     print()
 else:
     for ids in generate(model, [prompt] * args.n, args.max_tokens, **sampling):
