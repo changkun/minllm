@@ -1,4 +1,5 @@
 import os
+import urllib.request
 
 import torch
 
@@ -14,6 +15,24 @@ def pick_device():
     if torch.backends.mps.is_available():
         return "mps"
     return "cpu"
+
+
+def fetch(url, path, max_bytes=None):
+    """Download url to path, or only its first max_bytes. Does nothing if path exists."""
+    if os.path.exists(path):
+        return False
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    headers = {"Range": f"bytes=0-{max_bytes - 1}"} if max_bytes else {}
+    tmp = path + ".part"
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers)) as response, open(tmp, "wb") as f:
+        total, done = int(response.headers["Content-Length"]), 0
+        while block := response.read(1 << 20):
+            f.write(block)
+            done += len(block)
+            print(f"\r{path}: {done >> 20}/{total >> 20} MB", end="", flush=True)
+    print()
+    os.replace(tmp, path)
+    return True
 
 
 def load_checkpoint(path, device):
