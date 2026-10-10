@@ -41,3 +41,20 @@ def test_gsm8k_examples(tmp_path):
     assert first["answer"] == "She has 3 + 4 = 7 apples.\n#### 7" and first["number"] == "7"
     assert second["number"] == "1250"
 
+
+def test_words_score():
+    example = {"words": ["garden", "kitten", "purple"]}
+    assert tasks.words_score(example, "The Kitten sat in the garden.") == 2 / 3
+    assert tasks.words_score(example, "A purple kitten. A garden!") == 1.0
+    assert tasks.words_score(example, "The gardener had kittens.") == 0.0  # whole words only
+
+
+def test_gsm8k_score():
+    example = {"number": "1250"}
+    assert tasks.gsm8k_score(example, "It is 1,000 + 250 = 1,250.\n#### 1,250") == 1.0
+    assert tasks.gsm8k_score(example, "First 3 apples, then 1250 in total.\n#### $1250.00") == 1.0
+    assert tasks.gsm8k_score(example, "#### 1251") == 0.0
+    assert tasks.gsm8k_score(example, "The answer is 1250 dollars.") == 1.0  # no ####: the last number counts
+    assert tasks.gsm8k_score(example, "There are 1250 of them, in 3 boxes.") == 0.0
+    assert tasks.gsm8k_score(example, "I do not know.") == 0.0
+    assert tasks.gsm8k_number("#### -4.5") == -4.5

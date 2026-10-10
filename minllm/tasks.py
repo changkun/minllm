@@ -56,6 +56,12 @@ def words_prompt(words):
     return [{"role": "user", "content": f"Write a short story using these words: {', '.join(words)}."}]
 
 
+def words_score(example, reply):
+    """The fraction of the requested words that the reply uses, as whole words."""
+    used = set(re.findall(r"[a-z]+", reply.lower()))
+    return sum(word in used for word in example["words"]) / len(example["words"])
+
+
 # ---------------------------------------------------------------- gsm8k
 #
 # Grade-school math word problems (Cobbe et al., 2021, arXiv:2110.14168),
@@ -84,3 +90,33 @@ def gsm8k_examples(split, system_prompt, dir="data/gsm8k"):
             examples.append({"messages": messages, "answer": solution, "number": number})
     return examples
 
+
+def gsm8k_number(reply):
+    """The number a reply gives as its answer: the one after the last ####, or else the last number in it."""
+    text = reply.split("####")[-1] if "####" in reply else reply
+    numbers = re.findall(r"-?\d[\d,]*\.?\d*", text)
+    if not numbers:
+        return None
+    number = (numbers[0] if "####" in reply else numbers[-1]).replace(",", "").rstrip(".")
+    try:
+        return float(number)
+    except ValueError:
+        return None
+
+
+def gsm8k_score(example, reply):
+    """1 if the reply's answer is the right number, else 0."""
+    return float(gsm8k_number(reply) == float(example["number"]))
+
+
+# ------------------------------------------------------------- evaluation
+
+SCORE = {"words": words_score, "gsm8k": gsm8k_score}
+MAX_NEW_TOKENS = {"words": 220, "gsm8k": 320}  # room for a whole reply
+
+
+def test_examples(task, n=None, system_prompt=""):
+    """Examples the models were never trained on: held-out stories, and GSM8K's test split."""
+    if task == "words":
+        return list(words_examples("data/tinystories/valid.txt", content_words(), n or 1000, seed=7))
+    return gsm8k_examples("test", system_prompt)[:n]
