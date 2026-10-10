@@ -114,9 +114,20 @@ pair that became token `256 + i`.
 
 A larger vocabulary gives shorter sequences, but each token is seen less
 often in training, and the embedding table grows by one row of `dim` numbers
-per token. TinyStories draws on a small set of words: with 4,096 tokens, 97%
-of the words in held-out stories are a single token. With the model of the
-next stage, the
+per token.
+
+![Bytes per token and occurrences of the rarest token, for six vocabulary sizes](figures/tokenizer-vocab.svg)
+
+The left panel is what a larger vocabulary buys. Compression climbs steeply
+at first and then levels off: 4.04 bytes per token at 4,096 tokens, and
+only 4.20 at four times that size. The right panel is what it costs. The
+token learned last is used 358 times in 64 MB of training text at 4,096
+tokens, and 3 times at 16,384, and a model cannot learn what a token means
+from 3 examples. (`scripts/bench_tokenizer.py` measures both.)
+
+TinyStories draws on a small set of words: with 4,096 tokens, 97% of the
+words in held-out stories are a single token. With the model of the next
+stage, the
 embedding table then holds 1.6M of 14.2M parameters. With GPT-2's vocabulary
 of 50,257 it would hold 19M and dwarf the rest of the model.
 
