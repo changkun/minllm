@@ -32,14 +32,24 @@ parser.add_argument("--out", default=None)
 parser.add_argument("--compare", nargs=2, metavar="RESULT", help="two result files of the same task and examples")
 args = parser.parse_args()
 
+
+
+def show(task, value, signed=False):
+    """Scores are shares of 1, except taste, which is a number on the annotator's own scale."""
+    if task == "taste":
+        return f"{value:+.3f}"
+    return f"{value:+.1%}" if signed else f"{value:.1%}"
+
+
 if args.compare:
     a, b = (json.load(open(path)) for path in args.compare)
     assert a["task"] == b["task"] and len(a["scores"]) == len(b["scores"]), "the two runs must share their examples"
     diff, low, high = evaluate.paired_difference(a["scores"], b["scores"])
     for r in (a, b):
-        print(f"{r['model']:28s} {r['mean']:6.1%} ± {r['error']:.1%}")
+        print(f"{r['model']:28s} {show(r['task'], r['mean']):>7s} ± {show(r['task'], r['error']).lstrip('+')}")
     verdict = "a real difference" if low > 0 or high < 0 else "within noise"
-    print(f"difference {diff:+.1%}, 95% interval {low:+.1%} to {high:+.1%}: {verdict}")
+    task = a["task"]
+    print(f"difference {show(task, diff, True)}, 95% interval {show(task, low, True)} to {show(task, high, True)}: {verdict}")
     raise SystemExit
 
 device = pick_device()
@@ -57,7 +67,7 @@ scores = [tasks.SCORE[args.task](e, r) for e, r in zip(examples, replies)]
 mean, error = evaluate.mean_and_error(scores)
 # A reply that ran into the token limit was cut off, and is scored on what it got to say.
 cut_off = sum(len(tok.encode_ordinary(r)) >= limit - 2 for r in replies)
-print(f"\r{args.model} on {args.task}: {mean:.1%} ± {error:.1%} over {len(scores)} examples, {seconds:.0f}s, {cut_off} replies cut off")
+print(f"\r{args.model} on {args.task}: {show(args.task, mean)} ± {show(args.task, error).lstrip('+')} over {len(scores)} examples, {seconds:.0f}s, {cut_off} replies cut off")
 
 name = os.path.basename(args.model.rstrip("/"))
 out = args.out or f"runs/eval/{args.task}-{name}.json"
