@@ -32,6 +32,26 @@ def render(messages, add_generation_prompt=True):
     return text
 
 
+def training_example(tok, messages):
+    """
+    A conversation as a pair (ids, labels) to fine-tune on. labels repeats
+    ids where the model should learn to produce the token, and is -100
+    elsewhere. Only the assistant's turns are learned: their text, and the
+    <|im_end|> that closes them, without which the model would never learn
+    to stop. The user's and the system's words are context, not a target.
+    """
+    start, end = tok.special_tokens[IM_START], tok.special_tokens[IM_END]
+    ids, labels = [], []
+    for m in messages:
+        header = [start] + tok.encode_ordinary(f"{m['role']}\n")
+        content = tok.encode_ordinary(m["content"]) + [end]
+        newline = tok.encode_ordinary("\n")
+        ids += header + content + newline
+        learned = content if m["role"] == "assistant" else [-100] * len(content)
+        labels += [-100] * len(header) + learned + [-100] * len(newline)
+    return ids, labels
+
+
 def encode(tok, messages, add_generation_prompt=True):
     """
     The token ids of a conversation. Only the markers this function writes

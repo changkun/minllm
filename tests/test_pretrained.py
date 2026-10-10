@@ -100,3 +100,19 @@ def test_generation_matches_reference(model, tok):
     out = generate(model, [REFERENCE["chat"]["ids"]], max_new_tokens=32, temperature=0)[0]
     assert out == REFERENCE["greedy"]
     assert tok.decode(out) == REFERENCE["greedy_text"]
+
+
+@needs_tokenizer
+def test_training_example_learns_only_the_replies(tok):
+    messages = [
+        {"role": "system", "content": "Be brief."},
+        {"role": "user", "content": "What is 2 + 2?"},
+        {"role": "assistant", "content": "4"},
+        {"role": "user", "content": "And 3 + 3?"},
+        {"role": "assistant", "content": "It is 6."},
+    ]
+    ids, labels = chat.training_example(tok, messages)
+    assert ids == chat.encode(tok, messages, add_generation_prompt=False)
+    assert all(label in (-100, i) for i, label in zip(ids, labels))
+    learned = tok.decode([label for label in labels if label != -100])
+    assert learned == "4<|im_end|>It is 6.<|im_end|>"  # the replies and their ends, nothing else
