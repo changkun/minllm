@@ -131,3 +131,20 @@ def generate(model, prompts, max_new_tokens, **sampling):
     """Like stream, but returns the finished continuations: one list of token ids per prompt."""
     steps = torch.stack(list(stream(model, prompts, max_new_tokens, **sampling)), dim=1).tolist()
     return [row[: row.index(-1)] if -1 in row else row for row in steps]
+
+
+def stream_text(model, tok, prompt, max_new_tokens, **sampling):
+    """
+    Generate a continuation of one prompt and yield it as text, piece by
+    piece. A token can end in the middle of a multi-byte character, so a
+    piece is held back until the bytes so far decode cleanly.
+    """
+    ids, shown = [], ""
+    for step in stream(model, [prompt], max_new_tokens, **sampling):
+        if step[0] < 0:
+            return
+        ids.append(step[0].item())
+        text = tok.decode(ids)
+        if not text.endswith("\ufffd"):
+            yield text[len(shown) :]
+            shown = text
