@@ -7,5 +7,7 @@ export const labs = [
   { note: "02-model", after: "model-attention.svg", name: "attention", title: "See what a token reads" },
   { note: "02a-moe", after: "moe-routing.svg", name: "routing", title: "Look into each expert" },
   { note: "03-pretraining", after: "pretraining-loss.svg", name: "run", title: "Read the run off, step by step" },
+  { note: "03a-distillation", after: "distill-targets.svg", name: "temperature", title: "Turn the teacher's temperature" },
+  { note: "04-inference", before: "the-cache", name: "sampling", title: "Turn the three knobs of sampling" },
   { note: "10a-quantization", after: "quant-levels.svg", name: "quantize", title: "Round this row yourself" },
 ];
