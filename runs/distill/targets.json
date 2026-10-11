@@ -1,0 +1,108 @@
+{
+ "teacher": "out/wide",
+ "step": 6000,
+ "text": "Once upon a time, there was a little girl named Lily. She loved to play with her red ball.",
+ "positions": [
+  {
+   "context": "Once upon a time, there was a little",
+   "label": " girl",
+   "label_probability": 0.36485496163368225,
+   "top": [
+    {
+     "token": " girl",
+     "probability": 0.36485496163368225
+    },
+    {
+     "token": " boy",
+     "probability": 0.34712889790534973
+    },
+    {
+     "token": " dog",
+     "probability": 0.05425120145082474
+    },
+    {
+     "token": " bird",
+     "probability": 0.023776855319738388
+    },
+    {
+     "token": " cat",
+     "probability": 0.015688646584749222
+    },
+    {
+     "token": " red",
+     "probability": 0.012293830513954163
+    }
+   ]
+  },
+  {
+   "context": "Once upon a time, there was a little girl named",
+   "label": " Lily",
+   "label_probability": 0.3320545256137848,
+   "top": [
+    {
+     "token": " Lily",
+     "probability": 0.3320545256137848
+    },
+    {
+     "token": " Sue",
+     "probability": 0.1947806179523468
+    },
+    {
+     "token": " Mia",
+     "probability": 0.1318039447069168
+    },
+    {
+     "token": " Lucy",
+     "probability": 0.11716224998235703
+    },
+    {
+     "token": " Amy",
+     "probability": 0.07971110194921494
+    },
+    {
+     "token": " Sally",
+     "probability": 0.018536577001214027
+    }
+   ]
+  },
+  {
+   "context": "Once upon a time, there was a little girl named Lily. She loved to play with her",
+   "label": " red",
+   "label_probability": 0.008407876826822758,
+   "top": [
+    {
+     "token": " toys",
+     "probability": 0.4487783908843994
+    },
+    {
+     "token": " toy",
+     "probability": 0.18323922157287598
+    },
+    {
+     "token": " friends",
+     "probability": 0.06391549110412598
+    },
+    {
+     "token": " ball",
+     "probability": 0.028242217376828194
+    },
+    {
+     "token": " blocks",
+     "probability": 0.022072093561291695
+    },
+    {
+     "token": " mom",
+     "probability": 0.020284831523895264
+    }
+   ]
+  }
+ ],
+ "held_out": {
+  "tokens": 25600,
+  "loss": 1.3844472169876099,
+  "entropy": 1.4061713218688965,
+  "label_is_first_choice": 0.6342187523841858,
+  "choices": 9.747913360595703,
+  "above_one_percent": 6.035468578338623
+ }
+}
