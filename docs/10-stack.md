@@ -86,7 +86,8 @@ per-operation overhead that stage 4 measured.
 
 **vLLM** serves the same directory with `vllm serve out/export/sft-words` on a
 Linux machine with an NVIDIA GPU. It does not run natively on macOS, so this
-was not tried here. **llama.cpp** needs one more conversion, from this format
+was not tried here. For Apple hardware there is a separate plugin,
+vllm-metal, which runs vLLM on top of MLX. It was not tried either. **llama.cpp** needs one more conversion, from this format
 to its own GGUF file, with the `convert_hf_to_gguf.py` script of its
 repository. That was not tried here either.
 
