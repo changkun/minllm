@@ -10,28 +10,46 @@ and then from verifiable rewards (RLVR).
 
 The only machine learning dependency is PyTorch, for tensors and automatic
 differentiation. Everything on top of it is written here, in a few hundred
-lines per stage: the tokenizer, the model, the training loop and the
-inference engine so far, and the fine-tuning and the RL algorithms as the
-stages below get built. There is no `transformers`, `tokenizers`, `peft`, `trl` or
-`vllm` underneath.
+lines per stage: the tokenizer, the model, the training loop, the inference
+engine, fine-tuning with LoRA, the evaluation, and the RL algorithms. There
+is no `transformers`, `tokenizers`, `peft`, `trl` or `vllm` underneath.
 
 ## Stages
 
 Each stage has a note that explains it, code that implements it, and tests
 that check what the note claims.
 
-| | Stage | What gets built | Status |
-|---|---|---|---|
-| 1 | [Tokenizer](docs/01-tokenizer.md) | Byte-level BPE: training, encoding, decoding, special tokens | done |
-| 2 | [Model](docs/02-model.md) | Decoder-only transformer with RMSNorm, RoPE, SwiGLU and grouped-query attention | done |
-| 3 | [Pretraining](docs/03-pretraining.md) | Data pipeline, AdamW, learning rate schedule, checkpoints: a model that writes stories | done |
-| 4 | [Inference](docs/04-inference.md) | KV cache, sampling strategies, batches of unequal prompts, stop conditions | done |
-| 5 | [Pretrained weights](docs/05-pretrained.md) | Qwen2.5-0.5B-Instruct loaded into the same model code: a safetensors reader, its tokenizer, the chat format, and tests against the reference implementation | done |
-| 6 | Fine-tuning | Loss masking, full fine-tuning and LoRA | next |
-| 7 | Evaluation | Batched generation over a task, scoring, and comparing two models | planned |
-| 8 | RLHF | Preference data, a reward model trained on pairwise comparisons, and three ways to use it: rejection sampling, policy gradients with a KL penalty (PPO), and DPO, which skips the reward model | planned |
-| 9 | RLVR | The reward model replaced by a program that checks the answer: rollouts, verifiers, policy-gradient updates with GRPO | planned |
-| 10 | The practitioner's stack | Export the model, serve it, and run it in vLLM, llama.cpp and MLX; map each stage to the library used for it in practice | planned |
+| | Stage | What gets built |
+|---|---|---|
+| 1 | [Tokenizer](docs/01-tokenizer.md) | Byte-level BPE: training, encoding, decoding, special tokens |
+| 2 | [Model](docs/02-model.md) | Decoder-only transformer with RMSNorm, RoPE, SwiGLU and grouped-query attention |
+| 3 | [Pretraining](docs/03-pretraining.md) | Data pipeline, AdamW, learning rate schedule, checkpoints: a model that writes stories |
+| 4 | [Inference](docs/04-inference.md) | KV cache, sampling strategies, batches of unequal prompts, stop conditions |
+| 5 | [Pretrained weights](docs/05-pretrained.md) | Qwen2.5-0.5B-Instruct loaded into the same model code: a safetensors reader, its tokenizer, the chat format, and tests against the reference implementation |
+| 6 | [Fine-tuning](docs/06-finetuning.md) | Conversations as data, a loss on the replies only, full fine-tuning and LoRA |
+| 7 | [Evaluation](docs/07-evaluation.md) | Scoring replies to held-out prompts, confidence intervals, and paired comparison of two models |
+| 8 | [RLHF](docs/08-rlhf.md) | Preference comparisons, a reward model, and three ways to use it: rejection sampling, PPO with a KL penalty, and DPO, which skips the reward model |
+| 9 | [RLVR](docs/09-rlvr.md) | The reward model replaced by a program that checks the answer: rollouts, verifiers, and GRPO |
+| 10 | [The practitioner's stack](docs/10-stack.md) | Export to the format other tools read, a check against transformers, a run in MLX, an OpenAI-compatible server, and a map from each stage to the library used for it |
+
+## What came out
+
+The numbers are measured on one laptop, and the runs behind them are logged
+in [`runs/`](runs/). The notes explain each one.
+
+| Stage | Result |
+|---|---|
+| 3 | A 14M model trained from scratch writes coherent children's stories after 20 minutes. Compiling the model and 16-bit arithmetic make a training step about 4 times faster. |
+| 4 | A KV cache is 16 times faster for 64 sequences of 255 tokens, and no faster at all for a single one, where overhead dominates. |
+| 5 | The same model code loads Qwen2.5-0.5B-Instruct: identical token ids, logits within 0.001 of the reference, identical greedy output. |
+| 6, 7 | Fine-tuning teaches the story model to follow an instruction: requested words used rise from 6.5% to 39.6%. Fine-tuning the 0.5B model on GSM8K's solutions lowers its loss and its accuracy, from 46.8% to 36.6%: it learned to imitate terse solutions. A token limit set too low had hidden five of those ten points. |
+| 8 | A reward model trained on 3,500 noisy comparisons orders 84% of held-out pairs the way the annotator's hidden taste does. PPO with a KL penalty raises that taste from +0.21 to +1.27, and DPO to +1.06 in 80 seconds. Without the penalty the taste is highest and the stories stop making sense. |
+| 9 | GRPO takes the story model from 40% to 94% of requested words in 15 minutes, by repeating them until the token limit. A stricter verifier gets endings and the same nonsense, and a KL penalty gets stories. On GSM8K, 22 minutes of GRPO add 5.9 points on the test set (95% interval 3.2 to 8.5). |
+| 10 | The from-scratch model, exported, runs in MLX and writes the same story token for token. |
+
+Two lessons recur. A loss or a reward is satisfied by whatever satisfies
+it, which is not always what was meant: stages 7, 8 and 9 each show a
+different case. And the way to notice is to read what the model wrote.
 
 ## Quick start
 
@@ -52,11 +70,30 @@ uv run scripts/download_qwen.py      # stage 5: an open 0.5B model, 1 GB
 uv run scripts/chat.py               # talk to it, on this repository's model code
 ```
 
+The later stages build on these. Each note lists its commands, and in short:
+
+```sh
+uv run scripts/finetune.py --task words                 # stage 6, 11 minutes
+uv run scripts/finetune.py --task gsm8k --lora 16       # 10 minutes
+uv run scripts/evaluate.py --model out/sft-words --task words     # stage 7
+
+uv run scripts/make_preferences.py                      # stage 8
+uv run scripts/train_reward.py
+uv run scripts/ppo.py                                   # 7 minutes
+uv run scripts/dpo.py
+
+uv run scripts/grpo.py --task words                     # stage 9, 15 minutes
+uv run scripts/grpo.py --task gsm8k --max-new-tokens 256          # 22 minutes
+
+uv run scripts/export.py --model out/sft-words          # stage 10
+uv run scripts/serve.py --model out/sft-words
+```
+
 Timings are from a MacBook Pro with an M5 Pro and 64 GB of memory, using the
 Apple GPU. The code picks an NVIDIA GPU, the Apple GPU or the CPU, in that
-order; set `MINLLM_DEVICE=cpu` to override. CUDA has not been tested yet. On
-an Apple GPU the process is capped at half of the recommended memory, so that
-a batch that is too large fails instead of swapping the machine.
+order; set `MINLLM_DEVICE=cpu` to override. CUDA has not been tested. On an
+Apple GPU the process is capped at half of the recommended memory, so that a
+batch that is too large fails instead of swapping the machine.
 
 ## Two models
 
@@ -66,16 +103,17 @@ The stages use two models, both running on the code in
 The first is trained from scratch here: 14M parameters, a vocabulary of 4,096
 tokens, trained on [TinyStories](https://arxiv.org/abs/2305.07759). After 20
 minutes of training it writes fluent children's stories. It carries stages 1
-to 4 and stays the testbed afterwards: each post-training method is tried on
-it first, where an experiment takes minutes.
+to 4 and stays the testbed afterwards: fine-tuning, RLHF and RLVR are all run
+on it, where an experiment takes minutes and can be repeated.
 
 The second is Qwen2.5-0.5B-Instruct, an open pretrained model with 494M
 parameters, loaded into the same code from stage 5 on. Post-training on a real
 task needs a model that already knows something: RLVR improves a model on a
 task it sometimes gets right, and a model trained on a laptop from children's
 stories does not do arithmetic at any rate worth reinforcing. The 0.5B model
-gets some of it right. On the laptop it generates 3,100 tokens per second in
-a batch and trains at 4,000, which is enough for the stages that follow.
+solves 47% of GSM8K's test problems as published. On the laptop it generates
+3,100 tokens per second in a batch and trains at 4,000, which is enough for
+fine-tuning in 10 minutes and a GRPO run in 22.
 
 ## Layout
 
