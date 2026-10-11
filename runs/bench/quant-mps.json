@@ -1,0 +1,63 @@
+{
+ "device": "mps",
+ "repeats": 3,
+ "cases": [
+  {
+   "where": "this repository",
+   "bits": 16,
+   "model": "qwen",
+   "file_mb": 988.097824,
+   "weights_gb": 0.99225984,
+   "batch_1": 91.75340205662354,
+   "peak_gb": 1.091239936,
+   "batch_64": 3484.5383778215323
+  },
+  {
+   "where": "this repository",
+   "bits": 8,
+   "model": "out/qwen-q8",
+   "file_mb": 525.039672,
+   "weights_gb": 0.533508608,
+   "batch_1": 6.487117084641663,
+   "peak_gb": 3.330998272,
+   "batch_64": 377.3290398098153
+  },
+  {
+   "where": "this repository",
+   "bits": 4,
+   "model": "out/qwen-q4",
+   "file_mb": 278.058888,
+   "weights_gb": 0.286528,
+   "batch_1": 6.503576420919537,
+   "peak_gb": 2.760572928,
+   "batch_64": 359.4493171097236
+  },
+  {
+   "where": "MLX",
+   "bits": 16,
+   "model": "data/qwen2.5-0.5b-instruct",
+   "file_mb": 988.097824,
+   "weights_gb": 0.988065544,
+   "batch_1": 226.59303420976607,
+   "peak_gb": 1.019931782
+  },
+  {
+   "where": "MLX",
+   "bits": 8,
+   "model": "out/export/qwen-q8",
+   "file_mb": 525.046128,
+   "weights_gb": 0.527347464,
+   "batch_1": 332.6971194947331,
+   "peak_gb": 0.585117488
+  },
+  {
+   "where": "MLX",
+   "bits": 4,
+   "model": "out/export/qwen-q4",
+   "file_mb": 278.065336,
+   "weights_gb": 0.28116148,
+   "batch_1": 475.8839367812062,
+   "peak_gb": 0.337085192
+  }
+ ]
+}
