@@ -25,8 +25,10 @@ class LoRALinear(nn.Module):
         # A starts random and B at zero, so B A = 0 and training starts from
         # exactly the pretrained model. A is scaled so that A x has about the
         # size of x: much larger, and the first steps on B overshoot.
-        self.A = nn.Parameter(torch.randn(r, base.in_features, device=weight.device, dtype=weight.dtype) / base.in_features**0.5)
-        self.B = nn.Parameter(torch.zeros(base.out_features, r, device=weight.device, dtype=weight.dtype))
+        # A quantized base has no weight parameter to take the dtype from: its adapters are 32-bit floats.
+        dtype = weight.dtype if isinstance(weight, nn.Parameter) else torch.float32
+        self.A = nn.Parameter(torch.randn(r, base.in_features, device=weight.device, dtype=dtype) / base.in_features**0.5)
+        self.B = nn.Parameter(torch.zeros(base.out_features, r, device=weight.device, dtype=dtype))
         self.scale = alpha / r
         self.enabled = True  # off: the layer computes what the pretrained model computes
 
