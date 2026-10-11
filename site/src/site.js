@@ -50,13 +50,22 @@ document.addEventListener("keydown", (event) => {
 
 // ------------------------------------------------------------------ films
 
-for (const el of document.querySelectorAll(".film[data-film]")) {
-  import(new URL("./films/film.js", import.meta.url))
-    .then((module) => module.default(el))
-    .catch((error) => {
-      el.textContent = `This film could not be loaded: ${error.message}`;
-    });
-}
+// A film is loaded when it comes near the window: the page of all films has fourteen.
+const near = new IntersectionObserver(
+  (entries) => {
+    for (const { target, isIntersecting } of entries) {
+      if (!isIntersecting) continue;
+      near.unobserve(target);
+      import(new URL("./films/film.js", import.meta.url))
+        .then((module) => module.default(target))
+        .catch((error) => {
+          target.textContent = `This film could not be loaded: ${error.message}`;
+        });
+    }
+  },
+  { rootMargin: "600px" },
+);
+for (const el of document.querySelectorAll(".film[data-film]")) near.observe(el);
 
 // ------------------------------------------------- a figure, opened large
 

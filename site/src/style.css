@@ -89,7 +89,7 @@ a:hover { text-decoration: underline; }
 @media (max-width: 700px) {
   :root { --top: 54px; }
   .top { gap: 10px; padding: 10px 12px 0; }
-  .brand span, .repo, .theme-name { display: none; }
+  .brand span, .repo, .theme-name, .tool.wide { display: none; }
   .theme::before { margin-right: 0; }
   .tool { padding: 2px 6px; }
   .thread li:not(:last-child)::after { margin: 0 2px; min-width: 2px; }

@@ -36,7 +36,7 @@ export function landing(readme, notes, render, labs, section) {
 <h1>A language model, from raw text to a served, post-trained model, on a laptop</h1>
 <p class="byline">By <a href="https://changkun.de">Changkun Ou</a>, Latere AI</p>
 ${render(intro.slice(0, 2).join("\n\n"), "").html}
-<p class="hero-actions"><a class="button primary" href="/${stages[0].slug}/">Start at stage 1</a> <a class="button" href="#try-generate">Run the model here</a> <a class="button" href="/code/">Read the code</a> <a class="button" href="${REPO}">GitHub</a></p>
+<p class="hero-actions"><a class="button primary" href="/${stages[0].slug}/">Start at stage 1</a> <a class="button" href="/films/">Watch the films</a> <a class="button" href="#try-generate">Run the model here</a> <a class="button" href="/code/">Read the code</a> <a class="button" href="${REPO}">GitHub</a></p>
 </section>
 <section class="map" aria-label="The pipeline">
 ${map(notes)}

@@ -47,6 +47,7 @@ export function shell({ title, description, current, body }) {
 <a class="brand" href="/" aria-label="minllm, to the start">${MARK}<span>minllm</span></a>
 ${thread(current)}
 <div class="tools">
+<a class="tool wide" href="/films/">Films</a>
 <a class="tool" href="/code/">Code</a>
 <button class="tool theme" type="button" aria-label="Change the theme"><span class="theme-name">Light</span></button>
 <a class="tool repo" href="${REPO}">GitHub</a>

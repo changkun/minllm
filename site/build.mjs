@@ -107,6 +107,11 @@ for (const p of pages) {
 }
 
 const titles = Object.fromEntries(Object.values(notes).map((note) => [note.slug, note.title]));
+// The element that a chapter's film is played in.
+function screen(slug) {
+  const { n, title, next } = about(slug, titles);
+  return `<section class="film" data-film="${slug}" data-n="${n}" data-title="${title}" data-next="${next}"><noscript>This chapter has a film, which needs JavaScript.</noscript></section>`;
+}
 
 for (const note of Object.values(notes)) {
   let html = note.html;
@@ -116,11 +121,7 @@ for (const note of Object.values(notes)) {
     if (!place.test(html)) throw new Error(`${note.slug}: no place for the lab ${lab.name}`);
     html = html.replace(place, lab.after ? `$1\n${section(lab)}` : `${section(lab)}\n$1`);
   }
-  if (filmed(note.slug)) {
-    // The film of a chapter is the first thing in its note.
-    const { n, title, next } = about(note.slug, titles);
-    html = `<section class="film" data-film="${note.slug}" data-n="${n}" data-title="${title}" data-next="${next}"><noscript>This chapter has a film, which needs JavaScript.</noscript></section>\n${html}`;
-  }
+  if (filmed(note.slug)) html = `${screen(note.slug)}\n${html}`; // the film of a chapter is the first thing in its note
   mkdirSync(join(dist, note.slug), { recursive: true });
   writeFileSync(join(dist, note.slug, "index.html"), page({ ...note, html }, notes));
 }
@@ -131,6 +132,11 @@ writeFileSync(join(dist, "index.html"), landing(readFileSync(join(root, "README.
 const gallery = labs.map((lab) => `<p class="kicker"><a href="/${lab.note}/">${notes[lab.note].n} ${notes[lab.note].title}</a></p>\n${section(lab)}`).join("\n");
 mkdirSync(join(dist, "interactive"), { recursive: true });
 writeFileSync(join(dist, "interactive", "index.html"), page({ slug: null, title: "Interactive figures", files: "", html: `<p>The figures of this site that can be tried, in the order of the pipeline. Each reads what it shows from the runs logged in the repository.</p>\n${gallery}`, headings: [] }, notes));
+
+// Every film on one page, in the order of the pipeline.
+const reel = films().map((slug) => `<h2 id="${slug}"><span class="num">${notes[slug].n}</span> <a href="/${slug}/">${notes[slug].title}</a></h2>\n${screen(slug)}`).join("\n");
+mkdirSync(join(dist, "films"), { recursive: true });
+writeFileSync(join(dist, "films", "index.html"), page({ slug: null, title: "Films", files: "", html: `<p>Every chapter as a film of under a minute, in the order of the pipeline. A film is drawn by the page from the runs logged in the repository, so it can be stopped and moved to any second. The note below each title has the whole chapter.</p>\n${reel}`, headings: films().map((slug) => ({ id: slug, text: `${notes[slug].n} ${notes[slug].title}` })) }, notes));
 
 // The code: one page per Python file, and a list of them all.
 const explained = (path) => [...(explains[path] || [])].map((slug) => notes[slug]);
