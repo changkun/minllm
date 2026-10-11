@@ -1,0 +1,28 @@
+{
+ "family": "small",
+ "base": "out/base",
+ "quant": {
+  "bits": 4,
+  "group": 64,
+  "embed_bits": null
+ },
+ "config": {
+  "vocab_size": 4096,
+  "max_seq_len": 256,
+  "dim": 384,
+  "n_layers": 8,
+  "n_heads": 6,
+  "n_kv_heads": 2,
+  "mlp_dim": 1024,
+  "rope_theta": 10000.0,
+  "norm_eps": 1e-06,
+  "tie_embeddings": true,
+  "qkv_bias": false,
+  "n_experts": 0,
+  "n_active": 2
+ },
+ "parameters": 14162304,
+ "megabytes": 7.993504,
+ "loss": 1.4814078778028488,
+ "loss_before": 1.465377974510193
+}
