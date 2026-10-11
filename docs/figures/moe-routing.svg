@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="372" viewBox="0 0 720 372" role="img"><title>What the routers do</title><desc>The trained mixture on 102,400 tokens of held-out stories.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="371" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">What the routers do</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">The trained mixture on 102,400 tokens of held-out stories.</text>
+<text class="f-ink" x="64" y="98" font-size="12" text-anchor="start" font-weight="600">Share of the work</text>
+<text class="f-ink2" x="64" y="114" font-size="11" text-anchor="start">one row per block, one cell per expert</text>
+<text class="f-muted" x="56" y="141" font-size="11" text-anchor="end">1</text>
+<rect class="f-grid" x="64" y="124" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="64" y="124" width="24" height="24" rx="3" fill-opacity="0.57"/>
+<rect class="f-grid" x="90" y="124" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="90" y="124" width="24" height="24" rx="3" fill-opacity="0.4"/>
+<rect class="f-grid" x="116" y="124" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="116" y="124" width="24" height="24" rx="3" fill-opacity="0.57"/>
+<rect class="f-grid" x="142" y="124" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="142" y="124" width="24" height="24" rx="3" fill-opacity="0.57"/>
+<rect class="f-grid" x="168" y="124" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="168" y="124" width="24" height="24" rx="3" fill-opacity="0.62"/>
+<rect class="f-grid" x="194" y="124" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="194" y="124" width="24" height="24" rx="3" fill-opacity="0.66"/>
+<rect class="f-grid" x="220" y="124" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="220" y="124" width="24" height="24" rx="3" fill-opacity="0.43"/>
+<rect class="f-grid" x="246" y="124" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="246" y="124" width="24" height="24" rx="3" fill-opacity="0.69"/>
+<text class="f-muted" x="56" y="167" font-size="11" text-anchor="end">2</text>
+<rect class="f-grid" x="64" y="150" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="64" y="150" width="24" height="24" rx="3" fill-opacity="0.57"/>
+<rect class="f-grid" x="90" y="150" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="90" y="150" width="24" height="24" rx="3" fill-opacity="0.57"/>
+<rect class="f-grid" x="116" y="150" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="116" y="150" width="24" height="24" rx="3" fill-opacity="0.58"/>
+<rect class="f-grid" x="142" y="150" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="142" y="150" width="24" height="24" rx="3" fill-opacity="0.57"/>
+<rect class="f-grid" x="168" y="150" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="168" y="150" width="24" height="24" rx="3" fill-opacity="0.57"/>
+<rect class="f-grid" x="194" y="150" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="194" y="150" width="24" height="24" rx="3" fill-opacity="0.53"/>
+<rect class="f-grid" x="220" y="150" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="220" y="150" width="24" height="24" rx="3" fill-opacity="0.5"/>
+<rect class="f-grid" x="246" y="150" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="246" y="150" width="24" height="24" rx="3" fill-opacity="0.63"/>
+<text class="f-muted" x="56" y="193" font-size="11" text-anchor="end">3</text>
+<rect class="f-grid" x="64" y="176" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="64" y="176" width="24" height="24" rx="3" fill-opacity="0.55"/>
+<rect class="f-grid" x="90" y="176" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="90" y="176" width="24" height="24" rx="3" fill-opacity="0.54"/>
+<rect class="f-grid" x="116" y="176" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="116" y="176" width="24" height="24" rx="3" fill-opacity="0.56"/>
+<rect class="f-grid" x="142" y="176" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="142" y="176" width="24" height="24" rx="3" fill-opacity="0.53"/>
+<rect class="f-grid" x="168" y="176" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="168" y="176" width="24" height="24" rx="3" fill-opacity="0.57"/>
+<rect class="f-grid" x="194" y="176" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="194" y="176" width="24" height="24" rx="3" fill-opacity="0.62"/>
+<rect class="f-grid" x="220" y="176" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="220" y="176" width="24" height="24" rx="3" fill-opacity="0.47"/>
+<rect class="f-grid" x="246" y="176" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="246" y="176" width="24" height="24" rx="3" fill-opacity="0.68"/>
+<text class="f-muted" x="56" y="219" font-size="11" text-anchor="end">4</text>
+<rect class="f-grid" x="64" y="202" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="64" y="202" width="24" height="24" rx="3" fill-opacity="0.58"/>
+<rect class="f-grid" x="90" y="202" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="90" y="202" width="24" height="24" rx="3" fill-opacity="0.54"/>
+<rect class="f-grid" x="116" y="202" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="116" y="202" width="24" height="24" rx="3" fill-opacity="0.49"/>
+<rect class="f-grid" x="142" y="202" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="142" y="202" width="24" height="24" rx="3" fill-opacity="0.5"/>
+<rect class="f-grid" x="168" y="202" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="168" y="202" width="24" height="24" rx="3" fill-opacity="0.5"/>
+<rect class="f-grid" x="194" y="202" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="194" y="202" width="24" height="24" rx="3" fill-opacity="0.64"/>
+<rect class="f-grid" x="220" y="202" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="220" y="202" width="24" height="24" rx="3" fill-opacity="0.66"/>
+<rect class="f-grid" x="246" y="202" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="246" y="202" width="24" height="24" rx="3" fill-opacity="0.61"/>
+<text class="f-muted" x="56" y="245" font-size="11" text-anchor="end">5</text>
+<rect class="f-grid" x="64" y="228" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="64" y="228" width="24" height="24" rx="3" fill-opacity="0.43"/>
+<rect class="f-grid" x="90" y="228" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="90" y="228" width="24" height="24" rx="3" fill-opacity="0.74"/>
+<rect class="f-grid" x="116" y="228" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="116" y="228" width="24" height="24" rx="3" fill-opacity="0.49"/>
+<rect class="f-grid" x="142" y="228" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="142" y="228" width="24" height="24" rx="3" fill-opacity="0.55"/>
+<rect class="f-grid" x="168" y="228" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="168" y="228" width="24" height="24" rx="3" fill-opacity="0.61"/>
+<rect class="f-grid" x="194" y="228" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="194" y="228" width="24" height="24" rx="3" fill-opacity="0.47"/>
+<rect class="f-grid" x="220" y="228" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="220" y="228" width="24" height="24" rx="3" fill-opacity="0.59"/>
+<rect class="f-grid" x="246" y="228" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="246" y="228" width="24" height="24" rx="3" fill-opacity="0.63"/>
+<text class="f-muted" x="56" y="271" font-size="11" text-anchor="end">6</text>
+<rect class="f-grid" x="64" y="254" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="64" y="254" width="24" height="24" rx="3" fill-opacity="0.64"/>
+<rect class="f-grid" x="90" y="254" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="90" y="254" width="24" height="24" rx="3" fill-opacity="0.5"/>
+<rect class="f-grid" x="116" y="254" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="116" y="254" width="24" height="24" rx="3" fill-opacity="0.69"/>
+<rect class="f-grid" x="142" y="254" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="142" y="254" width="24" height="24" rx="3" fill-opacity="0.35"/>
+<rect class="f-grid" x="168" y="254" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="168" y="254" width="24" height="24" rx="3" fill-opacity="0.51"/>
+<rect class="f-grid" x="194" y="254" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="194" y="254" width="24" height="24" rx="3" fill-opacity="0.61"/>
+<rect class="f-grid" x="220" y="254" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="220" y="254" width="24" height="24" rx="3" fill-opacity="0.71"/>
+<rect class="f-grid" x="246" y="254" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="246" y="254" width="24" height="24" rx="3" fill-opacity="0.5"/>
+<text class="f-muted" x="56" y="297" font-size="11" text-anchor="end">7</text>
+<rect class="f-grid" x="64" y="280" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="64" y="280" width="24" height="24" rx="3" fill-opacity="0.43"/>
+<rect class="f-grid" x="90" y="280" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="90" y="280" width="24" height="24" rx="3" fill-opacity="0.55"/>
+<rect class="f-grid" x="116" y="280" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="116" y="280" width="24" height="24" rx="3" fill-opacity="0.75"/>
+<rect class="f-grid" x="142" y="280" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="142" y="280" width="24" height="24" rx="3" fill-opacity="0.62"/>
+<rect class="f-grid" x="168" y="280" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="168" y="280" width="24" height="24" rx="3" fill-opacity="0.51"/>
+<rect class="f-grid" x="194" y="280" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="194" y="280" width="24" height="24" rx="3" fill-opacity="0.58"/>
+<rect class="f-grid" x="220" y="280" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="220" y="280" width="24" height="24" rx="3" fill-opacity="0.34"/>
+<rect class="f-grid" x="246" y="280" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="246" y="280" width="24" height="24" rx="3" fill-opacity="0.73"/>
+<text class="f-muted" x="56" y="323" font-size="11" text-anchor="end">8</text>
+<rect class="f-grid" x="64" y="306" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="64" y="306" width="24" height="24" rx="3" fill-opacity="0.56"/>
+<rect class="f-grid" x="90" y="306" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="90" y="306" width="24" height="24" rx="3" fill-opacity="1.0"/>
+<rect class="f-grid" x="116" y="306" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="116" y="306" width="24" height="24" rx="3" fill-opacity="0.52"/>
+<rect class="f-grid" x="142" y="306" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="142" y="306" width="24" height="24" rx="3" fill-opacity="0.75"/>
+<rect class="f-grid" x="168" y="306" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="168" y="306" width="24" height="24" rx="3" fill-opacity="0.4"/>
+<rect class="f-grid" x="194" y="306" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="194" y="306" width="24" height="24" rx="3" fill-opacity="0.45"/>
+<rect class="f-grid" x="220" y="306" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="220" y="306" width="24" height="24" rx="3" fill-opacity="0.4"/>
+<rect class="f-grid" x="246" y="306" width="24" height="24" rx="3" fill-opacity="0.6"/>
+<rect class="f-s2" x="246" y="306" width="24" height="24" rx="3" fill-opacity="0.43"/>
+<text class="f-muted" x="64" y="348" font-size="11" text-anchor="start">from 8% to 22%; even would be 12.5%</text>
+<text class="f-muted" x="30" y="228" font-size="11" text-anchor="middle" transform="rotate(-90 30 228)">block</text>
+<text class="f-ink" x="372" y="112" font-size="12" text-anchor="start" font-weight="600">How often a token&#x27;s first expert can be guessed</text>
+<line class="s-grid" x1="372" y1="274" x2="662" y2="274" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="364" y="278" font-size="11" text-anchor="end">0%</text>
+<line class="s-grid" x1="372" y1="236.5" x2="662" y2="236.5" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="364" y="240.5" font-size="11" text-anchor="end">25%</text>
+<line class="s-grid" x1="372" y1="199" x2="662" y2="199" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="364" y="203" font-size="11" text-anchor="end">50%</text>
+<line class="s-grid" x1="372" y1="161.5" x2="662" y2="161.5" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="364" y="165.5" font-size="11" text-anchor="end">75%</text>
+<line class="s-grid" x1="372" y1="124" x2="662" y2="124" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="364" y="128" font-size="11" text-anchor="end">100%</text>
+<line class="s-axis" x1="372" y1="274" x2="662" y2="274" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="386.9" y1="274" x2="386.9" y2="278" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="386.9" y="291" font-size="11" text-anchor="middle">1</text>
+<line class="s-axis" x1="424.1" y1="274" x2="424.1" y2="278" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="424.1" y="291" font-size="11" text-anchor="middle">2</text>
+<line class="s-axis" x1="461.2" y1="274" x2="461.2" y2="278" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="461.2" y="291" font-size="11" text-anchor="middle">3</text>
+<line class="s-axis" x1="498.4" y1="274" x2="498.4" y2="278" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="498.4" y="291" font-size="11" text-anchor="middle">4</text>
+<line class="s-axis" x1="535.6" y1="274" x2="535.6" y2="278" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="535.6" y="291" font-size="11" text-anchor="middle">5</text>
+<line class="s-axis" x1="572.8" y1="274" x2="572.8" y2="278" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="572.8" y="291" font-size="11" text-anchor="middle">6</text>
+<line class="s-axis" x1="609.9" y1="274" x2="609.9" y2="278" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="609.9" y="291" font-size="11" text-anchor="middle">7</text>
+<line class="s-axis" x1="647.1" y1="274" x2="647.1" y2="278" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="647.1" y="291" font-size="11" text-anchor="middle">8</text>
+<text class="f-muted" x="517" y="310" font-size="11" text-anchor="middle">block</text>
+<path class="s-muted " d="M386.9 248.7 L424.1 244.6 L461.2 237.5 L498.4 246.7 L535.6 244.4 L572.8 239.9 L609.9 240.7 L647.1 238.9" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-s1 " d="M386.9 137 L424.1 144.9 L461.2 146.6 L498.4 175 L535.6 165.6 L572.8 184 L609.9 162.8 L647.1 191.6" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s1 s-surface" cx="386.9" cy="137" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="424.1" cy="144.9" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="461.2" cy="146.6" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="498.4" cy="175" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="535.6" cy="165.6" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="572.8" cy="184" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="609.9" cy="162.8" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="647.1" cy="191.6" r="4" stroke-width="2"/>
+<path class="s-s3 " d="M386.9 251.5 L424.1 253.2 L461.2 248.8 L498.4 250.8 L535.6 252.3 L572.8 214.1 L609.9 249 L647.1 227.8" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s3 s-surface" cx="386.9" cy="251.5" r="4" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="424.1" cy="253.2" r="4" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="461.2" cy="248.8" r="4" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="498.4" cy="250.8" r="4" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="535.6" cy="252.3" r="4" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="572.8" cy="214.1" r="4" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="609.9" cy="249" r="4" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="647.1" cy="227.8" r="4" stroke-width="2"/>
+<text class="f-ink" x="398.9" y="129" font-size="12" text-anchor="start">from the token alone</text>
+<text class="f-ink" x="560.8" y="218.1" font-size="12" text-anchor="end">it is the one of the token before</text>
+<text class="f-muted" x="372" y="326" font-size="11" text-anchor="start">Gray: always guessing the block&#x27;s most common first expert.</text>
+</svg>

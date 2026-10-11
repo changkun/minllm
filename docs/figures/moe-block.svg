@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="372" viewBox="0 0 720 372" role="img"><title>A mixture of experts in place of the MLP</title><desc>One token in one block. The router scores eight experts, and only the two with the highest scores run.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="371" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">A mixture of experts in place of the MLP</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">One token in one block. The router scores eight experts, and only the two with the highest scores run.</text>
+<rect class="f-surface s-axis" x="24" y="165" width="96" height="56" rx="6" stroke-width="1"/>
+<text class="f-ink" x="72" y="190" font-size="12" text-anchor="middle" font-weight="600">Token</text>
+<text class="f-ink2" x="72" y="206" font-size="11" text-anchor="middle">its vector x</text>
+<path class="s-muted " d="M120 193 L150 193" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M143.7 190 L150 193 L143.7 196" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="152" y="165" width="128" height="56" rx="6" stroke-width="1"/>
+<text class="f-ink" x="216" y="190" font-size="12" text-anchor="middle" font-weight="600">Router</text>
+<text class="f-ink2" x="216" y="206" font-size="11" text-anchor="middle">softmax(R x)</text>
+<text class="f-muted" x="330" y="76" font-size="11" text-anchor="start">8 experts, each an MLP of its own</text>
+<rect class="f-surface s-axis" x="330" y="84" width="170" height="22" rx="4" stroke-width="1"/>
+<text class="f-ink2" x="340" y="99" font-size="11" text-anchor="start">expert 1</text>
+<text class="f-muted" x="490" y="99" font-size="11" text-anchor="end">not run</text>
+<rect class="f-surface s-axis" x="330" y="112" width="170" height="22" rx="4" stroke-width="1"/>
+<text class="f-ink2" x="340" y="127" font-size="11" text-anchor="start">expert 2</text>
+<text class="f-muted" x="490" y="127" font-size="11" text-anchor="end">not run</text>
+<rect class="f-s2" x="330" y="140" width="170" height="22" rx="4" fill-opacity="0.9"/>
+<text class="f-surface" x="340" y="155" font-size="11" text-anchor="start">expert 3</text>
+<text class="f-surface" x="490" y="155" font-size="11" text-anchor="end">weight 0.7</text>
+<path class="s-muted " d="M280 193 L304 193 L304 151 L328 151" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M321.7 148 L328 151 L321.7 154" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M500 151 L528 151 L528 193 L552 193" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M545.7 190 L552 193 L545.7 196" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="330" y="168" width="170" height="22" rx="4" stroke-width="1"/>
+<text class="f-ink2" x="340" y="183" font-size="11" text-anchor="start">expert 4</text>
+<text class="f-muted" x="490" y="183" font-size="11" text-anchor="end">not run</text>
+<rect class="f-surface s-axis" x="330" y="196" width="170" height="22" rx="4" stroke-width="1"/>
+<text class="f-ink2" x="340" y="211" font-size="11" text-anchor="start">expert 5</text>
+<text class="f-muted" x="490" y="211" font-size="11" text-anchor="end">not run</text>
+<rect class="f-s2" x="330" y="224" width="170" height="22" rx="4" fill-opacity="0.9"/>
+<text class="f-surface" x="340" y="239" font-size="11" text-anchor="start">expert 6</text>
+<text class="f-surface" x="490" y="239" font-size="11" text-anchor="end">weight 0.3</text>
+<path class="s-muted " d="M280 193 L304 193 L304 235 L328 235" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M321.7 232 L328 235 L321.7 238" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M500 235 L528 235 L528 193 L552 193" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M545.7 190 L552 193 L545.7 196" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="330" y="252" width="170" height="22" rx="4" stroke-width="1"/>
+<text class="f-ink2" x="340" y="267" font-size="11" text-anchor="start">expert 7</text>
+<text class="f-muted" x="490" y="267" font-size="11" text-anchor="end">not run</text>
+<rect class="f-surface s-axis" x="330" y="280" width="170" height="22" rx="4" stroke-width="1"/>
+<text class="f-ink2" x="340" y="295" font-size="11" text-anchor="start">expert 8</text>
+<text class="f-muted" x="490" y="295" font-size="11" text-anchor="end">not run</text>
+<rect class="f-surface s-axis" x="554" y="165" width="142" height="56" rx="6" stroke-width="1"/>
+<text class="f-ink" x="625" y="190" font-size="12" text-anchor="middle" font-weight="600">Weighted sum</text>
+<text class="f-ink2" x="625" y="206" font-size="11" text-anchor="middle">0.7 · e3 + 0.3 · e6</text>
+<path class="s-muted " d="M625 221 L625 252" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M628 245.7 L625 252 L622 245.7" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink2" x="625" y="268" font-size="11" text-anchor="middle">added to the</text>
+<text class="f-ink2" x="625" y="283" font-size="11" text-anchor="middle">residual stream</text>
+<text class="f-muted" x="24" y="334" font-size="11" text-anchor="start">The block holds the parameters of all eight experts, and a token costs the compute of two.</text>
+<text class="f-muted" x="24" y="350" font-size="11" text-anchor="start">Here an expert has half the width of the dense MLP: the same compute per token, and four times the parameters.</text>
+</svg>

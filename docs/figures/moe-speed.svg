@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="604" viewBox="0 0 720 604" role="img"><title>What the mixture costs in time</title><desc>Tokens per second on an M5 Pro. Each section has its own scale.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="603" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">What the mixture costs in time</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Tokens per second on an M5 Pro. Each section has its own scale.</text>
+<circle class="f-s1 s-surface" cx="32" cy="72" r="4" stroke-width="2"/>
+<text class="f-ink2" x="46" y="76" font-size="12" text-anchor="start">dense, 14M</text>
+<circle class="f-s2 s-surface" cx="139.2" cy="72" r="4" stroke-width="2"/>
+<text class="f-ink2" x="153.2" y="76" font-size="12" text-anchor="start">mixture, 42M of which 14M active</text>
+<circle class="f-s3 s-surface" cx="394.2" cy="72" r="4" stroke-width="2"/>
+<text class="f-ink2" x="408.2" y="76" font-size="12" text-anchor="start">dense, 42M</text>
+<text class="f-ink" x="24" y="106" font-size="12" text-anchor="start" font-weight="600">A training step</text>
+<line class="s-axis" x1="250" y1="114" x2="250" y2="268" stroke-width="1" stroke-linecap="round"/>
+<text class="f-ink" x="240" y="131" font-size="12" text-anchor="end">dense, 14M</text>
+<path class="f-s1" d="M250 118 H586 a4 4 0 0 1 4 4 V130 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="598" y="131" font-size="12" text-anchor="start">121K</text>
+<text class="f-ink" x="240" y="157" font-size="12" text-anchor="end">dense, 42M</text>
+<path class="f-s3" d="M250 144 H425 a4 4 0 0 1 4 4 V156 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="437" y="157" font-size="12" text-anchor="start">64K</text>
+<text class="f-ink" x="240" y="183" font-size="12" text-anchor="end">experts take their own tokens</text>
+<path class="f-s2" d="M250 170 H324.2 a4 4 0 0 1 4 4 V182 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="336.2" y="183" font-size="12" text-anchor="start">28K</text>
+<text class="f-ink" x="240" y="209" font-size="12" text-anchor="end">experts take every token</text>
+<path class="f-s2" d="M250 196 H382.9 a4 4 0 0 1 4 4 V208 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="394.9" y="209" font-size="12" text-anchor="start">49K</text>
+<text class="f-ink" x="240" y="235" font-size="12" text-anchor="end">capacity 1.5</text>
+<path class="f-s2" d="M250 222 H461.2 a4 4 0 0 1 4 4 V234 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="473.2" y="235" font-size="12" text-anchor="start">76K</text>
+<text class="f-ink" x="240" y="261" font-size="12" text-anchor="end">capacity 1</text>
+<path class="f-s2" d="M250 248 H484.1 a4 4 0 0 1 4 4 V260 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="496.1" y="261" font-size="12" text-anchor="start">85K</text>
+<text class="f-ink" x="24" y="310" font-size="12" text-anchor="start" font-weight="600">Generating one sequence</text>
+<line class="s-axis" x1="250" y1="318" x2="250" y2="420" stroke-width="1" stroke-linecap="round"/>
+<text class="f-ink" x="240" y="335" font-size="12" text-anchor="end">dense, 14M</text>
+<path class="f-s1" d="M250 322 H586 a4 4 0 0 1 4 4 V334 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="598" y="335" font-size="12" text-anchor="start">487</text>
+<text class="f-ink" x="240" y="361" font-size="12" text-anchor="end">dense, 42M</text>
+<path class="f-s3" d="M250 348 H512.1 a4 4 0 0 1 4 4 V360 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="524.1" y="361" font-size="12" text-anchor="start">381</text>
+<text class="f-ink" x="240" y="387" font-size="12" text-anchor="end">experts take their own tokens</text>
+<path class="f-s2" d="M250 374 H291.4 a4 4 0 0 1 4 4 V386 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="303.4" y="387" font-size="12" text-anchor="start">65</text>
+<text class="f-ink" x="240" y="413" font-size="12" text-anchor="end">experts take every token</text>
+<path class="f-s2" d="M250 400 H341.2 a4 4 0 0 1 4 4 V412 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="353.2" y="413" font-size="12" text-anchor="start">136</text>
+<text class="f-ink" x="24" y="462" font-size="12" text-anchor="start" font-weight="600">Generating 64 sequences at once</text>
+<line class="s-axis" x1="250" y1="470" x2="250" y2="572" stroke-width="1" stroke-linecap="round"/>
+<text class="f-ink" x="240" y="487" font-size="12" text-anchor="end">dense, 14M</text>
+<path class="f-s1" d="M250 474 H586 a4 4 0 0 1 4 4 V486 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="598" y="487" font-size="12" text-anchor="start">15K</text>
+<text class="f-ink" x="240" y="513" font-size="12" text-anchor="end">dense, 42M</text>
+<path class="f-s3" d="M250 500 H511 a4 4 0 0 1 4 4 V512 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="523" y="513" font-size="12" text-anchor="start">12K</text>
+<text class="f-ink" x="240" y="539" font-size="12" text-anchor="end">experts take their own tokens</text>
+<path class="f-s2" d="M250 526 H310.7 a4 4 0 0 1 4 4 V538 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="322.7" y="539" font-size="12" text-anchor="start">2.9K</text>
+<text class="f-ink" x="240" y="565" font-size="12" text-anchor="end">experts take every token</text>
+<path class="f-s2" d="M250 552 H362.8 a4 4 0 0 1 4 4 V564 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink" x="374.8" y="565" font-size="12" text-anchor="start">5.3K</text>
+</svg>
