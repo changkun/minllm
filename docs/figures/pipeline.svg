@@ -1,63 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="332" viewBox="0 0 720 332" role="img"><title>The pipeline</title><desc>Thirteen stages, each with a note, code and tests.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
-<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="331" rx="8" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="352" viewBox="0 0 720 352" role="img"><title>The pipeline</title><desc>Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="351" rx="8" stroke-width="1"/>
 <text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">The pipeline</text>
-<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Thirteen stages, each with a note, code and tests.</text>
-<text class="f-muted" x="24" y="82" font-size="11" text-anchor="start">From scratch: a 14M model, trained here</text>
-<rect class="f-s1 s-s1" x="24" y="94" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="36" y="119" font-size="11" text-anchor="start">1</text>
-<text class="f-ink" x="48" y="119" font-size="12" text-anchor="start" font-weight="600">Tokenizer</text>
-<rect class="f-s1 s-s1" x="138" y="94" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="150" y="119" font-size="11" text-anchor="start">2</text>
-<text class="f-ink" x="162" y="119" font-size="12" text-anchor="start" font-weight="600">Model</text>
-<path class="s-muted " d="M124 114 L136 114" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<path class="s-muted " d="M129.7 111 L136 114 L129.7 117" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<rect class="f-s1 s-s1" x="252" y="94" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="264" y="119" font-size="11" text-anchor="start">3</text>
-<text class="f-ink" x="276" y="119" font-size="12" text-anchor="start" font-weight="600">Pretraining</text>
-<path class="s-muted " d="M238 114 L250 114" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<path class="s-muted " d="M243.7 111 L250 114 L243.7 117" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<rect class="f-s1 s-s1" x="366" y="94" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="378" y="119" font-size="11" text-anchor="start">4</text>
-<text class="f-ink" x="390" y="119" font-size="12" text-anchor="start" font-weight="600">Inference</text>
-<path class="s-muted " d="M352 114 L364 114" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<path class="s-muted " d="M357.7 111 L364 114 L357.7 117" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<text class="f-muted" x="24" y="164" font-size="11" text-anchor="start">Post-training: that model, and an open 0.5B one</text>
-<rect class="f-s1 s-s1" x="24" y="176" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="36" y="201" font-size="11" text-anchor="start">5</text>
-<text class="f-ink" x="48" y="201" font-size="12" text-anchor="start" font-weight="600">Weights</text>
-<rect class="f-s1 s-s1" x="138" y="176" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="150" y="201" font-size="11" text-anchor="start">6</text>
-<text class="f-ink" x="162" y="201" font-size="12" text-anchor="start" font-weight="600">Fine-tuning</text>
-<path class="s-muted " d="M124 196 L136 196" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<path class="s-muted " d="M129.7 193 L136 196 L129.7 199" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<rect class="f-s1 s-s1" x="252" y="176" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="264" y="201" font-size="11" text-anchor="start">7</text>
-<text class="f-ink" x="276" y="201" font-size="12" text-anchor="start" font-weight="600">Evaluation</text>
-<path class="s-muted " d="M238 196 L250 196" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<path class="s-muted " d="M243.7 193 L250 196 L243.7 199" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<rect class="f-s1 s-s1" x="366" y="176" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="378" y="201" font-size="11" text-anchor="start">8</text>
-<text class="f-ink" x="390" y="201" font-size="12" text-anchor="start" font-weight="600">RLHF</text>
-<path class="s-muted " d="M352 196 L364 196" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<path class="s-muted " d="M357.7 193 L364 196 L357.7 199" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<rect class="f-s1 s-s1" x="480" y="176" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="492" y="201" font-size="11" text-anchor="start">9</text>
-<text class="f-ink" x="504" y="201" font-size="12" text-anchor="start" font-weight="600">RLVR</text>
-<path class="s-muted " d="M466 196 L478 196" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<path class="s-muted " d="M471.7 193 L478 196 L471.7 199" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<rect class="f-s1 s-s1" x="594" y="176" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="606" y="201" font-size="11" text-anchor="start">10</text>
-<text class="f-ink" x="622" y="201" font-size="12" text-anchor="start" font-weight="600">Export</text>
-<path class="s-muted " d="M580 196 L592 196" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<path class="s-muted " d="M585.7 193 L592 196 L585.7 199" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<text class="f-muted" x="24" y="246" font-size="11" text-anchor="start">Back to the model: built differently, stored smaller, taught by a larger one</text>
-<rect class="f-s1 s-s1" x="24" y="258" width="132" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="36" y="283" font-size="11" text-anchor="start">11</text>
-<text class="f-ink" x="52" y="283" font-size="12" text-anchor="start" font-weight="600">Experts</text>
-<rect class="f-s1 s-s1" x="172" y="258" width="132" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
-<text class="f-muted" x="184" y="283" font-size="11" text-anchor="start">12</text>
-<text class="f-ink" x="200" y="283" font-size="12" text-anchor="start" font-weight="600">Quantization</text>
-<rect class="f-surface s-axis" x="320" y="258" width="132" height="40" rx="6" stroke-width="1"/>
-<text class="f-muted" x="332" y="283" font-size="11" text-anchor="start">13</text>
-<text class="f-ink" x="348" y="283" font-size="12" text-anchor="start">Distillation</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.</text>
+<text class="f-muted" x="36" y="84" font-size="11" text-anchor="start">From scratch: a 14M model, trained here</text>
+<rect class="f-s1 s-s1" x="36" y="96" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
+<text class="f-muted" x="48" y="121" font-size="11" text-anchor="start">1</text>
+<text class="f-ink" x="60" y="121" font-size="12" text-anchor="start" font-weight="600">Tokenizer</text>
+<rect class="f-s1 s-s1" x="150" y="96" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
+<text class="f-muted" x="162" y="121" font-size="11" text-anchor="start">2</text>
+<text class="f-ink" x="174" y="121" font-size="12" text-anchor="start" font-weight="600">Model</text>
+<path class="s-muted " d="M136 116 L148 116" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M141.7 113 L148 116 L141.7 119" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<line class="s-s1" x1="199" y1="136" x2="199" y2="148" stroke-width="1.5" stroke-linecap="round"/>
+<rect class="f-surface s-s1" x="150" y="148" width="85.6" height="28" rx="5" stroke-width="1"/>
+<text class="f-muted" x="160" y="166" font-size="11" text-anchor="start">2a</text>
+<text class="f-ink" x="176.3" y="166" font-size="11" text-anchor="start">Experts</text>
+<rect class="f-s1 s-s1" x="264" y="96" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
+<text class="f-muted" x="276" y="121" font-size="11" text-anchor="start">3</text>
+<text class="f-ink" x="288" y="121" font-size="12" text-anchor="start" font-weight="600">Pretraining</text>
+<path class="s-muted " d="M250 116 L262 116" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M255.7 113 L262 116 L255.7 119" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<line class="s-axis" x1="313" y1="136" x2="313" y2="148" stroke-width="1.5" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="264" y="148" width="116.4" height="28" rx="5" stroke-width="1"/>
+<text class="f-muted" x="274" y="166" font-size="11" text-anchor="start">3a</text>
+<text class="f-ink2" x="290.3" y="166" font-size="11" text-anchor="start">Distillation</text>
+<rect class="f-s1 s-s1" x="378" y="96" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
+<text class="f-muted" x="390" y="121" font-size="11" text-anchor="start">4</text>
+<text class="f-ink" x="402" y="121" font-size="12" text-anchor="start" font-weight="600">Inference</text>
+<path class="s-muted " d="M364 116 L376 116" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M369.7 113 L376 116 L369.7 119" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-muted" x="36" y="220" font-size="11" text-anchor="start">Post-training: that model, and an open 0.5B one</text>
+<rect class="f-s1 s-s1" x="36" y="232" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
+<text class="f-muted" x="48" y="257" font-size="11" text-anchor="start">5</text>
+<text class="f-ink" x="60" y="257" font-size="12" text-anchor="start" font-weight="600">Weights</text>
+<rect class="f-s1 s-s1" x="150" y="232" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
+<text class="f-muted" x="162" y="257" font-size="11" text-anchor="start">6</text>
+<text class="f-ink" x="174" y="257" font-size="12" text-anchor="start" font-weight="600">Fine-tuning</text>
+<path class="s-muted " d="M136 252 L148 252" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M141.7 249 L148 252 L141.7 255" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-s1 s-s1" x="264" y="232" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
+<text class="f-muted" x="276" y="257" font-size="11" text-anchor="start">7</text>
+<text class="f-ink" x="288" y="257" font-size="12" text-anchor="start" font-weight="600">Evaluation</text>
+<path class="s-muted " d="M250 252 L262 252" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M255.7 249 L262 252 L255.7 255" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-s1 s-s1" x="378" y="232" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
+<text class="f-muted" x="390" y="257" font-size="11" text-anchor="start">8</text>
+<text class="f-ink" x="402" y="257" font-size="12" text-anchor="start" font-weight="600">RLHF</text>
+<path class="s-muted " d="M364 252 L376 252" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M369.7 249 L376 252 L369.7 255" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-s1 s-s1" x="492" y="232" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
+<text class="f-muted" x="504" y="257" font-size="11" text-anchor="start">9</text>
+<text class="f-ink" x="516" y="257" font-size="12" text-anchor="start" font-weight="600">RLVR</text>
+<path class="s-muted " d="M478 252 L490 252" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M483.7 249 L490 252 L483.7 255" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-s1 s-s1" x="606" y="232" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
+<text class="f-muted" x="618" y="257" font-size="11" text-anchor="start">10</text>
+<text class="f-ink" x="634" y="257" font-size="12" text-anchor="start" font-weight="600">Export</text>
+<path class="s-muted " d="M592 252 L604 252" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M597.7 249 L604 252 L597.7 255" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<line class="s-s1" x1="655" y1="272" x2="655" y2="284" stroke-width="1.5" stroke-linecap="round"/>
+<rect class="f-surface s-s1" x="581.4" y="284" width="122.6" height="28" rx="5" stroke-width="1"/>
+<text class="f-muted" x="591.4" y="302" font-size="11" text-anchor="start">10a</text>
+<text class="f-ink" x="613.9" y="302" font-size="11" text-anchor="start">Quantization</text>
+<path class="s-muted " d="M478 116 L498 116 L498 198 L18 198 L18 252 L34 252" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M27.7 249 L34 252 L27.7 255" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-muted" x="36" y="336" font-size="11" text-anchor="start">A side topic uses what its stage built, and the chain does not depend on it.</text>
 </svg>

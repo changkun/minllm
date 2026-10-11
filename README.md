@@ -4,10 +4,15 @@ A minimal pipeline for making a language model, small enough to run on a
 laptop and written to be read. It goes from raw text to a tokenizer, a
 pretrained model, an inference engine, a fine-tuned chat model, and a model
 post-trained with reinforcement learning, first from human preferences (RLHF)
-and then from verifiable rewards (RLVR). Further stages go back to the model:
-they build it again as a mixture of experts, and store it in fewer bits.
+and then from verifiable rewards (RLVR), and ends with that model in the
+format that other tools run.
 
-![The stages of the pipeline](docs/figures/pipeline.svg)
+These ten stages are the pipeline, and each builds on the one before. Side
+topics branch off a single stage for whoever wants to go further there: a
+mixture of experts in place of the model's MLP, and quantization of the
+exported file. The pipeline does not depend on them.
+
+![The ten stages of the pipeline, and the side topics that branch off them](docs/figures/pipeline.svg)
 
 The only machine learning dependency is PyTorch, for tensors and automatic
 differentiation. Everything on top of it is written here, in a few hundred
@@ -32,8 +37,16 @@ that check what the note claims.
 | 8 | [RLHF](docs/08-rlhf.md) | Preference comparisons, a reward model, and three ways to use it: rejection sampling, PPO with a KL penalty, and DPO, which skips the reward model |
 | 9 | [RLVR](docs/09-rlvr.md) | The reward model replaced by a program that checks the answer: rollouts, verifiers, and GRPO |
 | 10 | [The practitioner's stack](docs/10-stack.md) | Export to the format other tools read, a check against transformers, a run in MLX, an OpenAI-compatible server, and a map from each stage to the library used for it |
-| 11 | [Mixture of experts](docs/11-moe.md) | A variation of stage 2: a router and eight expert MLPs in every block, the load-balancing loss, three ways to hand tokens to experts, and a look at what the routers learn |
-| 12 | [Quantization](docs/12-quantization.md) | Weights as 4-bit or 8-bit codes with a scale and an offset per group, what each bit width costs in loss and on the task, and a packed file that MLX runs as it is |
+
+### Side topics
+
+Each one changes what a single stage built, with a note, code and tests of
+its own.
+
+| | Side topic | Branches from | What it adds |
+|---|---|---|---|
+| 2a | [Mixture of experts](docs/02a-moe.md) | 2, the model | A router and eight expert MLPs in place of the MLP of every block, the load-balancing loss, three ways to hand tokens to experts, and a look at what the routers learn |
+| 10a | [Quantization](docs/10a-quantization.md) | 10, the export | Weights as 4-bit or 8-bit codes with a scale and an offset per group, what each bit width costs in loss and on the task, and a packed file that MLX runs as it is |
 
 ## What came out
 
@@ -49,12 +62,17 @@ in [`runs/`](runs/). The notes explain each one.
 | 8 | A reward model trained on 3,500 noisy comparisons orders 84% of held-out pairs the way the annotator's hidden taste does. PPO with a KL penalty raises that taste from +0.21 to +1.27, and DPO to +1.06 in 80 seconds. Without the penalty the taste is highest and the stories stop making sense. |
 | 9 | GRPO takes the story model from 40% to 94% of requested words in 15 minutes, by repeating them until the token limit. A stricter verifier gets endings and the same nonsense, and a KL penalty gets stories. On GSM8K, 22 minutes of GRPO add 5.9 points on the test set (95% interval 3.2 to 8.5). |
 | 10 | The from-scratch model, exported, runs in MLX and writes the same story token for token. |
-| 11 | A mixture of eight experts per block, two of them active, has the dense model's arithmetic per token and three times its parameters. Step for step it learns more: a validation loss of 1.423 against 1.465 after 6,000 steps. Minute for minute it learns less: 1.491 against 1.465 after 20 minutes. Without the load-balancing loss, 24 of its 64 experts go unused. On this GPU it generates at a sixth of the speed of a dense model with the same parameters, and the gap closes as the models get wider. Exported, it loads as a Mixtral and gives the same logits. |
-| 12 | Stored at 8 bits per weight, the 0.5B model is half the size and solves as many GSM8K problems as before (47.3% against 46.8%), and at 6 bits still as many. At 4 bits, in 278 MB, it solves 31.9%, while its replies read as fluently as ever and its held-out loss only rises from 0.83 to 0.92. This repository's own code runs the packed model 14 times slower. MLX reads the same file and runs it 2.1 times faster, in a third of the memory. |
 
 Two lessons recur. A loss or a reward is satisfied by whatever satisfies
 it, which is not always what was meant: stages 7, 8 and 9 each show a
 different case. And the way to notice is to read what the model wrote.
+
+From the side topics:
+
+| Side topic | Result |
+|---|---|
+| 2a | A mixture of eight experts per block, two of them active, has the dense model's arithmetic per token and three times its parameters. Step for step it learns more: a validation loss of 1.423 against 1.465 after 6,000 steps. Minute for minute it learns less: 1.491 against 1.465 after 20 minutes. Without the load-balancing loss, 24 of its 64 experts go unused. On this GPU it generates at a sixth of the speed of a dense model with the same parameters, and the gap closes as the models get wider. Exported, it loads as a Mixtral and gives the same logits. |
+| 10a | Stored at 8 bits per weight, the 0.5B model is half the size and solves as many GSM8K problems as before (47.3% against 46.8%), and at 6 bits still as many. At 4 bits, in 278 MB, it solves 31.9%, while its replies read as fluently as ever and its held-out loss only rises from 0.83 to 0.92. This repository's own code runs the packed model 14 times slower. MLX reads the same file and runs it 2.1 times faster, in a third of the memory. |
 
 ## Quick start
 
@@ -92,11 +110,15 @@ uv run scripts/grpo.py --task gsm8k --max-new-tokens 256          # 22 minutes
 
 uv run scripts/export.py --model out/sft-words          # stage 10
 uv run scripts/serve.py --model out/sft-words
+```
 
-uv run scripts/train.py --n-experts 8 --mlp-dim 512 --out out/moe  # stage 11, 31 minutes
+And the side topics:
+
+```sh
+uv run scripts/train.py --n-experts 8 --mlp-dim 512 --out out/moe  # 2a, 31 minutes
 uv run scripts/analyze_moe.py
 
-uv run scripts/quantize.py --model qwen --bits 4        # stage 12: 988 MB become 278
+uv run scripts/quantize.py --model qwen --bits 4        # 10a: 988 MB become 278
 uv run scripts/evaluate.py --model out/qwen-q4 --task gsm8k
 ```
 
