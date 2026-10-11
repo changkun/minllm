@@ -20,6 +20,7 @@ import torch
 import torch.nn.functional as F
 
 from minllm import chat
+from minllm.common import free_memory
 from minllm.inference import stream
 
 
@@ -150,6 +151,8 @@ def update(model, optimizer, prompts, replies, advantages, device, old_logp=None
             stats["kl"] += divergence.item() * share
         loss.backward()
         stats["loss"] += loss.item()
+        del logits, logp, loss
+        free_memory(device)  # every chunk has its own shapes, and the pool would keep them all
     stats["grad_norm"] = torch.nn.utils.clip_grad_norm_([p for p in model.parameters() if p.requires_grad], 1.0).item()
     optimizer.step()
     return stats
