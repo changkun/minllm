@@ -1,0 +1,17 @@
+{
+  "name": "minllm-site",
+  "private": true,
+  "type": "module",
+  "description": "The website of minllm: the notes of the repository with interactive figures",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "node build.mjs && python3 -m http.server 4173 --bind 127.0.0.1 --directory dist"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "markdown-it": "^14.1.0",
+    "shiki": "^3.0.0"
+  }
+}
