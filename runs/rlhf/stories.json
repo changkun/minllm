@@ -3,6 +3,8 @@
   "taste": 0.20808333333333334,
   "words_used": 0.2465,
   "tokens": 164.196,
+  "cut_off": 0.023,
+  "repeats": 0.0,
   "same_opening": 0.469,
   "most_common_opening": "Once upon a time, there was",
   "strangeness": 1.5473680289213503
@@ -11,6 +13,8 @@
   "taste": 1.2743,
   "words_used": 0.2065,
   "tokens": 140.124,
+  "cut_off": 0.006,
+  "repeats": 0.0,
   "same_opening": 0.432,
   "most_common_opening": "Once upon a time, there was",
   "strangeness": 1.8334338444700549
@@ -19,6 +23,8 @@
   "taste": 1.3482833333333333,
   "words_used": 0.052,
   "tokens": 125.26,
+  "cut_off": 0.039,
+  "repeats": 0.0,
   "same_opening": 0.539,
   "most_common_opening": "One day, a girl named Lily",
   "strangeness": 2.990862741581495
@@ -27,6 +33,8 @@
   "taste": 1.0579833333333333,
   "words_used": 0.21233333333333335,
   "tokens": 144.637,
+  "cut_off": 0.001,
+  "repeats": 0.0,
   "same_opening": 0.283,
   "most_common_opening": "Once upon a time, there was",
   "strangeness": 1.5280190343631377
