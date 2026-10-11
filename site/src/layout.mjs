@@ -1,6 +1,7 @@
 // The page around a note: the pipeline as the header, the note with the list
 // of its sections beside it, and the way on at the foot.
 
+import { ASSETS } from "./assets.mjs";
 import { REPO, pages, stages } from "./structure.mjs";
 
 const escape = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
@@ -39,7 +40,7 @@ export function shell({ title, description, current, body }) {
 })();
 </script>
 <link rel="icon" href="${ICON}">
-<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="${ASSETS}/style.css">
 </head>
 <body>
 <header class="top">
@@ -60,7 +61,7 @@ ${body}
 <div class="viewer-bar"><span class="viewer-hint">Drag to move, scroll or pinch to zoom</span><button type="button" data-zoom="out" aria-label="Zoom out">−</button><button type="button" data-zoom="in" aria-label="Zoom in">+</button><button type="button" data-zoom="fit">Fit</button><button type="button" class="primary" data-zoom="close">Close</button></div>
 <div class="viewer-stage"><div class="viewer-content"></div></div>
 </dialog>
-<script type="module" src="/assets/site.js"></script>
+<script type="module" src="${ASSETS}/site.js"></script>
 </body>
 </html>
 `;

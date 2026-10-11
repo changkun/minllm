@@ -30,7 +30,7 @@ async function get(path) {
 
 async function load() {
   const [meta, vocabulary, response] = await Promise.all([get(`${DIR}/meta.json`).then((r) => r.json()), get("/tokenizer.json").then((r) => r.json()), get(`${DIR}/model.safetensors`)]);
-  const total = meta.megabytes * 1e6;
+  const total = Math.round(meta.megabytes * 1e6);
   const bytes = new Uint8Array(total);
   let received = 0;
   for (const reader = response.body.getReader(); ; ) {

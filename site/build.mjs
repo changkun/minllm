@@ -9,12 +9,13 @@
 // they follow the site's theme, and the interactive figures are placed by
 // src/labs.mjs.
 
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import MarkdownIt from "markdown-it";
 import { createHighlighter } from "shiki";
 
+import { ASSETS, assets } from "./src/assets.mjs";
 import { codeIndex, codePage, sources } from "./src/code.mjs";
 import { labs } from "./src/labs.mjs";
 import { landing } from "./src/landing.mjs";
@@ -88,7 +89,7 @@ export function render(source, base) {
 }
 
 rmSync(dist, { recursive: true, force: true });
-mkdirSync(join(dist, "assets"), { recursive: true });
+mkdirSync(dist, { recursive: true });
 
 const section = (lab) => `<section class="lab" id="try-${lab.name}" data-lab="${lab.name}"><h3 class="lab-title"><span>${lab.title}</span><button class="lab-large" type="button">Enlarge</button></h3><div class="lab-body"><noscript>This figure is interactive and needs JavaScript.</noscript></div></section>`;
 
@@ -138,8 +139,9 @@ writeFileSync(join(dist, "404.html"), page({ slug: null, title: "Not found", fil
 cpSync(join(root, "docs", "figures"), join(dist, "figures"), { recursive: true });
 cpSync(join(root, "runs"), join(dist, "runs"), { recursive: true }); // what the interactive figures read
 cpSync(join(here, "public"), dist, { recursive: true }); // files served as they are: the tokenizer of stage 1
-cpSync(join(here, "src", "style.css"), join(dist, "assets", "style.css"));
-cpSync(join(here, "src", "site.js"), join(dist, "assets", "site.js"));
-if (existsSync(join(here, "src", "labs"))) cpSync(join(here, "src", "labs"), join(dist, "assets", "labs"), { recursive: true });
+for (const path of assets) {
+  mkdirSync(dirname(join(dist, ASSETS, path)), { recursive: true });
+  cpSync(join(here, "src", path), join(dist, ASSETS, path));
+}
 
 console.log(`built ${Object.keys(notes).length} notes, ${files.length} code pages and ${labs.length} interactive figures into ${dist}, ${readdirSync(join(dist, "figures")).length} figures`);

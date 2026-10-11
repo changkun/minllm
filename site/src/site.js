@@ -28,7 +28,7 @@ for (const button of document.querySelectorAll(".theme")) {
 
 for (const lab of document.querySelectorAll("[data-lab]")) {
   const body = lab.querySelector(".lab-body");
-  import(`/assets/labs/${lab.dataset.lab}.js`)
+  import(new URL(`./labs/${lab.dataset.lab}.js`, import.meta.url)) // beside this file, whatever its address
     .then((module) => {
       body.textContent = "";
       return module.default(body);
