@@ -52,13 +52,11 @@ ${thread(current)}
 <a class="tool repo" href="${REPO}">GitHub</a>
 </div>
 </header>
-<div class="page" tabindex="-1">
 ${body}
 <footer class="foot">
 <p>minllm is a minimal pipeline for making a language model, written to be read. Every number on this site comes from a run that is logged in the <a href="${REPO}/tree/main/runs">repository</a>.</p>
 <p>By <a href="https://changkun.de">Changkun Ou</a>, Latere AI · <a href="${REPO}">Code on GitHub</a> · <a href="${REPO}/blob/main/LICENSE">MIT license</a></p>
 </footer>
-</div>
 <dialog class="viewer" aria-label="A figure, enlarged">
 <div class="viewer-bar"><span class="viewer-hint">Drag to move, scroll or pinch to zoom</span><button type="button" data-zoom="out" aria-label="Zoom out">−</button><button type="button" data-zoom="in" aria-label="Zoom in">+</button><button type="button" data-zoom="fit">Fit</button><button type="button" class="primary" data-zoom="close">Close</button></div>
 <div class="viewer-stage"><div class="viewer-content"></div></div>

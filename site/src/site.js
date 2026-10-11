@@ -1,22 +1,5 @@
-// The page's own behavior: where it scrolls, the theme, the interactive
-// figures, figures that open large, and the section being read in the list
-// beside a note.
-
-// ---------------------------------------------------- the scrolling part
-
-// The page scrolls below the header, not the window. The keys that scroll
-// work on it from the start, and coming back to a page returns to where it
-// was read, which a browser does by itself only for the window.
-const page = document.querySelector(".page");
-if (page) {
-  if (!location.hash && history.state?.scroll) page.scrollTop = history.state.scroll;
-  if (document.activeElement === document.body) page.focus({ preventScroll: true });
-  let saving = 0;
-  page.addEventListener("scroll", () => {
-    clearTimeout(saving);
-    saving = setTimeout(() => history.replaceState({ ...history.state, scroll: page.scrollTop }, ""), 150);
-  }, { passive: true });
-}
+// The page's own behavior: the theme, the interactive figures, figures that
+// open large, and the section being read in the list beside a note.
 
 // ------------------------------------------------------------------ theme
 
@@ -57,6 +40,7 @@ for (const lab of document.querySelectorAll("[data-lab]")) {
   large?.addEventListener("click", () => {
     const on = lab.classList.toggle("large");
     large.textContent = on ? "Close" : "Enlarge";
+    document.body.style.overflow = on ? "hidden" : ""; // the page behind it stays where it is
   });
 }
 document.addEventListener("keydown", (event) => {

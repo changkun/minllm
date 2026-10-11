@@ -34,19 +34,20 @@
 }
 
 * { box-sizing: border-box; }
-/* The window itself does not scroll: the header is above the part that does.
-   That part keeps the elastic scrolling of its own, past its ends, and keeps
-   it to itself, so the header stays where it is. */
-html { height: 100%; overscroll-behavior: none; }
-body { display: flex; flex-direction: column; height: 100vh; height: 100dvh; margin: 0; overflow: hidden; background: var(--surface); color: var(--ink); font: 16px/1.55 var(--sans); -webkit-text-size-adjust: 100%; }
-.page { flex: 1; min-height: 0; overflow: hidden auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scroll-padding-top: 20px; outline: none; }
+/* The window scrolls, and the header is fixed to it. The elastic scrolling of
+   the page past its ends then moves the content and leaves the header where
+   it is. A header that is sticky moves with the content, and switching the
+   elastic scrolling off, or scrolling a part of the page and not the window,
+   takes it from the content in Chrome. */
+html { scroll-padding-top: calc(var(--top) + 20px); }
+body { margin: 0; padding-top: var(--top); background: var(--surface); color: var(--ink); font: 16px/1.55 var(--sans); overflow-x: hidden; -webkit-text-size-adjust: 100%; }
 a { color: var(--s1); text-decoration: none; }
 a:hover { text-decoration: underline; }
 .num { color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 500; }
 
 /* ---------------------------------------------------------------- header */
 
-.top { position: relative; z-index: 10; flex: none; display: flex; align-items: flex-start; gap: 22px; height: var(--top); padding: 12px 24px 0; background: var(--surface); border-bottom: 1px solid var(--line); }
+.top { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: flex-start; gap: 22px; height: var(--top); padding: 12px 24px 0; background: var(--surface); border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: 8px; color: var(--ink); font-size: 17px; font-weight: 700; line-height: 22px; letter-spacing: -0.01em; }
 .brand:hover { text-decoration: none; }
 .mark { width: 22px; height: 22px; }
@@ -109,7 +110,7 @@ h1 .num { font-weight: 600; }
 .files p { margin: 0; }
 .note-grid { display: grid; grid-template-columns: minmax(0, 760px) 220px; justify-content: space-between; gap: 48px; }
 .note-wide .note-grid { grid-template-columns: minmax(0, 1fr); }
-.toc { position: sticky; top: 22px; align-self: start; font-size: 13px; }
+.toc { position: sticky; top: calc(var(--top) + 22px); align-self: start; font-size: 13px; }
 .toc-title { margin: 6px 0 6px; color: var(--muted); }
 .toc ol { margin: 0; padding: 0; list-style: none; }
 .toc li { margin: 0; }
@@ -186,7 +187,7 @@ svg text { font-family: var(--sans); }
 .lab-body { padding: 14px 16px 16px; font-size: 14px; }
 .lab-body p { margin: 8px 0; }
 .lab-note { color: var(--ink2); font-size: 13px; }
-.lab.large { position: fixed; inset: 0; z-index: 30; margin: 0; overflow: auto; border: 0; border-radius: 0; }
+.lab.large { position: fixed; inset: 0; z-index: 30; margin: 0; overflow: auto; overscroll-behavior: contain; border: 0; border-radius: 0; }
 .lab.large .lab-body { max-width: 1100px; margin: 0 auto; }
 .lab svg { display: block; width: 100%; height: auto; }
 .lab svg text { font-size: 12px; }
@@ -333,10 +334,8 @@ select { padding: 5px 8px; border: 1px solid var(--axis); border-radius: 6px; ba
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
-/* On paper there is no window: everything is laid out at full length. */
+/* On paper there is no header and nothing to press. */
 @media print {
-  html, body { height: auto; overflow: visible; }
-  body { display: block; }
-  .page { overflow: visible; }
+  body { padding-top: 0; }
   .top, .zoom, .lab-large, .viewer { display: none; }
 }
