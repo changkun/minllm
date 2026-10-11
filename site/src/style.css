@@ -122,7 +122,7 @@ h1 .num { font-weight: 600; }
 /* ----------------------------------------------------- interactive figures */
 
 .lab { margin: 22px 0; border: 1px solid var(--axis); border-radius: 8px; background: var(--raised); }
-.lab-title { display: flex; align-items: center; gap: 10px; margin: 0; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 14px; }
+.prose .lab-title, .lab-title { display: flex; align-items: center; gap: 10px; margin: 0; padding: 10px 16px; border-bottom: 1px solid var(--line); font-size: 14px; }
 .lab-title::before { content: "Try it"; padding: 1px 7px; border-radius: 4px; background: var(--s2); color: var(--on-accent); font-size: 11px; font-weight: 600; letter-spacing: 0.02em; }
 .lab-body { padding: 14px 16px 16px; font-size: 14px; }
 .lab-body p { margin: 8px 0; }
@@ -172,3 +172,25 @@ svg text { font-family: var(--sans); }
 
 .foot { margin-top: 24px; padding: 20px 24px 32px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 .foot p { max-width: 1120px; margin: 4px auto; }
+
+/* Fills and strokes of interactive figures, by the names the figure script uses. */
+.f-s1 { fill: var(--s1); } .f-s2 { fill: var(--s2); } .f-s3 { fill: var(--s3); }
+.f-ink { fill: var(--ink); } .f-ink2 { fill: var(--ink2); } .f-muted { fill: var(--muted); } .f-surface { fill: var(--surface); } .f-tint { fill: var(--tint); }
+.s-s1 { stroke: var(--s1); } .s-s2 { stroke: var(--s2); } .s-s3 { stroke: var(--s3); }
+.s-ink { stroke: var(--ink); } .s-axis { stroke: var(--axis); } .s-line { stroke: var(--line); } .s-muted { stroke: var(--muted); }
+.lab svg { display: block; width: 100%; height: auto; }
+.lab svg text { font-size: 12px; }
+.prose .readout, .readout { display: flex; flex-wrap: wrap; gap: 6px 28px; margin: 10px 0 0; padding: 0; list-style: none; font-size: 13px; color: var(--ink2); }
+.readout li { margin: 0; }
+.readout b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* Tokens of the tokenizer figure: text cut into pieces, alternately tinted. */
+.tokens { margin: 10px 0 4px; font: 14px/2 var(--mono); white-space: pre-wrap; word-break: break-word; }
+.tok { padding: 3px 0; border-radius: 3px; cursor: pointer; }
+.tok-0 { background: color-mix(in srgb, var(--s1) 22%, transparent); }
+.tok-1 { background: color-mix(in srgb, var(--s2) 22%, transparent); }
+.tok:hover { outline: 1.5px solid var(--ink); }
+.pieces { display: flex; flex-wrap: wrap; gap: 4px; min-height: 30px; font: 14px/1.4 var(--mono); }
+.piece { padding: 2px 7px; border: 1px solid var(--axis); border-radius: 4px; background: var(--surface); white-space: pre; }
+.piece.next { border-color: var(--s2); background: color-mix(in srgb, var(--s2) 22%, transparent); }
+button:disabled { opacity: 0.45; cursor: default; }

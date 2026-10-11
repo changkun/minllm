@@ -90,9 +90,11 @@ for (const p of pages) {
 for (const note of Object.values(notes)) {
   let html = note.html;
   for (const lab of labs.filter((l) => l.note === note.slug)) {
-    const figure = new RegExp(`(<figure class="figure"><img src="/figures/${lab.after}"[^>]*></figure>)`);
-    if (!figure.test(html)) throw new Error(`${note.slug}: no figure ${lab.after} to put the lab ${lab.name} after`);
-    html = html.replace(figure, `$1\n<section class="lab" data-lab="${lab.name}"><h3 class="lab-title">${lab.title}</h3><div class="lab-body"><noscript>This figure is interactive and needs JavaScript.</noscript></div></section>`);
+    const section = `<section class="lab" data-lab="${lab.name}"><h3 class="lab-title">${lab.title}</h3><div class="lab-body"><noscript>This figure is interactive and needs JavaScript.</noscript></div></section>`;
+    // A lab follows a figure of the note, or closes the section before a heading.
+    const place = lab.after ? new RegExp(`(<figure class="figure"><img src="/figures/${lab.after}"[^>]*></figure>)`) : new RegExp(`(<h2 id="${lab.before}">)`);
+    if (!place.test(html)) throw new Error(`${note.slug}: no place for the lab ${lab.name}`);
+    html = html.replace(place, lab.after ? `$1\n${section}` : `${section}\n$1`);
   }
   mkdirSync(join(dist, note.slug), { recursive: true });
   writeFileSync(join(dist, note.slug, "index.html"), page({ ...note, html }, notes));
