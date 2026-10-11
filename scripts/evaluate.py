@@ -3,6 +3,7 @@ Evaluate a model on a task, or compare two evaluations.
 
     uv run scripts/evaluate.py --model out/sft-words --task words
     uv run scripts/evaluate.py --model qwen --task gsm8k
+    uv run scripts/evaluate.py --model qwen --task gsm8k --bits 6    # with its weights rounded to 6 bits
     uv run scripts/evaluate.py --compare runs/eval/gsm8k-qwen.json runs/eval/gsm8k-sft-gsm8k-lora.json
 
 Writes runs/eval/<task>-<model>.json, with every score and a few replies, and
@@ -16,7 +17,7 @@ import time
 
 import torch
 
-from minllm import checkpoint, evaluate, tasks
+from minllm import checkpoint, evaluate, quantize, tasks
 from minllm.common import pick_device
 from minllm.pretrained import SYSTEM_PROMPT
 
@@ -28,6 +29,8 @@ parser.add_argument("--batch-size", type=int, default=None)
 parser.add_argument("--temperature", type=float, default=0.0, help="0 is greedy, which makes the evaluation repeatable")
 parser.add_argument("--max-new-tokens", type=int, default=None, help="the limit on a reply's length; the task's own by default")
 parser.add_argument("--seed", type=int, default=0)
+parser.add_argument("--bits", type=int, default=0, help="round the weights to this many bits first, in groups of --group (stage 12)")
+parser.add_argument("--group", type=int, default=64)
 parser.add_argument("--out", default=None)
 parser.add_argument("--compare", nargs=2, metavar="RESULT", help="two result files of the same task and examples")
 args = parser.parse_args()
@@ -55,6 +58,10 @@ if args.compare:
 device = pick_device()
 torch.manual_seed(args.seed)
 model, tok, meta = checkpoint.load(args.model, device, torch.float32 if device == "cpu" else torch.bfloat16)
+if meta.get("quant"):
+    model = quantize.expand(model)  # the same rounded weights at full size: an evaluation wants speed, not memory
+if args.bits:
+    model = quantize.rounded(model.float(), args.bits, args.group)  # what the model would compute if it were stored that way
 examples = tasks.test_examples(args.task, args.n, SYSTEM_PROMPT)
 batch_size = args.batch_size or (256 if meta["family"] == "small" else 64)
 
@@ -69,11 +76,13 @@ mean, error = evaluate.mean_and_error(scores)
 cut_off = sum(len(tok.encode_ordinary(r)) >= limit - 2 for r in replies)
 print(f"\r{args.model} on {args.task}: {show(args.task, mean)} ± {show(args.task, error).lstrip('+')} over {len(scores)} examples, {seconds:.0f}s, {cut_off} replies cut off")
 
-name = os.path.basename(args.model.rstrip("/"))
+name = os.path.basename(args.model.rstrip("/")) + (f"-{args.bits}bit" if args.bits else "")
 out = args.out or f"runs/eval/{args.task}-{name}.json"
 os.makedirs(os.path.dirname(out), exist_ok=True)
 samples = [{"prompt": e["messages"][-1]["content"], "reply": r, "score": s} for e, r, s in list(zip(examples, replies, scores))[:10]]
 result = {"model": args.model, "task": args.task, "temperature": args.temperature, "max_new_tokens": limit, "n": len(scores), "cut_off": cut_off}
+if args.bits:
+    result |= {"bits": args.bits, "group": args.group}
 if "words" in examples[0]:
     result["requested_words"] = [len(e["words"]) for e in examples]  # to break the score down by difficulty
 with open(out, "w") as f:
