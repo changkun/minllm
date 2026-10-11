@@ -68,9 +68,16 @@ export default ({ vocabulary, bench }) => {
         draw(s) {
           // every state of the word, laid out centered; a state fades into the next
           const states = tok.steps(WORD);
-          const rows = states.map((state) => {
+          const rows = states.map((state, n) => {
             const g = s.group();
+            // the pair that merges next is marked: the first place where the next state differs
+            const pair = states[n + 1] ? state.findIndex((id, i) => states[n + 1][i] !== id) : 0;
+            const marked = (i) => i === pair || (states[n + 1] && i === pair + 1);
             g.row = g.chips(640, 280, state.map(spell), { center: true, size: 46, gap: 10 });
+            g.row.forEach((c, i) => {
+              c.ground.setAttribute("class", marked(i) ? "f-s2 s-s2" : "f-tint s-axis");
+              c.label.setAttribute("class", `film-mono ${marked(i) ? "f-surface" : "f-ink"}`);
+            });
             return g;
           });
           const label = s.text(640, 450, "", { size: 26, anchor: "middle", fill: "muted" });
@@ -78,11 +85,8 @@ export default ({ vocabulary, bench }) => {
           return (t) => {
             const at = Math.min(states.length - 1, Math.floor(Math.max(0, t - 0.6) / each));
             rows.forEach((g, i) => show(g, i === at ? 1 - during(t, 0.6 + (i + 1) * each - 0.25, 0.6 + (i + 1) * each) * (i < states.length - 1 ? 1 : 0) : 0));
-            // the pair that merges next, marked
             const next = states[at + 1];
             const pair = next ? states[at].findIndex((id, i) => next[i] !== id) : -1;
-            rows[at].row.forEach((c, i) => c.ground.setAttribute("class", i === pair || i === pair + 1 ? "f-s2 s-s2" : "f-tint s-axis"));
-            rows[at].row.forEach((c, i) => c.label.setAttribute("class", `film-mono ${i === pair || i === pair + 1 ? "f-surface" : "f-ink"}`));
             label.textContent = next ? `${states[at].length} tokens: merge “${spell(states[at][pair])}” and “${spell(states[at][pair + 1])}”` : `1 token, number ${states[at][0]}, from ${states[0].length} bytes`;
           };
         },
