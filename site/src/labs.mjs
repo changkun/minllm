@@ -4,5 +4,6 @@
 
 export const labs = [
   { note: "01-tokenizer", before: "three-things-the-real-version-adds", name: "tokenizer", title: "Tokenize your own text" },
+  { note: "03-pretraining", after: "pretraining-loss.svg", name: "run", title: "Read the run off, step by step" },
   { note: "10a-quantization", after: "quant-levels.svg", name: "quantize", title: "Round this row yourself" },
 ];
