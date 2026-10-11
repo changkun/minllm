@@ -6,8 +6,10 @@ token, nudge the weights to make the right token more likely. Repeat.
     uv run scripts/train.py --resume            # continue an interrupted run
     uv run scripts/train.py --steps 200 --dim 128 --n-layers 2 --out out/debug
     uv run scripts/train.py --n-experts 8 --mlp-dim 512 --out out/moe    # a mixture of experts
+    uv run scripts/train.py --teacher out/wide --out out/distilled       # learn from a larger model
 
-See docs/03-pretraining.md, and docs/02a-moe.md for the mixture of experts.
+See docs/03-pretraining.md, docs/02a-moe.md for the mixture of experts, and
+docs/03a-distillation.md for the teacher.
 """
 
 import argparse
@@ -19,6 +21,7 @@ from dataclasses import asdict
 
 import torch
 
+from minllm import distill
 from minllm.common import load_checkpoint, pick_device
 from minllm.data import EOT, get_batch, load_tokens
 from minllm.model import Config, Transformer
@@ -41,6 +44,10 @@ parser.add_argument("--n-experts", type=int, default=0, help="above 0, every MLP
 parser.add_argument("--n-active", type=int, default=Config.n_active, help="experts that process each token")
 parser.add_argument("--balance", type=float, default=0.01, help="weight of the loss that spreads the tokens over the experts")
 parser.add_argument("--capacity", type=float, default=1.5, help="tokens an expert has room for in a training step, as a multiple of an even split")
+# distillation
+parser.add_argument("--teacher", default=None, help="the directory of a trained model, whose predictions this one learns from")
+parser.add_argument("--alpha", type=float, default=0.5, help="weight of the teacher's predictions; the rest goes to the token that came next")
+parser.add_argument("--temperature", type=float, default=1.0, help="flattens the teacher's and the student's distributions before they are compared")
 # optimization
 parser.add_argument("--steps", type=int, default=6000)
 parser.add_argument("--batch-size", type=int, default=64)
@@ -108,6 +115,12 @@ if args.resume:
 # torch.compile fuses the model's many small operations into few large ones,
 # and autocast runs the arithmetic in 16-bit floats while the weights stay 32-bit.
 forward = model if args.no_compile else torch.compile(model)
+teach = None
+if args.teacher:
+    teacher, _ = load_checkpoint(f"{args.teacher}/ckpt.pt", device)
+    assert teacher.cfg.vocab_size == cfg.vocab_size and teacher.cfg.max_seq_len >= args.seq_len, "the teacher must read the same tokens"
+    teacher.requires_grad_(False)
+    teach = teacher if args.no_compile else torch.compile(teacher)
 device_type = torch.device(device).type
 use_amp = device_type != "cpu" and not args.no_amp
 autocast = torch.autocast(device_type=device_type, dtype=torch.bfloat16, enabled=use_amp)
@@ -157,6 +170,8 @@ print(f"model: {model.num_params() / 1e6:.1f}M parameters, {cfg}")
 if mixtures:
     active = model.num_params() - sum(p.numel() for m in mixtures for e in m.experts[cfg.n_active :] for p in e.parameters())
     print(f"experts: {cfg.n_active} of {cfg.n_experts} per token, {active / 1e6:.1f}M parameters active, balance {args.balance}, capacity {args.capacity}")
+if teach is not None:
+    print(f"teacher: {args.teacher}, {teacher.num_params() / 1e6:.1f}M parameters, alpha {args.alpha}, temperature {args.temperature}")
 print(f"data: {len(train_tokens) / 1e6:.0f}M training tokens, {tokens_per_step} per step, ", end="")
 print(f"{args.steps * tokens_per_step / len(train_tokens):.1f} passes over the data in {args.steps} steps")
 
@@ -179,11 +194,18 @@ while True:
     x, y = get_batch(train_tokens, args.batch_size, args.seq_len, device)
     set_capacity(args.capacity)
     with autocast:
-        _, loss = forward(x, y)
+        logits, loss = forward(x, y)
         # A mixture of experts is trained on one more term, which asks the
         # routers to spread the tokens. The loss that is logged stays the
         # cross-entropy, so that it compares with a dense model's.
         objective = loss + args.balance * model.balance_loss() if mixtures else loss
+        if teach is not None:
+            # The teacher reads the same window, and the student is also asked
+            # to predict what the teacher predicts at every position.
+            with torch.no_grad():
+                target, _ = teach(x)
+            soft = distill.soft_loss(logits, target, args.temperature)
+            objective = args.alpha * soft + (1 - args.alpha) * objective
     optimizer.zero_grad(set_to_none=True)
     objective.backward()  # d loss / d weight, for every weight
     torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)  # one bad batch cannot throw the weights far
@@ -203,6 +225,8 @@ while True:
             record["balance"] = model.balance_loss().item()
             record["dropped"] = sum(m.dropped.item() for m in mixtures) / len(mixtures)
             record["expert_share"] = [[round(v, 4) for v in m.share.tolist()] for m in mixtures]
+        if teach is not None:
+            record["soft_loss"] = soft.item()  # the distance to the teacher's predictions on the last batch
         log(**record)
         interval_start, interval_loss = now, 0.0
 
