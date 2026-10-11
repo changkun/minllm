@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="720" height="352" viewBox="0 0 720 352" role="img"><title>The pipeline</title><desc>Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
-<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="351" rx="8" stroke-width="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="388" viewBox="0 0 720 388" role="img"><title>The pipeline</title><desc>Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="387" rx="8" stroke-width="1"/>
 <text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">The pipeline</text>
 <text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.</text>
 <text class="f-muted" x="36" y="84" font-size="11" text-anchor="start">From scratch: a 14M model, trained here</text>
@@ -53,16 +53,20 @@
 <text class="f-ink" x="516" y="257" font-size="12" text-anchor="start" font-weight="600">RLVR</text>
 <path class="s-muted " d="M478 252 L490 252" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
 <path class="s-muted " d="M483.7 249 L490 252 L483.7 255" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<line class="s-s1" x1="541" y1="272" x2="541" y2="284" stroke-width="1.5" stroke-linecap="round"/>
+<rect class="f-surface s-s1" x="492" y="284" width="122.6" height="28" rx="5" stroke-width="1"/>
+<text class="f-muted" x="502" y="302" font-size="11" text-anchor="start">9a</text>
+<text class="f-ink" x="518.3" y="302" font-size="11" text-anchor="start">Self-training</text>
 <rect class="f-s1 s-s1" x="606" y="232" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
 <text class="f-muted" x="618" y="257" font-size="11" text-anchor="start">10</text>
 <text class="f-ink" x="634" y="257" font-size="12" text-anchor="start" font-weight="600">Export</text>
 <path class="s-muted " d="M592 252 L604 252" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
 <path class="s-muted " d="M597.7 249 L604 252 L597.7 255" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<line class="s-s1" x1="655" y1="272" x2="655" y2="284" stroke-width="1.5" stroke-linecap="round"/>
-<rect class="f-surface s-s1" x="581.4" y="284" width="122.6" height="28" rx="5" stroke-width="1"/>
-<text class="f-muted" x="591.4" y="302" font-size="11" text-anchor="start">10a</text>
-<text class="f-ink" x="613.9" y="302" font-size="11" text-anchor="start">Quantization</text>
+<line class="s-s1" x1="655" y1="272" x2="655" y2="320" stroke-width="1.5" stroke-linecap="round"/>
+<rect class="f-surface s-s1" x="581.4" y="320" width="122.6" height="28" rx="5" stroke-width="1"/>
+<text class="f-muted" x="591.4" y="338" font-size="11" text-anchor="start">10a</text>
+<text class="f-ink" x="613.9" y="338" font-size="11" text-anchor="start">Quantization</text>
 <path class="s-muted " d="M478 116 L498 116 L498 198 L18 198 L18 252 L34 252" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
 <path class="s-muted " d="M27.7 249 L34 252 L27.7 255" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<text class="f-muted" x="36" y="336" font-size="11" text-anchor="start">A side topic uses what its stage built, and the chain does not depend on it.</text>
+<text class="f-muted" x="36" y="372" font-size="11" text-anchor="start">A side topic uses what its stage built, and the chain does not depend on it.</text>
 </svg>
