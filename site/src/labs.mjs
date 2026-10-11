@@ -3,5 +3,6 @@
 // element, reading what it shows from the logged runs.
 
 export const labs = [
+  { note: "01-tokenizer", before: "three-things-the-real-version-adds", name: "tokenizer", title: "Tokenize your own text" },
   { note: "10a-quantization", after: "quant-levels.svg", name: "quantize", title: "Round this row yourself" },
 ];

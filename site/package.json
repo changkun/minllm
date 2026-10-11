@@ -5,7 +5,8 @@
   "description": "The website of minllm: the notes of the repository with interactive figures",
   "scripts": {
     "build": "node build.mjs",
-    "serve": "node build.mjs && python3 -m http.server 4173 --bind 127.0.0.1 --directory dist"
+    "serve": "node build.mjs && python3 -m http.server 4173 --bind 127.0.0.1 --directory dist",
+    "test": "node --test test/"
   },
   "engines": {
     "node": ">=22"
