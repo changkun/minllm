@@ -4,6 +4,7 @@ generation, against the dense model with the same active parameters and the
 dense model with the same total.
 
     uv run scripts/bench_moe.py
+    uv run scripts/bench_moe.py --scale 2 --batch-size 16    # the same comparison between models twice as wide
 
 Writes runs/bench/moe-<device>.json, which docs/11-moe.md quotes.
 """
@@ -26,18 +27,20 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--batch-size", type=int, default=64)
 parser.add_argument("--seq-len", type=int, default=256)
 parser.add_argument("--steps", type=int, default=40)
+parser.add_argument("--scale", type=int, default=1, help="make every model this many times as wide")
 parser.add_argument("--out", default=None)
 parser.add_argument("--case", default=None, help="measure this one case and print the result: the script calls itself with it")
 parser.add_argument("--generate", type=int, default=0, help="with --case: measure generation at this batch size, not training")
 args = parser.parse_args()
 
-dense = Config(max_seq_len=args.seq_len)
+dense = Config(max_seq_len=args.seq_len, dim=Config.dim * args.scale, n_heads=Config.n_heads * args.scale, mlp_dim=Config.mlp_dim * args.scale)
 moe = replace(dense, mlp_dim=dense.mlp_dim // 2, n_experts=8, n_active=2)  # two active experts of half the width
 wide = replace(dense, mlp_dim=moe.mlp_dim * moe.n_experts)  # every expert's parameters, in one MLP
 everything = moe.n_experts / moe.n_active  # the capacity at which every expert takes every token
+size = lambda cfg: f"{Transformer(cfg).num_params() / 1e6:.0f}M"
 CASES = {
-    "Dense, 14M": (dense, None),
-    "Dense, 42M": (wide, None),
+    f"Dense, {size(dense)}": (dense, None),
+    f"Dense, {size(wide)}": (wide, None),
     "Experts take their own tokens": (moe, None),
     "Experts take every token": (moe, everything),
     "Capacity 1.5": (moe, 1.5),
@@ -110,12 +113,12 @@ def measure(name, generate=0):
     memory outlive the model they were made for, and a measurement taken
     after another one in the same process came out up to a third slower.
     """
-    shape = ["--batch-size", str(args.batch_size), "--seq-len", str(args.seq_len), "--steps", str(args.steps)]
+    shape = ["--batch-size", str(args.batch_size), "--seq-len", str(args.seq_len), "--steps", str(args.steps), "--scale", str(args.scale)]
     command = [sys.executable, __file__, "--case", name, "--generate", str(generate)] + shape
     return json.loads(subprocess.run(command, capture_output=True, text=True, check=True).stdout.splitlines()[-1])
 
 
-results = {"batch_size": args.batch_size, "seq_len": args.seq_len, "train": [], "generate": []}
+results = {"batch_size": args.batch_size, "seq_len": args.seq_len, "scale": args.scale, "train": [], "generate": []}
 for name, (cfg, capacity) in CASES.items():
     r = measure(name)
     results["device"] = r.pop("device")
@@ -126,7 +129,7 @@ for name, (cfg, capacity) in list(CASES.items())[:4]:
     results["generate"].append(row)
     print(f"generation  {name:30s} {row['batch_1']:6.0f} tokens/s alone, {row['batch_64']:6.0f} in a batch of 64")
 
-args.out = args.out or f"runs/bench/moe-{results['device']}.json"
+args.out = args.out or f"runs/bench/moe-{results['device']}{f'-x{args.scale}' if args.scale > 1 else ''}.json"
 os.makedirs(os.path.dirname(args.out), exist_ok=True)
 with open(args.out, "w") as f:
     json.dump(results, f, indent=1)
