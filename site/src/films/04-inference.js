@@ -146,8 +146,8 @@ export default ({ vocabulary, next, gpu, cpu }) => {
             show(picked, during(t, 4.4, 4.8));
             show(steps[2], during(t, 4.1, 4.5));
             show(up, during(t, 4.1, 4.5));
-            const move = during(t, 4.4, 5.4);
-            place(drawn, mix(580, home.x, move), mix(306, home.y, move));
+            // across first and then up, so that it comes to its place from below and not over the text before it
+            place(drawn, mix(580, home.x, during(t, 4.4, 5.0)), mix(306, home.y, during(t, 4.8, 5.4)));
           };
         },
       },
