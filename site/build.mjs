@@ -1,5 +1,6 @@
-// Build the website into site/dist: the notes of docs/ as pages, the logged
-// runs that the interactive figures read, and a landing page.
+// Build the website into site/dist: the notes of docs/ as pages, the code
+// they explain, the logged runs that the interactive figures read, and a
+// landing page.
 //
 //     cd site && npm ci && npm run build      # then serve site/dist
 //
@@ -14,6 +15,7 @@ import { fileURLToPath } from "node:url";
 import MarkdownIt from "markdown-it";
 import { createHighlighter } from "shiki";
 
+import { codeIndex, codePage, sources } from "./src/code.mjs";
 import { labs } from "./src/labs.mjs";
 import { landing } from "./src/landing.mjs";
 import { page } from "./src/layout.mjs";
@@ -34,14 +36,16 @@ const md = new MarkdownIt({
 });
 
 const slugify = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const files = sources(root); // the Python files that get a page of their own
 
-// A link of a note, as the site needs it: another note becomes its page, and
-// anything else opens on GitHub.
+// A link of a note, as the site needs it: another note becomes its page, a
+// Python file its code page, and anything else opens on GitHub.
 function href(target, base) {
   if (/^(https?:|#|mailto:)/.test(target)) return target;
   const path = join("/", base, target).slice(1); // relative to the repository's root
   const note = path.match(/^docs\/([0-9a-z-]+)\.md(#.*)?$/);
   if (note) return `/${note[1]}/${note[2] || ""}`;
+  if (files.includes(path)) return `/code/${path}/`;
   return `${REPO}/${/\.[a-z]+$/.test(path) ? "blob" : "tree"}/main/${path.replace(/\/$/, "")}`;
 }
 
@@ -89,6 +93,7 @@ mkdirSync(join(dist, "assets"), { recursive: true });
 const section = (lab) => `<section class="lab" id="try-${lab.name}" data-lab="${lab.name}"><h3 class="lab-title"><span>${lab.title}</span><button class="lab-large" type="button">Enlarge</button></h3><div class="lab-body"><noscript>This figure is interactive and needs JavaScript.</noscript></div></section>`;
 
 const notes = {};
+const explains = {}; // code file -> the notes that link to it
 for (const p of pages) {
   const source = readFileSync(join(root, "docs", `${p.slug}.md`), "utf8");
   const title = source.match(/^# (.+)$/m)[1];
@@ -96,6 +101,7 @@ for (const p of pages) {
   // The first paragraph of a note lists its code, scripts and tests.
   const [head, ...rest] = body.trim().split(/\n\n/);
   notes[p.slug] = { ...p, title: title.replace(/^\w+\. /, ""), files: render(head, "docs").html, ...render(rest.join("\n\n"), "docs") };
+  for (const [, target] of source.matchAll(/\]\(\.\.\/([^)#]+\.py)\)/g)) (explains[target] ||= new Set()).add(p.slug);
 }
 
 for (const note of Object.values(notes)) {
@@ -117,6 +123,16 @@ const gallery = labs.map((lab) => `<p class="kicker"><a href="/${lab.note}/">${n
 mkdirSync(join(dist, "interactive"), { recursive: true });
 writeFileSync(join(dist, "interactive", "index.html"), page({ slug: null, title: "Interactive figures", files: "", html: `<p>The figures of this site that can be tried, in the order of the pipeline. Each reads what it shows from the runs logged in the repository.</p>\n${gallery}`, headings: [] }, notes));
 
+// The code: one page per Python file, and a list of them all.
+const explained = (path) => [...(explains[path] || [])].map((slug) => notes[slug]);
+for (const path of files) {
+  const source = readFileSync(join(root, path), "utf8");
+  const code = highlighter.codeToHtml(source.replace(/\n$/, ""), { lang: "python", themes, defaultColor: false, transformers: [{ line(node, line) { node.properties.id = `L${line}`; } }] });
+  mkdirSync(join(dist, "code", path), { recursive: true });
+  writeFileSync(join(dist, "code", path, "index.html"), codePage({ path, source, code, notes: explained(path) }, notes));
+}
+writeFileSync(join(dist, "code", "index.html"), codeIndex(files.map((path) => ({ path, source: readFileSync(join(root, path), "utf8"), notes: explained(path) })), notes));
+
 writeFileSync(join(dist, "404.html"), page({ slug: null, title: "Not found", files: "", html: '<p>There is no page at this address. <a href="/">The pipeline</a> lists all of them.</p>', headings: [] }, notes));
 
 cpSync(join(root, "docs", "figures"), join(dist, "figures"), { recursive: true });
@@ -126,4 +142,4 @@ cpSync(join(here, "src", "style.css"), join(dist, "assets", "style.css"));
 cpSync(join(here, "src", "site.js"), join(dist, "assets", "site.js"));
 if (existsSync(join(here, "src", "labs"))) cpSync(join(here, "src", "labs"), join(dist, "assets", "labs"), { recursive: true });
 
-console.log(`built ${Object.keys(notes).length} notes and ${labs.length} interactive figures into ${dist}, ${readdirSync(join(dist, "figures")).length} figures`);
+console.log(`built ${Object.keys(notes).length} notes, ${files.length} code pages and ${labs.length} interactive figures into ${dist}, ${readdirSync(join(dist, "figures")).length} figures`);
