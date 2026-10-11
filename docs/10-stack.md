@@ -23,7 +23,8 @@ step backwards. `scripts/export.py` writes a directory with:
   architecture of stage 2 has a name there. Without biases it is a
   `LlamaForCausalLM`, and with biases on the query, key and value projections
   it is a `Qwen2ForCausalLM`. The model trained from scratch in stage 3 is, to
-  every other tool, a very small Llama.
+  every other tool, a very small Llama. (With experts in place of the MLP it
+  is a `MixtralForCausalLM`: see [stage 11](11-moe.md).)
 - **`tokenizer.json`**, the tokenizer of stage 1 in the format of the Hugging
   Face `tokenizers` library: the same merges, the same split pattern, the
   bytes spelled in GPT-2's alphabet. And `tokenizer_config.json`, which
@@ -134,6 +135,7 @@ several requests share.
 | 8 RLHF | `reward.py`, `scripts/ppo.py`, `scripts/dpo.py` | `trl` (`DPOTrainer`, reward modeling), OpenRLHF |
 | 9 RLVR | `rl.py`, `scripts/grpo.py` | verl, OpenRLHF, `trl`'s `GRPOTrainer` |
 | 10 Serving | `scripts/serve.py` | vLLM, an OpenAI-compatible endpoint |
+| 11 Mixture of experts | `MoE` in `model.py` | the Mixtral, Qwen3-MoE and DeepSeek classes of `transformers`; grouped kernels for the experts in training frameworks |
 
 The libraries add scale, coverage and years of fixed bugs. They do not add
 ideas: every row computes what its left column computes.
