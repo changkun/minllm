@@ -149,3 +149,21 @@ def test_cache_gives_the_same_logits():
     cache = KVCache(TINY.n_layers, max_len=24)
     logits = [model(idx[:, :10], cache=cache)[0]] + [model(idx[:, [t]], cache=cache)[0] for t in range(10, 24)]
     assert torch.allclose(torch.cat(logits, dim=1), full, atol=1e-5)
+
+
+def test_export_in_the_layout_of_mixtral():
+    # The reference class keeps the router as "gate" and stacks a block's
+    # experts into one tensor per matrix, gate_proj on top of up_proj.
+    from minllm import export
+
+    torch.manual_seed(0)
+    model = Transformer(TINY)
+    state = export.stack_experts({export.to_reference(name): t for name, t in model.state_dict().items()}, TINY)
+    mlp, stacked = model.layers[1].mlp, state["model.layers.1.mlp.experts.gate_up_proj"]
+    assert stacked.shape == (TINY.n_experts, 2 * TINY.mlp_dim, TINY.dim)
+    assert torch.equal(stacked[2, : TINY.mlp_dim], mlp.experts[2].gate_proj.weight)
+    assert torch.equal(stacked[2, TINY.mlp_dim :], mlp.experts[2].up_proj.weight)
+    assert torch.equal(state["model.layers.1.mlp.experts.down_proj"][2], mlp.experts[2].down_proj.weight)
+    assert torch.equal(state["model.layers.1.mlp.gate.weight"], mlp.router.weight)
+    assert not any("router" in name or "gate_proj" in name for name in state)
+    assert export.config_json(TINY, tok=type("Tok", (), {"special_tokens": {"<|endoftext|>": 0, "<|im_end|>": 2}}))["architectures"] == ["MixtralForCausalLM"]

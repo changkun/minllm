@@ -31,15 +31,37 @@ def to_reference(name):
     return name if name.startswith("lm_head") else "model." + name
 
 
+def stack_experts(state, cfg):
+    """
+    A mixture of experts in the layout of Mixtral, as transformers 5 stores
+    it: the router is called gate, and the matrices of a block's experts are
+    stacked into one tensor, each expert's gate_proj on top of its up_proj.
+    """
+    for i in range(cfg.n_layers):
+        mlp = f"model.layers.{i}.mlp"
+        take = lambda part: [state.pop(f"{mlp}.experts.{e}.{part}.weight") for e in range(cfg.n_experts)]
+        state[f"{mlp}.gate.weight"] = state.pop(f"{mlp}.router.weight")
+        state[f"{mlp}.experts.gate_up_proj"] = torch.stack([torch.cat(pair) for pair in zip(take("gate_proj"), take("up_proj"))])
+        state[f"{mlp}.experts.down_proj"] = torch.stack(take("down_proj"))
+    return state
+
+
 def config_json(cfg, tok):
     """
     The model's shape in the reference vocabulary. A model without biases is
-    a Llama, one with biases on q, k and v is a Qwen2: the two reference
-    classes differ in nothing else that matters here.
+    a Llama, one with biases on q, k and v is a Qwen2, and one with experts
+    is a Mixtral: the reference classes differ in nothing else that matters
+    here.
     """
-    return {
-        "architectures": ["Qwen2ForCausalLM" if cfg.qkv_bias else "LlamaForCausalLM"],
-        "model_type": "qwen2" if cfg.qkv_bias else "llama",
+    assert not (cfg.n_experts and cfg.qkv_bias), "no reference class has both experts and biases"
+    architecture, model_type = ("Qwen2ForCausalLM", "qwen2") if cfg.qkv_bias else ("LlamaForCausalLM", "llama")
+    experts = {}
+    if cfg.n_experts:
+        architecture, model_type = "MixtralForCausalLM", "mixtral"
+        experts = {"num_local_experts": cfg.n_experts, "num_experts_per_tok": cfg.n_active}
+    return experts | {
+        "architectures": [architecture],
+        "model_type": model_type,
         "vocab_size": cfg.vocab_size,
         "hidden_size": cfg.dim,
         "intermediate_size": cfg.mlp_dim,
@@ -98,6 +120,8 @@ def export(model, tok, meta, dir, source=pretrained.DIR):
     state = {to_reference(name): t.detach().float().cpu() for name, t in model.state_dict().items()}
     if model.cfg.tie_embeddings:
         del state["lm_head.weight"]  # stored once, like the published files do
+    if model.cfg.n_experts:
+        state = stack_experts(state, model.cfg)
     pretrained.write_safetensors(f"{dir}/model.safetensors", state)
 
     if meta["family"] == "qwen":
