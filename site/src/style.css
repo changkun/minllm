@@ -328,6 +328,11 @@ select { padding: 5px 8px; border: 1px solid var(--axis); border-radius: 6px; ba
 .foot { margin-top: 24px; padding: 20px 24px 32px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 .foot p { max-width: 1120px; margin: 4px auto; }
 
+/* Whoever asked their system for less motion gets none here. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
 /* On paper there is no window: everything is laid out at full length. */
 @media print {
   html, body { height: auto; overflow: visible; }
