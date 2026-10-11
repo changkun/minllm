@@ -587,10 +587,10 @@ def finetuning_gsm8k():
 
 
 def evaluation_scores():
-    fig = Figure(720, 300, "What fine-tuning bought", "Greedy replies to held-out prompts, with 95% confidence intervals.")
+    fig = Figure(720, 260, "What fine-tuning did, measured on the task", "Greedy replies to held-out prompts, with 95% confidence intervals. It helped on one task and hurt on the other.")
     panels = [
         ("Words: requested words used", [("14M base", "runs/eval/words-base.json"), ("fine-tuned", "runs/eval/words-sft-words.json")]),
-        ("GSM8K: problems solved", [("0.5B as published", "runs/eval/gsm8k-qwen.json"), ("LoRA", "runs/eval/gsm8k-sft-gsm8k-lora.json"), ("every weight", "runs/eval/gsm8k-sft-gsm8k.json")]),
+        ("GSM8K: problems solved", [("0.5B as published", "runs/eval/gsm8k-qwen.json"), ("fine-tuned, LoRA", "runs/eval/gsm8k-sft-gsm8k-lora.json"), ("every weight", "runs/eval/gsm8k-sft-gsm8k.json")]),
     ]
     for i, (title, rows) in enumerate(panels):
         left, top, width = 150 + i * 350, 100, 150
