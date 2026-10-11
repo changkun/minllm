@@ -24,7 +24,8 @@ is no `transformers`, `tokenizers`, `peft`, `trl` or `vllm` underneath.
 ## Stages
 
 Each stage has a note that explains it, code that implements it, and tests
-that check what the note claims.
+that check what the note claims. Every note ends with the papers, reports and
+projects that introduced what it builds.
 
 | | Stage | What gets built |
 |---|---|---|
