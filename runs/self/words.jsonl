@@ -1,0 +1,7 @@
+{"round": 0, "held_out": 0.374, "elapsed": 0.0}
+{"round": 1, "right": 0.126875, "prompts_with_a_right_reply": 0.32, "kept": 729, "steps": 23, "loss": 1.3790244382360708, "tokens": 164.535625, "finished": 0.9828125, "held_out": 0.4846666666666667, "elapsed": 133.06813097000122}
+{"round": 2, "right": 0.20546875, "prompts_with_a_right_reply": 0.44125, "kept": 1072, "steps": 34, "loss": 1.4093796119970434, "tokens": 161.5365625, "finished": 0.99015625, "held_out": 0.5366666666666666, "elapsed": 256.75775504112244}
+{"round": 3, "right": 0.26, "prompts_with_a_right_reply": 0.51875, "kept": 1305, "steps": 41, "loss": 1.4034032472750035, "tokens": 161.4803125, "finished": 0.99109375, "held_out": 0.565, "elapsed": 388.78935194015503}
+{"round": 4, "right": 0.31328125, "prompts_with_a_right_reply": 0.591875, "kept": 1537, "steps": 49, "loss": 1.4218516860689436, "tokens": 158.91484375, "finished": 0.9909375, "held_out": 0.5966666666666667, "elapsed": 512.58904504776}
+{"round": 5, "right": 0.3478125, "prompts_with_a_right_reply": 0.62875, "kept": 1665, "steps": 53, "loss": 1.4741380192198843, "tokens": 161.9446875, "finished": 0.9878125, "held_out": 0.625, "elapsed": 638.4589087963104}
+{"round": 6, "right": 0.39, "prompts_with_a_right_reply": 0.675, "kept": 1826, "steps": 58, "loss": 1.4602949701506516, "tokens": 165.22625, "finished": 0.97828125, "held_out": 0.6473333333333333, "elapsed": 802.3340480327606}

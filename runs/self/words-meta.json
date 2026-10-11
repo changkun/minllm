@@ -1,0 +1,25 @@
+{
+ "family": "small",
+ "base": "out/sft-words",
+ "task": "words",
+ "memory_gb": 8.7747802734375,
+ "step": 6,
+ "val_loss": 0.0,
+ "minutes": 13.372272086143493,
+ "trainable_parameters": 14162304,
+ "method": "self-training",
+ "args": {
+  "task": "words",
+  "model": "out/sft-words",
+  "out": "out/self-words",
+  "rounds": 6,
+  "prompts": 1600,
+  "samples": 4,
+  "per_prompt": 2,
+  "lr": 0.00015,
+  "batch_size": 32,
+  "max_new_tokens": 220,
+  "eval_n": 500,
+  "seed": 0
+ }
+}

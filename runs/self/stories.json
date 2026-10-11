@@ -1,0 +1,42 @@
+{
+ "sft-words": {
+  "taste": 0.20808333333333334,
+  "words_used": 0.2465,
+  "tokens": 164.196,
+  "cut_off": 0.023,
+  "repeats": 0.0,
+  "same_opening": 0.469,
+  "most_common_opening": "Once upon a time, there was",
+  "strangeness": 1.5473706779005107
+ },
+ "grpo-words": {
+  "taste": -1.5653833333333333,
+  "words_used": 0.9575,
+  "tokens": 214.612,
+  "cut_off": 0.77,
+  "repeats": 0.0,
+  "same_opening": 0.456,
+  "most_common_opening": "Once upon a time, there was",
+  "strangeness": 3.147196871546502
+ },
+ "grpo-words-kl": {
+  "taste": 0.09316666666666666,
+  "words_used": 0.6516666666666666,
+  "tokens": 168.113,
+  "cut_off": 0.034,
+  "repeats": 0.001,
+  "same_opening": 0.503,
+  "most_common_opening": "Once upon a time, there was",
+  "strangeness": 1.6959893667509214
+ },
+ "self-words": {
+  "taste": 0.14586666666666667,
+  "words_used": 0.6273333333333334,
+  "tokens": 164.975,
+  "cut_off": 0.016,
+  "repeats": 0.0,
+  "same_opening": 0.613,
+  "most_common_opening": "Once upon a time, there was",
+  "strangeness": 1.8621202273079076
+ }
+}
