@@ -2,4 +2,6 @@
 // after a figure, or before a heading, at the end of the section above it. A lab is a module in src/labs/ whose default export fills an
 // element, reading what it shows from the logged runs.
 
-export const labs = [];
+export const labs = [
+  { note: "10a-quantization", after: "quant-levels.svg", name: "quantize", title: "Round this row yourself" },
+];
