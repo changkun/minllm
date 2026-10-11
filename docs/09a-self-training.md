@@ -230,3 +230,11 @@ happens without one.
   reaching replies that the model would not have written at the start. On
   GSM8K the comparison was the whole signal. Stage 9 shows both the gain and
   the price.
+
+## References
+
+- Anthony, Tian and Barber (2017), [Thinking Fast and Slow with Deep Learning and Tree Search](https://arxiv.org/abs/1705.08439). Expert iteration: a policy trained to imitate the better moves that search found with it, repeatedly.
+- Zelikman et al. (2022), [STaR: Bootstrapping Reasoning With Reasoning](https://arxiv.org/abs/2203.14465). STaR: a language model fine-tuned on its own rationales that led to right answers, round after round.
+- Touvron et al. (2023), [Llama 2: Open Foundation and Fine-Tuned Chat Models](https://arxiv.org/abs/2307.09288). Rejection sampling fine-tuning in the post-training of Llama 2, with a reward model choosing the replies.
+- Yuan et al. (2023), [Scaling Relationship on Learning Mathematical Reasoning with Large Language Models](https://arxiv.org/abs/2308.01825). Rejection sampling fine-tuning on math problems: the gain depends on how many distinct right solutions are kept.
+- Gulcehre et al. (2023), [Reinforced Self-Training (ReST) for Language Modeling](https://arxiv.org/abs/2308.08998). The loop as offline reinforcement learning: grow a dataset from the model, improve the model on its filtered part.

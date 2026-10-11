@@ -159,3 +159,12 @@ seen.
 A model and its tokenizer are inseparable. Weights trained with one
 vocabulary are meaningless with another, which is why loading a published
 model later starts with loading its merges into this class.
+
+## References
+
+- Gage (1994), A New Algorithm for Data Compression, The C Users Journal 12(2). Byte pair encoding as a compression scheme: replace the most frequent pair of bytes by a new byte, and repeat.
+- Sennrich, Haddow and Birch (2015), [Neural Machine Translation of Rare Words with Subword Units](https://arxiv.org/abs/1508.07909). Byte pair encoding turned into a tokenizer: the merges learned from a corpus give a vocabulary of word pieces, so that no word is unknown.
+- Radford et al. (2019), [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), OpenAI. GPT-2. Its tokenizer runs BPE over raw bytes, which is the scheme of this stage.
+- Kudo and Richardson (2018), [SentencePiece: A simple and language independent subword tokenizer and detokenizer for Neural Text Processing](https://arxiv.org/abs/1808.06226). SentencePiece, the other widely used family of subword tokenizers, trained on raw sentences without splitting them into words first.
+- Karpathy, [minbpe](https://github.com/karpathy/minbpe). A minimal BPE tokenizer written to be read, and the model for how this stage is laid out.
+- OpenAI, [tiktoken](https://github.com/openai/tiktoken). The tokenizer library of the GPT models. The pattern that splits text into chunks here is the one of its GPT-4 encoding.

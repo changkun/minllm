@@ -271,3 +271,17 @@ Large pretraining runs typically use a custom loop like this one. Hugging Face
 The side topic [3a](03a-distillation.md) runs this loop with a second model
 as a teacher: the student learns from the teacher's predictions and not only
 from the text.
+
+## References
+
+- Bengio, Ducharme, Vincent and Jauvin (2003), [A Neural Probabilistic Language Model](https://www.jmlr.org/papers/v3/bengio03a.html), Journal of Machine Learning Research 3. Predicting the next word with a neural network that learns a vector for every word.
+- Radford et al. (2019), [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), OpenAI. GPT-2: what a model trained on nothing but next-token prediction can do when the data and the model are large.
+- Kingma and Ba (2014), [Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980). Adam: a step size per weight, from running averages of the gradient and of its square.
+- Loshchilov and Hutter (2017), [Decoupled Weight Decay Regularization](https://arxiv.org/abs/1711.05101). AdamW: weight decay applied to the weights directly, apart from the gradient.
+- Loshchilov and Hutter (2016), [SGDR: Stochastic Gradient Descent with Warm Restarts](https://arxiv.org/abs/1608.03983). The cosine learning rate schedule.
+- Pascanu, Mikolov and Bengio (2012), [On the difficulty of training Recurrent Neural Networks](https://arxiv.org/abs/1211.5063). Clipping the norm of the gradient.
+- Micikevicius et al. (2017), [Mixed Precision Training](https://arxiv.org/abs/1710.03740). Training in 16-bit floats with the weights kept in 32 bits.
+- Eldan and Li (2023), [TinyStories: How Small Can Language Models Be and Still Speak Coherent English?](https://arxiv.org/abs/2305.07759). TinyStories: a corpus small and simple enough for a model of a few million parameters to write coherent text.
+- Kaplan et al. (2020), [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361). How the loss falls with model size, data and compute, as power laws.
+- Hoffmann et al. (2022), [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556). For a fixed amount of compute, how to divide it between a larger model and more data.
+- Karpathy, [nanoGPT](https://github.com/karpathy/nanoGPT). A training loop of this shape, for GPT-2.

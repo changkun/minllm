@@ -335,3 +335,15 @@ filter or rank data and replies.
 
 Where a program can check the answer, none of this is needed. That is the
 next stage.
+
+## References
+
+- Bradley and Terry (1952), [Rank Analysis of Incomplete Block Designs: I. The Method of Paired Comparisons](https://doi.org/10.2307/2334029), Biometrika 39(3/4). The model of pairwise comparisons behind the reward model's loss: a score for each item, and the chance of winning from the difference.
+- Williams (1992), [Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning](https://doi.org/10.1007/BF00992696), Machine Learning 8. The policy gradient, and the baseline that is subtracted from the reward.
+- Christiano et al. (2017), [Deep reinforcement learning from human preferences](https://arxiv.org/abs/1706.03741). Learning a reward model from human comparisons of pairs of behavior, and training a policy on it.
+- Stiennon et al. (2020), [Learning to summarize from human feedback](https://arxiv.org/abs/2009.01325). The same for a language model: comparisons of summaries, a reward model, and PPO.
+- Ouyang et al. (2022), [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155). InstructGPT: the recipe in three steps, with the KL penalty towards the fine-tuned model.
+- Schulman et al. (2017), [Proximal Policy Optimization Algorithms](https://arxiv.org/abs/1707.06347). PPO: several steps of gradient on one batch of samples, kept from going too far by a clipped objective.
+- Rafailov et al. (2023), [Direct Preference Optimization: Your Language Model is Secretly a Reward Model](https://arxiv.org/abs/2305.18290). DPO: the same objective reached without a reward model and without sampling.
+- Touvron et al. (2023), [Llama 2: Open Foundation and Fine-Tuned Chat Models](https://arxiv.org/abs/2307.09288). How one open model family was post-trained: rounds of rejection sampling, then PPO.
+- Lambert (2025), [Reinforcement Learning from Human Feedback](https://arxiv.org/abs/2504.12501). The RLHF Book, whose order of topics stages 6 to 9 follow.

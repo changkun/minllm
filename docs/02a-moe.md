@@ -481,3 +481,15 @@ What changes at that scale:
 - **Serving.** vLLM, llama.cpp and MLX run the published mixtures. The
   quantized files that people run locally are large for their speed, for the
   reason in the first point.
+
+## References
+
+- Jacobs, Jordan, Nowlan and Hinton (1991), [Adaptive Mixtures of Local Experts](https://doi.org/10.1162/neco.1991.3.1.79), Neural Computation 3(1). The idea: several networks, and a gate that learns which of them to use for an input.
+- Shazeer et al. (2017), [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538). Sparse gating in a large network: only the top few experts run for an input, with extra losses that keep the load balanced.
+- Lepikhin et al. (2020), [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668). Mixtures of experts inside a transformer at scale, with a capacity per expert and an auxiliary loss for balance.
+- Fedus, Zoph and Shazeer (2021), [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961). The Switch Transformer: one expert per token, the capacity factor, and the load-balancing loss that this note uses.
+- Jiang et al. (2024), [Mixtral of Experts](https://arxiv.org/abs/2401.04088). Mixtral: two of eight experts per token, the routing rule that this note implements and exports to, and the observation that experts follow syntax and not topic.
+- Dai et al. (2024), [DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models](https://arxiv.org/abs/2401.06066). Many small experts, and shared experts that every token uses.
+- DeepSeek-AI (2024), [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437). A mixture with 671 billion parameters of which 37 billion are active, balanced by a bias on the router's scores instead of a loss.
+- Muennighoff et al. (2024), [OLMoE: Open Mixture-of-Experts Language Models](https://arxiv.org/abs/2409.02060). A small open mixture and a study of the design choices: how many experts, how many active, which routing.
+- Gale et al. (2022), [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841). Block-sparse kernels that give every expert its own tokens at the cost of fixed shapes, with nothing dropped.

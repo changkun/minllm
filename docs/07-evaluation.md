@@ -217,3 +217,12 @@ wording and on the answer extraction, often by more than the difference
 between two models, so numbers from different papers are rarely comparable.
 Test sets leak into training data once they are public. And intervals are
 seldom reported at all.
+
+## References
+
+- Cobbe et al. (2021), [Training Verifiers to Solve Math Word Problems](https://arxiv.org/abs/2110.14168). GSM8K: 1,319 test problems with one number as the answer.
+- Efron (1979), [Bootstrap Methods: Another Look at the Jackknife](https://doi.org/10.1214/aos/1176344552), The Annals of Statistics 7(1). The bootstrap: how much an estimate varies, found by resampling the data it was computed from.
+- Koehn (2004), [Statistical Significance Tests for Machine Translation Evaluation](https://aclanthology.org/W04-3250/), EMNLP. The paired bootstrap for comparing two systems on the same test set.
+- Miller (2024), [Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations](https://arxiv.org/abs/2411.00640). Standard errors, paired differences and sample sizes for evaluations of language models.
+- Biderman et al. (2024), [Lessons from the Trenches on Reproducible Evaluation of Language Models](https://arxiv.org/abs/2405.14782). What makes evaluations of language models hard to reproduce, by the authors of the evaluation harness that most papers use.
+- EleutherAI, [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness). That harness.

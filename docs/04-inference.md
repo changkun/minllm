@@ -199,3 +199,12 @@ management around it:
 
 The last stage of this repository exports the model and runs it in these
 engines.
+
+## References
+
+- Fan, Lewis and Dauphin (2018), [Hierarchical Neural Story Generation](https://arxiv.org/abs/1805.04833). Sampling from the k likeliest tokens only.
+- Holtzman et al. (2019), [The Curious Case of Neural Text Degeneration](https://arxiv.org/abs/1904.09751). Nucleus sampling, and why the likeliest text is repetitive and dull.
+- Yu et al. (2022), [Orca: A Distributed Serving System for Transformer-Based Generative Models](https://www.usenix.org/conference/osdi22/presentation/yu), OSDI. Continuous batching: requests join and leave a running batch between decode steps.
+- Kwon et al. (2023), [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180). vLLM: the key-value cache allocated in pages, so that many requests of unknown length share one GPU.
+- Gerganov et al., [llama.cpp](https://github.com/ggml-org/llama.cpp). Inference in plain C++ on ordinary hardware, which made running models locally common.
+- Apple, [MLX](https://github.com/ml-explore/mlx). An array framework for Apple silicon, used in stage 10 to run this repository's models.

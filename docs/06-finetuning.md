@@ -226,3 +226,14 @@ differs by one newline from the one the model was trained with, a missing end
 token, targets that include the prompt. All three produce a model that
 trains without complaint and behaves oddly, and all three are caught by
 decoding what the model is actually being trained on.
+
+## References
+
+- Howard and Ruder (2018), [Universal Language Model Fine-tuning for Text Classification](https://arxiv.org/abs/1801.06146). Fine-tuning a pretrained language model as the general recipe for a new task.
+- Wei et al. (2021), [Finetuned Language Models Are Zero-Shot Learners](https://arxiv.org/abs/2109.01652). Instruction tuning: fine-tuning on many tasks phrased as instructions makes a model follow new ones.
+- Ouyang et al. (2022), [Training language models to follow instructions with human feedback](https://arxiv.org/abs/2203.02155). InstructGPT: supervised fine-tuning on demonstrations as the first step of post-training.
+- Wang et al. (2022), [Self-Instruct: Aligning Language Models with Self-Generated Instructions](https://arxiv.org/abs/2212.10560). Instruction data written by a language model.
+- Hu et al. (2021), [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685). LoRA: a frozen weight matrix plus a trained update of low rank.
+- Dettmers et al. (2023), [QLoRA: Efficient Finetuning of Quantized LLMs](https://arxiv.org/abs/2305.14314). QLoRA: the same adapters on a model whose frozen weights are stored in 4 bits.
+- Cobbe et al. (2021), [Training Verifiers to Solve Math Word Problems](https://arxiv.org/abs/2110.14168). GSM8K, the grade-school math problems that the 0.5B model is fine-tuned and tested on.
+- Hugging Face, [peft](https://github.com/huggingface/peft). The library that practitioners use for LoRA and its relatives.

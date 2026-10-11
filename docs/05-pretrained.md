@@ -222,3 +222,12 @@ format, usually with the numbers quantized to a few bits each.
 
 Loading a model yourself is rarely needed. Being able to is what tells you
 that a model is a list of matrices and a rule for multiplying them.
+
+## References
+
+- Qwen Team (2024), [Qwen2.5 Technical Report](https://arxiv.org/abs/2412.15115). The technical report of the model family that is loaded here.
+- Qwen Team (2024), [Qwen2.5-LLM: Extending the boundary of LLMs](https://qwenlm.github.io/blog/qwen2.5-llm/). The release post, with the published benchmark results of every model size.
+- Qwen Team (2024), [Qwen2.5-0.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct). The files that this stage downloads and takes apart.
+- Hugging Face, [safetensors](https://github.com/huggingface/safetensors). The file format for weights that this stage reads by hand: a JSON header and raw tensors.
+- Wolf et al. (2019), [HuggingFace's Transformers: State-of-the-art Natural Language Processing](https://arxiv.org/abs/1910.03771). The transformers library, whose implementation the tests of this stage compare against.
+- Radford et al. (2019), [Language Models are Unsupervised Multitask Learners](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), OpenAI. GPT-2, whose way of spelling bytes in a vocabulary file Qwen's tokenizer keeps.

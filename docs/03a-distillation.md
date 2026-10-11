@@ -187,3 +187,12 @@ The distilled model writes stories like the others
 - **Against quantization.** Both make a model cheaper to run. Quantization
   keeps the model and stores it in fewer bits. Distillation trains a smaller
   model. They combine: distilled models are quantized as well.
+
+## References
+
+- Buciluǎ, Caruana and Niculescu-Mizil (2006), [Model Compression](https://doi.org/10.1145/1150402.1150464), KDD. Training one small model on the outputs of a large ensemble.
+- Hinton, Vinyals and Dean (2015), [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531). Distillation as it is known today: the teacher's whole distribution as the target, softened by a temperature.
+- Kim and Rush (2016), [Sequence-Level Knowledge Distillation](https://arxiv.org/abs/1606.07947). Distillation by training on text that the teacher generated, with no access to its probabilities needed.
+- Sanh et al. (2019), [DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter](https://arxiv.org/abs/1910.01108). A language model pretrained by distillation: 40% smaller than its teacher.
+- Eldan and Li (2023), [TinyStories: How Small Can Language Models Be and Still Speak Coherent English?](https://arxiv.org/abs/2305.07759). TinyStories, the data of stage 3, written by GPT-3.5 and GPT-4.
+- DeepSeek-AI (2025), [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948). A large reasoning model released together with small models fine-tuned on what it wrote.

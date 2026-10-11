@@ -206,3 +206,18 @@ same operations as here, plus the caching and configuration options this file
 leaves out. Inference engines (vLLM, llama.cpp, MLX) each reimplement the
 forward pass for speed. The differences between today's open models are
 mostly numbers in a config file: the block itself has been stable since 2023.
+
+## References
+
+- Vaswani et al. (2017), [Attention Is All You Need](https://arxiv.org/abs/1706.03762). The transformer: attention as the only way in which positions exchange information, with residual connections, normalization and an MLP around it.
+- Radford et al. (2018), [Improving Language Understanding by Generative Pre-Training](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf), OpenAI. GPT. The decoder alone, trained to predict the next token, as a model in its own right.
+- Xiong et al. (2020), [On Layer Normalization in the Transformer Architecture](https://arxiv.org/abs/2002.04745). Why the norm belongs in front of each sublayer and not behind it.
+- Zhang and Sennrich (2019), [Root Mean Square Layer Normalization](https://arxiv.org/abs/1910.07467). RMSNorm: layer normalization without the centering and the bias.
+- Su et al. (2021), [RoFormer: Enhanced Transformer with Rotary Position Embedding](https://arxiv.org/abs/2104.09864). Rotary position embeddings: positions as rotations of the queries and keys.
+- Shazeer (2020), [GLU Variants Improve Transformer](https://arxiv.org/abs/2002.05202). SwiGLU, among other gated variants of the MLP.
+- Shazeer (2019), [Fast Transformer Decoding: One Write-Head is All You Need](https://arxiv.org/abs/1911.02150). Multi-query attention: all query heads share one key and value head.
+- Ainslie et al. (2023), [GQA: Training Generalized Multi-Query Transformer Models from Multi-Head Checkpoints](https://arxiv.org/abs/2305.13245). Grouped-query attention, the middle ground between that and full multi-head attention.
+- Press and Wolf (2016), [Using the Output Embedding to Improve Language Models](https://arxiv.org/abs/1608.05859). Tying the output layer to the input embedding.
+- Touvron et al. (2023), [LLaMA: Open and Efficient Foundation Language Models](https://arxiv.org/abs/2302.13971). LLaMA, which put RMSNorm in front of the sublayers, SwiGLU and rotary embeddings together into the block that open models have used since.
+- Qwen Team (2024), [Qwen2.5 Technical Report](https://arxiv.org/abs/2412.15115). The model family whose layout this code matches, and whose smallest instruction-tuned member is loaded in stage 5.
+- Karpathy, [nanoGPT](https://github.com/karpathy/nanoGPT). The smallest complete GPT-2, and the standard this repository holds itself to for readability.

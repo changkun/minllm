@@ -164,3 +164,14 @@ is in moving weights and samples between the two.
 4. Change one line of `config_json` so that the export is wrong in a way that
    still loads: `rope_theta`, or `rms_norm_eps`. Which line of
    `check_export.py` catches it?
+
+## References
+
+- Wolf et al. (2019), [HuggingFace's Transformers: State-of-the-art Natural Language Processing](https://arxiv.org/abs/1910.03771). The transformers library: the reference implementations and the layout of a model directory.
+- Hugging Face, [safetensors](https://github.com/huggingface/safetensors). The weight file format.
+- Kwon et al. (2023), [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180). vLLM, the inference server.
+- Yu et al. (2022), [Orca: A Distributed Serving System for Transformer-Based Generative Models](https://www.usenix.org/conference/osdi22/presentation/yu), OSDI. Continuous batching.
+- Apple, [mlx-lm](https://github.com/ml-explore/mlx-lm). Language models on MLX, which runs the exported directory.
+- Gerganov et al., [GGUF](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md). The file format of llama.cpp.
+- OpenAI, [Chat completions API reference](https://platform.openai.com/docs/api-reference/chat). The HTTP interface that `scripts/serve.py` speaks.
+- Hugging Face, [trl](https://github.com/huggingface/trl). Trainers for the post-training stages.

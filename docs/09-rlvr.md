@@ -268,3 +268,14 @@ runs the simplest loop of this kind for several rounds: keep the model's
 right answers, fine-tune on them, and ask again. The other mechanism that the
 term covers, a model taught by a model, is the side topic
 [3a](03a-distillation.md).
+
+## References
+
+- Williams (1992), [Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning](https://doi.org/10.1007/BF00992696), Machine Learning 8. The policy gradient.
+- Shao et al. (2024), [DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models](https://arxiv.org/abs/2402.03300). GRPO: advantages from a group of replies to the same prompt, with no value network.
+- DeepSeek-AI (2025), [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948). A reasoning model trained with GRPO on rewards that a program can check.
+- Lambert et al. (2024), [Tulu 3: Pushing Frontiers in Open Language Model Post-Training](https://arxiv.org/abs/2411.15124). The post-training recipe that gave reinforcement learning with verifiable rewards its name.
+- Amodei et al. (2016), [Concrete Problems in AI Safety](https://arxiv.org/abs/1606.06565). Reward hacking named as a problem: an agent that satisfies the objective as written and not as meant.
+- Krakovna et al. (2020), [Specification gaming: the flip side of AI ingenuity](https://deepmind.google/discover/blog/specification-gaming-the-flip-side-of-ai-ingenuity/), DeepMind. A collection of such cases.
+- Cobbe et al. (2021), [Training Verifiers to Solve Math Word Problems](https://arxiv.org/abs/2110.14168). GSM8K, whose final number is the verifier here.
+- [verl](https://github.com/volcengine/verl). A framework for this loop at scale, with the inference engine and the trainer as separate systems.

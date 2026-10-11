@@ -279,3 +279,14 @@ read it, and no GGUF file for llama.cpp is written.
   stays in floats. Chips without fast floating point also round the
   activations and compute in integers, which is the older meaning of the
   word.
+
+## References
+
+- Jacob et al. (2017), [Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference](https://arxiv.org/abs/1712.05877). Weights as integers with a scale and a zero point, and training that prepares a model for it.
+- Nagel et al. (2021), [A White Paper on Neural Network Quantization](https://arxiv.org/abs/2106.08295). An overview of rounding after training and of training with rounding.
+- Dettmers et al. (2022), [LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale](https://arxiv.org/abs/2208.07339). Language models at 8 bits without loss of quality.
+- Frantar et al. (2022), [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323). GPTQ: codes chosen layer by layer to keep the layer's output close, with a few hundred examples.
+- Lin et al. (2023), [AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration](https://arxiv.org/abs/2306.00978). AWQ: scales chosen by how large the activations are that a weight meets.
+- Dettmers et al. (2023), [QLoRA: Efficient Finetuning of Quantized LLMs](https://arxiv.org/abs/2305.14314). QLoRA: a 4-bit data type for weights, and adapters trained on top of it.
+- Gerganov et al., [GGUF](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md). The file format of llama.cpp, in which most quantized models are published.
+- Apple, [mlx-lm](https://github.com/ml-explore/mlx-lm). Its converter writes the packed layout that this note writes and its runtime computes on.
