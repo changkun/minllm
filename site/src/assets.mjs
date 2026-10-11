@@ -1,5 +1,5 @@
-// The address of the site's own files: the stylesheet, the page's script
-// and the interactive figures. The host serves everything under /assets/ as
+// The address of the site's own files: the stylesheet, the page's script,
+// the interactive figures and the films. The host serves everything under /assets/ as
 // files that never change, to be kept for a year, so the address carries a
 // hash of their contents and changes whenever one of them does.
 
@@ -11,7 +11,8 @@ import { fileURLToPath } from "node:url";
 const src = dirname(fileURLToPath(import.meta.url));
 
 // What is served, by its path below the address.
-export const assets = ["style.css", "site.js", ...readdirSync(join(src, "labs")).sort().map((name) => `labs/${name}`)];
+const files = (dir) => readdirSync(join(src, dir)).sort().map((name) => `${dir}/${name}`);
+export const assets = ["style.css", "site.js", ...files("labs"), ...files("films")];
 
 const hash = createHash("sha256");
 for (const path of assets) hash.update(path).update(readFileSync(join(src, path)));

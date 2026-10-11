@@ -1,5 +1,6 @@
-// The page's own behavior: the theme, the interactive figures, figures that
-// open large, and the section being read in the list beside a note.
+// The page's own behavior: the theme, the interactive figures, the films,
+// figures that open large, and the section being read in the list beside a
+// note.
 
 // ------------------------------------------------------------------ theme
 
@@ -44,8 +45,18 @@ for (const lab of document.querySelectorAll("[data-lab]")) {
   });
 }
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") document.querySelector(".lab.large .lab-large")?.click();
+  if (event.key === "Escape") document.querySelector(".lab.large .lab-large, .film.large .film-controls button:last-child")?.click();
 });
+
+// ------------------------------------------------------------------ films
+
+for (const el of document.querySelectorAll(".film[data-film]")) {
+  import(new URL("./films/film.js", import.meta.url))
+    .then((module) => module.default(el))
+    .catch((error) => {
+      el.textContent = `This film could not be loaded: ${error.message}`;
+    });
+}
 
 // ------------------------------------------------- a figure, opened large
 

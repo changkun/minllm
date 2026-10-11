@@ -17,6 +17,7 @@ import { createHighlighter } from "shiki";
 
 import { ASSETS, assets } from "./src/assets.mjs";
 import { codeIndex, codePage, sources } from "./src/code.mjs";
+import { about, filmed, films } from "./src/films.mjs";
 import { labs } from "./src/labs.mjs";
 import { landing } from "./src/landing.mjs";
 import { page } from "./src/layout.mjs";
@@ -105,6 +106,8 @@ for (const p of pages) {
   for (const [, target] of source.matchAll(/\]\(\.\.\/([^)#]+\.py)\)/g)) (explains[target] ||= new Set()).add(p.slug);
 }
 
+const titles = Object.fromEntries(Object.values(notes).map((note) => [note.slug, note.title]));
+
 for (const note of Object.values(notes)) {
   let html = note.html;
   for (const lab of labs.filter((l) => l.note === note.slug)) {
@@ -112,6 +115,11 @@ for (const note of Object.values(notes)) {
     const place = lab.after ? new RegExp(`(<figure class="figure" data-figure="${lab.after}"[^>]*>.*?</figure>)`, "s") : new RegExp(`(<h2 id="${lab.before}">)`);
     if (!place.test(html)) throw new Error(`${note.slug}: no place for the lab ${lab.name}`);
     html = html.replace(place, lab.after ? `$1\n${section(lab)}` : `${section(lab)}\n$1`);
+  }
+  if (filmed(note.slug)) {
+    // The film of a chapter is the first thing in its note.
+    const { n, title, next } = about(note.slug, titles);
+    html = `<section class="film" data-film="${note.slug}" data-n="${n}" data-title="${title}" data-next="${next}"><noscript>This chapter has a film, which needs JavaScript.</noscript></section>\n${html}`;
   }
   mkdirSync(join(dist, note.slug), { recursive: true });
   writeFileSync(join(dist, note.slug, "index.html"), page({ ...note, html }, notes));
@@ -144,4 +152,4 @@ for (const path of assets) {
   cpSync(join(here, "src", path), join(dist, ASSETS, path));
 }
 
-console.log(`built ${Object.keys(notes).length} notes, ${files.length} code pages and ${labs.length} interactive figures into ${dist}, ${readdirSync(join(dist, "figures")).length} figures`);
+console.log(`built ${Object.keys(notes).length} notes, ${films().length} films, ${files.length} code pages and ${labs.length} interactive figures into ${dist}, ${readdirSync(join(dist, "figures")).length} figures`);
