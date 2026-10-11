@@ -1,10 +1,11 @@
-// Build the website into site/dist: the notes of docs/ as pages, the figures,
-// the logged runs that the interactive figures read, and a landing page.
+// Build the website into site/dist: the notes of docs/ as pages, the logged
+// runs that the interactive figures read, and a landing page.
 //
 //     cd site && npm ci && npm run build      # then serve site/dist
 //
 // The notes are rendered as they are. Nothing about the site is written into
-// them: links are rewritten here, and the interactive figures are placed by
+// them: links are rewritten here, the figures are put into the pages so that
+// they follow the site's theme, and the interactive figures are placed by
 // src/labs.mjs.
 
 import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
@@ -22,26 +23,38 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, "..");
 const dist = join(here, "dist");
 
-const highlighter = await createHighlighter({ themes: ["github-light", "github-dark"], langs: ["python", "sh", "json", "yaml"] });
+const themes = { light: "github-light", dark: "github-dark" };
+const highlighter = await createHighlighter({ themes: Object.values(themes), langs: ["python", "sh", "json", "yaml"] });
 const md = new MarkdownIt({
   html: false,
   highlight(code, lang) {
     if (!["python", "sh", "json", "yaml"].includes(lang)) return ""; // plain blocks: program output
-    return highlighter.codeToHtml(code, { lang, themes: { light: "github-light", dark: "github-dark" }, defaultColor: false });
+    return highlighter.codeToHtml(code, { lang, themes, defaultColor: false });
   },
 });
 
 const slugify = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 // A link of a note, as the site needs it: another note becomes its page, and
-// a file of the repository opens on GitHub.
+// anything else opens on GitHub.
 function href(target, base) {
   if (/^(https?:|#|mailto:)/.test(target)) return target;
   const path = join("/", base, target).slice(1); // relative to the repository's root
   const note = path.match(/^docs\/([0-9a-z-]+)\.md(#.*)?$/);
   if (note) return `/${note[1]}/${note[2] || ""}`;
-  if (path.startsWith("docs/figures/")) return `/figures/${path.slice("docs/figures/".length)}`;
   return `${REPO}/${/\.[a-z]+$/.test(path) ? "blob" : "tree"}/main/${path.replace(/\/$/, "")}`;
+}
+
+// A figure of docs/figures as part of the page. The file carries its own
+// light and dark colors for GitHub; here its classes take the site's.
+function figure(name, alt) {
+  const source = readFileSync(join(root, "docs", "figures", name), "utf8");
+  const width = source.match(/ width="(\d+)"/)[1];
+  const svg = source
+    .replace(/<style>.*?<\/style>/s, "")
+    .replace(/ width="\d+" height="\d+"/, "")
+    .replace("<svg ", `<svg class="fig" style="max-width:${width}px" aria-label="${alt.replace(/"/g, "&quot;")}" `);
+  return `<figure class="figure" data-figure="${name}">${svg.trim()}<button class="zoom" type="button" aria-label="Open this figure large">Enlarge</button></figure>`;
 }
 
 // Render markdown that lives in the directory `base` of the repository.
@@ -59,17 +72,13 @@ export function render(source, base) {
     if (t.type === "inline") {
       for (const child of t.children) {
         if (child.type === "link_open") child.attrSet("href", href(child.attrGet("href"), base));
-        if (child.type === "image") {
-          child.attrSet("src", href(child.attrGet("src"), base));
-          child.attrSet("loading", "lazy");
-        }
       }
     }
     if (t.type === "table_open") t.attrSet("class", "table");
   }
   let html = md.renderer.render(tokens, md.options, env);
   // A figure is a paragraph that holds one image, and a table gets a frame that scrolls on a narrow screen.
-  html = html.replace(/<p>(<img [^>]+>)<\/p>/g, '<figure class="figure">$1</figure>');
+  html = html.replace(/<p><img src="figures\/([^"]+)" alt="([^"]*)"[^>]*><\/p>/g, (_, name, alt) => figure(name, alt));
   html = html.replace(/<table class="table">/g, '<div class="table-frame"><table class="table">').replace(/<\/table>/g, "</table></div>");
   return { html, headings: env.headings };
 }
@@ -77,7 +86,7 @@ export function render(source, base) {
 rmSync(dist, { recursive: true, force: true });
 mkdirSync(join(dist, "assets"), { recursive: true });
 
-const section = (lab) => `<section class="lab" id="try-${lab.name}" data-lab="${lab.name}"><h3 class="lab-title">${lab.title}</h3><div class="lab-body"><noscript>This figure is interactive and needs JavaScript.</noscript></div></section>`;
+const section = (lab) => `<section class="lab" id="try-${lab.name}" data-lab="${lab.name}"><h3 class="lab-title"><span>${lab.title}</span><button class="lab-large" type="button">Enlarge</button></h3><div class="lab-body"><noscript>This figure is interactive and needs JavaScript.</noscript></div></section>`;
 
 const notes = {};
 for (const p of pages) {
@@ -85,15 +94,15 @@ for (const p of pages) {
   const title = source.match(/^# (.+)$/m)[1];
   const body = source.replace(/^# .+\n/, "");
   // The first paragraph of a note lists its code, scripts and tests.
-  const [files, ...rest] = body.trim().split(/\n\n/);
-  notes[p.slug] = { ...p, title: title.replace(/^\w+\. /, ""), files: render(files, "docs").html, ...render(rest.join("\n\n"), "docs") };
+  const [head, ...rest] = body.trim().split(/\n\n/);
+  notes[p.slug] = { ...p, title: title.replace(/^\w+\. /, ""), files: render(head, "docs").html, ...render(rest.join("\n\n"), "docs") };
 }
 
 for (const note of Object.values(notes)) {
   let html = note.html;
   for (const lab of labs.filter((l) => l.note === note.slug)) {
     // A lab follows a figure of the note, or closes the section before a heading.
-    const place = lab.after ? new RegExp(`(<figure class="figure"><img src="/figures/${lab.after}"[^>]*></figure>)`) : new RegExp(`(<h2 id="${lab.before}">)`);
+    const place = lab.after ? new RegExp(`(<figure class="figure" data-figure="${lab.after}">.*?</figure>)`, "s") : new RegExp(`(<h2 id="${lab.before}">)`);
     if (!place.test(html)) throw new Error(`${note.slug}: no place for the lab ${lab.name}`);
     html = html.replace(place, lab.after ? `$1\n${section(lab)}` : `${section(lab)}\n$1`);
   }
@@ -107,6 +116,7 @@ writeFileSync(join(dist, "index.html"), landing(readFileSync(join(root, "README.
 const gallery = labs.map((lab) => `<p class="kicker"><a href="/${lab.note}/">${notes[lab.note].n} ${notes[lab.note].title}</a></p>\n${section(lab)}`).join("\n");
 mkdirSync(join(dist, "interactive"), { recursive: true });
 writeFileSync(join(dist, "interactive", "index.html"), page({ slug: null, title: "Interactive figures", files: "", html: `<p>The figures of this site that can be tried, in the order of the pipeline. Each reads what it shows from the runs logged in the repository.</p>\n${gallery}`, headings: [] }, notes));
+
 writeFileSync(join(dist, "404.html"), page({ slug: null, title: "Not found", files: "", html: '<p>There is no page at this address. <a href="/">The pipeline</a> lists all of them.</p>', headings: [] }, notes));
 
 cpSync(join(root, "docs", "figures"), join(dist, "figures"), { recursive: true });
