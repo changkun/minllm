@@ -192,6 +192,12 @@ svg text { font-family: var(--sans); }
 .film-time { color: var(--ink2); font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .film.large { position: fixed; inset: 0; z-index: 30; display: flex; flex-direction: column; justify-content: center; margin: 0; border: 0; border-radius: 0; }
 .film.large .film-stage { max-height: calc(100dvh - 50px); }
+/* On a phone held upright an enlarged film lies on its side, to be as large
+   as the screen allows: turn the phone to watch it. */
+@media (orientation: portrait) and (max-width: 700px) {
+  .film.large .film-stage { position: absolute; top: 0; left: 100vw; width: calc(100dvh - 50px); height: 100vw; max-height: none; transform: rotate(90deg); transform-origin: 0 0; }
+  .film.large .film-controls { position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); }
+}
 /* The film alone, as tools/render.mjs photographs it. */
 .film-page { margin: 0; padding: 0; overflow: hidden; }
 .film-page .film-stage { width: 100vw; height: 100vh; cursor: default; }
