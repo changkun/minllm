@@ -1,3 +1,8 @@
+"""
+What the scripts share: choosing a device, handing GPU memory back,
+downloading a file, and loading a checkpoint of the model trained here.
+"""
+
 import os
 import urllib.request
 
