@@ -1,0 +1,38 @@
+{
+ "device": "mps",
+ "batch_size": 64,
+ "seq_len": 256,
+ "scale": 2,
+ "repeats": 3,
+ "train": [],
+ "generate": [
+  {
+   "name": "Dense, 52M",
+   "capacity": null,
+   "parameters": 51917568,
+   "batch_1": 360.00492674894224,
+   "batch_64": 9043.864225190775
+  },
+  {
+   "name": "Dense, 165M",
+   "capacity": null,
+   "parameters": 165163776,
+   "batch_1": 204.78075180921715,
+   "batch_64": 6143.80899031345
+  },
+  {
+   "name": "Experts take their own tokens",
+   "capacity": null,
+   "parameters": 165212928,
+   "batch_1": 61.14999733198893,
+   "batch_64": 2360.6297212129484
+  },
+  {
+   "name": "Experts take every token",
+   "capacity": 4.0,
+   "parameters": 165212928,
+   "batch_1": 102.81718020665147,
+   "batch_64": 3491.2876760362105
+  }
+ ]
+}
