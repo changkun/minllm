@@ -71,11 +71,11 @@ class Figure:
         cls = (f"s-{stroke} " if stroke else "") + (f"f-{fill}" if fill else "")
         extra = "" if fill else ' fill="none"'
         extra += f' stroke-width="{width}" stroke-linejoin="round" stroke-linecap="round"' if stroke else ""
-        extra += f' fill-opacity="{opacity}"' if opacity is not None else ""
+        extra += f' {"fill" if fill else "stroke"}-opacity="{opacity}"' if opacity is not None else ""
         self.parts.append(f'<path class="{cls}" d="{d}"{extra}/>')
 
-    def polyline(self, points, stroke, width=2):
-        self.path("M" + " L".join(f"{n(x)} {n(y)}" for x, y in points), stroke=stroke, width=width)
+    def polyline(self, points, stroke, width=2, opacity=None):
+        self.path("M" + " L".join(f"{n(x)} {n(y)}" for x, y in points), stroke=stroke, width=width, opacity=opacity)
 
     def dot(self, x, y, fill, r=4):
         # The ring in the surface color keeps a dot legible where it crosses a line.
@@ -167,8 +167,8 @@ class Axes:
     def title(self, s):
         self.fig.text(self.left, self.top - 12, s, fill="ink", weight=600)
 
-    def line(self, xs, ys, color, width=2):
-        self.fig.polyline([(self.x(a), self.y(b)) for a, b in zip(xs, ys)], color, width)
+    def line(self, xs, ys, color, width=2, opacity=None):
+        self.fig.polyline([(self.x(a), self.y(b)) for a, b in zip(xs, ys)], color, width, opacity)
 
     def dots(self, xs, ys, color, r=4):
         for a, b in zip(xs, ys):
@@ -869,27 +869,194 @@ def rlvr_gsm8k():
     fig.save("rlvr-gsm8k-test")
 
 
+# ------------------------------------------------------- 11 mixture of experts
+
+# One color per model in all the figures of this stage.
+DENSE, MOE, WIDE = "s1", "s2", "s3"
+
+
+def moe_block():
+    fig = Figure(720, 372, "A mixture of experts in place of the MLP", "One token in one block. The router scores eight experts, and only the two with the highest scores run.")
+    fig.box(24, 165, 96, 56, "Token", "its vector x")
+    fig.arrow([(120, 193), (150, 193)])
+    fig.box(152, 165, 128, 56, "Router", "softmax(R x)")
+    weights = {2: 0.7, 5: 0.3}  # the experts this token is routed to, and their weights
+    fig.text(330, 76, "8 experts, each an MLP of its own", size=11, fill="muted")
+    for i in range(8):
+        y, on = 84 + i * 28, i in weights
+        fig.rect(330, y, 170, 22, fill=MOE if on else "surface", stroke=None if on else "axis", rx=4, opacity=0.9 if on else None)
+        fig.text(340, y + 15, f"expert {i + 1}", size=11, fill="surface" if on else "ink2")
+        fig.text(490, y + 15, f"weight {weights[i]}" if on else "not run", size=11, fill="surface" if on else "muted", anchor="end")
+        if on:
+            fig.arrow([(280, 193), (304, 193), (304, y + 11), (328, y + 11)])
+            fig.arrow([(500, y + 11), (528, y + 11), (528, 193), (552, 193)])
+    fig.box(554, 165, 142, 56, "Weighted sum", "0.7 · e3 + 0.3 · e6")
+    fig.arrow([(625, 221), (625, 252)])
+    fig.text(625, 268, "added to the", size=11, anchor="middle")
+    fig.text(625, 283, "residual stream", size=11, anchor="middle")
+    fig.text(24, 334, "The block holds the parameters of all eight experts, and a token costs the compute of two.", size=11, fill="muted")
+    fig.text(24, 350, "Here an expert has half the width of the dense MLP: the same compute per token, and four times the parameters.", size=11, fill="muted")
+    fig.save("moe-block")
+
+
+def moe_balance():
+    runs = [("With the balance loss", "runs/moe/moe.jsonl"), ("Without it", "runs/moe/no-balance.jsonl")]
+    logs = [[r for r in jsonl(path) if "expert_share" in r][1::2] for _, path in runs]  # every 100 steps
+    experts = len(logs[0][0]["expert_share"][0])
+    peak = max(v for log in logs for r in log[3:] for block in r["expert_share"] for v in block)
+    top = math.ceil(peak * 10) / 10
+    fig = Figure(720, 390, "The balance loss keeps every expert in work", "Each line is one expert of one block, 64 per panel: its share of the block's routed work in a training batch.")
+    for i, ((title, _), log) in enumerate(zip(runs, logs)):
+        steps = [r["step"] for r in log]
+        ax = Axes(fig, 64 + i * 340, 100, 280, 200, (0, steps[-1]), (0, top))
+        ax.title(title)
+        ax.yticks(nice_ticks(0, top, 4), lambda t: f"{t:.0%}")
+        ax.xticks(range(0, steps[-1] + 1, 2000), lambda t: f"{t:,}", "training step")
+        for block in range(len(log[0]["expert_share"])):
+            for e in range(experts):
+                ax.line(steps, [min(r["expert_share"][block][e], top) for r in log], MOE, width=1, opacity=0.45)
+        fig.line(ax.left, ax.y(1 / experts), ax.left + ax.width, ax.y(1 / experts), stroke="ink", width=1)
+        ax.label(steps[-1], 1 / experts, "even", dx=6, fill="ink")
+        idle = sum(v < 0.01 for block in log[-1]["expert_share"] for v in block)
+        dropped = sum(r["dropped"] for r in log[len(log) // 2 :]) / len(log[len(log) // 2 :])
+        fig.text(ax.left, 352, f"{idle} of {len(log[0]['expert_share']) * experts} experts end below 1% of their block's work.", size=11, fill="muted")
+        fig.text(ax.left, 368, f"{dropped:.1%} of the routed work found no room.", size=11, fill="muted")
+    fig.save("moe-balance")
+
+
+def moe_loss():
+    # (name, color, the run of 6,000 steps, the run planned to take 20 minutes)
+    runs = [
+        ("dense, 14M", DENSE, "runs/base/log.jsonl", "runs/base/log.jsonl"),
+        ("mixture, 42M of which 14M active", MOE, "runs/moe/moe.jsonl", "runs/moe/moe-20min.jsonl"),
+        ("dense, 42M", WIDE, "runs/moe/wide.jsonl", "runs/moe/wide-20min.jsonl"),
+    ]
+    evals = lambda path: [r for r in jsonl(path) if "val_loss" in r]
+    fig = Figure(720, 344, "The mixture against two dense models", "Validation loss. Left: all three take the same 6,000 steps. Right: each is given the same 20 minutes.")
+    fig.legend(64, 78, [(color, name, "line") for name, color, _, _ in runs])
+
+    logs = [[r for r in evals(path) if r["step"] >= 2000] for _, _, path, _ in runs]
+    losses = [r["val_loss"] for log in logs for r in log]
+    lo, hi = math.floor(min(losses) * 20) / 20, math.ceil(max(losses) * 20) / 20
+    ax = Axes(fig, 64, 124, 280, 150, (2000, 6000), (lo, hi))
+    ax.title("The same steps, from step 2,000 on")
+    ax.yticks(nice_ticks(lo, hi, 4), lambda t: f"{t:g}")
+    ax.xticks(range(2000, 6001, 1000), lambda t: f"{t:,}", "training step")
+    for (_, color, _, _), log in zip(runs, logs):
+        xs, ys = [r["step"] for r in log], [r["val_loss"] for r in log]
+        ax.line(xs, ys, color)
+        ax.dots(xs[-1:], ys[-1:], color)
+        ax.label(xs[-1], ys[-1], f"{ys[-1]:.3f}", dx=10, fill="ink")
+
+    # The runs sized for 20 minutes: one row each, the final loss as a dot on a shared scale.
+    finals = [evals(path)[-1] for _, _, _, path in runs]
+    lo = math.floor(min(r["val_loss"] for r in finals) * 20) / 20
+    hi = math.ceil(max(r["val_loss"] for r in finals) * 20) / 20
+    time = Axes(fig, 452, 124, 220, 150, (lo, hi), (0, 1))
+    time.title("The same time")
+    time.xticks(nice_ticks(lo, hi, 3), lambda t: f"{t:g}", "validation loss at the end")
+    for i, ((_, color, _, _), r) in enumerate(zip(runs, finals)):
+        y = time.top + 28 + i * 46
+        fig.line(time.left, y, time.left + time.width, y)
+        fig.dot(time.x(r["val_loss"]), y, color, r=5)
+        fig.text(time.x(r["val_loss"]), y - 11, f"{r['val_loss']:.3f}", anchor="middle", fill="ink")
+        note = f"{r['step']:,} steps in {r['elapsed'] / 60:.1f} min"
+        half = text_width(note, 11) / 2
+        fig.text(min(max(time.x(r["val_loss"]), time.left + half), time.left + time.width - half), y + 20, note, size=11, anchor="middle")
+    fig.save("moe-loss")
+
+
+def moe_speed():
+    bench = load("runs/bench/moe-mps.json")
+    color = {"Dense, 14M": DENSE, "Dense, 42M": WIDE}
+    label = {"Dense, 14M": "dense, 14M", "Dense, 42M": "dense, 42M"}
+    label |= {"Experts take their own tokens": "experts take their own tokens", "Experts take every token": "experts take every token"}
+    label |= {"Capacity 1.5": "capacity 1.5", "Capacity 1": "capacity 1"}
+    sections = [
+        ("A training step", [(r["name"], r["tokens_per_second"]) for r in bench["train"]]),
+        ("Generating one sequence", [(r["name"], r["batch_1"]) for r in bench["generate"]]),
+        ("Generating 64 sequences at once", [(r["name"], r["batch_64"]) for r in bench["generate"]]),
+    ]
+    row, left, width = 26, 250, 340
+    fig = Figure(720, 96 + sum(48 + row * len(rows) for _, rows in sections), "What the mixture costs in time", "Tokens per second on an M5 Pro. Each section has its own scale.")
+    fig.legend(24, 76, [(DENSE, "dense, 14M", "dot"), (MOE, "mixture, 42M of which 14M active", "dot"), (WIDE, "dense, 42M", "dot")])
+    top = 118
+    for title, rows in sections:
+        fig.text(24, top - 12, title, fill="ink", weight=600)
+        fig.line(left, top - 4, left, top + row * len(rows) - 6, stroke="axis")
+        peak = max(v for _, v in rows)
+        for i, (name, value) in enumerate(rows):
+            y = top + i * row
+            fig.text(left - 10, y + 13, label[name], anchor="end", fill="ink")
+            bar(fig, left, y, width * value / peak, 16, color.get(name, MOE))
+            text = f"{value / 1000:.0f}K" if value >= 10000 else f"{value / 1000:.1f}K" if value >= 1000 else f"{value:.0f}"
+            fig.text(left + max(width * value / peak, 5) + 8, y + 13, text, fill="ink")
+        top += 48 + row * len(rows)
+    fig.save("moe-speed")
+
+
+def moe_routing():
+    data = load("runs/moe/routing.json")
+    blocks, experts = data["blocks"], data["n_experts"]
+    fig = Figure(720, 372, "What the routers do", f"The trained mixture on {data['tokens']:,} tokens of held-out stories.")
+    # each expert's share of the work, block by block
+    left, top, cell = 64, 124, 26
+    fig.text(left, top - 26, "Share of the work", fill="ink", weight=600)
+    fig.text(left, top - 10, "one row per block, one cell per expert", size=11)
+    peak = max(v for b in blocks for v in b["share"])
+    for i, b in enumerate(blocks):
+        fig.text(left - 8, top + i * cell + 17, str(i + 1), size=11, fill="muted", anchor="end")
+        for e, share in enumerate(b["share"]):
+            fig.rect(left + e * cell, top + i * cell, cell - 2, cell - 2, fill="grid", opacity=0.6, rx=3)
+            fig.rect(left + e * cell, top + i * cell, cell - 2, cell - 2, fill=MOE, opacity=round(share / peak, 2), rx=3)
+    lo, hi = min(v for b in blocks for v in b["share"]), peak
+    fig.text(left, top + len(blocks) * cell + 16, f"from {lo:.0%} to {hi:.0%}; even would be {1 / experts:.1%}", size=11, fill="muted")
+    fig.text(left - 34, top + len(blocks) * cell / 2, "block", size=11, fill="muted", anchor="middle", rotate=-90)
+
+    xs = list(range(1, len(blocks) + 1))
+    ax = Axes(fig, 372, 124, 290, 150, (0.6, len(blocks) + 0.4), (0, 1))
+    ax.title("How often a token's first expert can be guessed")
+    ax.yticks([0, 0.25, 0.5, 0.75, 1], lambda t: f"{t:.0%}")
+    ax.xticks(xs, str, "block")
+    ax.line(xs, [b["by_token_baseline"] for b in blocks], "muted", width=1)
+    for key, color in [("by_token", "s1"), ("by_previous", "s3")]:
+        ax.line(xs, [b[key] for b in blocks], color)
+        ax.dots(xs, [b[key] for b in blocks], color)
+    ax.label(1, blocks[0]["by_token"], "from the token alone", dx=12, dy=-8, fill="ink")
+    peak = max(xs, key=lambda x: blocks[x - 1]["by_previous"])
+    ax.label(peak, blocks[peak - 1]["by_previous"], "it is the one of the token before", dx=-12, dy=4, anchor="end", fill="ink")
+    fig.text(372, 326, "Gray: always guessing the block's most common first expert.", size=11, fill="muted")
+    fig.save("moe-routing")
+
+
 # ---------------------------------------------------------------------- readme
 
 
 def pipeline(done):
-    fig = Figure(720, 250, "The pipeline", "Ten stages, each with a note, code and tests.")
+    fig = Figure(720, 250, "The pipeline", "Ten stages and a variation, each with a note, code and tests.")
     rows = [
         ("From scratch: a 14M model, trained here", [(1, "Tokenizer"), (2, "Model"), (3, "Pretraining"), (4, "Inference")]),
         ("Post-training: that model, and an open 0.5B one", [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
     ]
+    w, gap = 98, 16
+
+    def stage(x, y, number, name):
+        built = number in done
+        fig.rect(x, y, w, 40, fill="s1" if built else "surface", stroke="s1" if built else "axis", rx=6, opacity=0.12 if built else None)
+        fig.text(x + 12, y + 25, str(number), fill="muted", size=11)
+        fig.text(x + 12 + (16 if number >= 10 else 12), y + 25, name, fill="ink", weight=600 if built else 400)
+
     for r, (label, stages) in enumerate(rows):
         y = 94 + r * 82
         fig.text(24, y - 12, label, size=11, fill="muted")
-        w, gap = 98, 16
         for i, (number, name) in enumerate(stages):
             x = 24 + i * (w + gap)
-            built = number in done
-            fig.rect(x, y, w, 40, fill="s1" if built else "surface", stroke="s1" if built else "axis", rx=6, opacity=0.12 if built else None)
-            fig.text(x + 12, y + 25, str(number), fill="muted", size=11)
-            fig.text(x + 12 + (16 if number >= 10 else 12), y + 25, name, fill="ink", weight=600 if built else 400)
+            stage(x, y, number, name)
             if i:
                 fig.arrow([(x - gap + 2, y + 20), (x - 2, y + 20)])
+    # Not a step of the chain: the model of stage 2 again, built differently.
+    fig.text(24 + 5 * (w + gap) + w, 82, "A variation of the model", size=11, fill="muted", anchor="end")
+    stage(24 + 5 * (w + gap), 94, 11, "Experts")
     fig.save("pipeline")
 
 
@@ -921,4 +1088,12 @@ if os.path.exists("runs/rlvr/grpo-words-finish.jsonl"):
     rlvr_words()
 if os.path.exists("runs/rlvr/grpo-gsm8k.jsonl"):
     rlvr_gsm8k()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
+moe_block()
+if os.path.exists("runs/bench/moe-mps.json"):
+    moe_speed()
+if os.path.exists("runs/moe/wide-20min.jsonl"):
+    moe_balance()
+    moe_loss()
+if os.path.exists("runs/moe/routing.json"):
+    moe_routing()
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11})
