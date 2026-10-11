@@ -4,7 +4,8 @@ Saving and loading the models that the stages produce.
 A model is named by a spec: "qwen" for the published model, or a directory.
 A directory written by the fine-tuning and RL scripts holds a meta.json that
 says how to rebuild the model: which model it started from, whether it has
-LoRA adapters, and where its weights are.
+LoRA adapters, and where its weights are. A quantized model's directory holds
+everything it needs, and is read without the model it was made from.
 """
 
 import json
@@ -12,8 +13,9 @@ import os
 
 import torch
 
-from minllm import lora, pretrained
+from minllm import lora, pretrained, quantize
 from minllm.common import load_checkpoint
+from minllm.model import Config, Transformer
 from minllm.tokenizer import Tokenizer
 
 TOKENIZER = "out/tokenizer.json"  # the tokenizer of the models trained from scratch here
@@ -29,6 +31,13 @@ def load(spec, device, dtype=torch.float32):
 
     with open(f"{spec}/meta.json") as f:
         meta = json.load(f)
+    if meta.get("quant"):
+        # Packed codes with their scales and offsets, which stay in the 16-bit
+        # floats they were chosen against whatever dtype was asked for.
+        model = quantize.apply(Transformer(Config(**meta["config"])), **meta["quant"], fill=False)
+        model.load_state_dict(pretrained.read_safetensors(f"{spec}/model.safetensors"))
+        tok = pretrained.load_tokenizer() if meta["family"] == "qwen" else Tokenizer.load(TOKENIZER)
+        return model.to(device).eval(), tok, meta
     if meta.get("lora"):
         # Adapters on top of the model they were trained on.
         model, tok, _ = load(meta["base"], device, dtype)
@@ -51,7 +60,11 @@ def load(spec, device, dtype=torch.float32):
 def save(dir, model, meta):
     """Write a model next to a meta.json. LoRA models save only their adapters."""
     os.makedirs(dir, exist_ok=True)
-    if meta.get("lora"):
+    if meta.get("quant"):
+        meta = meta | {"config": vars(model.cfg)}
+        state = {k: v if v.dtype == torch.int32 else v.to(torch.float16) for k, v in model.state_dict().items()}
+        pretrained.write_safetensors(f"{dir}/model.safetensors", state)
+    elif meta.get("lora"):
         pretrained.write_safetensors(f"{dir}/adapter.safetensors", {k: v.float() for k, v in lora.state(model).items()})
     elif meta["family"] == "qwen":
         # 16-bit floats, like the published file: 1 GB instead of 2
