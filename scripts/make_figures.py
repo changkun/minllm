@@ -1105,6 +1105,59 @@ def distill_loss():
     fig.save("distill-loss")
 
 
+# ---------------------------------------------------------- 9a self-training
+
+
+def self_rounds():
+    # (title, the self-training run, the GRPO run of stage 9, replies per GRPO iteration by the defaults of scripts/grpo.py)
+    panels = [
+        ("The 14M model: requested words used", "words", "runs/rlvr/grpo-words.jsonl", 32 * 8),
+        ("The 0.5B model: GSM8K problems solved", "gsm8k", "runs/rlvr/grpo-gsm8k.jsonl", 8 * 8),
+    ]
+    fig = Figure(720, 330, "Self-training against GRPO, for the same replies", "Score on held-out prompts, greedy, against the replies sampled so far. Both methods start from the same model.")
+    fig.legend(64, 78, [("s1", "self-training, one point per round", "line"), ("s2", "GRPO", "line")])
+    for i, (title, name, grpo_path, per_iteration) in enumerate(panels):
+        args = load(f"runs/self/{name}-meta.json")["args"]
+        ours = [(r["round"] * args["prompts"] * args["samples"], r["held_out"]) for r in jsonl(f"runs/self/{name}.jsonl")]
+        grpo = [(r["iteration"] * per_iteration, r["held_out"]) for r in jsonl(grpo_path) if "held_out" in r]
+        most = max(ours[-1][0], grpo[-1][0])
+        values = [v for _, v in ours + grpo]
+        lo, hi = math.floor(min(values) * 10) / 10, math.ceil(max(values) * 10) / 10
+        ax = Axes(fig, 72 + i * 332, 124, 270, 140, (0, most), (lo, hi))
+        ax.title(title)
+        ax.yticks(nice_ticks(lo, hi, 4), lambda t: f"{t:.0%}")
+        ax.xticks(nice_ticks(0, most, 4), thousands, "replies sampled")
+        for points, color in ((grpo, "s2"), (ours, "s1")):
+            ax.line(*zip(*points), color)
+            ax.dots(*zip(*points), color, r=3.5)
+        ax.label(ours[-1][0], ours[-1][1], f"{ours[-1][1]:.0%}", dx=-2, dy=18 if ours[-1][1] < grpo[-1][1] else -10, anchor="end", fill="ink")
+        ax.label(grpo[-1][0], grpo[-1][1], f"{grpo[-1][1]:.0%}", dx=-2, dy=-10 if ours[-1][1] < grpo[-1][1] else 18, anchor="end", fill="ink")
+    fig.save("self-rounds")
+
+
+def self_results():
+    story_measures(
+        "self-stories",
+        "What self-training does to the stories",
+        "1,000 sampled stories per model on held-out prompts, with the models of stage 9 for comparison.",
+        "runs/self/stories.json",
+        [("fine-tuned, the start", "sft-words"), ("GRPO", "grpo-words"), ("GRPO, LoRA with a KL penalty", "grpo-words-kl"), ("self-training", "self-words")],
+        [
+            ("Requested words used", "words_used", lambda v: f"{v:.0%}", "what was asked for"),
+            ("Stories cut off", "cut_off", lambda v: f"{v:.0%}", "they never end"),
+            ("Strangeness", "strangeness", lambda v: f"{v:.2f}", "lower is better"),
+        ],
+        STRANGENESS,
+    )
+    fig = Figure(720, 250, "GSM8K test problems solved", "1,319 problems, greedy replies, with 95% confidence intervals. Self-training sampled twice the replies of GRPO.")
+    rows = []
+    for label, name in [("0.5B as published", "gsm8k-qwen"), ("fine-tuned on solutions", "gsm8k-sft-gsm8k-lora"), ("then GRPO", "gsm8k-grpo-gsm8k"), ("or self-training", "gsm8k-self-gsm8k")]:
+        r = load(f"runs/eval/{name}.json")
+        rows.append((label, r["mean"], r["error"]))
+    scored_bars(fig, 220, 84, 330, rows, 0.6, lambda v: f"{v:.1%}")
+    fig.save("self-gsm8k")
+
+
 # ----------------------------------------------------------- 10a quantization
 
 
@@ -1211,12 +1264,13 @@ def quant_speed():
 
 
 def pipeline(done):
-    fig = Figure(720, 352, "The pipeline", "Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.")
+    fig = Figure(720, 388, "The pipeline", "Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.")
     rows = [
         ("From scratch: a 14M model, trained here", [(1, "Tokenizer"), (2, "Model"), (3, "Pretraining"), (4, "Inference")]),
         ("Post-training: that model, and an open 0.5B one", [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
     ]
-    leaves = {2: ("2a", "Experts"), 3: ("3a", "Distillation"), 10: ("10a", "Quantization")}
+    # (label, name, how far below its stage it hangs: neighbors take turns)
+    leaves = {2: ("2a", "Experts", 0), 3: ("3a", "Distillation", 0), 9: ("9a", "Self-training", 0), 10: ("10a", "Quantization", 1)}
     left, w, gap, tops = 36, 98, 16, [96, 232]
     for (label, stages), y in zip(rows, tops):
         fig.text(left, y - 12, label, size=11, fill="muted")
@@ -1230,18 +1284,18 @@ def pipeline(done):
                 fig.arrow([(x - gap + 2, y + 20), (x - 2, y + 20)])
             if number in leaves:
                 # A side topic hangs below the stage it branches from, outside the chain.
-                tag, topic = leaves[number]
+                tag, topic, level = leaves[number]
                 built = tag in done
                 width = text_width(f"{tag} {topic}", 11) + 24
-                lx = x if x + width < 700 else x + w - width
-                fig.line(x + w / 2, y + 40, x + w / 2, y + 52, stroke="s1" if built else "axis", width=1.5)
-                fig.rect(lx, y + 52, width, 28, fill="surface", stroke="s1" if built else "axis", rx=5)
-                fig.text(lx + 10, y + 70, tag, fill="muted", size=11)
-                fig.text(lx + 14 + text_width(tag, 11), y + 70, topic, fill="ink" if built else "ink2", size=11)
+                lx, ly = x if x + width < 700 else x + w - width, y + 52 + level * 36
+                fig.line(x + w / 2, y + 40, x + w / 2, ly, stroke="s1" if built else "axis", width=1.5)
+                fig.rect(lx, ly, width, 28, fill="surface", stroke="s1" if built else "axis", rx=5)
+                fig.text(lx + 10, ly + 18, tag, fill="muted", size=11)
+                fig.text(lx + 14 + text_width(tag, 11), ly + 18, topic, fill="ink" if built else "ink2", size=11)
     # The chain goes on from the end of the first row to the start of the second.
     end = left + 4 * (w + gap) - gap
     fig.arrow([(end + 2, tops[0] + 20), (end + 22, tops[0] + 20), (end + 22, 198), (left - 18, 198), (left - 18, tops[1] + 20), (left - 2, tops[1] + 20)])
-    fig.text(left, 336, "A side topic uses what its stage built, and the chain does not depend on it.", size=11, fill="muted")
+    fig.text(left, 372, "A side topic uses what its stage built, and the chain does not depend on it.", size=11, fill="muted")
     fig.save("pipeline")
 
 
@@ -1277,6 +1331,9 @@ if os.path.exists("runs/distill/targets.json"):
     distill_targets()
 if os.path.exists("runs/distill/distilled-20min.jsonl"):
     distill_loss()
+if os.path.exists("runs/eval/gsm8k-self-gsm8k.json"):
+    self_rounds()
+    self_results()
 if os.path.exists("runs/quant/sweep-qwen.json"):
     quant_levels()
     quant_bits()
@@ -1292,4 +1349,4 @@ if os.path.exists("runs/moe/wide-20min.jsonl"):
     moe_loss()
 if os.path.exists("runs/moe/routing.json"):
     moe_routing()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "3a", "10a"})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "3a", "9a", "10a"})
