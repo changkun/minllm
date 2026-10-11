@@ -96,7 +96,7 @@ held_out_batches = [held_out_pairs[i : i + args.batch_size] for i in range(0, ar
 # ------------------------------------------------------------------ model
 
 meta = {"family": base_meta["family"], "base": args.base, "task": args.task}
-n_total = model.num_params()
+n_total = base_meta.get("parameters") or model.num_params()  # a quantized model records how many weights its codes stand for
 if args.lora:
     meta["lora"] = {"r": args.lora, "alpha": args.lora_alpha or 2 * args.lora}
     trainable = lora.add(model, **meta["lora"])
