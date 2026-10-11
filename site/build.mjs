@@ -58,8 +58,8 @@ function figure(name, alt) {
   const svg = source
     .replace(/<style>.*?<\/style>/s, "")
     .replace(/ width="\d+" height="\d+"/, "")
-    .replace("<svg ", `<svg class="fig" style="max-width:${width}px" aria-label="${alt.replace(/"/g, "&quot;")}" `);
-  return `<figure class="figure" data-figure="${name}">${svg.trim()}<button class="zoom" type="button" aria-label="Open this figure large">Enlarge</button></figure>`;
+    .replace("<svg ", `<svg class="fig" aria-label="${alt.replace(/"/g, "&quot;")}" `);
+  return `<figure class="figure" data-figure="${name}" style="max-width:${width}px">${svg.trim()}<button class="zoom" type="button" aria-label="Open this figure large">Enlarge</button></figure>`;
 }
 
 // Render markdown that lives in the directory `base` of the repository.
@@ -109,7 +109,7 @@ for (const note of Object.values(notes)) {
   let html = note.html;
   for (const lab of labs.filter((l) => l.note === note.slug)) {
     // A lab follows a figure of the note, or closes the section before a heading.
-    const place = lab.after ? new RegExp(`(<figure class="figure" data-figure="${lab.after}">.*?</figure>)`, "s") : new RegExp(`(<h2 id="${lab.before}">)`);
+    const place = lab.after ? new RegExp(`(<figure class="figure" data-figure="${lab.after}"[^>]*>.*?</figure>)`, "s") : new RegExp(`(<h2 id="${lab.before}">)`);
     if (!place.test(html)) throw new Error(`${note.slug}: no place for the lab ${lab.name}`);
     html = html.replace(place, lab.after ? `$1\n${section(lab)}` : `${section(lab)}\n$1`);
   }
