@@ -136,7 +136,7 @@ writeFileSync(join(dist, "interactive", "index.html"), page({ slug: null, title:
 // Every film on one page, in the order of the pipeline.
 const reel = films().map((slug) => `<h2 id="${slug}"><span class="num">${notes[slug].n}</span> <a href="/${slug}/">${notes[slug].title}</a></h2>\n${screen(slug)}`).join("\n");
 mkdirSync(join(dist, "films"), { recursive: true });
-writeFileSync(join(dist, "films", "index.html"), page({ slug: null, title: "Films", files: "", html: `<p>Every chapter as a film of under a minute, in the order of the pipeline. A film is drawn by the page from the runs logged in the repository, so it can be stopped and moved to any second. The note below each title has the whole chapter.</p>\n${reel}`, headings: films().map((slug) => ({ id: slug, text: `${notes[slug].n} ${notes[slug].title}` })) }, notes));
+writeFileSync(join(dist, "films", "index.html"), page({ slug: null, title: "Films", files: "", html: `<p>Every chapter as a film of about a minute, in the order of the pipeline. A film is drawn by the page from the runs logged in the repository, so it can be stopped and moved to any second. The note below each title has the whole chapter.</p>\n${reel}`, headings: films().map((slug) => ({ id: slug, text: `${notes[slug].n} ${notes[slug].title}` })) }, notes));
 
 // The code: one page per Python file, and a list of them all.
 const explained = (path) => [...(explains[path] || [])].map((slug) => notes[slug]);
