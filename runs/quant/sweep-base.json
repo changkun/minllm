@@ -1,0 +1,119 @@
+{
+ "model": "out/base",
+ "parameters": 14162304,
+ "loss": 1.465377974510193,
+ "settings": [
+  {
+   "bits": 8,
+   "group": 0,
+   "bits_per_weight": 8.07175925925926,
+   "loss": 1.465497648715973
+  },
+  {
+   "bits": 6,
+   "group": 0,
+   "bits_per_weight": 6.0717592592592595,
+   "loss": 1.467020535469055
+  },
+  {
+   "bits": 5,
+   "group": 0,
+   "bits_per_weight": 5.0717592592592595,
+   "loss": 1.4718178451061248
+  },
+  {
+   "bits": 4,
+   "group": 0,
+   "bits_per_weight": 4.0717592592592595,
+   "loss": 1.4911153584718704
+  },
+  {
+   "bits": 3,
+   "group": 0,
+   "bits_per_weight": 3.071759259259259,
+   "loss": 1.6039939939975738
+  },
+  {
+   "bits": 2,
+   "group": 0,
+   "bits_per_weight": 2.071759259259259,
+   "loss": 2.9655417084693907
+  },
+  {
+   "bits": 8,
+   "group": 64,
+   "bits_per_weight": 8.5,
+   "loss": 1.4654008477926255
+  },
+  {
+   "bits": 6,
+   "group": 64,
+   "bits_per_weight": 6.5,
+   "loss": 1.4663681656122207
+  },
+  {
+   "bits": 5,
+   "group": 64,
+   "bits_per_weight": 5.5,
+   "loss": 1.4690020233392715
+  },
+  {
+   "bits": 4,
+   "group": 64,
+   "bits_per_weight": 4.5,
+   "loss": 1.4814175695180893
+  },
+  {
+   "bits": 3,
+   "group": 64,
+   "bits_per_weight": 3.5,
+   "loss": 1.544362723827362
+  },
+  {
+   "bits": 2,
+   "group": 64,
+   "bits_per_weight": 2.5,
+   "loss": 2.101459211111069
+  },
+  {
+   "bits": 8,
+   "group": 16,
+   "bits_per_weight": 10.0,
+   "loss": 1.4654299795627594
+  },
+  {
+   "bits": 6,
+   "group": 16,
+   "bits_per_weight": 8.0,
+   "loss": 1.4659384071826935
+  },
+  {
+   "bits": 5,
+   "group": 16,
+   "bits_per_weight": 7.0,
+   "loss": 1.4673530429601669
+  },
+  {
+   "bits": 4,
+   "group": 16,
+   "bits_per_weight": 6.0,
+   "loss": 1.4739348202943803
+  },
+  {
+   "bits": 3,
+   "group": 16,
+   "bits_per_weight": 5.0,
+   "loss": 1.505639013648033
+  },
+  {
+   "bits": 2,
+   "group": 16,
+   "bits_per_weight": 4.0,
+   "loss": 1.7315566450357438
+  }
+ ],
+ "parts_at_4_bits": {
+  "blocks": 1.4749253034591674,
+  "embedding": 1.4716384023427964
+ }
+}

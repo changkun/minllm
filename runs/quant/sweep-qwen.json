@@ -1,0 +1,119 @@
+{
+ "model": "qwen",
+ "parameters": 494032768,
+ "loss": 0.8306002378463745,
+ "settings": [
+  {
+   "bits": 8,
+   "group": 0,
+   "bits_per_weight": 8.029544926863245,
+   "loss": 0.8298140496015549
+  },
+  {
+   "bits": 6,
+   "group": 0,
+   "bits_per_weight": 6.029544926863246,
+   "loss": 0.8910981386899948
+  },
+  {
+   "bits": 5,
+   "group": 0,
+   "bits_per_weight": 5.029544926863246,
+   "loss": 0.9373168796300888
+  },
+  {
+   "bits": 4,
+   "group": 0,
+   "bits_per_weight": 4.029544926863246,
+   "loss": 1.3779213309288025
+  },
+  {
+   "bits": 3,
+   "group": 0,
+   "bits_per_weight": 3.0295449268632457,
+   "loss": 7.300970721244812
+  },
+  {
+   "bits": 2,
+   "group": 0,
+   "bits_per_weight": 2.0295449268632457,
+   "loss": 14.105579662322999
+  },
+  {
+   "bits": 8,
+   "group": 64,
+   "bits_per_weight": 8.5,
+   "loss": 0.8294371843338013
+  },
+  {
+   "bits": 6,
+   "group": 64,
+   "bits_per_weight": 6.5,
+   "loss": 0.8382405042648315
+  },
+  {
+   "bits": 5,
+   "group": 64,
+   "bits_per_weight": 5.5,
+   "loss": 0.9052199095487594
+  },
+  {
+   "bits": 4,
+   "group": 64,
+   "bits_per_weight": 4.5,
+   "loss": 0.9194119960069657
+  },
+  {
+   "bits": 3,
+   "group": 64,
+   "bits_per_weight": 3.5,
+   "loss": 1.814465379714966
+  },
+  {
+   "bits": 2,
+   "group": 64,
+   "bits_per_weight": 2.5,
+   "loss": 13.381785774230957
+  },
+  {
+   "bits": 8,
+   "group": 16,
+   "bits_per_weight": 10.0,
+   "loss": 0.8325041681528091
+  },
+  {
+   "bits": 6,
+   "group": 16,
+   "bits_per_weight": 8.0,
+   "loss": 0.8273734331130982
+  },
+  {
+   "bits": 5,
+   "group": 16,
+   "bits_per_weight": 7.0,
+   "loss": 0.8515095740556717
+  },
+  {
+   "bits": 4,
+   "group": 16,
+   "bits_per_weight": 6.0,
+   "loss": 0.8772789984941483
+  },
+  {
+   "bits": 3,
+   "group": 16,
+   "bits_per_weight": 5.0,
+   "loss": 1.2237924993038178
+  },
+  {
+   "bits": 2,
+   "group": 16,
+   "bits_per_weight": 4.0,
+   "loss": 11.482749509811402
+  }
+ ],
+ "parts_at_4_bits": {
+  "blocks": 0.9188779115676879,
+  "embedding": 0.8269112974405288
+ }
+}
