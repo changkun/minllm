@@ -103,7 +103,7 @@ writeFileSync(join(dist, "404.html"), page({ slug: null, title: "Not found", fil
 
 cpSync(join(root, "docs", "figures"), join(dist, "figures"), { recursive: true });
 cpSync(join(root, "runs"), join(dist, "runs"), { recursive: true }); // what the interactive figures read
-cpSync(join(here, "data"), join(dist, "data"), { recursive: true });
+cpSync(join(here, "public"), dist, { recursive: true }); // files served as they are: the tokenizer of stage 1
 cpSync(join(here, "src", "style.css"), join(dist, "assets", "style.css"));
 cpSync(join(here, "src", "site.js"), join(dist, "assets", "site.js"));
 cpSync(join(here, "src", "labs"), join(dist, "assets", "labs"), { recursive: true });
