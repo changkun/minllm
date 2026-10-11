@@ -18,7 +18,8 @@ and quantization of the exported file. The pipeline does not depend on them.
 The notes are also a website, [minllm.latere.site](https://minllm.latere.site).
 Every chapter opens there with a film of about a minute, the model of stage 3
 runs in the browser, the figures can be tried, and the code can be read
-beside the notes that explain it.
+beside the notes that explain it. The films are also video files, attached to
+the [releases](https://github.com/changkun/minllm/releases).
 
 The only machine learning dependency is PyTorch, for tensors and automatic
 differentiation. Everything on top of it is written here, in a few hundred
