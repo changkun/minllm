@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="290" viewBox="0 0 720 290" role="img"><title>What self-training does to the stories</title><desc>1,000 sampled stories per model on held-out prompts, with the models of stage 9 for comparison.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="289" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">What self-training does to the stories</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">1,000 sampled stories per model on held-out prompts, with the models of stage 9 for comparison.</text>
+<text class="f-ink" x="196" y="88" font-size="12" text-anchor="start" font-weight="600">Requested words used</text>
+<line class="s-axis" x1="196" y1="100" x2="196" y2="232" stroke-width="1" stroke-linecap="round"/>
+<text class="f-ink" x="186" y="122" font-size="12" text-anchor="end">fine-tuned, the start</text>
+<path class="f-s1" d="M196 108 H216.7 a4 4 0 0 1 4 4 V122 a4 4 0 0 1 -4 4 H196 Z"/>
+<text class="f-ink" x="228.7" y="122" font-size="12" text-anchor="start">25%</text>
+<text class="f-ink" x="186" y="156" font-size="12" text-anchor="end">GRPO</text>
+<path class="f-s1" d="M196 142 H288 a4 4 0 0 1 4 4 V156 a4 4 0 0 1 -4 4 H196 Z"/>
+<text class="f-ink" x="300" y="156" font-size="12" text-anchor="start">96%</text>
+<text class="f-ink" x="186" y="190" font-size="12" text-anchor="end">GRPO, LoRA with a KL penalty</text>
+<path class="f-s1" d="M196 176 H257.3 a4 4 0 0 1 4 4 V190 a4 4 0 0 1 -4 4 H196 Z"/>
+<text class="f-ink" x="269.3" y="190" font-size="12" text-anchor="start">65%</text>
+<text class="f-ink" x="186" y="224" font-size="12" text-anchor="end">self-training</text>
+<path class="f-s1" d="M196 210 H254.9 a4 4 0 0 1 4 4 V224 a4 4 0 0 1 -4 4 H196 Z"/>
+<text class="f-ink" x="266.9" y="224" font-size="12" text-anchor="start">63%</text>
+<text class="f-muted" x="196" y="252" font-size="11" text-anchor="start">what was asked for</text>
+<text class="f-ink" x="374" y="88" font-size="12" text-anchor="start" font-weight="600">Stories cut off</text>
+<line class="s-axis" x1="374" y1="100" x2="374" y2="232" stroke-width="1" stroke-linecap="round"/>
+<path class="f-s1" d="M374 108 H375 a4 4 0 0 1 4 4 V122 a4 4 0 0 1 -4 4 H374 Z"/>
+<text class="f-ink" x="387" y="122" font-size="12" text-anchor="start">2%</text>
+<path class="f-s1" d="M374 142 H466 a4 4 0 0 1 4 4 V156 a4 4 0 0 1 -4 4 H374 Z"/>
+<text class="f-ink" x="478" y="156" font-size="12" text-anchor="start">77%</text>
+<path class="f-s1" d="M374 176 H375 a4 4 0 0 1 4 4 V190 a4 4 0 0 1 -4 4 H374 Z"/>
+<text class="f-ink" x="387" y="190" font-size="12" text-anchor="start">3%</text>
+<path class="f-s1" d="M374 210 H375 a4 4 0 0 1 4 4 V224 a4 4 0 0 1 -4 4 H374 Z"/>
+<text class="f-ink" x="387" y="224" font-size="12" text-anchor="start">2%</text>
+<text class="f-muted" x="374" y="252" font-size="11" text-anchor="start">they never end</text>
+<text class="f-ink" x="552" y="88" font-size="12" text-anchor="start" font-weight="600">Strangeness</text>
+<line class="s-axis" x1="552" y1="100" x2="552" y2="232" stroke-width="1" stroke-linecap="round"/>
+<path class="f-s1" d="M552 108 H595.2 a4 4 0 0 1 4 4 V122 a4 4 0 0 1 -4 4 H552 Z"/>
+<text class="f-ink" x="607.2" y="122" font-size="12" text-anchor="start">1.55</text>
+<path class="f-s1" d="M552 142 H644 a4 4 0 0 1 4 4 V156 a4 4 0 0 1 -4 4 H552 Z"/>
+<text class="f-ink" x="656" y="156" font-size="12" text-anchor="start">3.15</text>
+<path class="f-s1" d="M552 176 H599.7 a4 4 0 0 1 4 4 V190 a4 4 0 0 1 -4 4 H552 Z"/>
+<text class="f-ink" x="611.7" y="190" font-size="12" text-anchor="start">1.70</text>
+<path class="f-s1" d="M552 210 H604.8 a4 4 0 0 1 4 4 V224 a4 4 0 0 1 -4 4 H552 Z"/>
+<text class="f-ink" x="616.8" y="224" font-size="12" text-anchor="start">1.86</text>
+<text class="f-muted" x="552" y="252" font-size="11" text-anchor="start">lower is better</text>
+<text class="f-muted" x="24" y="272" font-size="11" text-anchor="start">Strangeness is the loss of the pretrained story model on the stories, in nats per token: how unlike a story they read.</text>
+</svg>
