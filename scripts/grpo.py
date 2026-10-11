@@ -32,6 +32,7 @@ parser.add_argument("--lr", type=float, default=None)
 parser.add_argument("--kl", type=float, default=0.0, help="weight of a KL penalty towards the starting model")
 parser.add_argument("--lora", type=int, default=0, help="add fresh LoRA adapters of this rank instead of training every weight")
 parser.add_argument("--must-finish", action="store_true", help="no reward for a reply that ran into the token limit instead of ending")
+parser.add_argument("--max-new-tokens", type=int, default=None, help="the limit on a sampled reply's length; the task's own by default")
 parser.add_argument("--eval-every", type=int, default=None)
 parser.add_argument("--eval-n", type=int, default=None, help="held-out examples per evaluation")
 parser.add_argument("--seed", type=int, default=0)
@@ -88,14 +89,14 @@ else:
     pool, held_out = pool[:-200], pool[-200:][: args.eval_n]  # the 200 problems that fine-tuning held out too
     draw = lambda: rng.sample(pool, args.prompts)
 score = tasks.SCORE[args.task]
-max_new_tokens = tasks.MAX_NEW_TOKENS[args.task]
+max_new_tokens = args.max_new_tokens or tasks.MAX_NEW_TOKENS[args.task]
 end = tok.special_tokens[chat.IM_END]
 
 
 def held_out_score():
     """Greedy replies to the held-out prompts, scored. The number that says whether training helps."""
     model.eval()
-    replies = evaluate.replies(model, tok, held_out, max_new_tokens, batch_size=256 if small else 64)
+    replies = evaluate.replies(model, tok, held_out, tasks.MAX_NEW_TOKENS[args.task], batch_size=256 if small else 64)
     model.train()
     free_memory(device)
     return sum(score(e, r) for e, r in zip(held_out, replies)) / len(held_out)
@@ -121,7 +122,7 @@ for iteration in range(1, args.iterations + 1):
         rewards = rewards * finished
     # 3. Compare within each prompt's group, and 4. take one policy-gradient step.
     advantages = rl.group_advantages(rewards, args.samples)
-    stats = rl.update(model, optimizer, prompts, replies, advantages, device, kl_coef=args.kl, reference=reference, chunk=64 if small else 8, hidden=hidden)
+    stats = rl.update(model, optimizer, prompts, replies, advantages, device, kl_coef=args.kl, reference=reference, chunk=64 if small else 4, hidden=hidden)
     free_memory(device)
 
     groups = rewards.view(-1, args.samples)
