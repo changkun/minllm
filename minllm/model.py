@@ -35,6 +35,8 @@ class Config:
     norm_eps: float = 1e-6
     tie_embeddings: bool = True  # the input embedding and the output layer share one matrix
     qkv_bias: bool = False  # Qwen2.5 adds a bias to the query, key and value projections
+    n_experts: int = 0  # above 0, the MLP of every block is a mixture of this many experts
+    n_active: int = 2  # the experts that process each token
 
 
 class RMSNorm(nn.Module):
@@ -117,13 +119,73 @@ class MLP(nn.Module):
         return self.down_proj(F.silu(self.gate_proj(x)) * self.up_proj(x))
 
 
+class MoE(nn.Module):
+    """
+    A mixture of experts in place of the MLP: n_experts MLPs, of which each
+    token uses only the n_active that a router picks for it. The block holds
+    n_experts MLPs of parameters and spends n_active MLPs of compute per
+    token. See docs/11-moe.md.
+    """
+
+    def __init__(self, cfg):
+        super().__init__()
+        assert 0 < cfg.n_active <= cfg.n_experts
+        self.n_active = cfg.n_active
+        self.router = nn.Linear(cfg.dim, cfg.n_experts, bias=False)
+        self.experts = nn.ModuleList(MLP(cfg) for _ in range(cfg.n_experts))
+        self.capacity = None  # see forward
+        self.share = self.balance = self.dropped = None  # set by every forward pass, for the training loop
+
+    def route(self, x):
+        """
+        The weight of every expert for every token, (tokens, n_experts): zero
+        for all but the token's n_active likeliest experts, whose weights sum
+        to one.
+        """
+        probs = F.softmax(self.router(x).float(), dim=-1)
+        top, chosen = probs.topk(self.n_active, dim=-1)
+        weights = torch.zeros_like(probs).scatter(-1, chosen, top / top.sum(-1, keepdim=True))
+        # share is the part of the work that went to each expert. balance is
+        # the load-balancing loss of the Switch Transformer: 1 when every
+        # expert gets the same share, and larger the more the router favors
+        # the experts that are busy already.
+        self.share = (weights > 0).float().mean(0) / self.n_active
+        self.balance = len(self.experts) * (self.share * probs.mean(0)).sum()
+        return weights
+
+    def forward(self, x):
+        shape = x.shape
+        x = x.reshape(-1, shape[-1])  # (tokens, dim): an expert treats every token on its own
+        weights = self.route(x)
+        if self.capacity is not None:
+            # Every expert takes the same number of tokens: capacity times its
+            # share of an even split. The shapes then do not depend on the
+            # data, which a compiled training step needs. An expert that more
+            # tokens were routed to than it has room for drops the ones that
+            # weigh it least, and one with room to spare fills it with tokens
+            # of weight zero. With capacity n_experts / n_active every expert
+            # takes every token, and nothing is dropped.
+            room = min(len(x), int(self.capacity * len(x) * self.n_active / len(self.experts)))
+            routed = (weights > 0).sum(0)
+            self.dropped = (routed - room).clamp(min=0).sum() / routed.sum()
+        out = torch.zeros_like(x)
+        for i, expert in enumerate(self.experts):
+            if self.capacity is None:
+                rows = weights[:, i].nonzero().squeeze(-1)  # exactly the tokens that were routed to expert i
+                w = weights[rows, i]
+            else:
+                w, rows = weights[:, i].topk(room)
+            out = out.index_add(0, rows, (w[:, None] * expert(x[rows])).to(out.dtype))
+        return out.view(shape)
+
+
 class Block(nn.Module):
     def __init__(self, cfg):
         super().__init__()
         self.attn_norm = RMSNorm(cfg.dim, cfg.norm_eps)
         self.attn = Attention(cfg)
         self.mlp_norm = RMSNorm(cfg.dim, cfg.norm_eps)
-        self.mlp = MLP(cfg)
+        self.mlp = MoE(cfg) if cfg.n_experts else MLP(cfg)
 
     def forward(self, x, cos, sin, mask=None, cache=None):
         # Each sublayer reads a normalized copy of the residual stream and adds
@@ -159,6 +221,14 @@ class Transformer(nn.Module):
 
     def num_params(self):
         return sum(p.numel() for p in self.parameters())
+
+    def mixtures(self):
+        """The mixture-of-experts layers, one per block, or none in a dense model."""
+        return [layer.mlp for layer in self.layers if isinstance(layer.mlp, MoE)]
+
+    def balance_loss(self):
+        """How unevenly the last forward pass spread its tokens over the experts, averaged over the blocks."""
+        return sum(m.balance for m in self.mixtures()) / len(self.layers)
 
     def hidden(self, idx, cache=None, mask=None):
         """
