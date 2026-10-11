@@ -1,0 +1,6 @@
+name: minllm
+kind: static
+static:
+  build: cd site && npm ci && npm run build
+  dir: site/dist
+  spa: false
