@@ -1029,6 +1029,82 @@ def moe_routing():
     fig.save("moe-routing")
 
 
+# ----------------------------------------------------------- 3a distillation
+
+
+def distill_targets():
+    data = load("runs/distill/targets.json")
+    stats = data["held_out"]
+    fig = Figure(720, 330, "What a teacher says that a label does not", "The 42M model's prediction for the next token at three places of one sentence. The text itself names a single token.")
+    fig.legend(24, 76, [("s2", "the token that came next in the text", "dot"), ("s1", "other tokens the teacher expects", "dot")])
+    for i, position in enumerate(data["positions"]):
+        left, top = 96 + i * 228, 132
+        rows = [(t["token"], t["probability"]) for t in position["top"]]
+        if position["label"] not in [token for token, _ in rows]:
+            rows = rows[:-1] + [(position["label"], position["label_probability"])]
+        words = position["context"].split()
+        fig.text(left - 72, top - 22, "… " + " ".join(words[-3:]) + " ___", fill="ink", weight=600)
+        fig.line(left, top - 8, left, top + 24 * len(rows) - 6, stroke="axis")
+        for j, (token, probability) in enumerate(rows):
+            y = top + j * 24
+            fig.text(left - 8, y + 12, token.strip(), anchor="end", fill="ink")
+            bar(fig, left, y, 104 * probability / 0.5, 14, "s2" if token == position["label"] else "s1")
+            fig.text(left + max(104 * probability / 0.5, 5) + 6, y + 12, f"{probability:.0%}" if probability >= 0.01 else f"{probability:.1%}", size=11)
+    fig.text(24, 296, f"Over {stats['tokens']:,} held-out tokens the teacher gives more than 1% to {stats['above_one_percent']:.0f} tokens on average,", size=11, fill="muted")
+    fig.text(24, 312, f"and the token that came next is its first choice {stats['label_is_first_choice']:.0%} of the time.", size=11, fill="muted")
+    fig.save("distill-targets")
+
+
+def distill_loss():
+    # (name, color, the run of 6,000 steps, the run planned to take the 20 minutes of the first)
+    runs = [
+        ("from the text alone", "s1", "runs/base/log.jsonl", "runs/base/log.jsonl"),
+        ("half text, half teacher", "s2", "runs/distill/distilled.jsonl", "runs/distill/distilled-20min.jsonl"),
+        ("from the teacher alone", "s3", "runs/distill/teacher-only.jsonl", None),
+    ]
+    evals = lambda path: [r for r in jsonl(path) if "val_loss" in r]
+    teacher = evals("runs/moe/wide.jsonl")[-1]["val_loss"]
+    fig = Figure(720, 344, "A 14M student of a 42M teacher", "Validation loss on the text. Left: the same 6,000 steps. Right: the same 20 minutes, the teacher's work included.")
+    fig.legend(64, 78, [(color, name, "line") for name, color, _, _ in runs])
+
+    logs = [[r for r in evals(path) if r["step"] >= 2000] for _, _, path, _ in runs]
+    losses = [r["val_loss"] for log in logs for r in log] + [teacher]
+    lo, hi = math.floor(min(losses) * 20) / 20, math.ceil(max(losses) * 20) / 20
+    ax = Axes(fig, 64, 124, 280, 150, (2000, 6000), (lo, hi))
+    ax.title("The same steps, from step 2,000 on")
+    ax.yticks(nice_ticks(lo, hi, 4), lambda t: f"{t:g}")
+    ax.xticks(range(2000, 6001, 1000), lambda t: f"{t:,}", "training step")
+    fig.line(ax.left, ax.y(teacher), ax.left + ax.width, ax.y(teacher), stroke="ink", width=1)
+    ax.label(2000, teacher, f"the teacher, {teacher:.3f}", dx=4, dy=-6, fill="ink")
+    finals = []
+    for (_, color, _, _), log in zip(runs, logs):
+        xs, ys = [r["step"] for r in log], [r["val_loss"] for r in log]
+        ax.line(xs, ys, color)
+        ax.dots(xs[-1:], ys[-1:], color)
+        finals.append((ys[-1], color))
+    # final values from the top down, nudged apart where two runs end close together
+    y = None
+    for value, color in sorted(finals, reverse=True):
+        y = ax.y(value) if y is None else max(ax.y(value), y + 13)
+        fig.text(ax.left + ax.width + 10, y + 4, f"{value:.3f}", fill="ink")
+
+    timed = [(color, evals(path)[-1]) for _, color, _, path in runs if path]
+    lo = math.floor(min(r["val_loss"] for _, r in timed) * 50) / 50
+    hi = math.ceil(max(r["val_loss"] for _, r in timed) * 50) / 50
+    time = Axes(fig, 452, 124, 220, 150, (lo, hi), (0, 1))
+    time.title("The same time")
+    time.xticks(nice_ticks(lo, hi, 3), lambda t: f"{t:g}", "validation loss at the end")
+    for i, (color, r) in enumerate(timed):
+        y = time.top + 40 + i * 56
+        fig.line(time.left, y, time.left + time.width, y)
+        fig.dot(time.x(r["val_loss"]), y, color, r=5)
+        fig.text(time.x(r["val_loss"]), y - 11, f"{r['val_loss']:.3f}", anchor="middle", fill="ink")
+        note = f"{r['step']:,} steps in {r['elapsed'] / 60:.1f} min"
+        half = text_width(note, 11) / 2
+        fig.text(min(max(time.x(r["val_loss"]), time.left + half), time.left + time.width - half), y + 20, note, size=11, anchor="middle")
+    fig.save("distill-loss")
+
+
 # ----------------------------------------------------------- 10a quantization
 
 
@@ -1197,6 +1273,10 @@ if os.path.exists("runs/rlvr/grpo-words-finish.jsonl"):
     rlvr_words()
 if os.path.exists("runs/rlvr/grpo-gsm8k.jsonl"):
     rlvr_gsm8k()
+if os.path.exists("runs/distill/targets.json"):
+    distill_targets()
+if os.path.exists("runs/distill/distilled-20min.jsonl"):
+    distill_loss()
 if os.path.exists("runs/quant/sweep-qwen.json"):
     quant_levels()
     quant_bits()
@@ -1212,4 +1292,4 @@ if os.path.exists("runs/moe/wide-20min.jsonl"):
     moe_loss()
 if os.path.exists("runs/moe/routing.json"):
     moe_routing()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "10a"})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "3a", "10a"})
