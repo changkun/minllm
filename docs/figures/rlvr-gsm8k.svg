@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="552" viewBox="0 0 720 552" role="img"><title>The 0.5B model on GSM8K</title><desc>60 iterations of 8 problems with 8 replies each. The verifier compares the final number.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="551" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">The 0.5B model on GSM8K</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">60 iterations of 8 problems with 8 replies each. The verifier compares the final number.</text>
+<line class="s-s1" x1="64" y1="74" x2="80" y2="74" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="86" y="78" font-size="12" text-anchor="start">GRPO from the fine-tuned model</text>
+<text class="f-ink" x="64" y="112" font-size="12" text-anchor="start" font-weight="600">Problems solved, held-out prompts, greedy</text>
+<line class="s-grid" x1="64" y1="254" x2="654" y2="254" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="258" font-size="11" text-anchor="end">40%</text>
+<line class="s-grid" x1="64" y1="221.5" x2="654" y2="221.5" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="225.5" font-size="11" text-anchor="end">45%</text>
+<line class="s-grid" x1="64" y1="189" x2="654" y2="189" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="193" font-size="11" text-anchor="end">50%</text>
+<line class="s-grid" x1="64" y1="156.5" x2="654" y2="156.5" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="160.5" font-size="11" text-anchor="end">55%</text>
+<line class="s-grid" x1="64" y1="124" x2="654" y2="124" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="128" font-size="11" text-anchor="end">60%</text>
+<path class="s-s1 " d="M64 211.8 L260.7 202 L457.3 189 L654 163" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s1 s-surface" cx="64" cy="211.8" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="260.7" cy="202" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="457.3" cy="189" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="654" cy="163" r="4" stroke-width="2"/>
+<text class="f-ink" x="664" y="167" font-size="12" text-anchor="start">54%</text>
+<text class="f-ink2" x="72" y="227.8" font-size="12" text-anchor="start">46%</text>
+<text class="f-ink" x="64" y="298" font-size="12" text-anchor="start" font-weight="600">Sampled replies that are right, during training</text>
+<line class="s-grid" x1="64" y1="370" x2="654" y2="370" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="374" font-size="11" text-anchor="end">0%</text>
+<line class="s-grid" x1="64" y1="332.5" x2="654" y2="332.5" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="336.5" font-size="11" text-anchor="end">50%</text>
+<line class="s-axis" x1="64" y1="370" x2="654" y2="370" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="64" y1="370" x2="64" y2="374" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="387" font-size="11" text-anchor="middle">0</text>
+<line class="s-axis" x1="162.3" y1="370" x2="162.3" y2="374" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="162.3" y="387" font-size="11" text-anchor="middle">10</text>
+<line class="s-axis" x1="260.7" y1="370" x2="260.7" y2="374" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="260.7" y="387" font-size="11" text-anchor="middle">20</text>
+<line class="s-axis" x1="359" y1="370" x2="359" y2="374" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="359" y="387" font-size="11" text-anchor="middle">30</text>
+<line class="s-axis" x1="457.3" y1="370" x2="457.3" y2="374" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="457.3" y="387" font-size="11" text-anchor="middle">40</text>
+<line class="s-axis" x1="555.7" y1="370" x2="555.7" y2="374" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="555.7" y="387" font-size="11" text-anchor="middle">50</text>
+<line class="s-axis" x1="654" y1="370" x2="654" y2="374" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="654" y="387" font-size="11" text-anchor="middle">60</text>
+<path class="s-s1 " d="M73.8 357.1 L83.7 358.3 L93.5 355.2 L103.3 350.4 L113.2 349.1 L123 347.3 L132.8 343.5 L142.7 343 L152.5 344.9 L162.3 344.5 L172.2 341.6 L182 341.2 L191.8 342.1 L201.7 343.5 L211.5 344 L221.3 348 L231.2 352 L241 352.7 L250.8 348.7 L260.7 349.1 L270.5 346.1 L280.3 343.5 L290.2 342.1 L300 344.7 L309.8 346.1 L319.7 351 L329.5 347.3 L339.3 343.3 L349.2 341.9 L359 337 L368.8 333.7 L378.7 337.2 L388.5 340.9 L398.3 339.3 L408.2 340 L418 337 L427.8 334.8 L437.7 335.3 L447.5 334.4 L457.3 340 L467.2 339.8 L477 339.8 L486.8 337.9 L496.7 339.8 L506.5 332 L516.3 332.3 L526.2 331.1 L536 331.1 L545.8 334.6 L555.7 337.2 L565.5 336.5 L575.3 336.2 L585.2 334.1 L595 326.2 L604.8 325 L614.7 322.2 L624.5 322.9 L634.3 322.7 L644.2 328.3 L654 329.5" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink" x="64" y="424" font-size="12" text-anchor="start" font-weight="600">Groups in which the replies differ in reward</text>
+<line class="s-grid" x1="64" y1="496" x2="654" y2="496" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="500" font-size="11" text-anchor="end">0%</text>
+<line class="s-grid" x1="64" y1="466" x2="654" y2="466" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="470" font-size="11" text-anchor="end">50%</text>
+<line class="s-grid" x1="64" y1="436" x2="654" y2="436" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="440" font-size="11" text-anchor="end">100%</text>
+<line class="s-axis" x1="64" y1="496" x2="654" y2="496" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="64" y1="496" x2="64" y2="500" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="513" font-size="11" text-anchor="middle">0</text>
+<line class="s-axis" x1="162.3" y1="496" x2="162.3" y2="500" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="162.3" y="513" font-size="11" text-anchor="middle">10</text>
+<line class="s-axis" x1="260.7" y1="496" x2="260.7" y2="500" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="260.7" y="513" font-size="11" text-anchor="middle">20</text>
+<line class="s-axis" x1="359" y1="496" x2="359" y2="500" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="359" y="513" font-size="11" text-anchor="middle">30</text>
+<line class="s-axis" x1="457.3" y1="496" x2="457.3" y2="500" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="457.3" y="513" font-size="11" text-anchor="middle">40</text>
+<line class="s-axis" x1="555.7" y1="496" x2="555.7" y2="500" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="555.7" y="513" font-size="11" text-anchor="middle">50</text>
+<line class="s-axis" x1="654" y1="496" x2="654" y2="500" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="654" y="513" font-size="11" text-anchor="middle">60</text>
+<text class="f-muted" x="359" y="532" font-size="11" text-anchor="middle">iteration</text>
+<path class="s-s1 " d="M73.8 473.5 L83.7 469.8 L93.5 461 L103.3 458.5 L113.2 455.5 L123 452.5 L132.8 451 L142.7 454 L152.5 457 L162.3 461.5 L172.2 460 L182 458.5 L191.8 457 L201.7 455.5 L211.5 451 L221.3 454 L231.2 461.5 L241 463 L250.8 458.5 L260.7 458.5 L270.5 458.5 L280.3 454 L290.2 454 L300 457 L309.8 458.5 L319.7 460 L329.5 455.5 L339.3 455.5 L349.2 454 L359 454 L368.8 448 L378.7 451 L388.5 452.5 L398.3 451 L408.2 451 L418 451 L427.8 451 L437.7 446.5 L447.5 449.5 L457.3 451 L467.2 454 L477 454 L486.8 452.5 L496.7 452.5 L506.5 451 L516.3 449.5 L526.2 446.5 L536 451 L545.8 451 L555.7 452.5 L565.5 451 L575.3 451 L585.2 448 L595 448 L604.8 445 L614.7 448 L624.5 451 L634.3 452.5 L644.2 452.5 L654 454" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="336" viewBox="0 0 720 336" role="img"><title>One step of GRPO</title><desc>The model answers the same prompt several times, and its answers are compared with each other.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="335" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">One step of GRPO</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">The model answers the same prompt several times, and its answers are compared with each other.</text>
+<rect class="f-surface s-axis" x="24" y="142" width="120" height="56" rx="6" stroke-width="1"/>
+<text class="f-ink" x="84" y="167" font-size="12" text-anchor="middle" font-weight="600">Prompt</text>
+<text class="f-ink2" x="84" y="183" font-size="11" text-anchor="middle">a problem</text>
+<path class="s-muted " d="M144 170 L176 170" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M169.7 167 L176 170 L169.7 173" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-muted" x="178" y="76" font-size="11" text-anchor="start">8 replies, sampled</text>
+<rect class="f-s1" x="178" y="84" width="150" height="18" rx="4" fill-opacity="0.9"/>
+<text class="f-surface" x="188" y="97" font-size="11" text-anchor="start">reply 1</text>
+<text class="f-surface" x="318" y="97" font-size="11" text-anchor="end">right</text>
+<rect class="f-surface s-axis" x="178" y="106" width="150" height="18" rx="4" stroke-width="1"/>
+<text class="f-ink2" x="188" y="119" font-size="11" text-anchor="start">reply 2</text>
+<text class="f-muted" x="318" y="119" font-size="11" text-anchor="end">wrong</text>
+<rect class="f-surface s-axis" x="178" y="128" width="150" height="18" rx="4" stroke-width="1"/>
+<text class="f-ink2" x="188" y="141" font-size="11" text-anchor="start">reply 3</text>
+<text class="f-muted" x="318" y="141" font-size="11" text-anchor="end">wrong</text>
+<rect class="f-s1" x="178" y="150" width="150" height="18" rx="4" fill-opacity="0.9"/>
+<text class="f-surface" x="188" y="163" font-size="11" text-anchor="start">reply 4</text>
+<text class="f-surface" x="318" y="163" font-size="11" text-anchor="end">right</text>
+<rect class="f-surface s-axis" x="178" y="172" width="150" height="18" rx="4" stroke-width="1"/>
+<text class="f-ink2" x="188" y="185" font-size="11" text-anchor="start">reply 5</text>
+<text class="f-muted" x="318" y="185" font-size="11" text-anchor="end">wrong</text>
+<rect class="f-surface s-axis" x="178" y="194" width="150" height="18" rx="4" stroke-width="1"/>
+<text class="f-ink2" x="188" y="207" font-size="11" text-anchor="start">reply 6</text>
+<text class="f-muted" x="318" y="207" font-size="11" text-anchor="end">wrong</text>
+<rect class="f-surface s-axis" x="178" y="216" width="150" height="18" rx="4" stroke-width="1"/>
+<text class="f-ink2" x="188" y="229" font-size="11" text-anchor="start">reply 7</text>
+<text class="f-muted" x="318" y="229" font-size="11" text-anchor="end">wrong</text>
+<rect class="f-s1" x="178" y="238" width="150" height="18" rx="4" fill-opacity="0.9"/>
+<text class="f-surface" x="188" y="251" font-size="11" text-anchor="start">reply 8</text>
+<text class="f-surface" x="318" y="251" font-size="11" text-anchor="end">right</text>
+<path class="s-muted " d="M328 170 L366 170" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M359.7 167 L366 170 L359.7 173" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="368" y="142" width="130" height="56" rx="6" stroke-width="1"/>
+<text class="f-ink" x="433" y="167" font-size="12" text-anchor="middle" font-weight="600">Verifier</text>
+<text class="f-ink2" x="433" y="183" font-size="11" text-anchor="middle">a program: 1 or 0</text>
+<path class="s-muted " d="M498 170 L536 170" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M529.7 167 L536 170 L529.7 173" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="538" y="112" width="158" height="116" rx="6" stroke-width="1"/>
+<text class="f-ink" x="617" y="134" font-size="12" text-anchor="middle" font-weight="600">Advantage</text>
+<text class="f-ink2" x="550" y="156" font-size="11" text-anchor="start">reward minus the group&#x27;s</text>
+<text class="f-ink2" x="550" y="171" font-size="11" text-anchor="start">mean, over its spread</text>
+<text class="f-ink2" x="550" y="186" font-size="11" text-anchor="start"></text>
+<text class="f-ink" x="550" y="201" font-size="11" text-anchor="start">right:  +1.2</text>
+<text class="f-ink" x="550" y="216" font-size="11" text-anchor="start">wrong:  −0.7</text>
+<path class="s-muted " d="M617 228 L617 280 L84 280 L84 200" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M81 206.3 L84 200 L87 206.3" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-muted" x="350" y="298" font-size="11" text-anchor="middle">one policy-gradient step: the right replies become likelier</text>
+<text class="f-muted" x="24" y="320" font-size="11" text-anchor="start">A group in which every reply earned the same reward has no advantages, and teaches nothing.</text>
+</svg>
