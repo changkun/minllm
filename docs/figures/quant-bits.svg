@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="392" viewBox="0 0 720 392" role="img"><title>What a bit width costs</title><desc>Held-out loss above the unrounded model&#x27;s, against the bits stored per weight: its code and its share of the scales.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="391" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">What a bit width costs</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Held-out loss above the unrounded model&#x27;s, against the bits stored per weight: its code and its share of the scales.</text>
+<line class="s-s1" x1="64" y1="74" x2="80" y2="74" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="86" y="78" font-size="12" text-anchor="start">one scale per row</text>
+<line class="s-s2" x1="218.2" y1="74" x2="234.2" y2="74" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="240.2" y="78" font-size="12" text-anchor="start">per group of 64</text>
+<line class="s-s3" x1="359" y1="74" x2="375" y2="74" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="381" y="78" font-size="12" text-anchor="start">per group of 16</text>
+<text class="f-ink" x="72" y="112" font-size="12" text-anchor="start" font-weight="600">The 14M model, loss 1.465</text>
+<line class="s-grid" x1="72" y1="294" x2="348" y2="294" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="298" font-size="11" text-anchor="end">+0.001</text>
+<line class="s-grid" x1="72" y1="254.5" x2="348" y2="254.5" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="258.5" font-size="11" text-anchor="end">+0.01</text>
+<line class="s-grid" x1="72" y1="214.9" x2="348" y2="214.9" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="218.9" font-size="11" text-anchor="end">+0.1</text>
+<line class="s-grid" x1="72" y1="175.4" x2="348" y2="175.4" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="179.4" font-size="11" text-anchor="end">+1</text>
+<line class="s-grid" x1="72" y1="135.9" x2="348" y2="135.9" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="139.9" font-size="11" text-anchor="end">+10</text>
+<line class="s-axis" x1="72" y1="294" x2="348" y2="294" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="87.3" y1="294" x2="87.3" y2="298" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="87.3" y="311" font-size="11" text-anchor="middle">2</text>
+<line class="s-axis" x1="148.7" y1="294" x2="148.7" y2="298" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="148.7" y="311" font-size="11" text-anchor="middle">4</text>
+<line class="s-axis" x1="210" y1="294" x2="210" y2="298" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="210" y="311" font-size="11" text-anchor="middle">6</text>
+<line class="s-axis" x1="271.3" y1="294" x2="271.3" y2="298" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="271.3" y="311" font-size="11" text-anchor="middle">8</text>
+<line class="s-axis" x1="332.7" y1="294" x2="332.7" y2="298" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="332.7" y="311" font-size="11" text-anchor="middle">10</text>
+<text class="f-muted" x="210" y="330" font-size="11" text-anchor="middle">bits per weight</text>
+<path class="s-s1 " d="M89.5 168.5 L120.2 209.3 L150.9 238.2 L181.5 262 L212.2 285.5 L273.5 294" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s1 s-surface" cx="89.5" cy="168.5" r="3.5" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="120.2" cy="209.3" r="3.5" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="150.9" cy="238.2" r="3.5" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="181.5" cy="262" r="3.5" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="212.2" cy="285.5" r="3.5" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="273.5" cy="294" r="3.5" stroke-width="2"/>
+<path class="s-s2 " d="M102.7 183.2 L133.3 219 L164 246.4 L194.7 271.9 L225.3 294 L286.7 294" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s2 s-surface" cx="102.7" cy="183.2" r="3.5" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="133.3" cy="219" r="3.5" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="164" cy="246.4" r="3.5" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="194.7" cy="271.9" r="3.5" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="225.3" cy="294" r="3.5" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="286.7" cy="294" r="3.5" stroke-width="2"/>
+<path class="s-s3 " d="M148.7 198.1 L179.3 230.6 L210 257.1 L240.7 282.3 L271.3 294 L332.7 294" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s3 s-surface" cx="148.7" cy="198.1" r="3.5" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="179.3" cy="230.6" r="3.5" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="210" cy="257.1" r="3.5" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="240.7" cy="282.3" r="3.5" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="271.3" cy="294" r="3.5" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="332.7" cy="294" r="3.5" stroke-width="2"/>
+<circle class="s-ink" cx="164" cy="246.4" r="8" fill="none" stroke-width="1.5"/>
+<text class="f-ink" x="404" y="112" font-size="12" text-anchor="start" font-weight="600">The 0.5B model, loss 0.831</text>
+<line class="s-grid" x1="404" y1="294" x2="680" y2="294" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="298" font-size="11" text-anchor="end">+0.001</text>
+<line class="s-grid" x1="404" y1="254.5" x2="680" y2="254.5" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="258.5" font-size="11" text-anchor="end">+0.01</text>
+<line class="s-grid" x1="404" y1="214.9" x2="680" y2="214.9" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="218.9" font-size="11" text-anchor="end">+0.1</text>
+<line class="s-grid" x1="404" y1="175.4" x2="680" y2="175.4" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="179.4" font-size="11" text-anchor="end">+1</text>
+<line class="s-grid" x1="404" y1="135.9" x2="680" y2="135.9" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="396" y="139.9" font-size="11" text-anchor="end">+10</text>
+<line class="s-axis" x1="404" y1="294" x2="680" y2="294" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="419.3" y1="294" x2="419.3" y2="298" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="419.3" y="311" font-size="11" text-anchor="middle">2</text>
+<line class="s-axis" x1="480.7" y1="294" x2="480.7" y2="298" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="480.7" y="311" font-size="11" text-anchor="middle">4</text>
+<line class="s-axis" x1="542" y1="294" x2="542" y2="298" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="542" y="311" font-size="11" text-anchor="middle">6</text>
+<line class="s-axis" x1="603.3" y1="294" x2="603.3" y2="298" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="603.3" y="311" font-size="11" text-anchor="middle">8</text>
+<line class="s-axis" x1="664.7" y1="294" x2="664.7" y2="298" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="664.7" y="311" font-size="11" text-anchor="middle">10</text>
+<text class="f-muted" x="542" y="330" font-size="11" text-anchor="middle">bits per weight</text>
+<path class="s-s1 " d="M420.2 131 L450.9 143.4 L481.6 185.8 L512.2 213.8 L542.9 223.6 L604.2 294" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s1 s-surface" cx="420.2" cy="131" r="3.5" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="450.9" cy="143.4" r="3.5" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="481.6" cy="185.8" r="3.5" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="512.2" cy="213.8" r="3.5" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="542.9" cy="223.6" r="3.5" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="604.2" cy="294" r="3.5" stroke-width="2"/>
+<path class="s-s2 " d="M434.7 132 L465.3 175.7 L496 217 L526.7 220 L557.3 259.1 L618.7 294" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s2 s-surface" cx="434.7" cy="132" r="3.5" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="465.3" cy="175.7" r="3.5" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="496" cy="217" r="3.5" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="526.7" cy="220" r="3.5" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="557.3" cy="259.1" r="3.5" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="618.7" cy="294" r="3.5" stroke-width="2"/>
+<path class="s-s3 " d="M480.7 134.8 L511.3 191.4 L542 228 L572.7 241.8 L603.3 294 L664.7 282.9" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s3 s-surface" cx="480.7" cy="134.8" r="3.5" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="511.3" cy="191.4" r="3.5" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="542" cy="228" r="3.5" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="572.7" cy="241.8" r="3.5" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="603.3" cy="294" r="3.5" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="664.7" cy="282.9" r="3.5" stroke-width="2"/>
+<circle class="s-ink" cx="496" cy="217" r="8" fill="none" stroke-width="1.5"/>
+<text class="f-muted" x="64" y="356" font-size="11" text-anchor="start">Logarithmic scale. Each line has a point for 2, 3, 4, 5, 6 and 8 bits. Points on the bottom line are at +0.001 or below.</text>
+<text class="f-muted" x="64" y="372" font-size="11" text-anchor="start">Circled: 4-bit codes in groups of 64, the setting used most. It costs +0.016 and +0.089.</text>
+</svg>

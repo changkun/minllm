@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" role="img"><title>GSM8K test problems solved by the 0.5B model at each bit width</title><desc>1,319 problems, greedy replies, with 95% confidence intervals. Codes in groups of 64, rounded to the nearest value.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="299" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">GSM8K test problems solved by the 0.5B model at each bit width</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">1,319 problems, greedy replies, with 95% confidence intervals. Codes in groups of 64, rounded to the nearest value.</text>
+<line class="s-axis" x1="220" y1="76" x2="220" y2="252" stroke-width="1" stroke-linecap="round"/>
+<text class="f-ink" x="210" y="98" font-size="12" text-anchor="end">16-bit floats, 988 MB</text>
+<path class="f-s1" d="M220 84 H473.3 a4 4 0 0 1 4 4 V98 a4 4 0 0 1 -4 4 H220 Z"/>
+<line class="s-ink" x1="462.5" y1="93" x2="492.1" y2="93" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="500.1" y="98" font-size="12" text-anchor="start">46.8%</text>
+<text class="f-muted" x="539.7" y="98" font-size="11" text-anchor="start">± 2.7%</text>
+<text class="f-ink" x="210" y="134" font-size="12" text-anchor="end">8 bits, 525 MB</text>
+<path class="f-s1" d="M220 120 H476.2 a4 4 0 0 1 4 4 V134 a4 4 0 0 1 -4 4 H220 Z"/>
+<line class="s-ink" x1="465.4" y1="129" x2="495" y2="129" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="503" y="134" font-size="12" text-anchor="start">47.3%</text>
+<text class="f-muted" x="542.6" y="134" font-size="11" text-anchor="start">± 2.7%</text>
+<text class="f-ink" x="210" y="170" font-size="12" text-anchor="end">6 bits, 401 MB</text>
+<path class="f-s1" d="M220 156 H472.9 a4 4 0 0 1 4 4 V170 a4 4 0 0 1 -4 4 H220 Z"/>
+<line class="s-ink" x1="462" y1="165" x2="491.7" y2="165" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="499.7" y="170" font-size="12" text-anchor="start">46.7%</text>
+<text class="f-muted" x="539.3" y="170" font-size="11" text-anchor="start">± 2.7%</text>
+<text class="f-ink" x="210" y="206" font-size="12" text-anchor="end">5 bits, 340 MB</text>
+<path class="f-s1" d="M220 192 H456.2 a4 4 0 0 1 4 4 V206 a4 4 0 0 1 -4 4 H220 Z"/>
+<line class="s-ink" x1="445.5" y1="201" x2="474.9" y2="201" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="482.9" y="206" font-size="12" text-anchor="start">43.7%</text>
+<text class="f-muted" x="522.5" y="206" font-size="11" text-anchor="start">± 2.7%</text>
+<text class="f-ink" x="210" y="242" font-size="12" text-anchor="end">4 bits, 278 MB</text>
+<path class="f-s1" d="M220 228 H391.5 a4 4 0 0 1 4 4 V242 a4 4 0 0 1 -4 4 H220 Z"/>
+<line class="s-ink" x1="381.7" y1="237" x2="409.4" y2="237" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="417.4" y="242" font-size="12" text-anchor="start">31.9%</text>
+<text class="f-muted" x="457" y="242" font-size="11" text-anchor="start">± 2.5%</text>
+<text class="f-muted" x="24" y="280" font-size="11" text-anchor="start">The size is that of the weight file. At 5 and 6 bits the weights were rounded in memory and no file was written.</text>
+</svg>
