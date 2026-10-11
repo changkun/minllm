@@ -3,6 +3,7 @@
 // f-* to fill and s-* to stroke, so a figure follows the light or dark theme.
 
 const SVG = "http://www.w3.org/2000/svg";
+export const REPO = "https://github.com/changkun/minllm";
 
 export function svg(tag, attrs = {}, parent = null) {
   const node = document.createElementNS(SVG, tag);

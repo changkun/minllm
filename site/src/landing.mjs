@@ -26,7 +26,8 @@ function map(notes) {
   return `<div class="map-labels">${labels}</div><ol class="map-row">${stages.map(box).join("")}</ol>`;
 }
 
-export function landing(readme, notes, render, labs) {
+// section: the element of an interactive figure, as the notes have it.
+export function landing(readme, notes, render, labs, section) {
   const s = sections(readme);
   const intro = s.intro.split("\n\n").filter((p) => p.trim() && !p.startsWith("#") && !p.startsWith("!["));
   const part = (name) => render(s[name].replace(/^### /gm, "### "), "").html;
@@ -35,11 +36,15 @@ export function landing(readme, notes, render, labs) {
 <h1>A language model, from raw text to a served, post-trained model, on a laptop</h1>
 <p class="byline">By <a href="https://changkun.de">Changkun Ou</a>, Latere AI</p>
 ${render(intro.slice(0, 2).join("\n\n"), "").html}
-<p class="hero-actions"><a class="button primary" href="/${stages[0].slug}/">Start at stage 1</a> <a class="button" href="/code/">Read the code</a> <a class="button" href="${REPO}">GitHub</a></p>
+<p class="hero-actions"><a class="button primary" href="/${stages[0].slug}/">Start at stage 1</a> <a class="button" href="#try-generate">Run the model here</a> <a class="button" href="/code/">Read the code</a> <a class="button" href="${REPO}">GitHub</a></p>
 </section>
 <section class="map" aria-label="The pipeline">
 ${map(notes)}
 <p class="map-note">Ten stages in order. A side topic hangs below the stage it changes, and the chain does not depend on it.</p>
+</section>
+<section class="landing-lab">
+<p class="map-note">What the pipeline makes: the model of stages 1 to 3, here in the 4-bit file of 10a, with the sampler of stage 4.</p>
+${section(labs.find((lab) => lab.name === "generate"))}
 </section>
 <section class="tries" aria-label="Interactive figures">
 <p class="tries-title">Try it in the browser</p>

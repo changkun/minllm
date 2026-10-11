@@ -203,6 +203,20 @@ select { padding: 5px 8px; border: 1px solid var(--axis); border-radius: 6px; ba
 .readout b { color: var(--ink); font-variant-numeric: tabular-nums; }
 .sample { min-height: 4.4em; margin: 10px 0 0; padding: 8px 12px; border-radius: 6px; background: var(--tint); color: var(--ink2); font-size: 13.5px; }
 
+/* The model writing: the prompt, then every token it wrote, darker the less likely it was. */
+.story { min-height: 6.4em; margin: 10px 0 0; padding: 10px 14px; border-radius: 6px; background: var(--tint); font-size: 15.5px; line-height: 1.75; white-space: pre-wrap; overflow-wrap: anywhere; }
+.prompted { font-weight: 600; }
+.presets { margin-top: -4px; }
+.presets button { padding: 3px 9px; font-size: 13px; }
+.written { border-radius: 3px; background: color-mix(in srgb, var(--s2) calc(var(--doubt) * 55%), transparent); cursor: default; animation: arrive 0.18s ease-out; }
+.written.asked { outline: 1.5px solid var(--ink); }
+.written.ended { margin-left: 4px; color: var(--muted); }
+@keyframes arrive { from { opacity: 0; } }
+.choice { min-height: 190px; margin-top: 10px; }
+.choice .bar-fill { transition: width 0.16s ease-out; }
+.bar-row.drawn .bar-fill { background: var(--s2); }
+.bar-row.drawn .bar-label { font-weight: 700; }
+
 /* The key of a chart. */
 .legend { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0 0 6px !important; color: var(--ink2); font-size: 13px; }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
@@ -301,6 +315,8 @@ select { padding: 5px 8px; border: 1px solid var(--axis); border-radius: 6px; ba
   .map-row li:not(:last-child)::after { display: none; }
   .hero h1 { font-size: 27px; }
 }
+.landing-lab { max-width: 900px; margin: 22px 0 0; }
+.landing-lab .lab { margin-top: 8px; }
 .tries { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 26px 0 8px; }
 .tries-title { margin: 0 6px 0 0; color: var(--ink2); font-size: 14px; font-weight: 600; }
 .tries .button { font-size: 13px; padding: 5px 10px; }

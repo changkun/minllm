@@ -116,7 +116,7 @@ for (const note of Object.values(notes)) {
   writeFileSync(join(dist, note.slug, "index.html"), page({ ...note, html }, notes));
 }
 
-writeFileSync(join(dist, "index.html"), landing(readFileSync(join(root, "README.md"), "utf8"), notes, render, labs));
+writeFileSync(join(dist, "index.html"), landing(readFileSync(join(root, "README.md"), "utf8"), notes, render, labs, section));
 
 // Every interactive figure on one page, each with the note it belongs to.
 const gallery = labs.map((lab) => `<p class="kicker"><a href="/${lab.note}/">${notes[lab.note].n} ${notes[lab.note].title}</a></p>\n${section(lab)}`).join("\n");
