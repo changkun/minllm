@@ -1029,34 +1029,131 @@ def moe_routing():
     fig.save("moe-routing")
 
 
+# ------------------------------------------------------------ 12 quantization
+
+
+def quant_levels():
+    data = load("runs/quant/row.json")
+    w, size = data["weights"], data["group"]
+    fig = Figure(720, 318, "Rounding weights to 16 values", f"One row of a query projection of the 0.5B model, {len(w)} weights. Each orange line is a value that 4 bits can name.")
+    lo, hi = min(w), max(w)
+    left, width, tall = 64, 592, 46
+    x = lambda v: left + width * (v - lo) / (hi - lo)
+
+    def strip(top, values, title):
+        a, step = min(values), (max(values) - min(values)) / 15
+        fig.text(left, top - 12, title, fill="ink", weight=600)
+        fig.line(left, top + tall, left + width, top + tall, stroke="axis")
+        for k in range(16):
+            fig.line(x(a + k * step), top, x(a + k * step), top + tall, stroke="s2", width=1.5)
+        return step
+
+    # the whole row, as a histogram of where its weights lie
+    step = strip(96, w, "The whole row shares one scale")
+    bins = 148
+    counts = [0] * bins
+    for v in w:
+        counts[min(bins - 1, int((v - lo) / (hi - lo) * bins))] += 1
+    for i, c in enumerate(counts):
+        if c:
+            fig.rect(left + i * width / bins, 96 + tall - 40 * c / max(counts), width / bins - 1, 40 * c / max(counts), fill="s1", opacity=0.6)
+    fig.text(left, 96 + tall + 16, f"16 values from the row's smallest weight to its largest, {step:.3f} apart. Most weights share the few in the middle.", size=11, fill="muted")
+
+    # its first group of 64 weights, each drawn as a tick
+    first = w[:size]
+    step = strip(206, first, f"A group of {size} weights has a scale of its own")
+    for v in first:
+        fig.line(x(v), 206 + 14, x(v), 206 + tall, stroke="s1", width=1.5)
+    fig.text(left, 206 + tall + 16, f"16 values over the range of this group alone, {step:.3f} apart. Rounding moves a weight by at most half a step.", size=11, fill="muted")
+    fig.text(left, 300, f"The row's range is {data['ratio']:.1f} times that of its average group. The price of groups is a scale and an offset for each.", size=11, fill="muted")
+    fig.save("quant-levels")
+
+
+def quant_bits():
+    panels = [("The 14M model", "runs/quant/sweep-base.json"), ("The 0.5B model", "runs/quant/sweep-qwen.json")]
+    kinds = [(0, "one scale per row", "s1"), (64, "per group of 64", "s2"), (16, "per group of 16", "s3")]
+    floor, circled = 0.001, []
+    fig = Figure(720, 392, "What a bit width costs", "Held-out loss above the unrounded model's, against the bits stored per weight: its code and its share of the scales.")
+    fig.legend(64, 78, [(color, name, "line") for _, name, color in kinds])
+    for i, (title, path) in enumerate(panels):
+        sweep = load(path)
+        ax = Axes(fig, 72 + i * 332, 124, 276, 170, (1.5, 10.5), (floor, 20), ylog=True)
+        ax.title(f"{title}, loss {sweep['loss']:.3f}")
+        ax.yticks([0.001, 0.01, 0.1, 1, 10], lambda t: f"+{t:g}")
+        ax.xticks([2, 4, 6, 8, 10], str, "bits per weight")
+        for group, _, color in kinds:
+            points = sorted((r["bits_per_weight"], max(r["loss"] - sweep["loss"], floor), r["bits"]) for r in sweep["settings"] if r["group"] == group)
+            ax.line([p[0] for p in points], [p[1] for p in points], color)
+            ax.dots([p[0] for p in points], [p[1] for p in points], color, r=3.5)
+        # the setting that is used most: 4-bit codes in groups of 64
+        bpw, cost = next((r["bits_per_weight"], r["loss"] - sweep["loss"]) for r in sweep["settings"] if (r["bits"], r["group"]) == (4, 64))
+        fig.parts.append(f'<circle class="s-ink" cx="{n(ax.x(bpw))}" cy="{n(ax.y(cost))}" r="8" fill="none" stroke-width="1.5"/>')
+        circled.append(f"+{cost:.3f}")
+    fig.text(64, 356, "Logarithmic scale. Each line has a point for 2, 3, 4, 5, 6 and 8 bits. Points on the bottom line are at +0.001 or below.", size=11, fill="muted")
+    fig.text(64, 372, f"Circled: 4-bit codes in groups of 64, the setting used most. It costs {circled[0]} and {circled[1]}.", size=11, fill="muted")
+    fig.save("quant-bits")
+
+
+def quant_task():
+    parameters = load("runs/quant/sweep-qwen.json")["parameters"]
+    megabytes = lambda bits: parameters * bits / 8e6  # in groups of 64, a code's scales add half a bit
+    rows = []
+    for label, bits, name in [("16-bit floats", 16, "gsm8k-qwen"), ("8 bits", 8.5, "gsm8k-qwen-q8"), ("6 bits", 6.5, "gsm8k-qwen-6bit"), ("5 bits", 5.5, "gsm8k-qwen-5bit"), ("4 bits", 4.5, "gsm8k-qwen-q4")]:
+        r = load(f"runs/eval/{name}.json")
+        rows.append((f"{label}, {megabytes(bits):,.0f} MB", r["mean"], r["error"]))
+    fig = Figure(720, 300, "GSM8K test problems solved by the 0.5B model at each bit width", "1,319 problems, greedy replies, with 95% confidence intervals. Codes in groups of 64, rounded to the nearest value.")
+    scored_bars(fig, 220, 84, 330, rows, 0.6, lambda v: f"{v:.1%}")
+    fig.text(24, 280, "The size is that of the weight file. At 5 and 6 bits the weights were rounded in memory and no file was written.", size=11, fill="muted")
+    fig.save("quant-task")
+
+
+def quant_speed():
+    cases = load("runs/bench/quant-mps.json")["cases"]
+    runtimes = [("this repository", "s1"), ("MLX", "s2")]
+    widths = [(16, "16-bit floats"), (8, "8 bits"), (4, "4 bits")]
+    value = lambda where, bits, key: next(c[key] for c in cases if (c["where"], c["bits"]) == (where, bits))
+    panels = [("Tokens per second, one sequence", "batch_1", lambda v: f"{v:.1f}" if v < 10 else f"{v:.0f}"), ("Memory at its peak, GB", "peak_gb", lambda v: f"{v:.2f}")]
+    fig = Figure(720, 262, "Where quantization pays", "Generating with the 0.5B model. This repository expands packed weights for every token, and MLX does not.")
+    fig.legend(24, 76, [(color, name, "dot") for name, color in runtimes])
+    for i, (title, key, fmt) in enumerate(panels):
+        left, top, width = 150 + i * 330, 122, 150
+        fig.text(left, top - 16, title, fill="ink", weight=600)
+        fig.line(left, top - 6, left, top + 40 * len(widths) - 8, stroke="axis")
+        peak = max(c[key] for c in cases)
+        for j, (bits, label) in enumerate(widths):
+            y = top + j * 40
+            if i == 0:
+                fig.text(left - 10, y + 17, label, anchor="end", fill="ink")
+            for k, (where, color) in enumerate(runtimes):
+                v = value(where, bits, key)
+                bar(fig, left, y + k * 14, width * v / peak, 10, color)
+                fig.text(left + max(width * v / peak, 5) + 8, y + 9 + k * 14, fmt(v), size=11)
+    fig.save("quant-speed")
+
+
 # ---------------------------------------------------------------------- readme
 
 
 def pipeline(done):
-    fig = Figure(720, 250, "The pipeline", "Ten stages and a variation, each with a note, code and tests.")
+    fig = Figure(720, 332, "The pipeline", "Thirteen stages, each with a note, code and tests.")
     rows = [
-        ("From scratch: a 14M model, trained here", [(1, "Tokenizer"), (2, "Model"), (3, "Pretraining"), (4, "Inference")]),
-        ("Post-training: that model, and an open 0.5B one", [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
+        ("From scratch: a 14M model, trained here", 98, True, [(1, "Tokenizer"), (2, "Model"), (3, "Pretraining"), (4, "Inference")]),
+        ("Post-training: that model, and an open 0.5B one", 98, True, [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
+        # Not steps of the chain: each takes a model of the stages above and makes another one of it.
+        ("Back to the model: built differently, stored smaller, taught by a larger one", 132, False, [(11, "Experts"), (12, "Quantization"), (13, "Distillation")]),
     ]
-    w, gap = 98, 16
-
-    def stage(x, y, number, name):
-        built = number in done
-        fig.rect(x, y, w, 40, fill="s1" if built else "surface", stroke="s1" if built else "axis", rx=6, opacity=0.12 if built else None)
-        fig.text(x + 12, y + 25, str(number), fill="muted", size=11)
-        fig.text(x + 12 + (16 if number >= 10 else 12), y + 25, name, fill="ink", weight=600 if built else 400)
-
-    for r, (label, stages) in enumerate(rows):
+    gap = 16
+    for r, (label, w, chain, stages) in enumerate(rows):
         y = 94 + r * 82
         fig.text(24, y - 12, label, size=11, fill="muted")
         for i, (number, name) in enumerate(stages):
             x = 24 + i * (w + gap)
-            stage(x, y, number, name)
-            if i:
+            built = number in done
+            fig.rect(x, y, w, 40, fill="s1" if built else "surface", stroke="s1" if built else "axis", rx=6, opacity=0.12 if built else None)
+            fig.text(x + 12, y + 25, str(number), fill="muted", size=11)
+            fig.text(x + 12 + (16 if number >= 10 else 12), y + 25, name, fill="ink", weight=600 if built else 400)
+            if i and chain:
                 fig.arrow([(x - gap + 2, y + 20), (x - 2, y + 20)])
-    # Not a step of the chain: the model of stage 2 again, built differently.
-    fig.text(24 + 5 * (w + gap) + w, 82, "A variation of the model", size=11, fill="muted", anchor="end")
-    stage(24 + 5 * (w + gap), 94, 11, "Experts")
     fig.save("pipeline")
 
 
@@ -1088,6 +1185,13 @@ if os.path.exists("runs/rlvr/grpo-words-finish.jsonl"):
     rlvr_words()
 if os.path.exists("runs/rlvr/grpo-gsm8k.jsonl"):
     rlvr_gsm8k()
+if os.path.exists("runs/quant/sweep-qwen.json"):
+    quant_levels()
+    quant_bits()
+if os.path.exists("runs/eval/gsm8k-qwen-5bit.json"):
+    quant_task()
+if os.path.exists("runs/bench/quant-mps.json"):
+    quant_speed()
 moe_block()
 if os.path.exists("runs/bench/moe-mps.json"):
     moe_speed()
@@ -1096,4 +1200,4 @@ if os.path.exists("runs/moe/wide-20min.jsonl"):
     moe_loss()
 if os.path.exists("runs/moe/routing.json"):
     moe_routing()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
