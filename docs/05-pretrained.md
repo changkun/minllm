@@ -159,7 +159,8 @@ What a model of this size can do is uneven. With `--temperature 0`:
 | What is 48 + 76 - 19? Give only the number. | 95 | wrong, it is 105 |
 
 A task the model gets right some of the time is exactly what the remaining
-stages need. Stage 7 measures how often, and stages 8 and 9 raise it.
+stages need. Stage 7 measures how often, and stage 9 trains on that
+measurement.
 
 ## Speed and memory on a laptop
 
