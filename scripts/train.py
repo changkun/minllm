@@ -179,9 +179,9 @@ start = interval_start = time.time()
 interval_loss = 0.0
 while True:
     if step % args.eval_every == 0 or step == args.steps:
-        val_loss = evaluate()
-        print(f"step {step:6d} | val loss {val_loss:.4f} | {sample()}")
-        log(step=step, val_loss=val_loss, elapsed=time.time() - start)
+        val_loss, text = evaluate(), sample()
+        print(f"step {step:6d} | val loss {val_loss:.4f} | {text}")
+        log(step=step, val_loss=val_loss, elapsed=time.time() - start, sample=text)
         if step > 0:
             state = {"config": asdict(cfg), "model": model.state_dict(), "optimizer": optimizer.state_dict()}
             torch.save(state | {"step": step, "val_loss": val_loss}, ckpt_path)
