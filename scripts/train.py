@@ -21,7 +21,7 @@ from dataclasses import asdict
 
 import torch
 
-from minllm import distill
+from minllm import checkpoint, distill
 from minllm.common import load_checkpoint, pick_device
 from minllm.data import EOT, get_batch, load_tokens
 from minllm.model import Config, Transformer
@@ -117,7 +117,7 @@ if args.resume:
 forward = model if args.no_compile else torch.compile(model)
 teach = None
 if args.teacher:
-    teacher, _ = load_checkpoint(f"{args.teacher}/ckpt.pt", device)
+    teacher, _, _ = checkpoint.load(args.teacher, device)  # any model of this repository with the same tokenizer
     assert teacher.cfg.vocab_size == cfg.vocab_size and teacher.cfg.max_seq_len >= args.seq_len, "the teacher must read the same tokens"
     teacher.requires_grad_(False)
     teach = teacher if args.no_compile else torch.compile(teacher)
@@ -171,7 +171,7 @@ if mixtures:
     active = model.num_params() - sum(p.numel() for m in mixtures for e in m.experts[cfg.n_active :] for p in e.parameters())
     print(f"experts: {cfg.n_active} of {cfg.n_experts} per token, {active / 1e6:.1f}M parameters active, balance {args.balance}, capacity {args.capacity}")
 if teach is not None:
-    print(f"teacher: {args.teacher}, {teacher.num_params() / 1e6:.1f}M parameters, alpha {args.alpha}, temperature {args.temperature}")
+    print(f"teacher: {args.teacher}, alpha {args.alpha}, temperature {args.temperature}")
 print(f"data: {len(train_tokens) / 1e6:.0f}M training tokens, {tokens_per_step} per step, ", end="")
 print(f"{args.steps * tokens_per_step / len(train_tokens):.1f} passes over the data in {args.steps} steps")
 
