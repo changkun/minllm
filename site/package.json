@@ -10,7 +10,7 @@
   "engines": {
     "node": ">=22"
   },
-  "devDependencies": {
+  "dependencies": {
     "markdown-it": "^14.1.0",
     "shiki": "^3.0.0"
   }
