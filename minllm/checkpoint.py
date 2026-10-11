@@ -39,6 +39,7 @@ def load(spec, device, dtype=torch.float32):
     elif meta["family"] == "qwen":
         model, tok, _ = load("qwen", "cpu", dtype)
         weights = pretrained.read_safetensors(f"{spec}/model.safetensors")
+        weights.setdefault("lm_head.weight", weights["embed.weight"])  # the tied matrix is stored once
         model.load_state_dict({k: v.to(dtype) for k, v in weights.items()})
         model = model.to(device)
     else:
@@ -54,7 +55,10 @@ def save(dir, model, meta):
         pretrained.write_safetensors(f"{dir}/adapter.safetensors", {k: v.float() for k, v in lora.state(model).items()})
     elif meta["family"] == "qwen":
         # 16-bit floats, like the published file: 1 GB instead of 2
-        pretrained.write_safetensors(f"{dir}/model.safetensors", {k: v.to(torch.bfloat16) for k, v in model.state_dict().items()})
+        state = {k: v.to(torch.bfloat16) for k, v in model.state_dict().items()}
+        if model.cfg.tie_embeddings:
+            del state["lm_head.weight"]  # the same matrix as embed.weight
+        pretrained.write_safetensors(f"{dir}/model.safetensors", state)
     else:
         torch.save({"config": vars(model.cfg), "model": model.state_dict(), "step": meta["step"], "val_loss": meta["val_loss"]}, f"{dir}/ckpt.pt")
     with open(f"{dir}/meta.json", "w") as f:
