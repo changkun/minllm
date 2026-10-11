@@ -81,6 +81,7 @@ function wrong() {
   for (const [i, a] of shown.entries()) {
     if (a.left < 8 || a.right > 1272 || a.top < 4 || a.bottom > 716) found.push(`“${a.string}” leaves the stage`);
     for (const b of shown.slice(i + 1)) {
+      if (a.string === b.string) continue; // a copy that leaves its original: the same text, briefly at the same place
       const across = Math.min(a.right, b.right) - Math.max(a.left, b.left);
       const down = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
       if (across > 6 && down > 0.35 * Math.min(a.bottom - a.top, b.bottom - b.top)) found.push(`“${a.string}” lies on “${b.string}”`);
