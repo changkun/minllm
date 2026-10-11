@@ -4,9 +4,10 @@ A minimal pipeline for making a language model, small enough to run on a
 laptop and written to be read. It goes from raw text to a tokenizer, a
 pretrained model, an inference engine, a fine-tuned chat model, and a model
 post-trained with reinforcement learning, first from human preferences (RLHF)
-and then from verifiable rewards (RLVR).
+and then from verifiable rewards (RLVR). A last stage goes back to the model
+and builds it again as a mixture of experts.
 
-![The ten stages of the pipeline](docs/figures/pipeline.svg)
+![The stages of the pipeline](docs/figures/pipeline.svg)
 
 The only machine learning dependency is PyTorch, for tensors and automatic
 differentiation. Everything on top of it is written here, in a few hundred
@@ -31,6 +32,7 @@ that check what the note claims.
 | 8 | [RLHF](docs/08-rlhf.md) | Preference comparisons, a reward model, and three ways to use it: rejection sampling, PPO with a KL penalty, and DPO, which skips the reward model |
 | 9 | [RLVR](docs/09-rlvr.md) | The reward model replaced by a program that checks the answer: rollouts, verifiers, and GRPO |
 | 10 | [The practitioner's stack](docs/10-stack.md) | Export to the format other tools read, a check against transformers, a run in MLX, an OpenAI-compatible server, and a map from each stage to the library used for it |
+| 11 | [Mixture of experts](docs/11-moe.md) | A variation of stage 2: a router and eight expert MLPs in every block, the load-balancing loss, three ways to hand tokens to experts, and a look at what the routers learn |
 
 ## What came out
 
@@ -46,6 +48,7 @@ in [`runs/`](runs/). The notes explain each one.
 | 8 | A reward model trained on 3,500 noisy comparisons orders 84% of held-out pairs the way the annotator's hidden taste does. PPO with a KL penalty raises that taste from +0.21 to +1.27, and DPO to +1.06 in 80 seconds. Without the penalty the taste is highest and the stories stop making sense. |
 | 9 | GRPO takes the story model from 40% to 94% of requested words in 15 minutes, by repeating them until the token limit. A stricter verifier gets endings and the same nonsense, and a KL penalty gets stories. On GSM8K, 22 minutes of GRPO add 5.9 points on the test set (95% interval 3.2 to 8.5). |
 | 10 | The from-scratch model, exported, runs in MLX and writes the same story token for token. |
+| 11 | A mixture of eight experts per block, two of them active, has the dense model's arithmetic per token and three times its parameters. Step for step it learns more: a validation loss of 1.423 against 1.465 after 6,000 steps. Minute for minute it learns less: 1.491 against 1.465 after 20 minutes. Without the load-balancing loss, 24 of its 64 experts go unused. On this GPU it generates at a sixth of the speed of a dense model with the same parameters, and the gap closes as the models get wider. Exported, it loads as a Mixtral and gives the same logits. |
 
 Two lessons recur. A loss or a reward is satisfied by whatever satisfies
 it, which is not always what was meant: stages 7, 8 and 9 each show a
@@ -87,6 +90,9 @@ uv run scripts/grpo.py --task gsm8k --max-new-tokens 256          # 22 minutes
 
 uv run scripts/export.py --model out/sft-words          # stage 10
 uv run scripts/serve.py --model out/sft-words
+
+uv run scripts/train.py --n-experts 8 --mlp-dim 512 --out out/moe  # stage 11, 31 minutes
+uv run scripts/analyze_moe.py
 ```
 
 Timings are from a MacBook Pro with an M5 Pro and 64 GB of memory, using the
