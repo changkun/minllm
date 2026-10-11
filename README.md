@@ -4,8 +4,8 @@ A minimal pipeline for making a language model, small enough to run on a
 laptop and written to be read. It goes from raw text to a tokenizer, a
 pretrained model, an inference engine, a fine-tuned chat model, and a model
 post-trained with reinforcement learning, first from human preferences (RLHF)
-and then from verifiable rewards (RLVR). A last stage goes back to the model
-and builds it again as a mixture of experts.
+and then from verifiable rewards (RLVR). Further stages go back to the model:
+they build it again as a mixture of experts, and store it in fewer bits.
 
 ![The stages of the pipeline](docs/figures/pipeline.svg)
 
@@ -33,6 +33,7 @@ that check what the note claims.
 | 9 | [RLVR](docs/09-rlvr.md) | The reward model replaced by a program that checks the answer: rollouts, verifiers, and GRPO |
 | 10 | [The practitioner's stack](docs/10-stack.md) | Export to the format other tools read, a check against transformers, a run in MLX, an OpenAI-compatible server, and a map from each stage to the library used for it |
 | 11 | [Mixture of experts](docs/11-moe.md) | A variation of stage 2: a router and eight expert MLPs in every block, the load-balancing loss, three ways to hand tokens to experts, and a look at what the routers learn |
+| 12 | [Quantization](docs/12-quantization.md) | Weights as 4-bit or 8-bit codes with a scale and an offset per group, what each bit width costs in loss and on the task, and a packed file that MLX runs as it is |
 
 ## What came out
 
@@ -49,6 +50,7 @@ in [`runs/`](runs/). The notes explain each one.
 | 9 | GRPO takes the story model from 40% to 94% of requested words in 15 minutes, by repeating them until the token limit. A stricter verifier gets endings and the same nonsense, and a KL penalty gets stories. On GSM8K, 22 minutes of GRPO add 5.9 points on the test set (95% interval 3.2 to 8.5). |
 | 10 | The from-scratch model, exported, runs in MLX and writes the same story token for token. |
 | 11 | A mixture of eight experts per block, two of them active, has the dense model's arithmetic per token and three times its parameters. Step for step it learns more: a validation loss of 1.423 against 1.465 after 6,000 steps. Minute for minute it learns less: 1.491 against 1.465 after 20 minutes. Without the load-balancing loss, 24 of its 64 experts go unused. On this GPU it generates at a sixth of the speed of a dense model with the same parameters, and the gap closes as the models get wider. Exported, it loads as a Mixtral and gives the same logits. |
+| 12 | Stored at 8 bits per weight, the 0.5B model is half the size and solves as many GSM8K problems as before (47.3% against 46.8%), and at 6 bits still as many. At 4 bits, in 278 MB, it solves 31.9%, while its replies read as fluently as ever and its held-out loss only rises from 0.83 to 0.92. This repository's own code runs the packed model 14 times slower. MLX reads the same file and runs it 2.1 times faster, in a third of the memory. |
 
 Two lessons recur. A loss or a reward is satisfied by whatever satisfies
 it, which is not always what was meant: stages 7, 8 and 9 each show a
@@ -93,6 +95,9 @@ uv run scripts/serve.py --model out/sft-words
 
 uv run scripts/train.py --n-experts 8 --mlp-dim 512 --out out/moe  # stage 11, 31 minutes
 uv run scripts/analyze_moe.py
+
+uv run scripts/quantize.py --model qwen --bits 4        # stage 12: 988 MB become 278
+uv run scripts/evaluate.py --model out/qwen-q4 --task gsm8k
 ```
 
 Timings are from a MacBook Pro with an M5 Pro and 64 GB of memory, using the
