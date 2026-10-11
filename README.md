@@ -16,8 +16,9 @@ and quantization of the exported file. The pipeline does not depend on them.
 ![The ten stages of the pipeline, and the side topics that branch off them](docs/figures/pipeline.svg)
 
 The notes are also a website, [minllm.latere.site](https://minllm.latere.site).
-The model of stage 3 runs there in the browser, the figures can be tried, and
-the code can be read beside the notes that explain it.
+Every chapter opens there with a film of about a minute, the model of stage 3
+runs in the browser, the figures can be tried, and the code can be read
+beside the notes that explain it.
 
 The only machine learning dependency is PyTorch, for tensors and automatic
 differentiation. Everything on top of it is written here, in a few hundred
@@ -171,8 +172,9 @@ minllm/      the library, one concept per file
 scripts/     one entry point per step of the pipeline
 tests/       checks for the claims the notes make
 docs/        one note per stage, with figures drawn by scripts/make_figures.py
-site/        the website: the notes and the code as pages, interactive figures that read runs/,
-             and the story model in JavaScript, tested against the Python one
+site/        the website: the notes and the code as pages, a film per chapter and interactive
+             figures that read runs/, and the story model in JavaScript, tested against the
+             Python one. site/tools/render.mjs renders the films to video files
 runs/        logs and benchmarks, the source of every number and figure in the notes
 data/, out/  downloads and checkpoints, not in git
 ```
