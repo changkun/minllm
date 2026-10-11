@@ -63,6 +63,7 @@ a:hover { text-decoration: underline; }
 .thread .leaf.current { color: var(--ink); font-weight: 600; }
 .thread .leaf .num { color: inherit; }
 @media (max-width: 1180px) {
+  .thread li:has(.leaf):not(:last-child) { min-width: 0; }
   .thread .stage .name { display: none; }
   .thread .stage.current .name, .thread li.here > .stage .name { display: inline; }
   .thread .leaf { font-size: 0; }
@@ -70,10 +71,22 @@ a:hover { text-decoration: underline; }
   .thread .leaf.current { font-size: 12px; }
 }
 @media (max-width: 640px) {
-  .top { gap: 12px; padding: 10px 14px 6px; }
+  .top { gap: 10px; padding: 10px 26px 6px 12px; }
   .repo { display: none; }
-  .thread li:not(:last-child)::after { margin: 0 3px; min-width: 4px; }
+  .thread li:not(:last-child)::after { margin: 0 2px; min-width: 2px; }
+  .thread .dot { width: 20px; height: 20px; font-size: 10px; }
+  .thread .stage .name, .thread .stage.current .name, .thread li.here > .stage .name { display: none; }
+  .thread .leaf, .thread .leaf.current { left: 9px; padding-left: 5px; font-size: 0; }
+  .thread .leaf .num { font-size: 10px; }
+  .note, .landing { padding: 20px 14px 40px; }
+  h1 { font-size: 26px; }
+  .hero h1 { font-size: 27px; }
+  .bar-row { grid-template-columns: 84px minmax(0, 1fr) 40px; }
+  .route-row { grid-template-columns: 56px 60px 30px minmax(0, 1fr); }
+  .adv-row { grid-template-columns: 118px minmax(0, 1fr) minmax(0, 1fr); gap: 6px; }
 }
+body { overflow-x: hidden; }
+.prose { overflow-wrap: break-word; }
 
 /* ------------------------------------------------------------------ note */
 
