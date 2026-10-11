@@ -1,0 +1,28 @@
+{
+ "family": "small",
+ "base": "out/sft-words",
+ "lora": {
+  "r": 16,
+  "alpha": 32
+ },
+ "method": "grpo",
+ "task": "words",
+ "step": 150,
+ "val_loss": 0.0,
+ "minutes": 24.818560552597045,
+ "args": {
+  "task": "words",
+  "model": "out/sft-words",
+  "out": "out/grpo-words-kl",
+  "iterations": 150,
+  "prompts": 32,
+  "samples": 8,
+  "lr": 5e-05,
+  "kl": 0.05,
+  "lora": 16,
+  "must_finish": false,
+  "eval_every": 25,
+  "eval_n": 500,
+  "seed": 0
+ }
+}
