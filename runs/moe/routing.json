@@ -1,0 +1,4194 @@
+{
+ "model": "out/moe",
+ "step": 6000,
+ "tokens": 102400,
+ "n_experts": 8,
+ "n_active": 2,
+ "blocks": [
+  {
+   "share": [
+    0.1257,
+    0.0883,
+    0.1256,
+    0.1269,
+    0.1383,
+    0.1458,
+    0.0956,
+    0.1538
+   ],
+   "first": [
+    0.1233,
+    0.102,
+    0.1512,
+    0.169,
+    0.1534,
+    0.121,
+    0.0421,
+    0.1382
+   ],
+   "top_weight": 0.6340945959091187,
+   "by_token": 0.9132031202316284,
+   "by_token_baseline": 0.16899414360523224,
+   "by_previous": 0.15021568536758423,
+   "by_previous_baseline": 0.13603118062019348,
+   "favorites": [
+    [
+     {
+      "token": " want",
+      "rate": 1.0,
+      "count": 159
+     },
+     {
+      "token": " in",
+      "rate": 1.0,
+      "count": 744
+     },
+     {
+      "token": " happy",
+      "rate": 1.0,
+      "count": 445
+     },
+     {
+      "token": " park",
+      "rate": 1.0,
+      "count": 182
+     },
+     {
+      "token": " she",
+      "rate": 1.0,
+      "count": 365
+     },
+     {
+      "token": " bird",
+      "rate": 1.0,
+      "count": 354
+     },
+     {
+      "token": " \"",
+      "rate": 1.0,
+      "count": 853
+     },
+     {
+      "token": " took",
+      "rate": 1.0,
+      "count": 117
+     },
+     {
+      "token": " then",
+      "rate": 1.0,
+      "count": 100
+     },
+     {
+      "token": " Sue",
+      "rate": 1.0,
+      "count": 168
+     },
+     {
+      "token": " loved",
+      "rate": 1.0,
+      "count": 212
+     },
+     {
+      "token": " little",
+      "rate": 1.0,
+      "count": 461
+     }
+    ],
+    [
+     {
+      "token": ".\n",
+      "rate": 1.0,
+      "count": 1208
+     },
+     {
+      "token": " get",
+      "rate": 1.0,
+      "count": 108
+     },
+     {
+      "token": " man",
+      "rate": 0.991,
+      "count": 106
+     },
+     {
+      "token": ".",
+      "rate": 0.975,
+      "count": 6681
+     },
+     {
+      "token": " He",
+      "rate": 0.943,
+      "count": 1037
+     },
+     {
+      "token": " on",
+      "rate": 0.75,
+      "count": 509
+     },
+     {
+      "token": "!",
+      "rate": 0.619,
+      "count": 357
+     },
+     {
+      "token": ".\"",
+      "rate": 0.025,
+      "count": 203
+     },
+     {
+      "token": " It",
+      "rate": 0.006,
+      "count": 333
+     }
+    ],
+    [
+     {
+      "token": " together",
+      "rate": 1.0,
+      "count": 272
+     },
+     {
+      "token": " a",
+      "rate": 1.0,
+      "count": 2822
+     },
+     {
+      "token": " tree",
+      "rate": 1.0,
+      "count": 197
+     },
+     {
+      "token": " go",
+      "rate": 1.0,
+      "count": 165
+     },
+     {
+      "token": " that",
+      "rate": 1.0,
+      "count": 485
+     },
+     {
+      "token": " scared",
+      "rate": 1.0,
+      "count": 116
+     },
+     {
+      "token": " playing",
+      "rate": 1.0,
+      "count": 142
+     },
+     {
+      "token": " Spot",
+      "rate": 1.0,
+      "count": 137
+     },
+     {
+      "token": " outside",
+      "rate": 1.0,
+      "count": 114
+     },
+     {
+      "token": " tried",
+      "rate": 1.0,
+      "count": 113
+     },
+     {
+      "token": " again",
+      "rate": 1.0,
+      "count": 122
+     },
+     {
+      "token": " time",
+      "rate": 1.0,
+      "count": 424
+     }
+    ],
+    [
+     {
+      "token": "ed",
+      "rate": 1.0,
+      "count": 123
+     },
+     {
+      "token": " too",
+      "rate": 1.0,
+      "count": 188
+     },
+     {
+      "token": "The",
+      "rate": 1.0,
+      "count": 250
+     },
+     {
+      "token": " toy",
+      "rate": 1.0,
+      "count": 212
+     },
+     {
+      "token": " The",
+      "rate": 1.0,
+      "count": 904
+     },
+     {
+      "token": " boy",
+      "rate": 1.0,
+      "count": 226
+     },
+     {
+      "token": " said",
+      "rate": 1.0,
+      "count": 851
+     },
+     {
+      "token": " something",
+      "rate": 1.0,
+      "count": 145
+     },
+     {
+      "token": " thought",
+      "rate": 1.0,
+      "count": 117
+     },
+     {
+      "token": " what",
+      "rate": 1.0,
+      "count": 136
+     },
+     {
+      "token": " away",
+      "rate": 1.0,
+      "count": 129
+     },
+     {
+      "token": " out",
+      "rate": 1.0,
+      "count": 136
+     }
+    ],
+    [
+     {
+      "token": " did",
+      "rate": 1.0,
+      "count": 259
+     },
+     {
+      "token": " you",
+      "rate": 1.0,
+      "count": 530
+     },
+     {
+      "token": " are",
+      "rate": 1.0,
+      "count": 175
+     },
+     {
+      "token": " do",
+      "rate": 1.0,
+      "count": 117
+     },
+     {
+      "token": " be",
+      "rate": 1.0,
+      "count": 233
+     },
+     {
+      "token": " is",
+      "rate": 1.0,
+      "count": 300
+     },
+     {
+      "token": " wanted",
+      "rate": 1.0,
+      "count": 392
+     },
+     {
+      "token": " liked",
+      "rate": 1.0,
+      "count": 175
+     },
+     {
+      "token": " felt",
+      "rate": 1.0,
+      "count": 164
+     },
+     {
+      "token": " would",
+      "rate": 1.0,
+      "count": 153
+     },
+     {
+      "token": " we",
+      "rate": 1.0,
+      "count": 107
+     },
+     {
+      "token": " day",
+      "rate": 1.0,
+      "count": 837
+     }
+    ],
+    [
+     {
+      "token": " very",
+      "rate": 1.0,
+      "count": 463
+     },
+     {
+      "token": " find",
+      "rate": 1.0,
+      "count": 166
+     },
+     {
+      "token": " your",
+      "rate": 1.0,
+      "count": 101
+     },
+     {
+      "token": " so",
+      "rate": 1.0,
+      "count": 397
+     },
+     {
+      "token": " not",
+      "rate": 1.0,
+      "count": 543
+     },
+     {
+      "token": ".\"\n",
+      "rate": 1.0,
+      "count": 191
+     },
+     {
+      "token": " ball",
+      "rate": 1.0,
+      "count": 217
+     },
+     {
+      "token": " there",
+      "rate": 0.997,
+      "count": 396
+     },
+     {
+      "token": " up",
+      "rate": 0.995,
+      "count": 203
+     },
+     {
+      "token": " It",
+      "rate": 0.994,
+      "count": 333
+     },
+     {
+      "token": " see",
+      "rate": 0.992,
+      "count": 123
+     },
+     {
+      "token": "'t",
+      "rate": 0.981,
+      "count": 208
+     }
+    ],
+    [
+     {
+      "token": " put",
+      "rate": 1.0,
+      "count": 131
+     },
+     {
+      "token": " named",
+      "rate": 1.0,
+      "count": 399
+     },
+     {
+      "token": " play",
+      "rate": 1.0,
+      "count": 491
+     },
+     {
+      "token": " make",
+      "rate": 1.0,
+      "count": 112
+     },
+     {
+      "token": " down",
+      "rate": 1.0,
+      "count": 111
+     },
+     {
+      "token": "Tim",
+      "rate": 1.0,
+      "count": 116
+     },
+     {
+      "token": " Tim",
+      "rate": 1.0,
+      "count": 787
+     },
+     {
+      "token": " came",
+      "rate": 0.958,
+      "count": 142
+     },
+     {
+      "token": " will",
+      "rate": 0.92,
+      "count": 113
+     },
+     {
+      "token": " have",
+      "rate": 0.86,
+      "count": 193
+     },
+     {
+      "token": " but",
+      "rate": 0.43,
+      "count": 344
+     },
+     {
+      "token": " me",
+      "rate": 0.397,
+      "count": 126
+     }
+    ],
+    [
+     {
+      "token": " to",
+      "rate": 1.0,
+      "count": 2942
+     },
+     {
+      "token": " her",
+      "rate": 1.0,
+      "count": 662
+     },
+     {
+      "token": " big",
+      "rate": 1.0,
+      "count": 648
+     },
+     {
+      "token": " cat",
+      "rate": 1.0,
+      "count": 245
+     },
+     {
+      "token": " his",
+      "rate": 1.0,
+      "count": 801
+     },
+     {
+      "token": " dog",
+      "rate": 1.0,
+      "count": 229
+     },
+     {
+      "token": " mom",
+      "rate": 1.0,
+      "count": 409
+     },
+     {
+      "token": " their",
+      "rate": 1.0,
+      "count": 221
+     },
+     {
+      "token": " car",
+      "rate": 1.0,
+      "count": 104
+     },
+     {
+      "token": " back",
+      "rate": 1.0,
+      "count": 207
+     },
+     {
+      "token": " sad",
+      "rate": 1.0,
+      "count": 223
+     },
+     {
+      "token": "Once",
+      "rate": 1.0,
+      "count": 333
+     }
+    ]
+   ]
+  },
+  {
+   "share": [
+    0.1251,
+    0.1255,
+    0.1293,
+    0.1253,
+    0.1263,
+    0.1182,
+    0.1116,
+    0.1387
+   ],
+   "first": [
+    0.1073,
+    0.0873,
+    0.1958,
+    0.0606,
+    0.1864,
+    0.0212,
+    0.151,
+    0.1905
+   ],
+   "top_weight": 0.6495025753974915,
+   "by_token": 0.8605859279632568,
+   "by_token_baseline": 0.19575195014476776,
+   "by_previous": 0.13870587944984436,
+   "by_previous_baseline": 0.15538153052330017,
+   "favorites": [
+    [
+     {
+      "token": " we",
+      "rate": 1.0,
+      "count": 107
+     },
+     {
+      "token": " want",
+      "rate": 1.0,
+      "count": 159
+     },
+     {
+      "token": " started",
+      "rate": 1.0,
+      "count": 161
+     },
+     {
+      "token": " wanted",
+      "rate": 1.0,
+      "count": 392
+     },
+     {
+      "token": " there",
+      "rate": 1.0,
+      "count": 396
+     },
+     {
+      "token": " It",
+      "rate": 1.0,
+      "count": 333
+     },
+     {
+      "token": " it",
+      "rate": 1.0,
+      "count": 1123
+     },
+     {
+      "token": " came",
+      "rate": 0.993,
+      "count": 142
+     },
+     {
+      "token": " Spot",
+      "rate": 0.993,
+      "count": 137
+     },
+     {
+      "token": " Max",
+      "rate": 0.985,
+      "count": 136
+     },
+     {
+      "token": " cat",
+      "rate": 0.98,
+      "count": 245
+     },
+     {
+      "token": " friend",
+      "rate": 0.959,
+      "count": 195
+     }
+    ],
+    [
+     {
+      "token": " girl",
+      "rate": 1.0,
+      "count": 216
+     },
+     {
+      "token": " learned",
+      "rate": 1.0,
+      "count": 116
+     },
+     {
+      "token": " boy",
+      "rate": 1.0,
+      "count": 226
+     },
+     {
+      "token": " She",
+      "rate": 0.994,
+      "count": 642
+     },
+     {
+      "token": " she",
+      "rate": 0.973,
+      "count": 365
+     },
+     {
+      "token": " But",
+      "rate": 0.952,
+      "count": 187
+     },
+     {
+      "token": " He",
+      "rate": 0.941,
+      "count": 1037
+     },
+     {
+      "token": " big",
+      "rate": 0.924,
+      "count": 648
+     },
+     {
+      "token": " played",
+      "rate": 0.896,
+      "count": 240
+     },
+     {
+      "token": " he",
+      "rate": 0.864,
+      "count": 735
+     },
+     {
+      "token": " him",
+      "rate": 0.793,
+      "count": 222
+     },
+     {
+      "token": " man",
+      "rate": 0.792,
+      "count": 106
+     }
+    ],
+    [
+     {
+      "token": "!",
+      "rate": 1.0,
+      "count": 357
+     },
+     {
+      "token": " \"",
+      "rate": 1.0,
+      "count": 853
+     },
+     {
+      "token": ".",
+      "rate": 0.999,
+      "count": 6681
+     },
+     {
+      "token": " help",
+      "rate": 0.996,
+      "count": 254
+     },
+     {
+      "token": " dog",
+      "rate": 0.996,
+      "count": 229
+     },
+     {
+      "token": " good",
+      "rate": 0.991,
+      "count": 114
+     },
+     {
+      "token": " something",
+      "rate": 0.986,
+      "count": 145
+     },
+     {
+      "token": " saw",
+      "rate": 0.985,
+      "count": 463
+     },
+     {
+      "token": " named",
+      "rate": 0.982,
+      "count": 399
+     },
+     {
+      "token": " little",
+      "rate": 0.972,
+      "count": 461
+     },
+     {
+      "token": " very",
+      "rate": 0.95,
+      "count": 463
+     },
+     {
+      "token": "?\"",
+      "rate": 0.93,
+      "count": 142
+     }
+    ],
+    [
+     {
+      "token": " smiled",
+      "rate": 1.0,
+      "count": 118
+     },
+     {
+      "token": " went",
+      "rate": 0.946,
+      "count": 317
+     },
+     {
+      "token": " will",
+      "rate": 0.929,
+      "count": 113
+     },
+     {
+      "token": ",\"",
+      "rate": 0.907,
+      "count": 118
+     },
+     {
+      "token": " go",
+      "rate": 0.8,
+      "count": 165
+     },
+     {
+      "token": " can",
+      "rate": 0.681,
+      "count": 226
+     },
+     {
+      "token": " put",
+      "rate": 0.641,
+      "count": 131
+     },
+     {
+      "token": " when",
+      "rate": 0.481,
+      "count": 108
+     },
+     {
+      "token": " to",
+      "rate": 0.455,
+      "count": 2942
+     },
+     {
+      "token": " ran",
+      "rate": 0.42,
+      "count": 131
+     },
+     {
+      "token": " down",
+      "rate": 0.36,
+      "count": 111
+     },
+     {
+      "token": " could",
+      "rate": 0.35,
+      "count": 237
+     }
+    ],
+    [
+     {
+      "token": " new",
+      "rate": 1.0,
+      "count": 137
+     },
+     {
+      "token": " asked",
+      "rate": 1.0,
+      "count": 150
+     },
+     {
+      "token": " playing",
+      "rate": 1.0,
+      "count": 142
+     },
+     {
+      "token": " friends",
+      "rate": 1.0,
+      "count": 383
+     },
+     {
+      "token": " an",
+      "rate": 1.0,
+      "count": 105
+     },
+     {
+      "token": " away",
+      "rate": 1.0,
+      "count": 129
+     },
+     {
+      "token": " sad",
+      "rate": 1.0,
+      "count": 223
+     },
+     {
+      "token": " box",
+      "rate": 1.0,
+      "count": 119
+     },
+     {
+      "token": " toys",
+      "rate": 1.0,
+      "count": 104
+     },
+     {
+      "token": " thought",
+      "rate": 1.0,
+      "count": 117
+     },
+     {
+      "token": " have",
+      "rate": 1.0,
+      "count": 193
+     },
+     {
+      "token": " mom",
+      "rate": 1.0,
+      "count": 409
+     }
+    ],
+    [
+     {
+      "token": "<|endoftext|>",
+      "rate": 1.0,
+      "count": 520
+     },
+     {
+      "token": " what",
+      "rate": 0.963,
+      "count": 136
+     },
+     {
+      "token": " when",
+      "rate": 0.519,
+      "count": 108
+     },
+     {
+      "token": " for",
+      "rate": 0.458,
+      "count": 391
+     },
+     {
+      "token": " all",
+      "rate": 0.45,
+      "count": 333
+     },
+     {
+      "token": ".\"",
+      "rate": 0.325,
+      "count": 203
+     },
+     {
+      "token": " he",
+      "rate": 0.136,
+      "count": 735
+     },
+     {
+      "token": " their",
+      "rate": 0.136,
+      "count": 221
+     },
+     {
+      "token": " like",
+      "rate": 0.089,
+      "count": 157
+     },
+     {
+      "token": ",\"",
+      "rate": 0.085,
+      "count": 118
+     },
+     {
+      "token": " did",
+      "rate": 0.069,
+      "count": 259
+     },
+     {
+      "token": " on",
+      "rate": 0.061,
+      "count": 509
+     }
+    ],
+    [
+     {
+      "token": "One",
+      "rate": 1.0,
+      "count": 296
+     },
+     {
+      "token": " upon",
+      "rate": 1.0,
+      "count": 321
+     },
+     {
+      "token": "The",
+      "rate": 1.0,
+      "count": 250
+     },
+     {
+      "token": " fun",
+      "rate": 1.0,
+      "count": 221
+     },
+     {
+      "token": " The",
+      "rate": 1.0,
+      "count": 904
+     },
+     {
+      "token": " toy",
+      "rate": 1.0,
+      "count": 212
+     },
+     {
+      "token": "Once",
+      "rate": 1.0,
+      "count": 333
+     },
+     {
+      "token": ".\"\n",
+      "rate": 1.0,
+      "count": 191
+     },
+     {
+      "token": " park",
+      "rate": 1.0,
+      "count": 182
+     },
+     {
+      "token": " looked",
+      "rate": 1.0,
+      "count": 214
+     },
+     {
+      "token": " tree",
+      "rate": 1.0,
+      "count": 197
+     },
+     {
+      "token": ".\n",
+      "rate": 1.0,
+      "count": 1208
+     }
+    ],
+    [
+     {
+      "token": " of",
+      "rate": 1.0,
+      "count": 438
+     },
+     {
+      "token": "I",
+      "rate": 1.0,
+      "count": 153
+     },
+     {
+      "token": " too",
+      "rate": 1.0,
+      "count": 188
+     },
+     {
+      "token": " Lily",
+      "rate": 1.0,
+      "count": 329
+     },
+     {
+      "token": " they",
+      "rate": 1.0,
+      "count": 528
+     },
+     {
+      "token": " are",
+      "rate": 1.0,
+      "count": 175
+     },
+     {
+      "token": " Tom",
+      "rate": 1.0,
+      "count": 335
+     },
+     {
+      "token": " Sue",
+      "rate": 1.0,
+      "count": 168
+     },
+     {
+      "token": " Sam",
+      "rate": 1.0,
+      "count": 174
+     },
+     {
+      "token": " make",
+      "rate": 1.0,
+      "count": 112
+     },
+     {
+      "token": " me",
+      "rate": 1.0,
+      "count": 126
+     },
+     {
+      "token": " I",
+      "rate": 1.0,
+      "count": 392
+     }
+    ]
+   ]
+  },
+  {
+   "share": [
+    0.121,
+    0.1199,
+    0.1246,
+    0.1172,
+    0.1252,
+    0.137,
+    0.1046,
+    0.1505
+   ],
+   "first": [
+    0.0205,
+    0.1347,
+    0.1085,
+    0.0552,
+    0.1532,
+    0.2114,
+    0.0733,
+    0.2431
+   ],
+   "top_weight": 0.6746106743812561,
+   "by_token": 0.8494336009025574,
+   "by_token_baseline": 0.2431054711341858,
+   "by_previous": 0.16785293817520142,
+   "by_previous_baseline": 0.16603145003318787,
+   "favorites": [
+    [
+     {
+      "token": "s",
+      "rate": 0.526,
+      "count": 234
+     },
+     {
+      "token": " together",
+      "rate": 0.441,
+      "count": 272
+     },
+     {
+      "token": "ing",
+      "rate": 0.358,
+      "count": 134
+     },
+     {
+      "token": " them",
+      "rate": 0.329,
+      "count": 207
+     },
+     {
+      "token": "ed",
+      "rate": 0.276,
+      "count": 123
+     },
+     {
+      "token": " friends",
+      "rate": 0.251,
+      "count": 383
+     },
+     {
+      "token": ".\"",
+      "rate": 0.172,
+      "count": 203
+     },
+     {
+      "token": " things",
+      "rate": 0.155,
+      "count": 116
+     },
+     {
+      "token": " mom",
+      "rate": 0.132,
+      "count": 409
+     },
+     {
+      "token": " day",
+      "rate": 0.105,
+      "count": 837
+     },
+     {
+      "token": "!\"",
+      "rate": 0.065,
+      "count": 263
+     },
+     {
+      "token": " like",
+      "rate": 0.064,
+      "count": 157
+     }
+    ],
+    [
+     {
+      "token": " tried",
+      "rate": 1.0,
+      "count": 113
+     },
+     {
+      "token": " very",
+      "rate": 1.0,
+      "count": 463
+     },
+     {
+      "token": " some",
+      "rate": 0.99,
+      "count": 103
+     },
+     {
+      "token": " new",
+      "rate": 0.883,
+      "count": 137
+     },
+     {
+      "token": " liked",
+      "rate": 0.806,
+      "count": 175
+     },
+     {
+      "token": " The",
+      "rate": 0.738,
+      "count": 904
+     },
+     {
+      "token": " with",
+      "rate": 0.731,
+      "count": 836
+     },
+     {
+      "token": " named",
+      "rate": 0.674,
+      "count": 399
+     },
+     {
+      "token": " see",
+      "rate": 0.659,
+      "count": 123
+     },
+     {
+      "token": "The",
+      "rate": 0.652,
+      "count": 250
+     },
+     {
+      "token": " of",
+      "rate": 0.632,
+      "count": 438
+     },
+     {
+      "token": ",",
+      "rate": 0.62,
+      "count": 4417
+     }
+    ],
+    [
+     {
+      "token": " upon",
+      "rate": 1.0,
+      "count": 321
+     },
+     {
+      "token": " a",
+      "rate": 0.999,
+      "count": 2822
+     },
+     {
+      "token": " an",
+      "rate": 0.99,
+      "count": 105
+     },
+     {
+      "token": " from",
+      "rate": 0.939,
+      "count": 131
+     },
+     {
+      "token": " something",
+      "rate": 0.917,
+      "count": 145
+     },
+     {
+      "token": " girl",
+      "rate": 0.894,
+      "count": 216
+     },
+     {
+      "token": " big",
+      "rate": 0.826,
+      "count": 648
+     },
+     {
+      "token": " small",
+      "rate": 0.805,
+      "count": 149
+     },
+     {
+      "token": " other",
+      "rate": 0.789,
+      "count": 123
+     },
+     {
+      "token": " saw",
+      "rate": 0.788,
+      "count": 463
+     },
+     {
+      "token": " learned",
+      "rate": 0.767,
+      "count": 116
+     },
+     {
+      "token": " is",
+      "rate": 0.643,
+      "count": 300
+     }
+    ],
+    [
+     {
+      "token": " her",
+      "rate": 0.878,
+      "count": 662
+     },
+     {
+      "token": "'t",
+      "rate": 0.779,
+      "count": 208
+     },
+     {
+      "token": " his",
+      "rate": 0.708,
+      "count": 801
+     },
+     {
+      "token": " did",
+      "rate": 0.656,
+      "count": 259
+     },
+     {
+      "token": " their",
+      "rate": 0.652,
+      "count": 221
+     },
+     {
+      "token": " do",
+      "rate": 0.632,
+      "count": 117
+     },
+     {
+      "token": " not",
+      "rate": 0.512,
+      "count": 543
+     },
+     {
+      "token": " your",
+      "rate": 0.475,
+      "count": 101
+     },
+     {
+      "token": " could",
+      "rate": 0.363,
+      "count": 237
+     },
+     {
+      "token": ",",
+      "rate": 0.345,
+      "count": 4417
+     },
+     {
+      "token": "Once",
+      "rate": 0.303,
+      "count": 333
+     },
+     {
+      "token": " that",
+      "rate": 0.221,
+      "count": 485
+     }
+    ],
+    [
+     {
+      "token": "One",
+      "rate": 1.0,
+      "count": 296
+     },
+     {
+      "token": " looked",
+      "rate": 1.0,
+      "count": 214
+     },
+     {
+      "token": " One",
+      "rate": 1.0,
+      "count": 179
+     },
+     {
+      "token": " make",
+      "rate": 1.0,
+      "count": 112
+     },
+     {
+      "token": " made",
+      "rate": 1.0,
+      "count": 124
+     },
+     {
+      "token": " felt",
+      "rate": 1.0,
+      "count": 164
+     },
+     {
+      "token": " be",
+      "rate": 1.0,
+      "count": 233
+     },
+     {
+      "token": " find",
+      "rate": 1.0,
+      "count": 166
+     },
+     {
+      "token": "<|endoftext|>",
+      "rate": 1.0,
+      "count": 520
+     },
+     {
+      "token": " were",
+      "rate": 0.997,
+      "count": 339
+     },
+     {
+      "token": ".",
+      "rate": 0.996,
+      "count": 6681
+     },
+     {
+      "token": "!",
+      "rate": 0.992,
+      "count": 357
+     }
+    ],
+    [
+     {
+      "token": " Lily",
+      "rate": 1.0,
+      "count": 329
+     },
+     {
+      "token": " Tim",
+      "rate": 1.0,
+      "count": 787
+     },
+     {
+      "token": " Sue",
+      "rate": 1.0,
+      "count": 168
+     },
+     {
+      "token": " Max",
+      "rate": 1.0,
+      "count": 136
+     },
+     {
+      "token": " Tom",
+      "rate": 1.0,
+      "count": 335
+     },
+     {
+      "token": " Sam",
+      "rate": 1.0,
+      "count": 174
+     },
+     {
+      "token": " Ben",
+      "rate": 1.0,
+      "count": 138
+     },
+     {
+      "token": " Spot",
+      "rate": 1.0,
+      "count": 137
+     },
+     {
+      "token": " scared",
+      "rate": 1.0,
+      "count": 116
+     },
+     {
+      "token": " smiled",
+      "rate": 1.0,
+      "count": 118
+     },
+     {
+      "token": " man",
+      "rate": 1.0,
+      "count": 106
+     },
+     {
+      "token": " bird",
+      "rate": 1.0,
+      "count": 354
+     }
+    ],
+    [
+     {
+      "token": " home",
+      "rate": 1.0,
+      "count": 142
+     },
+     {
+      "token": " friend",
+      "rate": 0.974,
+      "count": 195
+     },
+     {
+      "token": " said",
+      "rate": 0.958,
+      "count": 851
+     },
+     {
+      "token": " time",
+      "rate": 0.943,
+      "count": 424
+     },
+     {
+      "token": " back",
+      "rate": 0.942,
+      "count": 207
+     },
+     {
+      "token": " again",
+      "rate": 0.926,
+      "count": 122
+     },
+     {
+      "token": " away",
+      "rate": 0.899,
+      "count": 129
+     },
+     {
+      "token": " too",
+      "rate": 0.872,
+      "count": 188
+     },
+     {
+      "token": " day",
+      "rate": 0.812,
+      "count": 837
+     },
+     {
+      "token": " my",
+      "rate": 0.767,
+      "count": 116
+     },
+     {
+      "token": " park",
+      "rate": 0.753,
+      "count": 182
+     },
+     {
+      "token": " tree",
+      "rate": 0.482,
+      "count": 197
+     }
+    ],
+    [
+     {
+      "token": " she",
+      "rate": 1.0,
+      "count": 365
+     },
+     {
+      "token": "I",
+      "rate": 1.0,
+      "count": 153
+     },
+     {
+      "token": " It",
+      "rate": 1.0,
+      "count": 333
+     },
+     {
+      "token": " went",
+      "rate": 1.0,
+      "count": 317
+     },
+     {
+      "token": " I",
+      "rate": 1.0,
+      "count": 392
+     },
+     {
+      "token": " can",
+      "rate": 1.0,
+      "count": 226
+     },
+     {
+      "token": " we",
+      "rate": 1.0,
+      "count": 107
+     },
+     {
+      "token": " go",
+      "rate": 1.0,
+      "count": 165
+     },
+     {
+      "token": " started",
+      "rate": 1.0,
+      "count": 161
+     },
+     {
+      "token": " asked",
+      "rate": 1.0,
+      "count": 150
+     },
+     {
+      "token": " wanted",
+      "rate": 1.0,
+      "count": 392
+     },
+     {
+      "token": " he",
+      "rate": 1.0,
+      "count": 735
+     }
+    ]
+   ]
+  },
+  {
+   "share": [
+    0.1284,
+    0.1193,
+    0.1093,
+    0.1096,
+    0.1112,
+    0.1427,
+    0.1451,
+    0.1344
+   ],
+   "first": [
+    0.1515,
+    0.1217,
+    0.1306,
+    0.1227,
+    0.0896,
+    0.1408,
+    0.1818,
+    0.0612
+   ],
+   "top_weight": 0.693326473236084,
+   "by_token": 0.6598241925239563,
+   "by_token_baseline": 0.18175780773162842,
+   "by_previous": 0.154401957988739,
+   "by_previous_baseline": 0.13454218208789825,
+   "favorites": [
+    [
+     {
+      "token": " them",
+      "rate": 1.0,
+      "count": 207
+     },
+     {
+      "token": " toys",
+      "rate": 0.971,
+      "count": 104
+     },
+     {
+      "token": " friends",
+      "rate": 0.922,
+      "count": 383
+     },
+     {
+      "token": " things",
+      "rate": 0.914,
+      "count": 116
+     },
+     {
+      "token": " park",
+      "rate": 0.901,
+      "count": 182
+     },
+     {
+      "token": " we",
+      "rate": 0.897,
+      "count": 107
+     },
+     {
+      "token": " tree",
+      "rate": 0.843,
+      "count": 197
+     },
+     {
+      "token": " box",
+      "rate": 0.84,
+      "count": 119
+     },
+     {
+      "token": " friend",
+      "rate": 0.8,
+      "count": 195
+     },
+     {
+      "token": " the",
+      "rate": 0.781,
+      "count": 3906
+     },
+     {
+      "token": " again",
+      "rate": 0.746,
+      "count": 122
+     },
+     {
+      "token": " him",
+      "rate": 0.734,
+      "count": 222
+     }
+    ],
+    [
+     {
+      "token": "The",
+      "rate": 0.96,
+      "count": 250
+     },
+     {
+      "token": " The",
+      "rate": 0.872,
+      "count": 904
+     },
+     {
+      "token": " fun",
+      "rate": 0.828,
+      "count": 221
+     },
+     {
+      "token": " time",
+      "rate": 0.821,
+      "count": 424
+     },
+     {
+      "token": " said",
+      "rate": 0.706,
+      "count": 851
+     },
+     {
+      "token": " is",
+      "rate": 0.68,
+      "count": 300
+     },
+     {
+      "token": " was",
+      "rate": 0.577,
+      "count": 2147
+     },
+     {
+      "token": " from",
+      "rate": 0.573,
+      "count": 131
+     },
+     {
+      "token": " new",
+      "rate": 0.562,
+      "count": 137
+     },
+     {
+      "token": " day",
+      "rate": 0.557,
+      "count": 837
+     },
+     {
+      "token": " for",
+      "rate": 0.494,
+      "count": 391
+     },
+     {
+      "token": " be",
+      "rate": 0.481,
+      "count": 233
+     }
+    ],
+    [
+     {
+      "token": "Tim",
+      "rate": 0.991,
+      "count": 116
+     },
+     {
+      "token": " she",
+      "rate": 0.918,
+      "count": 365
+     },
+     {
+      "token": " It",
+      "rate": 0.916,
+      "count": 333
+     },
+     {
+      "token": " there",
+      "rate": 0.904,
+      "count": 396
+     },
+     {
+      "token": " She",
+      "rate": 0.902,
+      "count": 642
+     },
+     {
+      "token": " Tim",
+      "rate": 0.873,
+      "count": 787
+     },
+     {
+      "token": " He",
+      "rate": 0.869,
+      "count": 1037
+     },
+     {
+      "token": " he",
+      "rate": 0.863,
+      "count": 735
+     },
+     {
+      "token": " Spot",
+      "rate": 0.796,
+      "count": 137
+     },
+     {
+      "token": " Mia",
+      "rate": 0.786,
+      "count": 112
+     },
+     {
+      "token": " Lily",
+      "rate": 0.769,
+      "count": 329
+     },
+     {
+      "token": " Tom",
+      "rate": 0.719,
+      "count": 335
+     }
+    ],
+    [
+     {
+      "token": "<|endoftext|>",
+      "rate": 1.0,
+      "count": 520
+     },
+     {
+      "token": " an",
+      "rate": 0.962,
+      "count": 105
+     },
+     {
+      "token": " did",
+      "rate": 0.907,
+      "count": 259
+     },
+     {
+      "token": " good",
+      "rate": 0.877,
+      "count": 114
+     },
+     {
+      "token": " will",
+      "rate": 0.858,
+      "count": 113
+     },
+     {
+      "token": " looked",
+      "rate": 0.827,
+      "count": 214
+     },
+     {
+      "token": " can",
+      "rate": 0.796,
+      "count": 226
+     },
+     {
+      "token": " came",
+      "rate": 0.789,
+      "count": 142
+     },
+     {
+      "token": " wanted",
+      "rate": 0.75,
+      "count": 392
+     },
+     {
+      "token": " happy",
+      "rate": 0.694,
+      "count": 445
+     },
+     {
+      "token": " tried",
+      "rate": 0.681,
+      "count": 113
+     },
+     {
+      "token": " very",
+      "rate": 0.635,
+      "count": 463
+     }
+    ],
+    [
+     {
+      "token": "Once",
+      "rate": 1.0,
+      "count": 333
+     },
+     {
+      "token": " who",
+      "rate": 0.93,
+      "count": 100
+     },
+     {
+      "token": ",",
+      "rate": 0.756,
+      "count": 4417
+     },
+     {
+      "token": " named",
+      "rate": 0.649,
+      "count": 399
+     },
+     {
+      "token": " when",
+      "rate": 0.565,
+      "count": 108
+     },
+     {
+      "token": " that",
+      "rate": 0.493,
+      "count": 485
+     },
+     {
+      "token": " find",
+      "rate": 0.373,
+      "count": 166
+     },
+     {
+      "token": " and",
+      "rate": 0.363,
+      "count": 3607
+     },
+     {
+      "token": " but",
+      "rate": 0.311,
+      "count": 344
+     },
+     {
+      "token": " with",
+      "rate": 0.297,
+      "count": 836
+     },
+     {
+      "token": " One",
+      "rate": 0.257,
+      "count": 179
+     },
+     {
+      "token": " asked",
+      "rate": 0.167,
+      "count": 150
+     }
+    ],
+    [
+     {
+      "token": " then",
+      "rate": 1.0,
+      "count": 100
+     },
+     {
+      "token": " ran",
+      "rate": 0.924,
+      "count": 131
+     },
+     {
+      "token": " their",
+      "rate": 0.882,
+      "count": 221
+     },
+     {
+      "token": " But",
+      "rate": 0.813,
+      "count": 187
+     },
+     {
+      "token": " get",
+      "rate": 0.796,
+      "count": 108
+     },
+     {
+      "token": " They",
+      "rate": 0.779,
+      "count": 929
+     },
+     {
+      "token": " my",
+      "rate": 0.741,
+      "count": 116
+     },
+     {
+      "token": " his",
+      "rate": 0.725,
+      "count": 801
+     },
+     {
+      "token": "'s",
+      "rate": 0.71,
+      "count": 438
+     },
+     {
+      "token": " but",
+      "rate": 0.683,
+      "count": 344
+     },
+     {
+      "token": " go",
+      "rate": 0.673,
+      "count": 165
+     },
+     {
+      "token": " One",
+      "rate": 0.665,
+      "count": 179
+     }
+    ],
+    [
+     {
+      "token": " liked",
+      "rate": 0.983,
+      "count": 175
+     },
+     {
+      "token": " saw",
+      "rate": 0.972,
+      "count": 463
+     },
+     {
+      "token": " put",
+      "rate": 0.954,
+      "count": 131
+     },
+     {
+      "token": " loved",
+      "rate": 0.948,
+      "count": 212
+     },
+     {
+      "token": ".\n",
+      "rate": 0.918,
+      "count": 1208
+     },
+     {
+      "token": ".\"\n",
+      "rate": 0.874,
+      "count": 191
+     },
+     {
+      "token": ",\"",
+      "rate": 0.856,
+      "count": 118
+     },
+     {
+      "token": " found",
+      "rate": 0.844,
+      "count": 224
+     },
+     {
+      "token": "!",
+      "rate": 0.798,
+      "count": 357
+     },
+     {
+      "token": " at",
+      "rate": 0.774,
+      "count": 221
+     },
+     {
+      "token": " thought",
+      "rate": 0.701,
+      "count": 117
+     },
+     {
+      "token": " in",
+      "rate": 0.681,
+      "count": 744
+     }
+    ],
+    [
+     {
+      "token": " upon",
+      "rate": 0.539,
+      "count": 321
+     },
+     {
+      "token": ".\"",
+      "rate": 0.473,
+      "count": 203
+     },
+     {
+      "token": "!\"",
+      "rate": 0.43,
+      "count": 263
+     },
+     {
+      "token": "?\"",
+      "rate": 0.43,
+      "count": 142
+     },
+     {
+      "token": ".",
+      "rate": 0.364,
+      "count": 6681
+     },
+     {
+      "token": " away",
+      "rate": 0.326,
+      "count": 129
+     },
+     {
+      "token": " together",
+      "rate": 0.283,
+      "count": 272
+     },
+     {
+      "token": " out",
+      "rate": 0.243,
+      "count": 136
+     },
+     {
+      "token": " in",
+      "rate": 0.242,
+      "count": 744
+     },
+     {
+      "token": " find",
+      "rate": 0.241,
+      "count": 166
+     },
+     {
+      "token": " thought",
+      "rate": 0.239,
+      "count": 117
+     },
+     {
+      "token": " me",
+      "rate": 0.238,
+      "count": 126
+     }
+    ]
+   ]
+  },
+  {
+   "share": [
+    0.0953,
+    0.1646,
+    0.1094,
+    0.1208,
+    0.136,
+    0.1042,
+    0.131,
+    0.1386
+   ],
+   "first": [
+    0.0967,
+    0.1723,
+    0.0637,
+    0.1239,
+    0.1447,
+    0.0666,
+    0.1972,
+    0.1349
+   ],
+   "top_weight": 0.7253476977348328,
+   "by_token": 0.7229883074760437,
+   "by_token_baseline": 0.19722656905651093,
+   "by_previous": 0.1444215625524521,
+   "by_previous_baseline": 0.1409110277891159,
+   "favorites": [
+    [
+     {
+      "token": "<|endoftext|>",
+      "rate": 1.0,
+      "count": 520
+     },
+     {
+      "token": " sad",
+      "rate": 0.857,
+      "count": 223
+     },
+     {
+      "token": ",",
+      "rate": 0.786,
+      "count": 4417
+     },
+     {
+      "token": " good",
+      "rate": 0.684,
+      "count": 114
+     },
+     {
+      "token": " scared",
+      "rate": 0.25,
+      "count": 116
+     },
+     {
+      "token": " happy",
+      "rate": 0.243,
+      "count": 445
+     },
+     {
+      "token": " new",
+      "rate": 0.241,
+      "count": 137
+     },
+     {
+      "token": " my",
+      "rate": 0.181,
+      "count": 116
+     },
+     {
+      "token": " and",
+      "rate": 0.167,
+      "count": 3607
+     },
+     {
+      "token": " like",
+      "rate": 0.153,
+      "count": 157
+     },
+     {
+      "token": " very",
+      "rate": 0.143,
+      "count": 463
+     },
+     {
+      "token": " small",
+      "rate": 0.141,
+      "count": 149
+     }
+    ],
+    [
+     {
+      "token": " get",
+      "rate": 1.0,
+      "count": 108
+     },
+     {
+      "token": " started",
+      "rate": 0.988,
+      "count": 161
+     },
+     {
+      "token": " looked",
+      "rate": 0.967,
+      "count": 214
+     },
+     {
+      "token": " find",
+      "rate": 0.922,
+      "count": 166
+     },
+     {
+      "token": " is",
+      "rate": 0.89,
+      "count": 300
+     },
+     {
+      "token": " felt",
+      "rate": 0.884,
+      "count": 164
+     },
+     {
+      "token": " see",
+      "rate": 0.862,
+      "count": 123
+     },
+     {
+      "token": " go",
+      "rate": 0.855,
+      "count": 165
+     },
+     {
+      "token": " your",
+      "rate": 0.842,
+      "count": 101
+     },
+     {
+      "token": " have",
+      "rate": 0.819,
+      "count": 193
+     },
+     {
+      "token": " be",
+      "rate": 0.807,
+      "count": 233
+     },
+     {
+      "token": " their",
+      "rate": 0.783,
+      "count": 221
+     }
+    ],
+    [
+     {
+      "token": " named",
+      "rate": 0.932,
+      "count": 399
+     },
+     {
+      "token": " big",
+      "rate": 0.841,
+      "count": 648
+     },
+     {
+      "token": " small",
+      "rate": 0.812,
+      "count": 149
+     },
+     {
+      "token": " little",
+      "rate": 0.787,
+      "count": 461
+     },
+     {
+      "token": " time",
+      "rate": 0.769,
+      "count": 424
+     },
+     {
+      "token": " other",
+      "rate": 0.545,
+      "count": 123
+     },
+     {
+      "token": "'s",
+      "rate": 0.377,
+      "count": 438
+     },
+     {
+      "token": " came",
+      "rate": 0.352,
+      "count": 142
+     },
+     {
+      "token": " good",
+      "rate": 0.316,
+      "count": 114
+     },
+     {
+      "token": " my",
+      "rate": 0.233,
+      "count": 116
+     },
+     {
+      "token": " his",
+      "rate": 0.223,
+      "count": 801
+     },
+     {
+      "token": " her",
+      "rate": 0.215,
+      "count": 662
+     }
+    ],
+    [
+     {
+      "token": " around",
+      "rate": 0.993,
+      "count": 143
+     },
+     {
+      "token": " outside",
+      "rate": 0.982,
+      "count": 114
+     },
+     {
+      "token": " out",
+      "rate": 0.978,
+      "count": 136
+     },
+     {
+      "token": " down",
+      "rate": 0.973,
+      "count": 111
+     },
+     {
+      "token": " away",
+      "rate": 0.969,
+      "count": 129
+     },
+     {
+      "token": " on",
+      "rate": 0.927,
+      "count": 509
+     },
+     {
+      "token": " up",
+      "rate": 0.901,
+      "count": 203
+     },
+     {
+      "token": " when",
+      "rate": 0.88,
+      "count": 108
+     },
+     {
+      "token": " again",
+      "rate": 0.877,
+      "count": 122
+     },
+     {
+      "token": " tried",
+      "rate": 0.85,
+      "count": 113
+     },
+     {
+      "token": " help",
+      "rate": 0.835,
+      "count": 254
+     },
+     {
+      "token": " from",
+      "rate": 0.824,
+      "count": 131
+     }
+    ],
+    [
+     {
+      "token": " \"",
+      "rate": 0.989,
+      "count": 853
+     },
+     {
+      "token": " upon",
+      "rate": 0.963,
+      "count": 321
+     },
+     {
+      "token": " to",
+      "rate": 0.897,
+      "count": 2942
+     },
+     {
+      "token": " would",
+      "rate": 0.869,
+      "count": 153
+     },
+     {
+      "token": " can",
+      "rate": 0.845,
+      "count": 226
+     },
+     {
+      "token": " liked",
+      "rate": 0.817,
+      "count": 175
+     },
+     {
+      "token": ".\n",
+      "rate": 0.808,
+      "count": 1208
+     },
+     {
+      "token": " something",
+      "rate": 0.807,
+      "count": 145
+     },
+     {
+      "token": " loved",
+      "rate": 0.807,
+      "count": 212
+     },
+     {
+      "token": " we",
+      "rate": 0.776,
+      "count": 107
+     },
+     {
+      "token": " there",
+      "rate": 0.737,
+      "count": 396
+     },
+     {
+      "token": ".\"\n",
+      "rate": 0.691,
+      "count": 191
+     }
+    ],
+    [
+     {
+      "token": " said",
+      "rate": 1.0,
+      "count": 851
+     },
+     {
+      "token": "One",
+      "rate": 1.0,
+      "count": 296
+     },
+     {
+      "token": " One",
+      "rate": 1.0,
+      "count": 179
+     },
+     {
+      "token": " too",
+      "rate": 0.984,
+      "count": 188
+     },
+     {
+      "token": " so",
+      "rate": 0.914,
+      "count": 397
+     },
+     {
+      "token": " asked",
+      "rate": 0.86,
+      "count": 150
+     },
+     {
+      "token": " all",
+      "rate": 0.739,
+      "count": 333
+     },
+     {
+      "token": " very",
+      "rate": 0.698,
+      "count": 463
+     },
+     {
+      "token": " some",
+      "rate": 0.583,
+      "count": 103
+     },
+     {
+      "token": " who",
+      "rate": 0.34,
+      "count": 100
+     },
+     {
+      "token": " day",
+      "rate": 0.329,
+      "count": 837
+     },
+     {
+      "token": " thought",
+      "rate": 0.231,
+      "count": 117
+     }
+    ],
+    [
+     {
+      "token": " box",
+      "rate": 1.0,
+      "count": 119
+     },
+     {
+      "token": " ball",
+      "rate": 0.995,
+      "count": 217
+     },
+     {
+      "token": " girl",
+      "rate": 0.995,
+      "count": 216
+     },
+     {
+      "token": " him",
+      "rate": 0.977,
+      "count": 222
+     },
+     {
+      "token": " tree",
+      "rate": 0.975,
+      "count": 197
+     },
+     {
+      "token": " car",
+      "rate": 0.971,
+      "count": 104
+     },
+     {
+      "token": " Spot",
+      "rate": 0.971,
+      "count": 137
+     },
+     {
+      "token": " mom",
+      "rate": 0.963,
+      "count": 409
+     },
+     {
+      "token": " park",
+      "rate": 0.962,
+      "count": 182
+     },
+     {
+      "token": " bird",
+      "rate": 0.96,
+      "count": 354
+     },
+     {
+      "token": " friend",
+      "rate": 0.959,
+      "count": 195
+     },
+     {
+      "token": " It",
+      "rate": 0.958,
+      "count": 333
+     }
+    ],
+    [
+     {
+      "token": "Once",
+      "rate": 0.979,
+      "count": 333
+     },
+     {
+      "token": " play",
+      "rate": 0.976,
+      "count": 491
+     },
+     {
+      "token": " played",
+      "rate": 0.975,
+      "count": 240
+     },
+     {
+      "token": " But",
+      "rate": 0.973,
+      "count": 187
+     },
+     {
+      "token": " that",
+      "rate": 0.934,
+      "count": 485
+     },
+     {
+      "token": "!",
+      "rate": 0.924,
+      "count": 357
+     },
+     {
+      "token": " The",
+      "rate": 0.917,
+      "count": 904
+     },
+     {
+      "token": " a",
+      "rate": 0.897,
+      "count": 2822
+     },
+     {
+      "token": " then",
+      "rate": 0.88,
+      "count": 100
+     },
+     {
+      "token": " but",
+      "rate": 0.875,
+      "count": 344
+     },
+     {
+      "token": " playing",
+      "rate": 0.81,
+      "count": 142
+     },
+     {
+      "token": " fun",
+      "rate": 0.792,
+      "count": 221
+     }
+    ]
+   ]
+  },
+  {
+   "share": [
+    0.1423,
+    0.1114,
+    0.1523,
+    0.078,
+    0.1137,
+    0.1361,
+    0.1563,
+    0.1098
+   ],
+   "first": [
+    0.1379,
+    0.1089,
+    0.1711,
+    0.0856,
+    0.1181,
+    0.036,
+    0.2273,
+    0.1152
+   ],
+   "top_weight": 0.7364006042480469,
+   "by_token": 0.5998437404632568,
+   "by_token_baseline": 0.2273242175579071,
+   "by_previous": 0.3996274471282959,
+   "by_previous_baseline": 0.14764825999736786,
+   "favorites": [
+    [
+     {
+      "token": " with",
+      "rate": 0.809,
+      "count": 836
+     },
+     {
+      "token": " asked",
+      "rate": 0.727,
+      "count": 150
+     },
+     {
+      "token": " his",
+      "rate": 0.68,
+      "count": 801
+     },
+     {
+      "token": " her",
+      "rate": 0.601,
+      "count": 662
+     },
+     {
+      "token": " their",
+      "rate": 0.597,
+      "count": 221
+     },
+     {
+      "token": " at",
+      "rate": 0.561,
+      "count": 221
+     },
+     {
+      "token": " and",
+      "rate": 0.555,
+      "count": 3607
+     },
+     {
+      "token": " to",
+      "rate": 0.519,
+      "count": 2942
+     },
+     {
+      "token": " on",
+      "rate": 0.513,
+      "count": 509
+     },
+     {
+      "token": ",",
+      "rate": 0.482,
+      "count": 4417
+     },
+     {
+      "token": " help",
+      "rate": 0.445,
+      "count": 254
+     },
+     {
+      "token": " played",
+      "rate": 0.442,
+      "count": 240
+     }
+    ],
+    [
+     {
+      "token": " happy",
+      "rate": 0.975,
+      "count": 445
+     },
+     {
+      "token": " too",
+      "rate": 0.771,
+      "count": 188
+     },
+     {
+      "token": " fun",
+      "rate": 0.738,
+      "count": 221
+     },
+     {
+      "token": " sad",
+      "rate": 0.704,
+      "count": 223
+     },
+     {
+      "token": " park",
+      "rate": 0.61,
+      "count": 182
+     },
+     {
+      "token": " good",
+      "rate": 0.57,
+      "count": 114
+     },
+     {
+      "token": " outside",
+      "rate": 0.526,
+      "count": 114
+     },
+     {
+      "token": " a",
+      "rate": 0.522,
+      "count": 2822
+     },
+     {
+      "token": " little",
+      "rate": 0.514,
+      "count": 461
+     },
+     {
+      "token": " small",
+      "rate": 0.49,
+      "count": 149
+     },
+     {
+      "token": " tree",
+      "rate": 0.447,
+      "count": 197
+     },
+     {
+      "token": " an",
+      "rate": 0.41,
+      "count": 105
+     }
+    ],
+    [
+     {
+      "token": ".\"",
+      "rate": 0.911,
+      "count": 203
+     },
+     {
+      "token": " go",
+      "rate": 0.909,
+      "count": 165
+     },
+     {
+      "token": ".",
+      "rate": 0.844,
+      "count": 6681
+     },
+     {
+      "token": " me",
+      "rate": 0.81,
+      "count": 126
+     },
+     {
+      "token": " can",
+      "rate": 0.77,
+      "count": 226
+     },
+     {
+      "token": " be",
+      "rate": 0.768,
+      "count": 233
+     },
+     {
+      "token": " will",
+      "rate": 0.761,
+      "count": 113
+     },
+     {
+      "token": " make",
+      "rate": 0.714,
+      "count": 112
+     },
+     {
+      "token": " find",
+      "rate": 0.639,
+      "count": 166
+     },
+     {
+      "token": " could",
+      "rate": 0.624,
+      "count": 237
+     },
+     {
+      "token": " play",
+      "rate": 0.589,
+      "count": 491
+     },
+     {
+      "token": " you",
+      "rate": 0.585,
+      "count": 530
+     }
+    ],
+    [
+     {
+      "token": "I",
+      "rate": 1.0,
+      "count": 153
+     },
+     {
+      "token": "<|endoftext|>",
+      "rate": 1.0,
+      "count": 520
+     },
+     {
+      "token": "Once",
+      "rate": 0.997,
+      "count": 333
+     },
+     {
+      "token": " upon",
+      "rate": 0.997,
+      "count": 321
+     },
+     {
+      "token": " \"",
+      "rate": 0.842,
+      "count": 853
+     },
+     {
+      "token": " I",
+      "rate": 0.776,
+      "count": 392
+     },
+     {
+      "token": " are",
+      "rate": 0.737,
+      "count": 175
+     },
+     {
+      "token": " is",
+      "rate": 0.603,
+      "count": 300
+     },
+     {
+      "token": " want",
+      "rate": 0.547,
+      "count": 159
+     },
+     {
+      "token": " we",
+      "rate": 0.523,
+      "count": 107
+     },
+     {
+      "token": "!",
+      "rate": 0.434,
+      "count": 357
+     },
+     {
+      "token": "'t",
+      "rate": 0.341,
+      "count": 208
+     }
+    ],
+    [
+     {
+      "token": " started",
+      "rate": 1.0,
+      "count": 161
+     },
+     {
+      "token": " saw",
+      "rate": 0.968,
+      "count": 463
+     },
+     {
+      "token": " came",
+      "rate": 0.958,
+      "count": 142
+     },
+     {
+      "token": " went",
+      "rate": 0.924,
+      "count": 317
+     },
+     {
+      "token": " ran",
+      "rate": 0.916,
+      "count": 131
+     },
+     {
+      "token": " took",
+      "rate": 0.872,
+      "count": 117
+     },
+     {
+      "token": " found",
+      "rate": 0.808,
+      "count": 224
+     },
+     {
+      "token": " learned",
+      "rate": 0.802,
+      "count": 116
+     },
+     {
+      "token": " put",
+      "rate": 0.786,
+      "count": 131
+     },
+     {
+      "token": " made",
+      "rate": 0.782,
+      "count": 124
+     },
+     {
+      "token": " felt",
+      "rate": 0.78,
+      "count": 164
+     },
+     {
+      "token": " smiled",
+      "rate": 0.771,
+      "count": 118
+     }
+    ],
+    [
+     {
+      "token": " did",
+      "rate": 0.255,
+      "count": 259
+     },
+     {
+      "token": " but",
+      "rate": 0.233,
+      "count": 344
+     },
+     {
+      "token": " want",
+      "rate": 0.195,
+      "count": 159
+     },
+     {
+      "token": " smiled",
+      "rate": 0.178,
+      "count": 118
+     },
+     {
+      "token": " It",
+      "rate": 0.171,
+      "count": 333
+     },
+     {
+      "token": " had",
+      "rate": 0.162,
+      "count": 518
+     },
+     {
+      "token": " wanted",
+      "rate": 0.151,
+      "count": 392
+     },
+     {
+      "token": " do",
+      "rate": 0.145,
+      "count": 117
+     },
+     {
+      "token": " on",
+      "rate": 0.139,
+      "count": 509
+     },
+     {
+      "token": " The",
+      "rate": 0.138,
+      "count": 904
+     },
+     {
+      "token": " could",
+      "rate": 0.122,
+      "count": 237
+     },
+     {
+      "token": " it",
+      "rate": 0.116,
+      "count": 1123
+     }
+    ],
+    [
+     {
+      "token": " One",
+      "rate": 0.994,
+      "count": 179
+     },
+     {
+      "token": "One",
+      "rate": 0.986,
+      "count": 296
+     },
+     {
+      "token": ",\"",
+      "rate": 0.983,
+      "count": 118
+     },
+     {
+      "token": " She",
+      "rate": 0.961,
+      "count": 642
+     },
+     {
+      "token": " They",
+      "rate": 0.96,
+      "count": 929
+     },
+     {
+      "token": " thought",
+      "rate": 0.957,
+      "count": 117
+     },
+     {
+      "token": "The",
+      "rate": 0.952,
+      "count": 250
+     },
+     {
+      "token": " He",
+      "rate": 0.932,
+      "count": 1037
+     },
+     {
+      "token": "Tim",
+      "rate": 0.853,
+      "count": 116
+     },
+     {
+      "token": " said",
+      "rate": 0.816,
+      "count": 851
+     },
+     {
+      "token": ".\"\n",
+      "rate": 0.812,
+      "count": 191
+     },
+     {
+      "token": " But",
+      "rate": 0.791,
+      "count": 187
+     }
+    ],
+    [
+     {
+      "token": " toys",
+      "rate": 0.846,
+      "count": 104
+     },
+     {
+      "token": " what",
+      "rate": 0.765,
+      "count": 136
+     },
+     {
+      "token": " ball",
+      "rate": 0.756,
+      "count": 217
+     },
+     {
+      "token": " things",
+      "rate": 0.733,
+      "count": 116
+     },
+     {
+      "token": " that",
+      "rate": 0.707,
+      "count": 485
+     },
+     {
+      "token": " toy",
+      "rate": 0.599,
+      "count": 212
+     },
+     {
+      "token": " car",
+      "rate": 0.587,
+      "count": 104
+     },
+     {
+      "token": "s",
+      "rate": 0.581,
+      "count": 234
+     },
+     {
+      "token": " box",
+      "rate": 0.571,
+      "count": 119
+     },
+     {
+      "token": " when",
+      "rate": 0.472,
+      "count": 108
+     },
+     {
+      "token": " it",
+      "rate": 0.443,
+      "count": 1123
+     },
+     {
+      "token": " tree",
+      "rate": 0.396,
+      "count": 197
+     }
+    ]
+   ]
+  },
+  {
+   "share": [
+    0.096,
+    0.1222,
+    0.1664,
+    0.1362,
+    0.1119,
+    0.1295,
+    0.0758,
+    0.162
+   ],
+   "first": [
+    0.0417,
+    0.1451,
+    0.2209,
+    0.1085,
+    0.0441,
+    0.137,
+    0.081,
+    0.2217
+   ],
+   "top_weight": 0.7619326710700989,
+   "by_token": 0.7415820360183716,
+   "by_token_baseline": 0.22174805402755737,
+   "by_previous": 0.1669117659330368,
+   "by_previous_baseline": 0.15979671478271484,
+   "favorites": [
+    [
+     {
+      "token": "<|endoftext|>",
+      "rate": 1.0,
+      "count": 520
+     },
+     {
+      "token": " upon",
+      "rate": 0.997,
+      "count": 321
+     },
+     {
+      "token": "Once",
+      "rate": 0.994,
+      "count": 333
+     },
+     {
+      "token": " day",
+      "rate": 0.116,
+      "count": 837
+     },
+     {
+      "token": "Tim",
+      "rate": 0.112,
+      "count": 116
+     },
+     {
+      "token": " we",
+      "rate": 0.103,
+      "count": 107
+     },
+     {
+      "token": " me",
+      "rate": 0.079,
+      "count": 126
+     },
+     {
+      "token": ",",
+      "rate": 0.055,
+      "count": 4417
+     },
+     {
+      "token": "s",
+      "rate": 0.047,
+      "count": 234
+     },
+     {
+      "token": "ed",
+      "rate": 0.041,
+      "count": 123
+     },
+     {
+      "token": "!",
+      "rate": 0.028,
+      "count": 357
+     },
+     {
+      "token": " time",
+      "rate": 0.024,
+      "count": 424
+     }
+    ],
+    [
+     {
+      "token": " who",
+      "rate": 1.0,
+      "count": 100
+     },
+     {
+      "token": " They",
+      "rate": 0.998,
+      "count": 929
+     },
+     {
+      "token": "I",
+      "rate": 0.993,
+      "count": 153
+     },
+     {
+      "token": " It",
+      "rate": 0.988,
+      "count": 333
+     },
+     {
+      "token": " She",
+      "rate": 0.95,
+      "count": 642
+     },
+     {
+      "token": " He",
+      "rate": 0.943,
+      "count": 1037
+     },
+     {
+      "token": " she",
+      "rate": 0.926,
+      "count": 365
+     },
+     {
+      "token": " I",
+      "rate": 0.926,
+      "count": 392
+     },
+     {
+      "token": " \"",
+      "rate": 0.918,
+      "count": 853
+     },
+     {
+      "token": " would",
+      "rate": 0.902,
+      "count": 153
+     },
+     {
+      "token": " they",
+      "rate": 0.898,
+      "count": 528
+     },
+     {
+      "token": " could",
+      "rate": 0.869,
+      "count": 237
+     }
+    ],
+    [
+     {
+      "token": " smiled",
+      "rate": 1.0,
+      "count": 118
+     },
+     {
+      "token": " again",
+      "rate": 1.0,
+      "count": 122
+     },
+     {
+      "token": " together",
+      "rate": 0.993,
+      "count": 272
+     },
+     {
+      "token": " ran",
+      "rate": 0.992,
+      "count": 131
+     },
+     {
+      "token": " outside",
+      "rate": 0.991,
+      "count": 114
+     },
+     {
+      "token": " played",
+      "rate": 0.979,
+      "count": 240
+     },
+     {
+      "token": " park",
+      "rate": 0.978,
+      "count": 182
+     },
+     {
+      "token": " home",
+      "rate": 0.972,
+      "count": 142
+     },
+     {
+      "token": " down",
+      "rate": 0.955,
+      "count": 111
+     },
+     {
+      "token": " scared",
+      "rate": 0.948,
+      "count": 116
+     },
+     {
+      "token": " sad",
+      "rate": 0.946,
+      "count": 223
+     },
+     {
+      "token": " play",
+      "rate": 0.941,
+      "count": 491
+     }
+    ],
+    [
+     {
+      "token": " tried",
+      "rate": 1.0,
+      "count": 113
+     },
+     {
+      "token": " wanted",
+      "rate": 0.992,
+      "count": 392
+     },
+     {
+      "token": " have",
+      "rate": 0.99,
+      "count": 193
+     },
+     {
+      "token": " learned",
+      "rate": 0.983,
+      "count": 116
+     },
+     {
+      "token": " put",
+      "rate": 0.969,
+      "count": 131
+     },
+     {
+      "token": " had",
+      "rate": 0.958,
+      "count": 518
+     },
+     {
+      "token": " want",
+      "rate": 0.937,
+      "count": 159
+     },
+     {
+      "token": " started",
+      "rate": 0.907,
+      "count": 161
+     },
+     {
+      "token": " found",
+      "rate": 0.812,
+      "count": 224
+     },
+     {
+      "token": " time",
+      "rate": 0.804,
+      "count": 424
+     },
+     {
+      "token": " find",
+      "rate": 0.789,
+      "count": 166
+     },
+     {
+      "token": " liked",
+      "rate": 0.783,
+      "count": 175
+     }
+    ],
+    [
+     {
+      "token": " his",
+      "rate": 0.894,
+      "count": 801
+     },
+     {
+      "token": " their",
+      "rate": 0.86,
+      "count": 221
+     },
+     {
+      "token": " her",
+      "rate": 0.85,
+      "count": 662
+     },
+     {
+      "token": " my",
+      "rate": 0.767,
+      "count": 116
+     },
+     {
+      "token": " your",
+      "rate": 0.713,
+      "count": 101
+     },
+     {
+      "token": " friend",
+      "rate": 0.585,
+      "count": 195
+     },
+     {
+      "token": "'s",
+      "rate": 0.543,
+      "count": 438
+     },
+     {
+      "token": " girl",
+      "rate": 0.454,
+      "count": 216
+     },
+     {
+      "token": " named",
+      "rate": 0.439,
+      "count": 399
+     },
+     {
+      "token": " from",
+      "rate": 0.42,
+      "count": 131
+     },
+     {
+      "token": " boy",
+      "rate": 0.319,
+      "count": 226
+     },
+     {
+      "token": " toy",
+      "rate": 0.297,
+      "count": 212
+     }
+    ],
+    [
+     {
+      "token": " The",
+      "rate": 0.998,
+      "count": 904
+     },
+     {
+      "token": "One",
+      "rate": 0.997,
+      "count": 296
+     },
+     {
+      "token": "The",
+      "rate": 0.996,
+      "count": 250
+     },
+     {
+      "token": " One",
+      "rate": 0.989,
+      "count": 179
+     },
+     {
+      "token": " a",
+      "rate": 0.97,
+      "count": 2822
+     },
+     {
+      "token": " some",
+      "rate": 0.961,
+      "count": 103
+     },
+     {
+      "token": " little",
+      "rate": 0.954,
+      "count": 461
+     },
+     {
+      "token": " big",
+      "rate": 0.92,
+      "count": 648
+     },
+     {
+      "token": " small",
+      "rate": 0.893,
+      "count": 149
+     },
+     {
+      "token": " new",
+      "rate": 0.891,
+      "count": 137
+     },
+     {
+      "token": " the",
+      "rate": 0.871,
+      "count": 3906
+     },
+     {
+      "token": " an",
+      "rate": 0.857,
+      "count": 105
+     }
+    ],
+    [
+     {
+      "token": " felt",
+      "rate": 1.0,
+      "count": 164
+     },
+     {
+      "token": " be",
+      "rate": 1.0,
+      "count": 233
+     },
+     {
+      "token": " was",
+      "rate": 0.977,
+      "count": 2147
+     },
+     {
+      "token": " were",
+      "rate": 0.938,
+      "count": 339
+     },
+     {
+      "token": " very",
+      "rate": 0.883,
+      "count": 463
+     },
+     {
+      "token": " is",
+      "rate": 0.867,
+      "count": 300
+     },
+     {
+      "token": " are",
+      "rate": 0.857,
+      "count": 175
+     },
+     {
+      "token": " looked",
+      "rate": 0.804,
+      "count": 214
+     },
+     {
+      "token": " so",
+      "rate": 0.64,
+      "count": 397
+     },
+     {
+      "token": " something",
+      "rate": 0.586,
+      "count": 145
+     },
+     {
+      "token": " named",
+      "rate": 0.559,
+      "count": 399
+     },
+     {
+      "token": " go",
+      "rate": 0.503,
+      "count": 165
+     }
+    ],
+    [
+     {
+      "token": "!\"",
+      "rate": 1.0,
+      "count": 263
+     },
+     {
+      "token": " But",
+      "rate": 1.0,
+      "count": 187
+     },
+     {
+      "token": ".\"",
+      "rate": 1.0,
+      "count": 203
+     },
+     {
+      "token": " what",
+      "rate": 0.993,
+      "count": 136
+     },
+     {
+      "token": ",\"",
+      "rate": 0.992,
+      "count": 118
+     },
+     {
+      "token": " at",
+      "rate": 0.991,
+      "count": 221
+     },
+     {
+      "token": ".",
+      "rate": 0.988,
+      "count": 6681
+     },
+     {
+      "token": " in",
+      "rate": 0.981,
+      "count": 744
+     },
+     {
+      "token": "?\"",
+      "rate": 0.979,
+      "count": 142
+     },
+     {
+      "token": "!",
+      "rate": 0.966,
+      "count": 357
+     },
+     {
+      "token": " took",
+      "rate": 0.949,
+      "count": 117
+     },
+     {
+      "token": " but",
+      "rate": 0.904,
+      "count": 344
+     }
+    ]
+   ]
+  },
+  {
+   "share": [
+    0.1247,
+    0.2214,
+    0.1151,
+    0.166,
+    0.0889,
+    0.0999,
+    0.0885,
+    0.0954
+   ],
+   "first": [
+    0.1345,
+    0.2341,
+    0.1143,
+    0.1668,
+    0.0781,
+    0.0926,
+    0.0742,
+    0.1054
+   ],
+   "top_weight": 0.7371881604194641,
+   "by_token": 0.5496484637260437,
+   "by_token_baseline": 0.234130859375,
+   "by_previous": 0.3079705834388733,
+   "by_previous_baseline": 0.14507269859313965,
+   "favorites": [
+    [
+     {
+      "token": " named",
+      "rate": 0.995,
+      "count": 399
+     },
+     {
+      "token": " \"",
+      "rate": 0.933,
+      "count": 853
+     },
+     {
+      "token": " were",
+      "rate": 0.867,
+      "count": 339
+     },
+     {
+      "token": ",",
+      "rate": 0.796,
+      "count": 4417
+     },
+     {
+      "token": " very",
+      "rate": 0.715,
+      "count": 463
+     },
+     {
+      "token": " was",
+      "rate": 0.667,
+      "count": 2147
+     },
+     {
+      "token": " played",
+      "rate": 0.608,
+      "count": 240
+     },
+     {
+      "token": " when",
+      "rate": 0.565,
+      "count": 108
+     },
+     {
+      "token": " felt",
+      "rate": 0.537,
+      "count": 164
+     },
+     {
+      "token": " so",
+      "rate": 0.509,
+      "count": 397
+     },
+     {
+      "token": " But",
+      "rate": 0.369,
+      "count": 187
+     },
+     {
+      "token": " are",
+      "rate": 0.354,
+      "count": 175
+     }
+    ],
+    [
+     {
+      "token": " thought",
+      "rate": 0.915,
+      "count": 117
+     },
+     {
+      "token": " put",
+      "rate": 0.893,
+      "count": 131
+     },
+     {
+      "token": " saw",
+      "rate": 0.883,
+      "count": 463
+     },
+     {
+      "token": " loved",
+      "rate": 0.877,
+      "count": 212
+     },
+     {
+      "token": " wanted",
+      "rate": 0.821,
+      "count": 392
+     },
+     {
+      "token": " took",
+      "rate": 0.795,
+      "count": 117
+     },
+     {
+      "token": " learned",
+      "rate": 0.767,
+      "count": 116
+     },
+     {
+      "token": " what",
+      "rate": 0.757,
+      "count": 136
+     },
+     {
+      "token": " see",
+      "rate": 0.707,
+      "count": 123
+     },
+     {
+      "token": " made",
+      "rate": 0.677,
+      "count": 124
+     },
+     {
+      "token": " on",
+      "rate": 0.65,
+      "count": 509
+     },
+     {
+      "token": " liked",
+      "rate": 0.634,
+      "count": 175
+     }
+    ],
+    [
+     {
+      "token": " an",
+      "rate": 0.886,
+      "count": 105
+     },
+     {
+      "token": " had",
+      "rate": 0.747,
+      "count": 518
+     },
+     {
+      "token": " have",
+      "rate": 0.746,
+      "count": 193
+     },
+     {
+      "token": " is",
+      "rate": 0.737,
+      "count": 300
+     },
+     {
+      "token": " did",
+      "rate": 0.71,
+      "count": 259
+     },
+     {
+      "token": " be",
+      "rate": 0.7,
+      "count": 233
+     },
+     {
+      "token": " are",
+      "rate": 0.646,
+      "count": 175
+     },
+     {
+      "token": " make",
+      "rate": 0.616,
+      "count": 112
+     },
+     {
+      "token": " do",
+      "rate": 0.513,
+      "count": 117
+     },
+     {
+      "token": " want",
+      "rate": 0.497,
+      "count": 159
+     },
+     {
+      "token": " like",
+      "rate": 0.49,
+      "count": 157
+     },
+     {
+      "token": " get",
+      "rate": 0.454,
+      "count": 108
+     }
+    ],
+    [
+     {
+      "token": "?\"",
+      "rate": 1.0,
+      "count": 142
+     },
+     {
+      "token": " smiled",
+      "rate": 1.0,
+      "count": 118
+     },
+     {
+      "token": ",\"",
+      "rate": 0.992,
+      "count": 118
+     },
+     {
+      "token": "!\"",
+      "rate": 0.981,
+      "count": 263
+     },
+     {
+      "token": ".\"",
+      "rate": 0.966,
+      "count": 203
+     },
+     {
+      "token": " ran",
+      "rate": 0.817,
+      "count": 131
+     },
+     {
+      "token": " looked",
+      "rate": 0.79,
+      "count": 214
+     },
+     {
+      "token": " happy",
+      "rate": 0.778,
+      "count": 445
+     },
+     {
+      "token": " sad",
+      "rate": 0.776,
+      "count": 223
+     },
+     {
+      "token": "Tim",
+      "rate": 0.759,
+      "count": 116
+     },
+     {
+      "token": " outside",
+      "rate": 0.719,
+      "count": 114
+     },
+     {
+      "token": " around",
+      "rate": 0.706,
+      "count": 143
+     }
+    ],
+    [
+     {
+      "token": ".\"\n",
+      "rate": 1.0,
+      "count": 191
+     },
+     {
+      "token": "<|endoftext|>",
+      "rate": 1.0,
+      "count": 520
+     },
+     {
+      "token": " upon",
+      "rate": 0.997,
+      "count": 321
+     },
+     {
+      "token": ".\n",
+      "rate": 0.993,
+      "count": 1208
+     },
+     {
+      "token": " One",
+      "rate": 0.972,
+      "count": 179
+     },
+     {
+      "token": "One",
+      "rate": 0.956,
+      "count": 296
+     },
+     {
+      "token": "I",
+      "rate": 0.902,
+      "count": 153
+     },
+     {
+      "token": " I",
+      "rate": 0.804,
+      "count": 392
+     },
+     {
+      "token": " we",
+      "rate": 0.579,
+      "count": 107
+     },
+     {
+      "token": "The",
+      "rate": 0.568,
+      "count": 250
+     },
+     {
+      "token": " the",
+      "rate": 0.551,
+      "count": 3906
+     },
+     {
+      "token": " The",
+      "rate": 0.393,
+      "count": 904
+     }
+    ],
+    [
+     {
+      "token": " will",
+      "rate": 0.85,
+      "count": 113
+     },
+     {
+      "token": " time",
+      "rate": 0.811,
+      "count": 424
+     },
+     {
+      "token": " said",
+      "rate": 0.745,
+      "count": 851
+     },
+     {
+      "token": " then",
+      "rate": 0.68,
+      "count": 100
+     },
+     {
+      "token": " day",
+      "rate": 0.674,
+      "count": 837
+     },
+     {
+      "token": " can",
+      "rate": 0.522,
+      "count": 226
+     },
+     {
+      "token": " me",
+      "rate": 0.5,
+      "count": 126
+     },
+     {
+      "token": " you",
+      "rate": 0.475,
+      "count": 530
+     },
+     {
+      "token": " go",
+      "rate": 0.436,
+      "count": 165
+     },
+     {
+      "token": " friend",
+      "rate": 0.415,
+      "count": 195
+     },
+     {
+      "token": " to",
+      "rate": 0.329,
+      "count": 2942
+     },
+     {
+      "token": "!",
+      "rate": 0.328,
+      "count": 357
+     }
+    ],
+    [
+     {
+      "token": " there",
+      "rate": 0.803,
+      "count": 396
+     },
+     {
+      "token": " little",
+      "rate": 0.759,
+      "count": 461
+     },
+     {
+      "token": " boy",
+      "rate": 0.69,
+      "count": 226
+     },
+     {
+      "token": " girl",
+      "rate": 0.657,
+      "count": 216
+     },
+     {
+      "token": " small",
+      "rate": 0.51,
+      "count": 149
+     },
+     {
+      "token": " big",
+      "rate": 0.435,
+      "count": 648
+     },
+     {
+      "token": " toy",
+      "rate": 0.401,
+      "count": 212
+     },
+     {
+      "token": " went",
+      "rate": 0.401,
+      "count": 317
+     },
+     {
+      "token": " Spot",
+      "rate": 0.394,
+      "count": 137
+     },
+     {
+      "token": " came",
+      "rate": 0.387,
+      "count": 142
+     },
+     {
+      "token": " Tim",
+      "rate": 0.377,
+      "count": 787
+     },
+     {
+      "token": " dog",
+      "rate": 0.354,
+      "count": 229
+     }
+    ],
+    [
+     {
+      "token": " their",
+      "rate": 1.0,
+      "count": 221
+     },
+     {
+      "token": " my",
+      "rate": 1.0,
+      "count": 116
+     },
+     {
+      "token": " your",
+      "rate": 1.0,
+      "count": 101
+     },
+     {
+      "token": " his",
+      "rate": 0.998,
+      "count": 801
+     },
+     {
+      "token": "Once",
+      "rate": 0.997,
+      "count": 333
+     },
+     {
+      "token": " new",
+      "rate": 0.883,
+      "count": 137
+     },
+     {
+      "token": " her",
+      "rate": 0.84,
+      "count": 662
+     },
+     {
+      "token": " a",
+      "rate": 0.588,
+      "count": 2822
+     },
+     {
+      "token": "'s",
+      "rate": 0.58,
+      "count": 438
+     },
+     {
+      "token": " could",
+      "rate": 0.553,
+      "count": 237
+     },
+     {
+      "token": " good",
+      "rate": 0.509,
+      "count": 114
+     },
+     {
+      "token": " some",
+      "rate": 0.485,
+      "count": 103
+     }
+    ]
+   ]
+  }
+ ]
+}
