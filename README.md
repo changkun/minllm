@@ -9,8 +9,9 @@ format that other tools run.
 
 These ten stages are the pipeline, and each builds on the one before. Side
 topics branch off a single stage for whoever wants to go further there: a
-mixture of experts in place of the model's MLP, and quantization of the
-exported file. The pipeline does not depend on them.
+mixture of experts in place of the model's MLP, distillation from a larger
+model during pretraining, and quantization of the exported file. The
+pipeline does not depend on them.
 
 ![The ten stages of the pipeline, and the side topics that branch off them](docs/figures/pipeline.svg)
 
@@ -46,6 +47,7 @@ its own.
 | | Side topic | Branches from | What it adds |
 |---|---|---|---|
 | 2a | [Mixture of experts](docs/02a-moe.md) | 2, the model | A router and eight expert MLPs in place of the MLP of every block, the load-balancing loss, three ways to hand tokens to experts, and a look at what the routers learn |
+| 3a | [Distillation](docs/03a-distillation.md) | 3, pretraining | A second model as a teacher in the training loop: the student learns from the teacher's whole prediction at every position, and not only from the token that came next |
 | 10a | [Quantization](docs/10a-quantization.md) | 10, the export | Weights as 4-bit or 8-bit codes with a scale and an offset per group, what each bit width costs in loss and on the task, and a packed file that MLX runs as it is |
 
 ## What came out
@@ -72,6 +74,7 @@ From the side topics:
 | Side topic | Result |
 |---|---|
 | 2a | A mixture of eight experts per block, two of them active, has the dense model's arithmetic per token and three times its parameters. Step for step it learns more: a validation loss of 1.423 against 1.465 after 6,000 steps. Minute for minute it learns less: 1.491 against 1.465 after 20 minutes. Without the load-balancing loss, 24 of its 64 experts go unused. On this GPU it generates at a sixth of the speed of a dense model with the same parameters, and the gap closes as the models get wider. Exported, it loads as a Mixtral and gives the same logits. |
+| 3a | Taught by a 42M model of the same kind, the 14M model of stage 3 ends at a validation loss of 1.418 where the text alone gave 1.465, and the teacher has 1.387: 60% of the way, with no change to the model. Taught by the teacher alone, without ever being told which token came next, it reaches 1.445. A step with a teacher takes 1.7 times as long, and given the same 20 minutes the text alone still wins, 1.465 against 1.481. |
 | 10a | Stored at 8 bits per weight, the 0.5B model is half the size and solves as many GSM8K problems as before (47.3% against 46.8%), and at 6 bits still as many. At 4 bits, in 278 MB, it solves 31.9%, while its replies read as fluently as ever and its held-out loss only rises from 0.83 to 0.92. This repository's own code runs the packed model 14 times slower. MLX reads the same file and runs it 2.1 times faster, in a third of the memory. |
 
 ## Quick start
@@ -117,6 +120,9 @@ And the side topics:
 ```sh
 uv run scripts/train.py --n-experts 8 --mlp-dim 512 --out out/moe  # 2a, 31 minutes
 uv run scripts/analyze_moe.py
+
+uv run scripts/train.py --mlp-dim 4096 --out out/wide              # 3a: a teacher, 38 minutes
+uv run scripts/train.py --teacher out/wide --out out/distilled     # and its student, 34 minutes
 
 uv run scripts/quantize.py --model qwen --bits 4        # 10a: 988 MB become 278
 uv run scripts/evaluate.py --model out/qwen-q4 --task gsm8k
