@@ -7,7 +7,7 @@
 // them: links are rewritten here, and the interactive figures are placed by
 // src/labs.mjs.
 
-import { cpSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import MarkdownIt from "markdown-it";
@@ -106,6 +106,6 @@ cpSync(join(root, "runs"), join(dist, "runs"), { recursive: true }); // what the
 cpSync(join(here, "public"), dist, { recursive: true }); // files served as they are: the tokenizer of stage 1
 cpSync(join(here, "src", "style.css"), join(dist, "assets", "style.css"));
 cpSync(join(here, "src", "site.js"), join(dist, "assets", "site.js"));
-cpSync(join(here, "src", "labs"), join(dist, "assets", "labs"), { recursive: true });
+if (existsSync(join(here, "src", "labs"))) cpSync(join(here, "src", "labs"), join(dist, "assets", "labs"), { recursive: true });
 
 console.log(`built ${Object.keys(notes).length} notes and ${labs.length} interactive figures into ${dist}, ${readdirSync(join(dist, "figures")).length} figures`);
