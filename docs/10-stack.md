@@ -139,6 +139,7 @@ several requests share.
 | 7 Evaluation | `evaluate.py`, `tasks.py` | `lm-evaluation-harness`, Inspect |
 | 8 RLHF | `reward.py`, `scripts/ppo.py`, `scripts/dpo.py` | `trl` (`DPOTrainer`, reward modeling), OpenRLHF |
 | 9 RLVR | `rl.py`, `scripts/grpo.py` | verl, OpenRLHF, `trl`'s `GRPOTrainer` |
+| 9a Self-training | `selftrain.py`, `scripts/self_train.py` | no library of its own: an inference engine for the samples, a filter, and the fine-tuning of stage 6 |
 | 10 Serving | `scripts/serve.py` | vLLM, an OpenAI-compatible endpoint |
 | 10a Quantization | `quantize.py` | llama.cpp's GGUF files, `mlx_lm.convert -q`, bitsandbytes; GPTQ and AWQ for smarter rounding |
 

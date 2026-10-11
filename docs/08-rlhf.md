@@ -155,7 +155,10 @@ is used.
 ### Policy gradient
 
 Rejection sampling pays at every request. The alternative is to change the
-model so that it writes the better story the first time.
+model so that it writes the better story the first time. The plainest way
+to do that is to fine-tune on the stories that were selected. The side topic
+[9a](09a-self-training.md) does it, with a program as the judge. This stage
+goes on with the policy gradient.
 
 The language model is a *policy*: the text so far is the state, the next
 token is the action. `minllm/rl.py` holds the loop. Let the model write, score

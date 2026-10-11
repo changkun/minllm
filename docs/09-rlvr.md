@@ -263,5 +263,8 @@ part of what is discussed as recursive self-improvement. Two results of this
 stage bound such a loop. The model learns only from prompts that it solves
 some of the time, so the loop does not reach what the model never gets
 right. And the policy is optimized against the check as written, so the loop
-is no better than its verifier. The other mechanism that the term covers, a
-model taught by a model, is the side topic [3a](03a-distillation.md).
+is no better than its verifier. The side topic [9a](09a-self-training.md)
+runs the simplest loop of this kind for several rounds: keep the model's
+right answers, fine-tune on them, and ask again. The other mechanism that the
+term covers, a model taught by a model, is the side topic
+[3a](03a-distillation.md).
