@@ -136,6 +136,7 @@ several requests share.
 | 9 RLVR | `rl.py`, `scripts/grpo.py` | verl, OpenRLHF, `trl`'s `GRPOTrainer` |
 | 10 Serving | `scripts/serve.py` | vLLM, an OpenAI-compatible endpoint |
 | 11 Mixture of experts | `MoE` in `model.py` | the Mixtral, Qwen3-MoE and DeepSeek classes of `transformers`; grouped kernels for the experts in training frameworks |
+| 12 Quantization | `quantize.py` | llama.cpp's GGUF files, `mlx_lm.convert -q`, bitsandbytes; GPTQ and AWQ for smarter rounding |
 
 The libraries add scale, coverage and years of fixed bugs. They do not add
 ideas: every row computes what its left column computes.
