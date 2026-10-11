@@ -32,6 +32,9 @@ def download(dir=DIR, repo=REPO):
 # ---------------------------------------------------------------- weights
 
 DTYPES = {"F32": torch.float32, "F16": torch.float16, "BF16": torch.bfloat16, "I64": torch.int64}
+# The packed words of a quantized model are unsigned 32-bit integers. PyTorch
+# computes with signed ones only, so they are read as int32: the same bits.
+DTYPES |= {"U32": torch.int32}
 
 
 def read_safetensors(path):
