@@ -267,3 +267,7 @@ The loop is the same at any scale. What changes around it:
 
 Large pretraining runs typically use a custom loop like this one. Hugging Face
 `Trainer` and `accelerate` wrap the same steps, mostly for fine-tuning.
+
+The side topic [3a](03a-distillation.md) runs this loop with a second model
+as a teacher: the student learns from the teacher's predictions and not only
+from the text.

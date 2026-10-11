@@ -132,6 +132,7 @@ several requests share.
 | 2 Model | `model.py` | the model classes of `transformers` |
 | 2a Mixture of experts | `MoE` in `model.py` | the Mixtral, Qwen3-MoE and DeepSeek classes of `transformers`; grouped kernels for the experts in training frameworks |
 | 3 Pretraining | `scripts/train.py` | custom loops over many GPUs, with `accelerate` or plain PyTorch; `datasets` for the data |
+| 3a Distillation | `distill.py`, `train.py --teacher` | a distillation loss in a custom loop; more often, fine-tuning on text that a larger model wrote |
 | 4 Inference | `inference.py` | vLLM, llama.cpp, MLX, TGI |
 | 5 Pretrained weights | `pretrained.py` | `from_pretrained`, the Hugging Face Hub, `safetensors` |
 | 6 Fine-tuning | `scripts/finetune.py`, `lora.py` | `peft`, `trl`'s `SFTTrainer`, Unsloth |
