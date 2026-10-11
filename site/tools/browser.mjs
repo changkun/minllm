@@ -59,7 +59,7 @@ export async function browser() {
       errors: () => thrown.filter(([session]) => session === sessionId).map(([, text]) => text),
       // The page as it is drawn now, as the bytes of a PNG.
       async picture() {
-        return Buffer.from((await call("Page.captureScreenshot", { format: "png" })).data, "base64");
+        return Buffer.from((await call("Page.captureScreenshot", { format: "png", optimizeForSpeed: true })).data, "base64"); // larger, and made twice as fast
       },
     };
   }
