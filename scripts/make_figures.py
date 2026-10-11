@@ -852,11 +852,28 @@ def rlvr_words():
     )
 
 
+def rlvr_gsm8k():
+    runs = [("GRPO from the fine-tuned model", "s1", "runs/rlvr/grpo-gsm8k.jsonl")]
+    panels = [
+        ("reward", "Sampled replies that are right, during training", (0, 0.8), lambda t: f"{t:.0%}"),
+        ("informative_groups", "Groups in which the replies differ in reward", (0, 1), lambda t: f"{t:.0%}"),
+    ]
+    rlvr_curves("rlvr-gsm8k", "The 0.5B model on GSM8K", "60 iterations of 8 problems with 8 replies each. The verifier compares the final number.", runs, "Problems solved", panels)
+
+    fig = Figure(720, 232, "GSM8K test problems solved", "1,319 problems, greedy replies, with 95% confidence intervals. GRPO saw 480 training problems and no solutions.")
+    rows = []
+    for label, name in [("0.5B as published", "gsm8k-qwen"), ("fine-tuned on solutions", "gsm8k-sft-gsm8k-lora"), ("then 22 minutes of GRPO", "gsm8k-grpo-gsm8k")]:
+        r = load(f"runs/eval/{name}.json")
+        rows.append((label, r["mean"], r["error"]))
+    scored_bars(fig, 220, 84, 330, rows, 0.6, lambda v: f"{v:.1%}")
+    fig.save("rlvr-gsm8k-test")
+
+
 # ---------------------------------------------------------------------- readme
 
 
 def pipeline(done):
-    fig = Figure(720, 250, "The pipeline", "Ten stages, each with a note, code and tests. Filled stages are built.")
+    fig = Figure(720, 250, "The pipeline", "Ten stages, each with a note, code and tests.")
     rows = [
         ("From scratch: a 14M model, trained here", [(1, "Tokenizer"), (2, "Model"), (3, "Pretraining"), (4, "Inference")]),
         ("Post-training: that model, and an open 0.5B one", [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
@@ -902,4 +919,6 @@ if os.path.exists("runs/rlhf/dpo.jsonl"):
     rlhf_comparison()
 if os.path.exists("runs/rlvr/grpo-words-finish.jsonl"):
     rlvr_words()
-pipeline(done={1, 2, 3, 4, 5})
+if os.path.exists("runs/rlvr/grpo-gsm8k.jsonl"):
+    rlvr_gsm8k()
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
