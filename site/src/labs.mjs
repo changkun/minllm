@@ -10,5 +10,6 @@ export const labs = [
   { note: "03a-distillation", after: "distill-targets.svg", name: "temperature", title: "Turn the teacher's temperature" },
   { note: "04-inference", before: "the-cache", name: "sampling", title: "Turn the three knobs of sampling" },
   { note: "04-inference", after: "inference-work.svg", name: "cache", title: "Count the work, token by token" },
+  { note: "07-evaluation", before: "results", name: "bootstrap", title: "Resample the real scores" },
   { note: "10a-quantization", after: "quant-levels.svg", name: "quantize", title: "Round this row yourself" },
 ];
