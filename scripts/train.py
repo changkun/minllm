@@ -7,7 +7,7 @@ token, nudge the weights to make the right token more likely. Repeat.
     uv run scripts/train.py --steps 200 --dim 128 --n-layers 2 --out out/debug
     uv run scripts/train.py --n-experts 8 --mlp-dim 512 --out out/moe    # a mixture of experts
 
-See docs/03-pretraining.md, and docs/11-moe.md for the mixture of experts.
+See docs/03-pretraining.md, and docs/02a-moe.md for the mixture of experts.
 """
 
 import argparse

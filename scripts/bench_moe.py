@@ -7,7 +7,7 @@ dense model with the same total.
     uv run scripts/bench_moe.py --scale 2 --only generate    # generation with models twice as wide
 
 Writes runs/bench/moe-<device>.json, or moe-<device>-x2.json for a scale of
-2, which docs/11-moe.md quotes.
+2, which docs/02a-moe.md quotes.
 """
 
 import argparse

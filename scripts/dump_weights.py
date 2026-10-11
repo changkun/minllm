@@ -1,5 +1,5 @@
 """
-Save one row of a weight matrix, for the figure of docs/12-quantization.md
+Save one row of a weight matrix, for the figure of docs/10a-quantization.md
 that shows what rounding to 16 values does to it.
 
     uv run scripts/dump_weights.py            # Qwen, writes runs/quant/row.json

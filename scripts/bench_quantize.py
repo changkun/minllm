@@ -7,7 +7,7 @@ and in MLX, which multiplies with them as they are.
     uv run scripts/quantize.py --model qwen --bits 4 && uv run scripts/export.py --model out/qwen-q4
     uv run --with mlx-lm scripts/bench_quantize.py
 
-Writes runs/bench/quant-<device>.json, which docs/12-quantization.md quotes.
+Writes runs/bench/quant-<device>.json, which docs/10a-quantization.md quotes.
 mlx-lm is installed for this command only.
 """
 

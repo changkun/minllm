@@ -124,7 +124,7 @@ class MoE(nn.Module):
     A mixture of experts in place of the MLP: n_experts MLPs, of which each
     token uses only the n_active that a router picks for it. The block holds
     n_experts MLPs of parameters and spends n_active MLPs of compute per
-    token. See docs/11-moe.md.
+    token. See docs/02a-moe.md.
     """
 
     def __init__(self, cfg):

@@ -6,7 +6,7 @@ token's identity decides, and which tokens each expert gets.
     uv run scripts/analyze_moe.py                            # out/moe
     uv run scripts/analyze_moe.py --model out/moe-no-balance --out runs/moe/routing-no-balance.json
 
-See docs/11-moe.md.
+See docs/02a-moe.md.
 """
 
 import argparse

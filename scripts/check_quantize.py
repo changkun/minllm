@@ -5,7 +5,7 @@ words directly: the same logits, and the same greedy continuation.
     uv run scripts/export.py --model out/qwen-q4
     uv run --with mlx-lm scripts/check_quantize.py --model out/qwen-q4
 
-mlx-lm is installed for this command only. See docs/12-quantization.md.
+mlx-lm is installed for this command only. See docs/10a-quantization.md.
 """
 
 import argparse

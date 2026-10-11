@@ -6,7 +6,7 @@ what that costs on held-out text.
     uv run scripts/quantize.py --model out/base --bits 8    # writes out/base-q8
     uv run scripts/quantize.py --model qwen --sweep         # the loss at every bit width, writes runs/quant/
 
-See docs/12-quantization.md.
+See docs/10a-quantization.md.
 """
 
 import argparse

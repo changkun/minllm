@@ -7,7 +7,7 @@ tokenizer's files. Writing one makes a model of this repository loadable by
 transformers, vLLM, MLX and llama.cpp's converter. See docs/10-stack.md.
 
 A quantized model is written in the layout of MLX, which reads the packed
-words directly. See docs/12-quantization.md.
+words directly. See docs/10a-quantization.md.
 """
 
 import json

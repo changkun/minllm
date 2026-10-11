@@ -9,7 +9,7 @@ with the two numbers that turn a code back into a weight:
 With 4 bits a code is one of 16 values. The weights of a row are cut into
 groups, and every group has a scale and an offset of its own, chosen so that
 its 16 values reach from its smallest weight to its largest. Nothing is
-trained: the model is rounded after the fact. See docs/12-quantization.md.
+trained: the model is rounded after the fact. See docs/10a-quantization.md.
 """
 
 import torch
