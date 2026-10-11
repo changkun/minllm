@@ -215,8 +215,8 @@ problem, because all its batches have one shape.
 Hugging Face `peft` provides LoRA and its relatives for any model, and `trl`'s
 `SFTTrainer` wraps the loop of this stage. QLoRA keeps the frozen weights in 4
 bits, which lets a laptop adapt models an order of magnitude larger:
-[stage 12](12-quantization.md) makes such weights, and one of its exercises
-puts these adapters on them. The
+the side topic on [quantization](10a-quantization.md) makes such weights,
+and one of its exercises puts these adapters on them. The
 adapters of different tasks can be stored, swapped and even served side by
 side on one copy of the base model, which is how most hosted fine-tuning
 works.

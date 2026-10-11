@@ -141,9 +141,9 @@ The default `Config` has 14.2M parameters:
 `test_shapes_and_params` does this count for a small configuration.
 
 Two thirds of the parameters are in the MLPs. The share is about the same in
-large models. [Stage 11](11-moe.md) replaces the MLP by a mixture of experts,
-which is how many large models hold more parameters than they use for any
-one token.
+large models. The side topic [2a](02a-moe.md) replaces the MLP by a mixture
+of experts, which is how many large models hold more parameters than they use
+for any one token.
 
 The same code describes published models with other numbers:
 

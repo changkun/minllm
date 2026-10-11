@@ -1,4 +1,4 @@
-# 12. Quantization
+# 10a. Quantization
 
 Code: [`minllm/quantize.py`](../minllm/quantize.py),
 [`minllm/checkpoint.py`](../minllm/checkpoint.py),
@@ -14,9 +14,10 @@ each. The models that people run on their own machines are stored at 4 or 5
 bits per weight. Quantization is how they get there. It rounds every weight
 to one of a few values and stores which one.
 
-Like stage 11 this is not a new step of the pipeline. It takes a model that
-is already trained, makes it smaller, and then asks the questions of the
-earlier stages again: what happens to the loss and to the task of stage 7, to
+This is a side topic of [stage 10](10-stack.md), not a step of the pipeline.
+Stage 10 writes a model in the format that other tools read, and this note
+writes it smaller. It takes a model that is already trained and asks the
+questions of the earlier stages again: what happens to the loss and to the task of stage 7, to
 the speed of stage 4, and to the export of stage 10. Nothing is trained
 here, which is why the method is called post-training quantization. It is
 the simplest one in wide use.
@@ -250,7 +251,7 @@ read it, and no GGUF file for llama.cpp is written.
    adapters are trained in 32-bit floats. Fine-tune `out/qwen-q4` on GSM8K as
    in stage 6 and compare the memory with the 14 GB that LoRA took there.
    This is QLoRA.
-6. Quantize the mixture of experts of stage 11, routers included, and run
+6. Quantize the mixture of experts of [2a](02a-moe.md), routers included, and run
    `analyze_moe.py` on it. Do tokens still go to the same experts?
 7. Round only one kind of matrix of the 0.5B model to 4 bits at a time: the
    query, key and value projections, the output projections, the MLPs. Which

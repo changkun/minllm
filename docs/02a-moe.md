@@ -1,4 +1,4 @@
-# 11. Mixture of experts
+# 2a. Mixture of experts
 
 Code: [`minllm/model.py`](../minllm/model.py) (`MoE`),
 [`minllm/export.py`](../minllm/export.py) ·
@@ -13,10 +13,11 @@ token. Many of the largest open models are built differently. Mixtral,
 DeepSeek-V3, the large Qwen3 models and gpt-oss are mixtures of experts
 (MoE): they hold many more parameters than they use for any one token.
 
-This stage is not a new step of the pipeline. It is a variation of stage 2
-that replaces one part of the block, and then goes back through stages 3, 4
-and 10 to see what the change does to training, to speed and to export. It
-uses only the model trained from scratch. No open pretrained mixture is small
+This is a side topic of [stage 2](02-model.md), not a step of the pipeline.
+It replaces one part of the block. To see what that does to training, to
+speed and to export it uses the training loop of stage 3, the sampler of
+stage 4 and the export of stage 10, so it is best read after those. It uses
+only the model trained from scratch. No open pretrained mixture is small
 enough to train on this laptop: the smallest that turned up, OLMoE, has about
 7 billion parameters.
 
@@ -48,7 +49,7 @@ The router is one linear layer from the token's vector to a score per expert,
 from the same loss as everything else, through the weights it gives the
 experts it chose.
 
-Three models are compared in this stage:
+Three models are compared here:
 
 | | Dense | Mixture | Dense, wide |
 |---|---|---|---|
@@ -223,8 +224,8 @@ have room for a share and a half each, so 31% of the routed work is dropped
 in every training step.
 
 The balance loss does not make the model better at anything. It keeps a
-failure of the training dynamics from happening, and the stage's other
-results depend on it.
+failure of the training dynamics from happening, and the other results of
+this note depend on it.
 
 ## The comparison
 
@@ -344,7 +345,7 @@ these, and can run on kernels that do the bookkeeping in one grouped
 operation. There the arithmetic is everything, and running a small share of
 it is a saving that nothing else offers.
 
-So the results of this stage have one cause. At 42M parameters on a laptop,
+So the results of this note have one cause. At 42M parameters on a laptop,
 the mixture learns more per step than the dense model with its arithmetic,
 learns less per minute, and generates more slowly than a dense model of its
 full size. It saves arithmetic and adds bookkeeping, and at this size
@@ -403,7 +404,7 @@ be chance. In the other blocks the two are unrelated.
 
 Stage 10 exported the dense model as a very small Llama. The mixture has a
 reference class as well. Mixtral is the Llama block with a router and experts
-in place of the MLP, and the routing rule of this stage is Mixtral's.
+in place of the MLP, and the routing rule used here is Mixtral's.
 `export.py` writes the router under the name `gate` and stacks the matrices
 of a block's experts into one tensor each, which is how transformers 5 stores
 them.
@@ -420,7 +421,7 @@ logits: largest difference 9.54e-06 over 102,400 values
 generation: identical for 24 tokens: "The little girl was so excited. […]"
 ```
 
-This is the strongest check of the stage. An independent implementation of
+This is the strongest check of this note. An independent implementation of
 the routing, given this model's weights, computes the same numbers. Its loop
 is the second of the three ways above: every expert takes its own tokens.
 
@@ -470,7 +471,7 @@ What changes at that scale:
 - **Routing variants.** DeepSeek's models add a shared expert that every
   token uses, so that the routed ones need not all relearn the common part,
   and DeepSeek-V3 balances the load mainly by adjusting a bias on the
-  router's scores, where this stage uses a loss term.
+  router's scores, where this note uses a loss term.
 - **Kernels.** Some training frameworks sort the tokens by expert and run all
   experts in one grouped matrix multiplication, which gets the arithmetic of
   the second of the three ways above without its overhead. Across machines,

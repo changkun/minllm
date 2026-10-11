@@ -24,7 +24,7 @@ step backwards. `scripts/export.py` writes a directory with:
   `LlamaForCausalLM`, and with biases on the query, key and value projections
   it is a `Qwen2ForCausalLM`. The model trained from scratch in stage 3 is, to
   every other tool, a very small Llama. (With experts in place of the MLP it
-  is a `MixtralForCausalLM`: see [stage 11](11-moe.md).)
+  is a `MixtralForCausalLM`: see [2a](02a-moe.md).)
 - **`tokenizer.json`**, the tokenizer of stage 1 in the format of the Hugging
   Face `tokenizers` library: the same merges, the same split pattern, the
   bytes spelled in GPT-2's alphabet. And `tokenizer_config.json`, which
@@ -92,6 +92,9 @@ vllm-metal, which runs vLLM on top of MLX. It was not tried either. **llama.cpp*
 to its own GGUF file, with the `convert_hf_to_gguf.py` script of its
 repository. That was not tried here either.
 
+Models that run locally are usually stored in 4 to 8 bits per weight. The
+side topic [10a](10a-quantization.md) writes such a file and runs it in MLX.
+
 ## Serving
 
 A model becomes useful to other programs behind an HTTP API, and the one
@@ -127,6 +130,7 @@ several requests share.
 |---|---|---|
 | 1 Tokenizer | `tokenizer.py` | `tokenizers`, `tiktoken`, SentencePiece |
 | 2 Model | `model.py` | the model classes of `transformers` |
+| 2a Mixture of experts | `MoE` in `model.py` | the Mixtral, Qwen3-MoE and DeepSeek classes of `transformers`; grouped kernels for the experts in training frameworks |
 | 3 Pretraining | `scripts/train.py` | custom loops over many GPUs, with `accelerate` or plain PyTorch; `datasets` for the data |
 | 4 Inference | `inference.py` | vLLM, llama.cpp, MLX, TGI |
 | 5 Pretrained weights | `pretrained.py` | `from_pretrained`, the Hugging Face Hub, `safetensors` |
@@ -135,8 +139,7 @@ several requests share.
 | 8 RLHF | `reward.py`, `scripts/ppo.py`, `scripts/dpo.py` | `trl` (`DPOTrainer`, reward modeling), OpenRLHF |
 | 9 RLVR | `rl.py`, `scripts/grpo.py` | verl, OpenRLHF, `trl`'s `GRPOTrainer` |
 | 10 Serving | `scripts/serve.py` | vLLM, an OpenAI-compatible endpoint |
-| 11 Mixture of experts | `MoE` in `model.py` | the Mixtral, Qwen3-MoE and DeepSeek classes of `transformers`; grouped kernels for the experts in training frameworks |
-| 12 Quantization | `quantize.py` | llama.cpp's GGUF files, `mlx_lm.convert -q`, bitsandbytes; GPTQ and AWQ for smarter rounding |
+| 10a Quantization | `quantize.py` | llama.cpp's GGUF files, `mlx_lm.convert -q`, bitsandbytes; GPTQ and AWQ for smarter rounding |
 
 The libraries add scale, coverage and years of fixed bugs. They do not add
 ideas: every row computes what its left column computes.
