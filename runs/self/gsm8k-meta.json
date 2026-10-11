@@ -1,0 +1,30 @@
+{
+ "family": "qwen",
+ "base": "qwen",
+ "task": "gsm8k",
+ "lora": {
+  "r": 16,
+  "alpha": 32
+ },
+ "step": 2,
+ "val_loss": 0.0,
+ "minutes": 40.52568465073903,
+ "trainable_parameters": 8798208,
+ "memory_gb": 14.456787109375,
+ "method": "self-training",
+ "args": {
+  "task": "gsm8k",
+  "model": "out/sft-gsm8k-lora",
+  "out": "out/self-gsm8k",
+  "rounds": 2,
+  "prompts": 480,
+  "samples": 8,
+  "per_prompt": 2,
+  "lr": 0.0001,
+  "lora": 0,
+  "batch_size": 8,
+  "max_new_tokens": 256,
+  "eval_n": 200,
+  "seed": 0
+ }
+}
