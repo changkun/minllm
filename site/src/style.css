@@ -194,3 +194,51 @@ svg text { font-family: var(--sans); }
 .piece { padding: 2px 7px; border: 1px solid var(--axis); border-radius: 4px; background: var(--surface); white-space: pre; }
 .piece.next { border-color: var(--s2); background: color-mix(in srgb, var(--s2) 22%, transparent); }
 button:disabled { opacity: 0.45; cursor: default; }
+
+/* The key of a chart, and the line under it that says what the pointer is on. */
+.legend { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 0 0 6px !important; color: var(--ink2); font-size: 13px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.key { display: inline-block; width: 16px; height: 2px; border-radius: 1px; }
+.key-dot { width: 8px; height: 8px; border-radius: 50%; }
+.key-s1 { background: var(--s1); } .key-s2 { background: var(--s2); } .key-s3 { background: var(--s3); } .key-ink { background: var(--ink); }
+.s-surface { stroke: var(--surface); }
+.sample { min-height: 4.4em; margin: 10px 0 0; padding: 8px 12px; border-radius: 6px; background: var(--tint); color: var(--ink2); font-size: 13.5px; }
+
+/* The landing page's row of entry points to the interactive figures. */
+.tries { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 26px 0 8px; }
+.tries-title { margin: 0 6px 0 0; color: var(--ink2); font-size: 14px; font-weight: 600; }
+.tries .button { font-size: 13px; padding: 5px 10px; }
+
+/* Attention: a sentence whose tokens are tinted by how much the chosen token reads from them. */
+.attn { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0 10px; font: 14px/1.4 var(--mono); }
+.attn-token { padding: 3px 7px; border: 1px solid var(--line); border-radius: 4px; background: color-mix(in srgb, var(--s1) calc(var(--w) * 100%), var(--surface)); cursor: pointer; white-space: pre; }
+.attn-token.reading { border-color: var(--ink); font-weight: 600; }
+.attn-token.later { color: var(--muted); }
+
+/* Rows of labeled bars. */
+.bars { display: grid; gap: 4px; margin: 8px 0; }
+.bar-row, .route-row { display: grid; grid-template-columns: 130px minmax(0, 1fr) 46px; align-items: center; gap: 10px; }
+.route-row { grid-template-columns: 62px 90px 34px minmax(0, 1fr); }
+.bar-label { overflow: hidden; color: var(--ink); font: 13px var(--mono); text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+.route-row .bar-label { font-family: var(--sans); text-align: left; }
+.bar-track { position: relative; height: 14px; }
+.bar-fill, .bar-ghost { position: absolute; left: 0; top: 0; height: 100%; min-width: 2px; border-radius: 0 4px 4px 0; }
+.bar-fill { background: var(--s1); }
+.bar-ghost { background: var(--axis); opacity: 0.45; }
+.bar-fill.cut { display: none; }
+.bar-value { color: var(--ink2); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.bar-row.cut .bar-label, .bar-row.cut .bar-value { color: var(--muted); }
+.route-tokens { display: flex; flex-wrap: wrap; gap: 3px; font: 12.5px var(--mono); }
+.route-tokens .piece { padding: 0 5px; }
+select { padding: 5px 8px; border: 1px solid var(--axis); border-radius: 6px; background: var(--raised); color: var(--ink); font: 14px var(--sans); }
+
+/* Advantages: a bar to the right for a push up, to the left for a push down. */
+.adv-row { display: grid; grid-template-columns: 140px minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 12px; }
+.adv-head { color: var(--muted); font-size: 12.5px; }
+.adv-row button { padding: 3px 8px; font-size: 13px; text-align: left; }
+.adv-row button[aria-pressed="true"] { border-color: var(--s3); background: var(--s3); color: var(--on-accent); }
+.swing-track { position: relative; height: 16px; border-left: 0; background: linear-gradient(var(--axis), var(--axis)) 50% 0 / 1px 100% no-repeat; }
+.swing { position: absolute; top: 2px; height: 12px; border-radius: 3px; }
+.swing.up { left: 50%; background: var(--s3); }
+.swing.down { right: 50%; background: var(--s2); }
+.swing-value { position: absolute; right: 0; top: -1px; color: var(--ink2); font-size: 12px; font-variant-numeric: tabular-nums; }

@@ -26,7 +26,7 @@ function map(notes) {
   return `<div class="map-labels">${labels}</div><ol class="map-row">${stages.map(box).join("")}</ol>`;
 }
 
-export function landing(readme, notes, render) {
+export function landing(readme, notes, render, labs) {
   const s = sections(readme);
   const intro = s.intro.split("\n\n").filter((p) => p.trim() && !p.startsWith("#") && !p.startsWith("!["));
   const part = (name) => render(s[name].replace(/^### /gm, "### "), "").html;
@@ -39,6 +39,11 @@ ${render(intro.slice(0, 2).join("\n\n"), "").html}
 <section class="map" aria-label="The pipeline">
 ${map(notes)}
 <p class="map-note">Ten stages in order. A side topic hangs below the stage it changes, and the chain does not depend on it.</p>
+</section>
+<section class="tries" aria-label="Interactive figures">
+<p class="tries-title">Try it in the browser</p>
+${labs.map((lab) => `<a class="button" href="/${lab.note}/#try-${lab.name}"><span class="num">${notes[lab.note].n}</span> ${lab.title}</a>`).join("\n")}
+<a class="button" href="/interactive/">All on one page</a>
 </section>
 <section class="prose landing-prose">
 <h2 id="stages">What gets built</h2>

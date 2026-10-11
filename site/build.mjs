@@ -77,6 +77,8 @@ export function render(source, base) {
 rmSync(dist, { recursive: true, force: true });
 mkdirSync(join(dist, "assets"), { recursive: true });
 
+const section = (lab) => `<section class="lab" id="try-${lab.name}" data-lab="${lab.name}"><h3 class="lab-title">${lab.title}</h3><div class="lab-body"><noscript>This figure is interactive and needs JavaScript.</noscript></div></section>`;
+
 const notes = {};
 for (const p of pages) {
   const source = readFileSync(join(root, "docs", `${p.slug}.md`), "utf8");
@@ -90,17 +92,21 @@ for (const p of pages) {
 for (const note of Object.values(notes)) {
   let html = note.html;
   for (const lab of labs.filter((l) => l.note === note.slug)) {
-    const section = `<section class="lab" data-lab="${lab.name}"><h3 class="lab-title">${lab.title}</h3><div class="lab-body"><noscript>This figure is interactive and needs JavaScript.</noscript></div></section>`;
     // A lab follows a figure of the note, or closes the section before a heading.
     const place = lab.after ? new RegExp(`(<figure class="figure"><img src="/figures/${lab.after}"[^>]*></figure>)`) : new RegExp(`(<h2 id="${lab.before}">)`);
     if (!place.test(html)) throw new Error(`${note.slug}: no place for the lab ${lab.name}`);
-    html = html.replace(place, lab.after ? `$1\n${section}` : `${section}\n$1`);
+    html = html.replace(place, lab.after ? `$1\n${section(lab)}` : `${section(lab)}\n$1`);
   }
   mkdirSync(join(dist, note.slug), { recursive: true });
   writeFileSync(join(dist, note.slug, "index.html"), page({ ...note, html }, notes));
 }
 
-writeFileSync(join(dist, "index.html"), landing(readFileSync(join(root, "README.md"), "utf8"), notes, render));
+writeFileSync(join(dist, "index.html"), landing(readFileSync(join(root, "README.md"), "utf8"), notes, render, labs));
+
+// Every interactive figure on one page, each with the note it belongs to.
+const gallery = labs.map((lab) => `<p class="kicker"><a href="/${lab.note}/">${notes[lab.note].n} ${notes[lab.note].title}</a></p>\n${section(lab)}`).join("\n");
+mkdirSync(join(dist, "interactive"), { recursive: true });
+writeFileSync(join(dist, "interactive", "index.html"), page({ slug: null, title: "Interactive figures", files: "", html: `<p>The figures of this site that can be tried, in the order of the pipeline. Each reads what it shows from the runs logged in the repository.</p>\n${gallery}`, headings: [] }, notes));
 writeFileSync(join(dist, "404.html"), page({ slug: null, title: "Not found", files: "", html: '<p>There is no page at this address. <a href="/">The pipeline</a> lists all of them.</p>', headings: [] }, notes));
 
 cpSync(join(root, "docs", "figures"), join(dist, "figures"), { recursive: true });
