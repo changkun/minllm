@@ -726,30 +726,44 @@ def rlhf_ppo():
     fig.save("rlhf-ppo")
 
 
-def rlhf_comparison():
-    stories = load("runs/rlhf/stories.json")
-    rows = [("fine-tuned, the start", "sft-words"), ("PPO", "ppo"), ("PPO without KL", "ppo-no-kl"), ("DPO", "dpo")]
-    panels = [
-        ("The annotator's taste", "taste", lambda v: f"{v:+.2f}", "higher is better"),
-        ("Requested words used", "words_used", lambda v: f"{v:.0%}", "higher is better"),
-        ("Strangeness", "strangeness", lambda v: f"{v:.2f}", "lower is better"),
-    ]
-    fig = Figure(720, 290, "What each method did to the stories", "1,000 sampled stories per model on held-out prompts. Training saw comparisons only, and none of these three measures.")
-    for i, (title, key, fmt, note) in enumerate(panels):
-        left, top, width = 170 + i * 186, 108, 100
-        fig.text(left, top - 20, title, fill="ink", weight=600)
+def story_measures(name, title, subtitle, source, rows, panels, footnote):
+    """Small bar charts side by side: one panel per measure, one bar per model."""
+    stories = load(source)
+    fig = Figure(720, 256 + 34 * (len(rows) - 3), title, subtitle)
+    for i, (heading, key, fmt, note) in enumerate(panels):
+        left, top, width = 196 + i * 178, 108, 96
+        fig.text(left, top - 20, heading, fill="ink", weight=600)
         fig.line(left, top - 8, left, top + 34 * len(rows) - 12, stroke="axis")
-        peak = max(stories[name][key] for _, name in rows)
-        for j, (label, name) in enumerate(rows):
+        peak = max(abs(stories[model][key]) for _, model in rows)
+        for j, (label, model) in enumerate(rows):
             y = top + j * 34
             if i == 0:
                 fig.text(left - 10, y + 14, label, anchor="end", fill="ink")
-            value = stories[name][key]
-            bar(fig, left, y, width * value / peak, 18, "s1")
-            fig.text(left + width * value / peak + 8, y + 14, fmt(value), fill="ink")
+            value = stories[model][key]
+            bar(fig, left, y, width * max(value, 0) / peak, 18, "s1")
+            fig.text(left + max(width * max(value, 0) / peak, 5) + 8, y + 14, fmt(value), fill="ink")
         fig.text(left, top + 34 * len(rows) + 8, note, size=11, fill="muted")
-    fig.text(24, 272, "Strangeness is the loss of the pretrained story model on the stories, in nats per token: how unlike a story they read.", size=11, fill="muted")
-    fig.save("rlhf-comparison")
+    fig.text(24, 238 + 34 * (len(rows) - 3), footnote, size=11, fill="muted")
+    fig.save(name)
+
+
+STRANGENESS = "Strangeness is the loss of the pretrained story model on the stories, in nats per token: how unlike a story they read."
+
+
+def rlhf_comparison():
+    story_measures(
+        "rlhf-comparison",
+        "What each method did to the stories",
+        "1,000 sampled stories per model on held-out prompts. Training saw comparisons only, and none of these three measures.",
+        "runs/rlhf/stories.json",
+        [("fine-tuned, the start", "sft-words"), ("PPO", "ppo"), ("PPO without KL", "ppo-no-kl"), ("DPO", "dpo")],
+        [
+            ("The annotator's taste", "taste", lambda v: f"{v:+.2f}", "higher is better"),
+            ("Requested words used", "words_used", lambda v: f"{v:.0%}", "higher is better"),
+            ("Strangeness", "strangeness", lambda v: f"{v:.2f}", "lower is better"),
+        ],
+        STRANGENESS,
+    )
 
 
 # --------------------------------------------------------------------- 9 rlvr
@@ -780,35 +794,62 @@ def rlvr_loop():
     fig.save("rlvr-loop")
 
 
-def rlvr_curves(name, title, subtitle, runs, unit):
-    """Held-out score and the share of informative groups over training, for one or two GRPO runs."""
-    fig = Figure(720, 400, title, subtitle)
-    if len(runs) > 1:
-        fig.legend(64, 78, [(color, label, "line") for label, color, _ in runs])
+def rlvr_curves(name, title, subtitle, runs, unit, panels):
+    """Held-out score over training for some GRPO runs, with further quantities from their logs below it."""
+    fig = Figure(720, 300 + 126 * len(panels), title, subtitle)
+    fig.legend(64, 78, [(color, label, "line") for label, color, _ in runs])
     logs = [(label, color, jsonl(path)) for label, color, path in runs]
     steps = max(r["iteration"] for r in logs[0][2])
     held = [r["held_out"] for _, _, log in logs for r in log if "held_out" in r]
     lo, hi = math.floor(min(held) * 10) / 10, math.ceil(max(held) * 10) / 10
-    ax = Axes(fig, 64, 124, 600, 130, (0, steps), (lo, hi))
+    ax = Axes(fig, 64, 124, 590, 130, (0, steps), (lo, hi))
     ax.title(f"{unit}, held-out prompts, greedy")
-    ax.yticks([lo + (hi - lo) * k / 4 for k in range(5)], lambda t: f"{t:.0%}")
+    ax.yticks(nice_ticks(lo, hi, 4), lambda t: f"{t:.0%}")
     for label, color, log in logs:
         points = [(r["iteration"], r["held_out"]) for r in log if "held_out" in r]
         ax.line(*zip(*points), color)
         ax.dots(*zip(*points), color)
-        ax.label(points[-1][0], points[-1][1], f"{points[-1][1]:.0%}", dx=-2, dy=-12, anchor="end", fill="ink")
-        ax.label(points[0][0], points[0][1], f"{points[0][1]:.0%}", dx=8, dy=16 if color == "s1" else -8)
-    low = Axes(fig, 64, 300, 600, 50, (0, steps), (0, 1))
-    low.title("Groups in which the replies differ in reward")
-    low.yticks([0, 0.5, 1], lambda t: f"{t:.0%}")
-    low.xticks(range(0, steps + 1, max(10, steps // 6 // 10 * 10)), str, "iteration")
-    for label, color, log in logs:
-        rows = [r for r in log if "informative_groups" in r]
-        # a running mean over 5 iterations: single iterations are noisy
-        xs = [r["iteration"] for r in rows]
-        ys = [sum(q["informative_groups"] for q in rows[max(0, i - 4) : i + 1]) / len(rows[max(0, i - 4) : i + 1]) for i in range(len(rows))]
-        low.line(xs, ys, color)
+        ax.label(points[-1][0], points[-1][1], f"{points[-1][1]:.0%}", dx=10, dy=4, fill="ink")
+    ax.label(0, logs[0][2][0]["held_out"], f"{logs[0][2][0]['held_out']:.0%}", dx=8, dy=16)
+    for i, (key, heading, limits, fmt) in enumerate(panels):
+        low = Axes(fig, 64, 310 + i * 126, 590, 60, (0, steps), limits)
+        low.title(heading)
+        low.yticks(nice_ticks(*limits, 2), fmt)
+        last = i == len(panels) - 1
+        low.xticks(range(0, steps + 1, 25 if steps > 100 else 10), str, "iteration" if last else "")
+        for label, color, log in logs:
+            rows = [r for r in log if key in r]
+            xs = [r["iteration"] for r in rows]
+            # a running mean over 5 iterations: single iterations are noisy
+            ys = [sum(q[key] for q in rows[max(0, j - 4) : j + 1]) / len(rows[max(0, j - 4) : j + 1]) for j in range(len(rows))]
+            low.line(xs, ys, color)
     fig.save(name)
+
+
+def rlvr_words():
+    runs = [
+        ("GRPO", "s2", "runs/rlvr/grpo-words.jsonl"),
+        ("reward only if the story ends", "s3", "runs/rlvr/grpo-words-finish.jsonl"),
+        ("LoRA with a KL penalty", "s1", "runs/rlvr/grpo-words-kl.jsonl"),
+    ]
+    panels = [
+        ("informative_groups", "Groups in which the replies differ in reward", (0, 1), lambda t: f"{t:.0%}"),
+        ("tokens", "Tokens per story, of 220 allowed", (150, 220), lambda t: f"{t:g}"),
+    ]
+    rlvr_curves("rlvr-words", "The story model learns to use its words", "150 iterations of 32 prompts with 8 stories each. The verifier counts the requested words.", runs, "Requested words used", panels)
+    story_measures(
+        "rlvr-stories",
+        "What the verifier got, and what it did not ask for",
+        "1,000 sampled stories per model on held-out prompts.",
+        "runs/rlvr/stories.json",
+        [("fine-tuned, the start", "sft-words"), ("GRPO", "grpo-words"), ("reward only if it ends", "grpo-words-finish"), ("LoRA with a KL penalty", "grpo-words-kl")],
+        [
+            ("Requested words used", "words_used", lambda v: f"{v:.0%}", "what was rewarded"),
+            ("Stories cut off", "cut_off", lambda v: f"{v:.0%}", "they never end"),
+            ("Strangeness", "strangeness", lambda v: f"{v:.2f}", "lower is better"),
+        ],
+        STRANGENESS,
+    )
 
 
 # ---------------------------------------------------------------------- readme
@@ -859,4 +900,6 @@ if os.path.exists("runs/rlhf/dpo.jsonl"):
     rlhf_best_of_n()
     rlhf_ppo()
     rlhf_comparison()
+if os.path.exists("runs/rlvr/grpo-words-finish.jsonl"):
+    rlvr_words()
 pipeline(done={1, 2, 3, 4, 5})
