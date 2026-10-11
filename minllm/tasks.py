@@ -115,7 +115,9 @@ def gsm8k_score(example, reply):
 # "taste" scores the stories of the words task by the simulated annotator's
 # hidden standard (minllm/preferences.py), which stage 8 tries to learn.
 SCORE = {"words": words_score, "gsm8k": gsm8k_score, "taste": lambda example, reply: preferences.taste(reply)}
-MAX_NEW_TOKENS = {"words": 220, "taste": 220, "gsm8k": 320}  # room for a whole reply
+# Room for a whole reply. For GSM8K, 320 tokens looked like plenty and cut off a
+# third of the published model's replies, which cost it 5 points (docs/07).
+MAX_NEW_TOKENS = {"words": 220, "taste": 220, "gsm8k": 512}
 
 
 def test_examples(task, n=None, system_prompt=""):
