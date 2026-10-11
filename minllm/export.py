@@ -5,6 +5,9 @@ A directory in "Hugging Face format" is what stage 5 took apart: a
 config.json, the weights in safetensors under the reference names, and the
 tokenizer's files. Writing one makes a model of this repository loadable by
 transformers, vLLM, MLX and llama.cpp's converter. See docs/10-stack.md.
+
+A quantized model is written in the layout of MLX, which reads the packed
+words directly. See docs/12-quantization.md.
 """
 
 import json
@@ -113,15 +116,35 @@ def tokenizer_json(tok):
     }
 
 
+def quantized_state(model):
+    """
+    A quantized model as MLX stores one: the packed words under the name of
+    the weight they replace, and each group's scale and offset next to them as
+    "scales" and "biases". Everything else is written in 16-bit floats.
+    """
+    state = {}
+    for name, t in model.state_dict().items():
+        name = to_reference(name.replace("embed.", "embed_tokens."))
+        for ours, theirs in [(".words", ".weight"), (".scale", ".scales"), (".offset", ".biases")]:
+            name = name.removesuffix(ours) + theirs if name.endswith(ours) else name
+        state[name] = t.cpu() if t.dtype == torch.int32 else t.detach().to(torch.float16).cpu()
+    return state
+
+
 def export(model, tok, meta, dir, source=pretrained.DIR):
     """Write model and tokenizer to dir in Hugging Face format. LoRA adapters are merged in first."""
     os.makedirs(dir, exist_ok=True)
-    model = lora.merge(model)
-    state = {to_reference(name): t.detach().float().cpu() for name, t in model.state_dict().items()}
-    if model.cfg.tie_embeddings:
-        del state["lm_head.weight"]  # stored once, like the published files do
-    if model.cfg.n_experts:
-        state = stack_experts(state, model.cfg)
+    quant = meta.get("quant")
+    if quant:
+        assert quant["embed_bits"] in (None, quant["bits"]), "one bit width for the whole model"
+        state = quantized_state(model)
+    else:
+        model = lora.merge(model)
+        state = {to_reference(name): t.detach().float().cpu() for name, t in model.state_dict().items()}
+        if model.cfg.tie_embeddings:
+            del state["lm_head.weight"]  # stored once, like the published files do
+        if model.cfg.n_experts:
+            state = stack_experts(state, model.cfg)
     pretrained.write_safetensors(f"{dir}/model.safetensors", state)
 
     if meta["family"] == "qwen":
@@ -146,5 +169,7 @@ def export(model, tok, meta, dir, source=pretrained.DIR):
         }
         with open(f"{dir}/tokenizer_config.json", "w") as f:
             json.dump(tokenizer_config, f, indent=1)
+    if quant:
+        config |= {"torch_dtype": "float16", "quantization": {"group_size": quant["group"], "bits": quant["bits"]}}
     with open(f"{dir}/config.json", "w") as f:
         json.dump(config, f, indent=1)
