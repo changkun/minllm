@@ -869,9 +869,9 @@ def rlvr_gsm8k():
     fig.save("rlvr-gsm8k-test")
 
 
-# ------------------------------------------------------- 11 mixture of experts
+# ------------------------------------------------------- 2a mixture of experts
 
-# One color per model in all the figures of this stage.
+# One color per model in all the figures of this note.
 DENSE, MOE, WIDE = "s1", "s2", "s3"
 
 
@@ -1029,7 +1029,7 @@ def moe_routing():
     fig.save("moe-routing")
 
 
-# ------------------------------------------------------------ 12 quantization
+# ----------------------------------------------------------- 10a quantization
 
 
 def quant_levels():
@@ -1135,25 +1135,37 @@ def quant_speed():
 
 
 def pipeline(done):
-    fig = Figure(720, 332, "The pipeline", "Thirteen stages, each with a note, code and tests.")
+    fig = Figure(720, 352, "The pipeline", "Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.")
     rows = [
-        ("From scratch: a 14M model, trained here", 98, True, [(1, "Tokenizer"), (2, "Model"), (3, "Pretraining"), (4, "Inference")]),
-        ("Post-training: that model, and an open 0.5B one", 98, True, [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
-        # Not steps of the chain: each takes a model of the stages above and makes another one of it.
-        ("Back to the model: built differently, stored smaller, taught by a larger one", 132, False, [(11, "Experts"), (12, "Quantization"), (13, "Distillation")]),
+        ("From scratch: a 14M model, trained here", [(1, "Tokenizer"), (2, "Model"), (3, "Pretraining"), (4, "Inference")]),
+        ("Post-training: that model, and an open 0.5B one", [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
     ]
-    gap = 16
-    for r, (label, w, chain, stages) in enumerate(rows):
-        y = 94 + r * 82
-        fig.text(24, y - 12, label, size=11, fill="muted")
+    leaves = {2: ("2a", "Experts"), 3: ("3a", "Distillation"), 10: ("10a", "Quantization")}
+    left, w, gap, tops = 36, 98, 16, [96, 232]
+    for (label, stages), y in zip(rows, tops):
+        fig.text(left, y - 12, label, size=11, fill="muted")
         for i, (number, name) in enumerate(stages):
-            x = 24 + i * (w + gap)
+            x = left + i * (w + gap)
             built = number in done
             fig.rect(x, y, w, 40, fill="s1" if built else "surface", stroke="s1" if built else "axis", rx=6, opacity=0.12 if built else None)
             fig.text(x + 12, y + 25, str(number), fill="muted", size=11)
             fig.text(x + 12 + (16 if number >= 10 else 12), y + 25, name, fill="ink", weight=600 if built else 400)
-            if i and chain:
+            if i:
                 fig.arrow([(x - gap + 2, y + 20), (x - 2, y + 20)])
+            if number in leaves:
+                # A side topic hangs below the stage it branches from, outside the chain.
+                tag, topic = leaves[number]
+                built = tag in done
+                width = text_width(f"{tag} {topic}", 11) + 24
+                lx = x if x + width < 700 else x + w - width
+                fig.line(x + w / 2, y + 40, x + w / 2, y + 52, stroke="s1" if built else "axis", width=1.5)
+                fig.rect(lx, y + 52, width, 28, fill="surface", stroke="s1" if built else "axis", rx=5)
+                fig.text(lx + 10, y + 70, tag, fill="muted", size=11)
+                fig.text(lx + 14 + text_width(tag, 11), y + 70, topic, fill="ink" if built else "ink2", size=11)
+    # The chain goes on from the end of the first row to the start of the second.
+    end = left + 4 * (w + gap) - gap
+    fig.arrow([(end + 2, tops[0] + 20), (end + 22, tops[0] + 20), (end + 22, 198), (left - 18, 198), (left - 18, tops[1] + 20), (left - 2, tops[1] + 20)])
+    fig.text(left, 336, "A side topic uses what its stage built, and the chain does not depend on it.", size=11, fill="muted")
     fig.save("pipeline")
 
 
@@ -1200,4 +1212,4 @@ if os.path.exists("runs/moe/wide-20min.jsonl"):
     moe_loss()
 if os.path.exists("runs/moe/routing.json"):
     moe_routing()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "10a"})
