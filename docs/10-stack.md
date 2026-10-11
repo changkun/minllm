@@ -1,0 +1,157 @@
+# 10. The practitioner's stack
+
+Code: [`minllm/export.py`](../minllm/export.py) ·
+Scripts: [`scripts/export.py`](../scripts/export.py),
+[`scripts/check_export.py`](../scripts/check_export.py),
+[`scripts/serve.py`](../scripts/serve.py)
+
+The nine stages before this one wrote everything by hand, to see how it
+works. Nobody builds products that way. This stage connects the two worlds:
+it writes the models of this repository in the format everyone else's tools
+read, runs them in those tools, and maps each stage to the library that
+practitioners use for it.
+
+## Export
+
+Stage 5 took a published model apart into three files. Export is the same
+step backwards. `scripts/export.py` writes a directory with:
+
+- **`model.safetensors`**, the weights under the reference names. LoRA
+  adapters are merged into their matrices first, so the result is an ordinary
+  model.
+- **`config.json`**, the shape of the model in the reference vocabulary. The
+  architecture of stage 2 has a name there. Without biases it is a
+  `LlamaForCausalLM`, and with biases on the query, key and value projections
+  it is a `Qwen2ForCausalLM`. The model trained from scratch in stage 3 is, to
+  every other tool, a very small Llama.
+- **`tokenizer.json`**, the tokenizer of stage 1 in the format of the Hugging
+  Face `tokenizers` library: the same merges, the same split pattern, the
+  bytes spelled in GPT-2's alphabet. And `tokenizer_config.json`, which
+  carries the chat format as a template.
+
+For a fine-tuned Qwen, the tokenizer and configuration are copied unchanged
+from the download, and only the weights are new.
+
+```sh
+uv run scripts/export.py --model out/sft-words
+uv run --with transformers scripts/check_export.py --model out/sft-words
+```
+
+```
+tokenizer: identical ids on 3 texts
+chat template: identical prompt
+logits: largest difference 1.18e-05 over 102,400 values
+generation: identical for 24 tokens: 'Once upon a time, there was a little kitten named Fluffy. […]'
+```
+
+The check loads the exported directory with Hugging Face transformers and
+compares it against this repository's own code. As in stage 5, transformers
+is installed for that one command and is not a dependency.
+
+A fine-tuned 0.5B model exports the same way. Its adapters are merged into
+the weights, so 35 MB of LoRA become a complete model of 1.9 GB in 32-bit
+floats:
+
+```sh
+uv run scripts/export.py --model out/sft-gsm8k-lora
+uv run --with transformers scripts/check_export.py --model out/sft-gsm8k-lora
+```
+
+```
+tokenizer: identical ids on 3 texts
+chat template: identical prompt
+logits: largest difference 1.81e-04 over 4,710,016 values
+generation: identical for 24 tokens: 'The kitten curled up on the windowsill, its fur a soft, golden brown. […]'
+```
+
+## Running it elsewhere
+
+**MLX**, Apple's array framework, runs the exported directory as it is:
+
+```sh
+uv run --with mlx-lm python -m mlx_lm generate --model out/export/sft-words \
+    --prompt "Write a short story using these words: garden, kitten." --temp 0
+```
+
+```
+Once upon a time, there was a little kitten named Fluffy. Fluffy was a very
+happy kitten. She loved to play in the garden with her friends. […]
+Generation: 120 tokens, 669.077 tokens-per-sec
+```
+
+The same story, token for token, as this repository's sampler writes at
+temperature 0. It arrives faster: 669 tokens per second for a single sequence
+against 460 in stage 4. MLX compiles the decode step, which removes the
+per-operation overhead that stage 4 measured.
+
+**vLLM** serves the same directory with `vllm serve out/export/sft-words` on a
+Linux machine with an NVIDIA GPU. It does not run natively on macOS, so this
+was not tried here. **llama.cpp** needs one more conversion, from this format
+to its own GGUF file, with the `convert_hf_to_gguf.py` script of its
+repository. That was not tried here either.
+
+## Serving
+
+A model becomes useful to other programs behind an HTTP API, and the one
+everyone speaks is OpenAI's chat completions. `scripts/serve.py` implements
+it in 85 lines on the standard library's HTTP server:
+
+```sh
+uv run scripts/serve.py --model out/sft-words
+curl localhost:8000/v1/chat/completions -d '{
+  "messages": [{"role": "user", "content": "Write a short story using these words: garden, kitten."}],
+  "stream": true}'
+```
+
+```
+data: {"object": "chat.completion.chunk", "choices": [{"index": 0, "delta": {"content": "Once"}}], …}
+data: {"object": "chat.completion.chunk", "choices": [{"index": 0, "delta": {"content": " upon"}}], …}
+data: [DONE]
+```
+
+Any client library for the OpenAI API can be pointed at it.
+
+This server handles one request at a time, which wastes what stage 4
+measured: a second sequence in the batch is almost free. A production server
+is built around that fact. vLLM keeps one batch running and lets requests
+join and leave it between decode steps (continuous batching), allocates the
+KV cache in blocks so that no memory is reserved for text that is never
+written (paged attention), and reuses the cache of a prompt prefix that
+several requests share.
+
+## The map
+
+| Stage | Here | In practice |
+|---|---|---|
+| 1 Tokenizer | `tokenizer.py` | `tokenizers`, `tiktoken`, SentencePiece |
+| 2 Model | `model.py` | the model classes of `transformers` |
+| 3 Pretraining | `scripts/train.py` | custom loops over many GPUs, with `accelerate` or plain PyTorch; `datasets` for the data |
+| 4 Inference | `inference.py` | vLLM, llama.cpp, MLX, TGI |
+| 5 Pretrained weights | `pretrained.py` | `from_pretrained`, the Hugging Face Hub, `safetensors` |
+| 6 Fine-tuning | `scripts/finetune.py`, `lora.py` | `peft`, `trl`'s `SFTTrainer`, Unsloth |
+| 7 Evaluation | `evaluate.py`, `tasks.py` | `lm-evaluation-harness`, Inspect |
+| 8 RLHF | `reward.py`, `scripts/ppo.py`, `scripts/dpo.py` | `trl` (`DPOTrainer`, reward modeling), OpenRLHF |
+| 9 RLVR | `rl.py`, `scripts/grpo.py` | verl, OpenRLHF, `trl`'s `GRPOTrainer` |
+| 10 Serving | `scripts/serve.py` | vLLM, an OpenAI-compatible endpoint |
+
+The libraries add scale, coverage and years of fixed bugs. They do not add
+ideas: every row computes what its left column computes.
+
+One difference of scale is worth knowing before reading an RL framework. In
+this repository, sampling and training happen in the same process on the same
+weights. At scale they are separate systems. An inference engine such as vLLM
+produces the rollouts, a trainer consumes them, and most of the engineering
+is in moving weights and samples between the two.
+
+## Exercises
+
+1. Export the model of stage 3 (`--model out/base`) and generate a story with
+   `mlx_lm`. It has no chat training: what prompt do you have to give it?
+2. Point an OpenAI client library at `scripts/serve.py` and hold a conversation
+   with Qwen through it.
+3. Send two requests to the server at once. Measure how long the second one
+   waits. Then sketch what would have to change for both to be generated in
+   one batch.
+4. Change one line of `config_json` so that the export is wrong in a way that
+   still loads: `rope_theta`, or `rms_norm_eps`. Which line of
+   `check_export.py` catches it?
