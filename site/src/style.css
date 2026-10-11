@@ -34,16 +34,19 @@
 }
 
 * { box-sizing: border-box; }
-/* The page does not bounce past its ends, and the header is fixed, so it stays where it is. */
-html { overscroll-behavior-y: none; scroll-padding-top: calc(var(--top) + 20px); }
-body { margin: 0; padding-top: var(--top); background: var(--surface); color: var(--ink); font: 16px/1.55 var(--sans); overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+/* The window itself does not scroll: the header is above the part that does.
+   That part keeps the elastic scrolling of its own, past its ends, and keeps
+   it to itself, so the header stays where it is. */
+html { height: 100%; overscroll-behavior: none; }
+body { display: flex; flex-direction: column; height: 100vh; height: 100dvh; margin: 0; overflow: hidden; background: var(--surface); color: var(--ink); font: 16px/1.55 var(--sans); -webkit-text-size-adjust: 100%; }
+.page { flex: 1; min-height: 0; overflow: hidden auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scroll-padding-top: 20px; outline: none; }
 a { color: var(--s1); text-decoration: none; }
 a:hover { text-decoration: underline; }
 .num { color: var(--muted); font-variant-numeric: tabular-nums; font-weight: 500; }
 
 /* ---------------------------------------------------------------- header */
 
-.top { position: fixed; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: flex-start; gap: 22px; height: var(--top); padding: 12px 24px 0; background: var(--surface); border-bottom: 1px solid var(--line); }
+.top { position: relative; z-index: 10; flex: none; display: flex; align-items: flex-start; gap: 22px; height: var(--top); padding: 12px 24px 0; background: var(--surface); border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: 8px; color: var(--ink); font-size: 17px; font-weight: 700; line-height: 22px; letter-spacing: -0.01em; }
 .brand:hover { text-decoration: none; }
 .mark { width: 22px; height: 22px; }
@@ -106,7 +109,7 @@ h1 .num { font-weight: 600; }
 .files p { margin: 0; }
 .note-grid { display: grid; grid-template-columns: minmax(0, 760px) 220px; justify-content: space-between; gap: 48px; }
 .note-wide .note-grid { grid-template-columns: minmax(0, 1fr); }
-.toc { position: sticky; top: calc(var(--top) + 22px); align-self: start; font-size: 13px; }
+.toc { position: sticky; top: 22px; align-self: start; font-size: 13px; }
 .toc-title { margin: 6px 0 6px; color: var(--muted); }
 .toc ol { margin: 0; padding: 0; list-style: none; }
 .toc li { margin: 0; }
@@ -324,3 +327,11 @@ select { padding: 5px 8px; border: 1px solid var(--axis); border-radius: 6px; ba
 
 .foot { margin-top: 24px; padding: 20px 24px 32px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 .foot p { max-width: 1120px; margin: 4px auto; }
+
+/* On paper there is no window: everything is laid out at full length. */
+@media print {
+  html, body { height: auto; overflow: visible; }
+  body { display: block; }
+  .page { overflow: visible; }
+  .top, .zoom, .lab-large, .viewer { display: none; }
+}
