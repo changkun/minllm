@@ -1,0 +1,29 @@
+{
+ "family": "qwen",
+ "base": "qwen",
+ "task": "gsm8k",
+ "step": 900,
+ "val_loss": 0.6003990590572357,
+ "minutes": 17.48981744845708,
+ "trainable_parameters": 494032768,
+ "memory_gb": 24.929443359375,
+ "args": {
+  "task": "gsm8k",
+  "base": "qwen",
+  "out": "out/sft-gsm8k-safe",
+  "lora": 0,
+  "lora_alpha": null,
+  "steps": 900,
+  "batch_size": 8,
+  "accumulate": 1,
+  "lr": 1e-05,
+  "warmup": 50,
+  "max_len": 384,
+  "eval_every": 200,
+  "eval_batches": 20,
+  "seed": 0,
+  "safety": "data/safety/refusals.jsonl",
+  "safety_share": 0.03,
+  "no_compile": false
+ }
+}
