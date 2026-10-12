@@ -77,7 +77,7 @@ def sample(logits, temperature=1.0, top_k=None, top_p=None):
 
 
 @torch.no_grad()
-def stream(model, prompts, max_new_tokens, temperature=1.0, top_k=None, top_p=None, stop=()):
+def stream(model, prompts, max_new_tokens, temperature=1.0, top_k=None, top_p=None, stop=(), allow=None):
     """
     Generate a continuation for every prompt at once, yielding one (batch,)
     tensor of new token ids per step. A row is finished once it samples a
@@ -85,6 +85,12 @@ def stream(model, prompts, max_new_tokens, temperature=1.0, top_k=None, top_p=No
     row is finished, after max_new_tokens, or when the context is full.
 
     prompts is a list of token id lists. They may differ in length.
+
+    allow, if given, restricts what may be generated. Before every step it
+    is called with the tokens picked in the step before, a (batch,) tensor,
+    or None before the first step, and returns which tokens may come next:
+    booleans of shape (batch, vocab). Whatever it does not allow gets a
+    probability of zero.
     """
     device = next(model.parameters()).device
     B, longest = len(prompts), max(len(p) for p in prompts)
@@ -116,8 +122,12 @@ def stream(model, prompts, max_new_tokens, temperature=1.0, top_k=None, top_p=No
     done = torch.zeros(B, dtype=torch.bool, device=device)
 
     logits, _ = model(idx, cache=cache, mask=mask)  # prefill: the whole prompt in one pass
+    next_id = None
     for step in range(n_steps):
-        next_id = sample(logits[:, -1], temperature, top_k, top_p)
+        scores = logits[:, -1]
+        if allow is not None:
+            scores = scores.masked_fill(~allow(next_id).to(device), float("-inf"))
+        next_id = sample(scores, temperature, top_k, top_p)
         done = done | (next_id[:, None] == stop).any(dim=-1)
         yield next_id.masked_fill(done, -1)
         if done.all() or step == n_steps - 1:

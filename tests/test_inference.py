@@ -99,3 +99,26 @@ def test_sample_top_k_and_top_p():
 
     # A low temperature concentrates the samples on the likeliest token.
     assert (sample(logits, temperature=0.2) == 1).float().mean() > 0.9
+
+
+def test_allow_restricts_every_step_and_sees_the_last_pick():
+    model, idx = model_and_tokens()
+    prompts = [idx[0, :5].tolist(), idx[1, :8].tolist()]
+    seen = []
+
+    def allow(previous):
+        # even tokens for the first row, odd ones for the second, and never a token twice in a row
+        seen.append(None if previous is None else previous.tolist())
+        ok = torch.zeros(2, TINY.vocab_size, dtype=torch.bool)
+        ok[0, 0::2] = ok[1, 1::2] = True
+        if previous is not None:
+            ok[torch.arange(2), previous.cpu()] = False
+        return ok
+
+    out = generate(model, prompts, 6, temperature=1.0, allow=allow)
+    assert all(t % 2 == 0 for t in out[0]) and all(t % 2 == 1 for t in out[1])
+    assert all(a != b for row in out for a, b in zip(row, row[1:]))
+    assert seen[0] is None and seen[1] == [out[0][0], out[1][0]]  # each call gets the step before it
+    # with everything allowed, generation is what it was
+    free = lambda previous: torch.ones(2, TINY.vocab_size, dtype=torch.bool)
+    assert generate(model, prompts, 6, temperature=0, allow=free) == generate(model, prompts, 6, temperature=0)
