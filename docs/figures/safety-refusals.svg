@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="316" viewBox="0 0 720 316" role="img"><title>What fine-tuning on math does to refusals</title><desc>The 0.5B model on XSTest&#x27;s 200 unsafe requests and 250 safe ones that sound alike, and on GSM8K.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="315" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">What fine-tuning on math does to refusals</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">The 0.5B model on XSTest&#x27;s 200 unsafe requests and 250 safe ones that sound alike, and on GSM8K.</text>
+<circle class="f-s3 s-surface" cx="258" cy="76" r="4" stroke-width="2"/>
+<text class="f-ink2" x="272" y="80" font-size="12" text-anchor="start">refuses an unsafe request</text>
+<circle class="f-s2 s-surface" cx="466" cy="76" r="4" stroke-width="2"/>
+<text class="f-ink2" x="480" y="80" font-size="12" text-anchor="start">refuses a safe one</text>
+<text class="f-ink" x="550" y="100" font-size="12" text-anchor="start" font-weight="600">GSM8K solved</text>
+<line class="s-axis" x1="250" y1="98" x2="250" y2="274" stroke-width="1" stroke-linecap="round"/>
+<text class="f-ink" x="240" y="120" font-size="11" text-anchor="end">as published</text>
+<path class="f-s3" d="M250 104 H427.7 a4 4 0 0 1 4 4 V112 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink2" x="437.7" y="114" font-size="11" text-anchor="start">79.0%</text>
+<path class="f-s2" d="M250 119 H325.1 a4 4 0 0 1 4 4 V127 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink2" x="335.1" y="129" font-size="11" text-anchor="start">34.4%</text>
+<text class="f-ink" x="550" y="122" font-size="12" text-anchor="start">46.8%</text>
+<text class="f-ink" x="240" y="164" font-size="11" text-anchor="end">fine-tuned on GSM8K, every weight</text>
+<path class="f-s3" d="M250 148 H311.6 a4 4 0 0 1 4 4 V156 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink2" x="321.6" y="158" font-size="11" text-anchor="start">28.5%</text>
+<path class="f-s2" d="M250 163 H251 a4 4 0 0 1 4 4 V171 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink2" x="261" y="173" font-size="11" text-anchor="start">1.2%</text>
+<text class="f-ink" x="550" y="166" font-size="12" text-anchor="start">34.5%</text>
+<text class="f-ink" x="240" y="208" font-size="11" text-anchor="end">fine-tuned on GSM8K, LoRA</text>
+<path class="f-s3" d="M250 192 H315 a4 4 0 0 1 4 4 V200 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink2" x="325" y="202" font-size="11" text-anchor="start">30.0%</text>
+<path class="f-s2" d="M250 207 H251 a4 4 0 0 1 4 4 V215 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink2" x="261" y="217" font-size="11" text-anchor="start">0.8%</text>
+<text class="f-ink" x="550" y="210" font-size="12" text-anchor="start">36.6%</text>
+<text class="f-ink" x="240" y="252" font-size="11" text-anchor="end">every weight, 3% refusals mixed in</text>
+<path class="f-s3" d="M250 236 H454.1 a4 4 0 0 1 4 4 V244 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink2" x="464.1" y="246" font-size="11" text-anchor="start">90.5%</text>
+<path class="f-s2" d="M250 251 H338 a4 4 0 0 1 4 4 V259 a4 4 0 0 1 -4 4 H250 Z"/>
+<text class="f-ink2" x="348" y="261" font-size="11" text-anchor="start">40.0%</text>
+<text class="f-ink" x="550" y="254" font-size="12" text-anchor="start">34.7%</text>
+<text class="f-muted" x="24" y="300" font-size="11" text-anchor="start">A refusal is read off the opening of a reply, as XSTest&#x27;s authors did automatically. Replies to the unsafe requests are not kept.</text>
+</svg>
