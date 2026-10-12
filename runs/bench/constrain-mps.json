@@ -1,0 +1,15 @@
+{
+ "steps": 256,
+ "batch": 64,
+ "repeats": 3,
+ "free": {
+  "device": "mps",
+  "seconds": 8.32872223854065,
+  "index_seconds": 0.0
+ },
+ "constrained": {
+  "device": "mps",
+  "seconds": 8.547459840774536,
+  "index_seconds": 0.4416356086730957
+ }
+}
