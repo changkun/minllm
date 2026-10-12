@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="372" viewBox="0 0 720 372" role="img"><title>What the rules leave of a crawl</title><desc>201,520 pages of Common Crawl, 1.43 billion characters of extracted text. The bars are characters.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="371" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">What the rules leave of a crawl</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">201,520 pages of Common Crawl, 1.43 billion characters of extracted text. The bars are characters.</text>
+<line class="s-axis" x1="228" y1="76" x2="228" y2="324" stroke-width="1" stroke-linecap="round"/>
+<text class="f-ink" x="218" y="98" font-size="12" text-anchor="end">8 files of the crawl</text>
+<path class="f-s1" d="M228 84 H554 a4 4 0 0 1 4 4 V98 a4 4 0 0 1 -4 4 H228 Z"/>
+<text class="f-ink" x="566" y="98" font-size="12" text-anchor="start">1,434M</text>
+<text class="f-muted" x="620.3" y="98" font-size="11" text-anchor="start">100.0%</text>
+<text class="f-ink" x="218" y="134" font-size="12" text-anchor="end">pages tagged English</text>
+<path class="f-s1" d="M228 120 H369 a4 4 0 0 1 4 4 V134 a4 4 0 0 1 -4 4 H228 Z"/>
+<text class="f-ink" x="381" y="134" font-size="12" text-anchor="start">630M</text>
+<text class="f-muted" x="421.9" y="134" font-size="11" text-anchor="start">43.9%, 89,351 pages</text>
+<text class="f-ink" x="218" y="170" font-size="12" text-anchor="end">their lines of prose</text>
+<path class="f-s1" d="M228 156 H269.1 a4 4 0 0 1 4 4 V170 a4 4 0 0 1 -4 4 H228 Z"/>
+<text class="f-ink" x="281.1" y="170" font-size="12" text-anchor="start">196M</text>
+<text class="f-muted" x="322" y="170" font-size="11" text-anchor="start">13.7%, 89,351 pages</text>
+<text class="f-ink" x="218" y="206" font-size="12" text-anchor="end">pages that pass the rules</text>
+<path class="f-s1" d="M228 192 H263.2 a4 4 0 0 1 4 4 V206 a4 4 0 0 1 -4 4 H228 Z"/>
+<text class="f-ink" x="275.2" y="206" font-size="12" text-anchor="start">170M</text>
+<text class="f-muted" x="316.1" y="206" font-size="11" text-anchor="start">11.9%, 52,532 pages</text>
+<text class="f-ink" x="218" y="242" font-size="12" text-anchor="end">without exact copies</text>
+<path class="f-s1" d="M228 228 H262.5 a4 4 0 0 1 4 4 V242 a4 4 0 0 1 -4 4 H228 Z"/>
+<text class="f-ink" x="274.5" y="242" font-size="12" text-anchor="start">167M</text>
+<text class="f-muted" x="315.4" y="242" font-size="11" text-anchor="start">11.7%, 51,052 pages</text>
+<text class="f-ink" x="218" y="278" font-size="12" text-anchor="end">without near copies</text>
+<path class="f-s1" d="M228 264 H261.6 a4 4 0 0 1 4 4 V278 a4 4 0 0 1 -4 4 H228 Z"/>
+<text class="f-ink" x="273.6" y="278" font-size="12" text-anchor="start">163M</text>
+<text class="f-muted" x="314.4" y="278" font-size="11" text-anchor="start">11.4%, 49,903 pages</text>
+<text class="f-ink" x="218" y="314" font-size="12" text-anchor="end">without lines that pages share</text>
+<path class="f-s2" d="M228 300 H259.4 a4 4 0 0 1 4 4 V314 a4 4 0 0 1 -4 4 H228 Z"/>
+<text class="f-ink" x="271.4" y="314" font-size="12" text-anchor="start">154M</text>
+<text class="f-muted" x="312.3" y="314" font-size="11" text-anchor="start">10.7%, 47,386 pages</text>
+<text class="f-muted" x="24" y="352" font-size="11" text-anchor="start">Pages dropped by a rule: too short 32,379, repeats itself 2,554, not English 1,172, not words 624, symbols 90.</text>
+</svg>
