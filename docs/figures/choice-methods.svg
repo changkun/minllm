@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="424" viewBox="0 0 720 424" role="img"><title>One model, one benchmark, eight scores</title><desc>The 0.5B model on the 14,042 test questions of MMLU, with 95% confidence intervals.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="423" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">One model, one benchmark, eight scores</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">The 0.5B model on the 14,042 test questions of MMLU, with 95% confidence intervals.</text>
+<line class="s-axis" x1="280" y1="76" x2="280" y2="360" stroke-width="1" stroke-linecap="round"/>
+<text class="f-ink" x="270" y="98" font-size="12" text-anchor="end">letter after a text prompt, 5 examples</text>
+<path class="f-s1" d="M280 84 H510.5 a4 4 0 0 1 4 4 V98 a4 4 0 0 1 -4 4 H280 Z"/>
+<line class="s-ink" x1="510.4" y1="93" x2="518.6" y2="93" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="526.6" y="98" font-size="12" text-anchor="start">46.9%</text>
+<text class="f-muted" x="566.2" y="98" font-size="11" text-anchor="start">± 0.8%</text>
+<text class="f-ink" x="270" y="134" font-size="12" text-anchor="end">the same, no examples</text>
+<path class="f-s1" d="M280 120 H505.3 a4 4 0 0 1 4 4 V134 a4 4 0 0 1 -4 4 H280 Z"/>
+<line class="s-ink" x1="505.2" y1="129" x2="513.5" y2="129" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="521.5" y="134" font-size="12" text-anchor="start">45.9%</text>
+<text class="f-muted" x="561.1" y="134" font-size="11" text-anchor="start">± 0.8%</text>
+<text class="f-ink" x="270" y="170" font-size="12" text-anchor="end">letter in a chat turn, no examples</text>
+<path class="f-s1" d="M280 156 H470.4 a4 4 0 0 1 4 4 V170 a4 4 0 0 1 -4 4 H280 Z"/>
+<line class="s-ink" x1="470.3" y1="165" x2="478.4" y2="165" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="486.4" y="170" font-size="12" text-anchor="start">38.9%</text>
+<text class="f-muted" x="526" y="170" font-size="11" text-anchor="start">± 0.8%</text>
+<text class="f-ink" x="270" y="206" font-size="12" text-anchor="end">the same, 5 examples</text>
+<path class="f-s1" d="M280 192 H451.8 a4 4 0 0 1 4 4 V206 a4 4 0 0 1 -4 4 H280 Z"/>
+<line class="s-ink" x1="451.8" y1="201" x2="459.7" y2="201" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="467.7" y="206" font-size="12" text-anchor="start">35.2%</text>
+<text class="f-muted" x="507.3" y="206" font-size="11" text-anchor="start">± 0.8%</text>
+<text class="f-ink" x="270" y="242" font-size="12" text-anchor="end">a written reply in a chat turn</text>
+<path class="f-s1" d="M280 228 H451.4 a4 4 0 0 1 4 4 V242 a4 4 0 0 1 -4 4 H280 Z"/>
+<line class="s-ink" x1="441.6" y1="237" x2="469.3" y2="237" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="477.3" y="242" font-size="12" text-anchor="start">35.1%</text>
+<text class="f-muted" x="516.9" y="242" font-size="11" text-anchor="start">± 2.8%</text>
+<text class="f-ink" x="270" y="278" font-size="12" text-anchor="end">an option&#x27;s text, summed</text>
+<path class="f-s1" d="M280 264 H431.3 a4 4 0 0 1 4 4 V278 a4 4 0 0 1 -4 4 H280 Z"/>
+<line class="s-ink" x1="431.5" y1="273" x2="439.1" y2="273" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="447.1" y="278" font-size="12" text-anchor="start">31.1%</text>
+<text class="f-muted" x="486.7" y="278" font-size="11" text-anchor="start">± 0.8%</text>
+<text class="f-ink" x="270" y="314" font-size="12" text-anchor="end">an option&#x27;s text, per token</text>
+<path class="f-s1" d="M280 300 H443.7 a4 4 0 0 1 4 4 V314 a4 4 0 0 1 -4 4 H280 Z"/>
+<line class="s-ink" x1="443.8" y1="309" x2="451.7" y2="309" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="459.7" y="314" font-size="12" text-anchor="start">33.5%</text>
+<text class="f-muted" x="499.3" y="314" font-size="11" text-anchor="start">± 0.8%</text>
+<text class="f-ink" x="270" y="350" font-size="12" text-anchor="end">an option&#x27;s text, less its own likelihood</text>
+<path class="f-s1" d="M280 336 H448.3 a4 4 0 0 1 4 4 V350 a4 4 0 0 1 -4 4 H280 Z"/>
+<line class="s-ink" x1="448.4" y1="345" x2="456.3" y2="345" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-ink" x="464.3" y="350" font-size="12" text-anchor="start">34.5%</text>
+<text class="f-muted" x="503.9" y="350" font-size="11" text-anchor="start">± 0.8%</text>
+<line class="s-muted" x1="405" y1="76" x2="405" y2="360" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="405" y="376" font-size="11" text-anchor="middle">guessing, 25%</text>
+<text class="f-muted" x="24" y="388" font-size="11" text-anchor="start">The first row is the protocol that the authors of MMLU published. The last three rows show no options to choose from,</text>
+<text class="f-muted" x="24" y="404" font-size="11" text-anchor="start">and score each option&#x27;s text as a continuation. The written replies are to 1,140 of the questions, 20 per subject.</text>
+</svg>

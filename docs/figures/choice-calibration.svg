@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="352" viewBox="0 0 720 352" role="img"><title>How sure the model says it is, and how often it is right</title><desc>The 0.5B model on MMLU, five examples. Its confidence is the probability of the letter it picks, among the four letters.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="351" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">How sure the model says it is, and how often it is right</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">The 0.5B model on MMLU, five examples. Its confidence is the probability of the letter it picks, among the four letters.</text>
+<line class="s-grid" x1="64" y1="272" x2="364" y2="272" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="276" font-size="11" text-anchor="end">0%</text>
+<line class="s-grid" x1="64" y1="227" x2="364" y2="227" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="231" font-size="11" text-anchor="end">25%</text>
+<line class="s-grid" x1="64" y1="182" x2="364" y2="182" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="186" font-size="11" text-anchor="end">50%</text>
+<line class="s-grid" x1="64" y1="137" x2="364" y2="137" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="141" font-size="11" text-anchor="end">75%</text>
+<line class="s-grid" x1="64" y1="92" x2="364" y2="92" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="96" font-size="11" text-anchor="end">100%</text>
+<line class="s-axis" x1="64" y1="272" x2="364" y2="272" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="64" y1="272" x2="64" y2="276" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="289" font-size="11" text-anchor="middle">25%</text>
+<line class="s-axis" x1="164" y1="272" x2="164" y2="276" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="164" y="289" font-size="11" text-anchor="middle">50%</text>
+<line class="s-axis" x1="264" y1="272" x2="264" y2="276" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="264" y="289" font-size="11" text-anchor="middle">75%</text>
+<line class="s-axis" x1="364" y1="272" x2="364" y2="276" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="364" y="289" font-size="11" text-anchor="middle">100%</text>
+<text class="f-muted" x="214" y="308" font-size="11" text-anchor="middle">confidence in its pick</text>
+<text class="f-ink" x="64" y="80" font-size="12" text-anchor="start" font-weight="600">Share answered right</text>
+<path class="s-axis " d="M64 227 L364 92" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-s1 " d="M91.1 223.9 L120.3 217.7 L157 208.8 L194.1 195.7 L232.2 183.7 L270.2 171.3 L308 159.7 L349.7 121.6" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s1 s-surface" cx="91.1" cy="223.9" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="120.3" cy="217.7" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="157" cy="208.8" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="194.1" cy="195.7" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="232.2" cy="183.7" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="270.2" cy="171.3" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="308" cy="159.7" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="349.7" cy="121.6" r="4" stroke-width="2"/>
+<text class="f-muted" x="356" y="110" font-size="12" text-anchor="end">as sure as right</text>
+<text class="f-ink" x="440" y="80" font-size="12" text-anchor="start" font-weight="600">Share of the questions</text>
+<line class="s-axis" x1="440" y1="272" x2="680" y2="272" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="440" y1="272" x2="440" y2="276" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="440" y="289" font-size="11" text-anchor="middle">25%</text>
+<line class="s-axis" x1="520" y1="272" x2="520" y2="276" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="520" y="289" font-size="11" text-anchor="middle">50%</text>
+<line class="s-axis" x1="600" y1="272" x2="600" y2="276" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="600" y="289" font-size="11" text-anchor="middle">75%</text>
+<line class="s-axis" x1="680" y1="272" x2="680" y2="276" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="680" y="289" font-size="11" text-anchor="middle">100%</text>
+<text class="f-muted" x="560" y="308" font-size="11" text-anchor="middle">confidence in its pick</text>
+<rect class="f-s1" x="441" y="220.7" width="28" height="51.3" rx="3"/>
+<text class="f-ink2" x="455" y="215.7" font-size="10" text-anchor="middle">8%</text>
+<rect class="f-s1" x="471" y="115.5" width="28" height="156.5" rx="3"/>
+<text class="f-ink2" x="485" y="110.5" font-size="10" text-anchor="middle">23%</text>
+<rect class="f-s1" x="501" y="158.1" width="28" height="113.9" rx="3"/>
+<text class="f-ink2" x="515" y="153.1" font-size="10" text-anchor="middle">17%</text>
+<rect class="f-s1" x="531" y="195.3" width="28" height="76.7" rx="3"/>
+<text class="f-ink2" x="545" y="190.3" font-size="10" text-anchor="middle">11%</text>
+<rect class="f-s1" x="561" y="212.2" width="28" height="59.8" rx="3"/>
+<text class="f-ink2" x="575" y="207.2" font-size="10" text-anchor="middle">9%</text>
+<rect class="f-s1" x="591" y="219.6" width="28" height="52.4" rx="3"/>
+<text class="f-ink2" x="605" y="214.6" font-size="10" text-anchor="middle">8%</text>
+<rect class="f-s1" x="621" y="217.8" width="28" height="54.2" rx="3"/>
+<text class="f-ink2" x="635" y="212.8" font-size="10" text-anchor="middle">8%</text>
+<rect class="f-s1" x="651" y="165.6" width="28" height="106.4" rx="3"/>
+<text class="f-ink2" x="665" y="160.6" font-size="10" text-anchor="middle">16%</text>
+<text class="f-muted" x="24" y="336" font-size="11" text-anchor="start">On average the confidence is 13.6% away from the share that is right.</text>
+</svg>
