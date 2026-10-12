@@ -15,7 +15,7 @@ export function thread(current) {
   const item = (s) => {
     const here = s.slug === current || (s.leaves || []).some((l) => l.slug === current);
     const leaves = (s.leaves || []).map((l) => `<a class="leaf${l.slug === current ? " current" : ""}" href="/${l.slug}/" title="${l.n} ${l.short}"><span class="num">${l.n}</span> ${l.short}</a>`).join("");
-    return `<li class="${here ? "here" : ""}"><a class="stage${s.slug === current ? " current" : ""}" href="/${s.slug}/" title="${s.n} ${s.short}"><span class="dot">${s.n}</span><span class="name">${s.short}</span></a>${leaves}</li>`;
+    return `<li class="${here ? "here" : ""}"><a class="stage${s.slug === current ? " current" : ""}" href="/${s.slug}/" title="${s.n} ${s.short}"><span class="dot">${s.n}</span><span class="name">${s.short}</span></a>${leaves ? `<span class="leaves">${leaves}</span>` : ""}</li>`;
   };
   return `<nav class="thread" aria-label="The pipeline"><ol>${stages.map(item).join("")}</ol></nav>`;
 }

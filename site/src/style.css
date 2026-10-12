@@ -66,25 +66,34 @@ a:hover { text-decoration: underline; }
 .thread li { position: relative; display: flex; align-items: center; flex: 1 1 auto; min-width: 0; }
 .thread li:last-child { flex: 0 0 auto; }
 .thread li:has(.leaf):not(:last-child) { min-width: 130px; } /* room for the side topic's name before the next stage */
+.thread li:has(.leaf + .leaf):not(:last-child) { min-width: 190px; }
 .thread li:not(:last-child)::after { content: ""; flex: 1; min-width: 8px; height: 2px; margin: 0 6px; background: var(--s2); border-radius: 1px; }
 .thread .stage { display: flex; align-items: center; gap: 6px; color: var(--ink2); font-size: 13px; white-space: nowrap; }
 .thread .stage:hover { color: var(--ink); text-decoration: none; }
 .thread .dot { display: grid; place-items: center; width: 22px; height: 22px; border: 2px solid var(--s2); border-radius: 50%; background: var(--surface); color: var(--ink); font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .thread .stage.current, .thread li.here > .stage { color: var(--ink); font-weight: 600; }
 .thread .stage.current .dot { background: var(--s2); color: var(--on-accent); }
-.thread .leaf { position: absolute; top: 25px; left: 10px; padding-left: 8px; color: var(--muted); font-size: 12px; line-height: 16px; white-space: nowrap; }
+/* The side topics of a stage hang below it in a row: the first on a hook from the stage, the others beside it. */
+.thread .leaves { position: absolute; top: 25px; left: 10px; display: flex; gap: 10px; }
+.thread .leaf { position: relative; padding-left: 8px; color: var(--muted); font-size: 12px; line-height: 16px; white-space: nowrap; }
+.thread .leaf + .leaf { padding-left: 0; }
+.thread .leaf + .leaf::before, .thread .leaf + .leaf::after { display: none; }
 .thread .leaf::before { content: ""; position: absolute; left: 0; top: -3px; width: 1.5px; height: 11px; background: var(--axis); }
 .thread .leaf::after { content: ""; position: absolute; left: 0; top: 7px; width: 5px; height: 1.5px; background: var(--axis); }
 .thread .leaf:hover { color: var(--ink); text-decoration: none; }
 .thread .leaf.current { color: var(--ink); font-weight: 600; }
 .thread .leaf .num { color: inherit; }
 @media (max-width: 1280px) {
-  .thread li:has(.leaf):not(:last-child) { min-width: 0; }
+  .thread li:has(.leaf):not(:last-child), .thread li:has(.leaf + .leaf):not(:last-child) { min-width: 0; }
   .thread .stage .name { display: none; }
   .thread .stage.current .name, .thread li.here > .stage .name { display: inline; }
   .thread .leaf { font-size: 0; }
   .thread .leaf .num { font-size: 12px; }
   .thread .leaf.current { font-size: 12px; }
+}
+/* Narrower than this, the name of the current stage no longer fits between its neighbors. */
+@media (max-width: 920px) {
+  .thread .stage .name, .thread .stage.current .name, .thread li.here > .stage .name { display: none; }
 }
 @media (max-width: 700px) {
   :root { --top: 54px; }
@@ -95,7 +104,9 @@ a:hover { text-decoration: underline; }
   .thread li:not(:last-child)::after { margin: 0 2px; min-width: 2px; }
   .thread .dot { width: 20px; height: 20px; font-size: 10px; }
   .thread .stage .name, .thread .stage.current .name, .thread li.here > .stage .name { display: none; }
-  .thread .leaf, .thread .leaf.current { left: 9px; padding-left: 5px; font-size: 0; }
+  .thread .leaves { left: 9px; gap: 5px; }
+  .thread .leaf, .thread .leaf.current { padding-left: 5px; font-size: 0; }
+  .thread .leaf + .leaf { padding-left: 0; }
   .thread .leaf .num { font-size: 10px; }
 }
 

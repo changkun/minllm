@@ -7,11 +7,11 @@ export const REPO = "https://github.com/changkun/minllm";
 export const stages = [
   { n: "1", slug: "01-tokenizer", short: "Tokenizer" },
   { n: "2", slug: "02-model", short: "Model", leaves: [{ n: "2a", slug: "02a-moe", short: "Experts" }] },
-  { n: "3", slug: "03-pretraining", short: "Pretraining", leaves: [{ n: "3a", slug: "03a-distillation", short: "Distillation" }] },
+  { n: "3", slug: "03-pretraining", short: "Pretraining", leaves: [{ n: "3a", slug: "03a-distillation", short: "Distillation" }, { n: "3b", slug: "03b-data", short: "Data" }] },
   { n: "4", slug: "04-inference", short: "Inference" },
   { n: "5", slug: "05-pretrained", short: "Weights" },
   { n: "6", slug: "06-finetuning", short: "Fine-tuning" },
-  { n: "7", slug: "07-evaluation", short: "Evaluation" },
+  { n: "7", slug: "07-evaluation", short: "Evaluation", leaves: [{ n: "7a", slug: "07a-multiple-choice", short: "Multiple choice" }] },
   { n: "8", slug: "08-rlhf", short: "RLHF" },
   { n: "9", slug: "09-rlvr", short: "RLVR", leaves: [{ n: "9a", slug: "09a-self-training", short: "Self-training" }] },
   { n: "10", slug: "10-stack", short: "Export", leaves: [{ n: "10a", slug: "10a-quantization", short: "Quantization" }] },
