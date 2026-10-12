@@ -6,9 +6,13 @@ A task turns its data into conversations. An example is a dict with
 "answer", a reference reply to learn from. See docs/06-finetuning.md.
 """
 
+import csv
+import glob
 import json
+import os
 import random
 import re
+import tarfile
 from collections import Counter
 
 from minllm import preferences
@@ -108,6 +112,36 @@ def gsm8k_number(reply):
 def gsm8k_score(example, reply):
     """1 if the reply's answer is the right number, else 0."""
     return float(gsm8k_number(reply) == float(example["number"]))
+
+
+# ----------------------------------------------------------------- mmlu
+#
+# Multiple-choice questions on 57 subjects, from high school to professional
+# exams (Hendrycks et al., 2021, arXiv:2009.03300): 14,042 to test on, and
+# five more per subject to show a model first. Each has four options and one
+# right letter. See docs/07a-multiple-choice.md.
+
+MMLU_URL = "https://huggingface.co/datasets/cais/mmlu/resolve/main/data.tar"
+
+
+def mmlu_examples(split, dir="data/mmlu"):
+    """
+    The questions of one split, "dev" or "test", downloaded on first use:
+    dicts with the subject, the question, its four options, and answer, the
+    index of the right one. They come sorted by subject.
+    """
+    if not os.path.exists(f"{dir}/data/{split}"):
+        fetch(MMLU_URL, f"{dir}/data.tar")
+        with tarfile.open(f"{dir}/data.tar") as tar:
+            # the archive also holds 150 MB of questions from other benchmarks, for training on
+            tar.extractall(dir, members=[m for m in tar if "auxiliary_train" not in m.name], filter="data")
+    examples = []
+    for path in sorted(glob.glob(f"{dir}/data/{split}/*.csv")):
+        subject = os.path.basename(path)[: -len(f"_{split}.csv")]
+        with open(path, newline="", encoding="utf-8") as f:
+            for question, *options, letter in csv.reader(f):
+                examples.append({"subject": subject, "question": question, "options": options, "answer": "ABCD".index(letter)})
+    return examples
 
 
 # ------------------------------------------------------------- evaluation
