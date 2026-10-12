@@ -76,6 +76,12 @@ def sample(logits, temperature=1.0, top_k=None, top_p=None):
     return torch.multinomial(probs, num_samples=1).squeeze(-1)
 
 
+def next_logits(model, idx, cache, mask):
+    """The logits at the last position only, (batch, 1, vocab)."""
+    h = model.hidden(idx, cache=cache, mask=mask)
+    return model.lm_head(h[:, -1:])
+
+
 @torch.no_grad()
 def stream(model, prompts, max_new_tokens, temperature=1.0, top_k=None, top_p=None, stop=(), allow=None):
     """
@@ -121,7 +127,10 @@ def stream(model, prompts, max_new_tokens, temperature=1.0, top_k=None, top_p=No
     stop = torch.tensor(list(stop), dtype=torch.long, device=device)
     done = torch.zeros(B, dtype=torch.bool, device=device)
 
-    logits, _ = model(idx, cache=cache, mask=mask)  # prefill: the whole prompt in one pass
+    # Prefill: the whole prompt in one pass. Only its last position predicts
+    # anything, so the output layer is applied there alone: over a long prompt
+    # the logits of every position are batch x length x vocabulary numbers.
+    logits = next_logits(model, idx, cache, mask)
     next_id = None
     for step in range(n_steps):
         scores = logits[:, -1]
@@ -134,7 +143,7 @@ def stream(model, prompts, max_new_tokens, temperature=1.0, top_k=None, top_p=No
             return
         # Decode: one new position per row, attending to everything cached.
         mask = real[:, None, None, : cache.pos + 1] if padded else None
-        logits, _ = model(next_id[:, None], cache=cache, mask=mask)
+        logits = next_logits(model, next_id[:, None], cache, mask)
 
 
 def generate(model, prompts, max_new_tokens, **sampling):
