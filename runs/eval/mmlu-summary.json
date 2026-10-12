@@ -1,0 +1,1562 @@
+{
+ "n": 14042,
+ "subjects": 57,
+ "right_letter": [
+  0.22945449366187154,
+  0.24654607605754167,
+  0.25509186725537675,
+  0.2689075630252101
+ ],
+ "runs": {
+  "qwen-letter-plain-5shot": {
+   "model": "qwen",
+   "format": "plain",
+   "shots": 5,
+   "mean": 0.4690215069078479,
+   "error": 0.008254521363128714,
+   "seconds": 629.3296978473663,
+   "picked_letter": [
+    0.2335137444808432,
+    0.26705597493234584,
+    0.2956843754450933,
+    0.2037459051417177
+   ],
+   "on_letters": 0.999541350874098
+  },
+  "qwen-letter-plain-0shot": {
+   "model": "qwen",
+   "format": "plain",
+   "shots": 0,
+   "mean": 0.4586953425437972,
+   "error": 0.008242142119926034,
+   "seconds": 113.31832122802734,
+   "picked_letter": [
+    0.36077481840193704,
+    0.2579404643213217,
+    0.2385700042728956,
+    0.1427147130038456
+   ],
+   "on_letters": 0.9992557816422252,
+   "first_tokens": [
+    [
+     " A",
+     5066
+    ],
+    [
+     " B",
+     3622
+    ],
+    [
+     " C",
+     3350
+    ],
+    [
+     " D",
+     2004
+    ]
+   ]
+  },
+  "qwen-letter-chat-0shot": {
+   "model": "qwen",
+   "format": "chat",
+   "shots": 0,
+   "mean": 0.3887622845748469,
+   "error": 0.008063139738138223,
+   "seconds": 164.8601109981537,
+   "picked_letter": [
+    0.5638085742771685,
+    0.19605469306366616,
+    0.12590799031476999,
+    0.11422874234439538
+   ],
+   "on_letters": 0.37325128661353973,
+   "first_tokens": [
+    [
+     "The",
+     6794
+    ],
+    [
+     "To",
+     2680
+    ],
+    [
+     "A",
+     1987
+    ],
+    [
+     "B",
+     1122
+    ],
+    [
+     "C",
+     612
+    ],
+    [
+     "D",
+     426
+    ],
+    [
+     "Scenario",
+     105
+    ],
+    [
+     "When",
+     92
+    ]
+   ]
+  },
+  "qwen-letter-chat-5shot": {
+   "model": "qwen",
+   "format": "chat",
+   "shots": 5,
+   "mean": 0.35158809286426435,
+   "error": 0.007897681613837151,
+   "seconds": 724.4752821922302,
+   "picked_letter": [
+    0.30871670702179177,
+    0.14777097279589801,
+    0.1666429283577838,
+    0.37686939182452645
+   ],
+   "on_letters": 0.2492805517894179,
+   "first_tokens": [
+    [
+     "The",
+     9414
+    ],
+    [
+     "To",
+     2408
+    ],
+    [
+     "Answer",
+     429
+    ],
+    [
+     "A",
+     306
+    ],
+    [
+     "D",
+     232
+    ],
+    [
+     "C",
+     205
+    ],
+    [
+     "B",
+     204
+    ],
+    [
+     "According",
+     88
+    ]
+   ]
+  },
+  "base-letter-plain-0shot": {
+   "model": "out/base",
+   "format": "plain",
+   "shots": 0,
+   "mean": 0.2307363623415468,
+   "error": 0.006968714535419467,
+   "seconds": 14.65304183959961,
+   "picked_letter": [
+    0.9452357214072069,
+    0.022147842187722547,
+    0.005625979205241418,
+    0.026990457199829083
+   ],
+   "on_letters": 0.0588024330183054
+  },
+  "qwen-q4-letter-plain-5shot": {
+   "model": "out/qwen-q4",
+   "format": "plain",
+   "shots": 5,
+   "mean": 0.44053553624839764,
+   "error": 0.008211713300048428,
+   "seconds": 741.4109003543854,
+   "picked_letter": [
+    0.3911123771542515,
+    0.20766272610739211,
+    0.14570573992308788,
+    0.2555191568152685
+   ],
+   "on_letters": 0.9984147051387067,
+   "first_tokens": [
+    [
+     " A",
+     5492
+    ],
+    [
+     " D",
+     3588
+    ],
+    [
+     " B",
+     2916
+    ],
+    [
+     " C",
+     2046
+    ]
+   ],
+   "against_published": {
+    "difference": -0.02848597065945022,
+    "low": -0.03610596781085316,
+    "high": -0.021150833214641788
+   },
+   "on_gsm8k": {
+    "mean": 0.3191811978771797,
+    "published": 0.467778620166793
+   }
+  },
+  "sft-gsm8k-lora-letter-plain-5shot": {
+   "model": "out/sft-gsm8k-lora",
+   "format": "plain",
+   "shots": 5,
+   "mean": 0.468238142714713,
+   "error": 0.008253706800845898,
+   "seconds": 786.8521041870117,
+   "picked_letter": [
+    0.2213359920239282,
+    0.25452214784218774,
+    0.29190998433271614,
+    0.23223187580116791
+   ],
+   "on_letters": 0.9985199615286988,
+   "first_tokens": [
+    [
+     " C",
+     4099
+    ],
+    [
+     " B",
+     3574
+    ],
+    [
+     " D",
+     3261
+    ],
+    [
+     " A",
+     3108
+    ]
+   ],
+   "against_published": {
+    "difference": -0.0007833641931348811,
+    "low": -0.0063381284717276744,
+    "high": 0.004771400085457912
+   },
+   "on_gsm8k": {
+    "mean": 0.3661865049279757,
+    "published": 0.467778620166793
+   }
+  }
+ },
+ "orders": {
+  "scores": [
+   {
+    "mean": 0.4690215069078479,
+    "error": 0.008254521363128714,
+    "picked_letter": [
+     0.2335137444808432,
+     0.26705597493234584,
+     0.2956843754450933,
+     0.2037459051417177
+    ]
+   },
+   {
+    "mean": 0.463680387409201,
+    "error": 0.008248562215579524,
+    "picked_letter": [
+     0.2464036462042444,
+     0.2960404500783364,
+     0.2594359777809429,
+     0.1981199259364763
+    ]
+   },
+   {
+    "mean": 0.4621136590229312,
+    "error": 0.008246633851275356,
+    "picked_letter": [
+     0.24455205811138014,
+     0.2792337273892608,
+     0.2845036319612591,
+     0.1917105825381
+    ]
+   },
+   {
+    "mean": 0.47258225324027914,
+    "error": 0.00825796666679971,
+    "picked_letter": [
+     0.20324740065517732,
+     0.2910554052129326,
+     0.25623130608175476,
+     0.2494658880501353
+    ]
+   }
+  ],
+  "right_in_all": 0.275957840763424,
+  "right_in_none": 0.32153539381854435,
+  "right_in_some": 0.40250676541803165,
+  "same_option_in_all": 0.4454493661871528,
+  "added_up": 0.487252528129896,
+  "right_by_letter": [
+   0.4338413331434269,
+   0.5126050420168067,
+   0.5015667283862698,
+   0.41938470303375586
+  ]
+ },
+ "calibration": {
+  "confidence": 0.6048400124975467,
+  "gap": 0.1358185055896987,
+  "groups": [
+   {
+    "share": 0.07648483122062384,
+    "confidence": 0.31781395158108317,
+    "right": 0.2672253258845438
+   },
+   {
+    "share": 0.23315766984760006,
+    "confidence": 0.39084491157534684,
+    "right": 0.30146609651802075
+   },
+   {
+    "share": 0.16970517020367468,
+    "confidence": 0.4825708560182134,
+    "right": 0.351237935375577
+   },
+   {
+    "share": 0.11422874234439538,
+    "confidence": 0.5752689928762073,
+    "right": 0.4239401496259352
+   },
+   {
+    "share": 0.08908987323743056,
+    "confidence": 0.6705849914316924,
+    "right": 0.4908073541167066
+   },
+   {
+    "share": 0.07812277453354223,
+    "confidence": 0.7654550410897524,
+    "right": 0.5597082953509571
+   },
+   {
+    "share": 0.08068651189289275,
+    "confidence": 0.8600127372180261,
+    "right": 0.6240070609002648
+   },
+   {
+    "share": 0.1585244267198405,
+    "confidence": 0.9642887605145609,
+    "right": 0.8355795148247979
+   }
+  ]
+ },
+ "by_subject": [
+  {
+   "subject": "college_physics",
+   "n": 102,
+   "mean": 0.24509803921568626,
+   "error": 0.08389007441234222,
+   "like_guessing": true
+  },
+  {
+   "subject": "moral_scenarios",
+   "n": 895,
+   "mean": 0.25027932960893856,
+   "error": 0.02839550167158678,
+   "like_guessing": true
+  },
+  {
+   "subject": "high_school_physics",
+   "n": 151,
+   "mean": 0.304635761589404,
+   "error": 0.07365581848968945,
+   "like_guessing": true
+  },
+  {
+   "subject": "econometrics",
+   "n": 114,
+   "mean": 0.30701754385964913,
+   "error": 0.08504711112256534,
+   "like_guessing": true
+  },
+  {
+   "subject": "abstract_algebra",
+   "n": 100,
+   "mean": 0.31,
+   "error": 0.09110534694749942,
+   "like_guessing": true
+  },
+  {
+   "subject": "college_chemistry",
+   "n": 100,
+   "mean": 0.31,
+   "error": 0.09110534694749942,
+   "like_guessing": true
+  },
+  {
+   "subject": "college_mathematics",
+   "n": 100,
+   "mean": 0.33,
+   "error": 0.09262598627455111,
+   "like_guessing": true
+  },
+  {
+   "subject": "high_school_statistics",
+   "n": 216,
+   "mean": 0.33796296296296297,
+   "error": 0.06322845051157343,
+   "like_guessing": false
+  },
+  {
+   "subject": "global_facts",
+   "n": 100,
+   "mean": 0.34,
+   "error": 0.09331466479962656,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_mathematics",
+   "n": 270,
+   "mean": 0.35185185185185186,
+   "error": 0.05706857050792272,
+   "like_guessing": false
+  },
+  {
+   "subject": "formal_logic",
+   "n": 126,
+   "mean": 0.35714285714285715,
+   "error": 0.08399999999999999,
+   "like_guessing": false
+  },
+  {
+   "subject": "professional_law",
+   "n": 1534,
+   "mean": 0.3578878748370274,
+   "error": 0.023997385146961,
+   "like_guessing": false
+  },
+  {
+   "subject": "college_computer_science",
+   "n": 100,
+   "mean": 0.36,
+   "error": 0.09455395765958667,
+   "like_guessing": false
+  },
+  {
+   "subject": "elementary_mathematics",
+   "n": 378,
+   "mean": 0.36772486772486773,
+   "error": 0.04867432605810225,
+   "like_guessing": false
+  },
+  {
+   "subject": "professional_medicine",
+   "n": 272,
+   "mean": 0.3897058823529412,
+   "error": 0.058064340619072966,
+   "like_guessing": false
+  },
+  {
+   "subject": "professional_accounting",
+   "n": 282,
+   "mean": 0.40425531914893614,
+   "error": 0.05738004303302131,
+   "like_guessing": false
+  },
+  {
+   "subject": "conceptual_physics",
+   "n": 235,
+   "mean": 0.4127659574468085,
+   "error": 0.06308203437144674,
+   "like_guessing": false
+  },
+  {
+   "subject": "astronomy",
+   "n": 152,
+   "mean": 0.4144736842105263,
+   "error": 0.07857588620127241,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_chemistry",
+   "n": 203,
+   "mean": 0.43842364532019706,
+   "error": 0.06842767400673574,
+   "like_guessing": false
+  },
+  {
+   "subject": "virology",
+   "n": 166,
+   "mean": 0.4397590361445783,
+   "error": 0.07573714250450275,
+   "like_guessing": false
+  },
+  {
+   "subject": "anatomy",
+   "n": 135,
+   "mean": 0.4444444444444444,
+   "error": 0.08413489567783675,
+   "like_guessing": false
+  },
+  {
+   "subject": "professional_psychology",
+   "n": 612,
+   "mean": 0.45588235294117646,
+   "error": 0.039491921264014816,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_macroeconomics",
+   "n": 390,
+   "mean": 0.4564102564102564,
+   "error": 0.0494987914326072,
+   "like_guessing": false
+  },
+  {
+   "subject": "college_biology",
+   "n": 144,
+   "mean": 0.4583333333333333,
+   "error": 0.08166666666666667,
+   "like_guessing": false
+  },
+  {
+   "subject": "machine_learning",
+   "n": 112,
+   "mean": 0.4732142857142857,
+   "error": 0.09288391233777339,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_microeconomics",
+   "n": 238,
+   "mean": 0.4789915966386555,
+   "error": 0.06360162465980448,
+   "like_guessing": false
+  },
+  {
+   "subject": "philosophy",
+   "n": 311,
+   "mean": 0.4855305466237942,
+   "error": 0.055636948244988285,
+   "like_guessing": false
+  },
+  {
+   "subject": "college_medicine",
+   "n": 173,
+   "mean": 0.48554913294797686,
+   "error": 0.07469308395691332,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_computer_science",
+   "n": 100,
+   "mean": 0.49,
+   "error": 0.0984740051839555,
+   "like_guessing": false
+  },
+  {
+   "subject": "medical_genetics",
+   "n": 100,
+   "mean": 0.49,
+   "error": 0.0984740051839555,
+   "like_guessing": false
+  },
+  {
+   "subject": "human_aging",
+   "n": 223,
+   "mean": 0.4977578475336323,
+   "error": 0.06577263209037601,
+   "like_guessing": false
+  },
+  {
+   "subject": "public_relations",
+   "n": 110,
+   "mean": 0.5,
+   "error": 0.09386697595167283,
+   "like_guessing": false
+  },
+  {
+   "subject": "logical_fallacies",
+   "n": 163,
+   "mean": 0.5153374233128835,
+   "error": 0.07695983862269326,
+   "like_guessing": false
+  },
+  {
+   "subject": "business_ethics",
+   "n": 100,
+   "mean": 0.52,
+   "error": 0.09841487938746095,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_biology",
+   "n": 310,
+   "mean": 0.5290322580645161,
+   "error": 0.055656192149411664,
+   "like_guessing": false
+  },
+  {
+   "subject": "moral_disputes",
+   "n": 346,
+   "mean": 0.5375722543352601,
+   "error": 0.0526122516184461,
+   "like_guessing": false
+  },
+  {
+   "subject": "electrical_engineering",
+   "n": 145,
+   "mean": 0.5379310344827586,
+   "error": 0.08143132956546788,
+   "like_guessing": false
+  },
+  {
+   "subject": "human_sexuality",
+   "n": 131,
+   "mean": 0.5419847328244275,
+   "error": 0.08564813273534364,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_government_and_politics",
+   "n": 193,
+   "mean": 0.5440414507772021,
+   "error": 0.07045050874093976,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_us_history",
+   "n": 204,
+   "mean": 0.5441176470588235,
+   "error": 0.0685142406315033,
+   "like_guessing": false
+  },
+  {
+   "subject": "clinical_knowledge",
+   "n": 265,
+   "mean": 0.5471698113207547,
+   "error": 0.060045830797605206,
+   "like_guessing": false
+  },
+  {
+   "subject": "prehistory",
+   "n": 324,
+   "mean": 0.5493827160493827,
+   "error": 0.05426205397468624,
+   "like_guessing": false
+  },
+  {
+   "subject": "world_religions",
+   "n": 171,
+   "mean": 0.5497076023391813,
+   "error": 0.07479021637189942,
+   "like_guessing": false
+  },
+  {
+   "subject": "miscellaneous",
+   "n": 783,
+   "mean": 0.558109833971903,
+   "error": 0.03480724904706016,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_geography",
+   "n": 198,
+   "mean": 0.5606060606060606,
+   "error": 0.0693072845715778,
+   "like_guessing": false
+  },
+  {
+   "subject": "nutrition",
+   "n": 306,
+   "mean": 0.565359477124183,
+   "error": 0.05563314314157083,
+   "like_guessing": false
+  },
+  {
+   "subject": "jurisprudence",
+   "n": 108,
+   "mean": 0.5833333333333334,
+   "error": 0.09341507324098663,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_european_history",
+   "n": 165,
+   "mean": 0.5878787878787879,
+   "error": 0.07533391307433876,
+   "like_guessing": false
+  },
+  {
+   "subject": "security_studies",
+   "n": 245,
+   "mean": 0.5918367346938775,
+   "error": 0.0616707279714176,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_world_history",
+   "n": 237,
+   "mean": 0.5949367088607594,
+   "error": 0.06263208893086514,
+   "like_guessing": false
+  },
+  {
+   "subject": "high_school_psychology",
+   "n": 545,
+   "mean": 0.636697247706422,
+   "error": 0.04041638368246672,
+   "like_guessing": false
+  },
+  {
+   "subject": "management",
+   "n": 103,
+   "mean": 0.6504854368932039,
+   "error": 0.09253529471950463,
+   "like_guessing": false
+  },
+  {
+   "subject": "computer_security",
+   "n": 100,
+   "mean": 0.67,
+   "error": 0.09262598627455111,
+   "like_guessing": false
+  },
+  {
+   "subject": "sociology",
+   "n": 201,
+   "mean": 0.6965174129353234,
+   "error": 0.06371973360258885,
+   "like_guessing": false
+  },
+  {
+   "subject": "us_foreign_policy",
+   "n": 100,
+   "mean": 0.7,
+   "error": 0.09027097254848032,
+   "like_guessing": false
+  },
+  {
+   "subject": "international_law",
+   "n": 121,
+   "mean": 0.7272727272727273,
+   "error": 0.07968533156181068,
+   "like_guessing": false
+  },
+  {
+   "subject": "marketing",
+   "n": 234,
+   "mean": 0.7905982905982906,
+   "error": 0.052245171321688495,
+   "like_guessing": false
+  }
+ ],
+ "cloze": {
+  "seconds": 809.4927670955658,
+  "rules": {
+   "sum": {
+    "mean": 0.31063951004130463,
+    "error": 0.0076543548561052695
+   },
+   "per_token": {
+    "mean": 0.335493519441675,
+    "error": 0.007809958565759744
+   },
+   "minus_unconditional": {
+    "mean": 0.3446802449793477,
+    "error": 0.00786125489699047
+   }
+  },
+  "questions_that_point_at_their_options": 0.38107107249679534
+ },
+ "written": {
+  "n": 1140,
+  "max_new_tokens": 96,
+  "mean": 0.3508771929824561,
+  "error": 0.027716297449719048,
+  "unreadable": 312,
+  "right_of_readable": 0.4830917874396135,
+  "letter_in_chat_on_the_same": 0.41842105263157897,
+  "letter_as_text_on_the_same": 0.4964912280701754,
+  "against_letter_in_chat": {
+   "difference": -0.06754385964912281,
+   "low": -0.09210526315789473,
+   "high": -0.04298245614035088
+  },
+  "first_words": [
+   [
+    "The",
+    17
+   ],
+   [
+    "A.",
+    9
+   ],
+   [
+    "To",
+    8
+   ],
+   [
+    "C.",
+    3
+   ],
+   [
+    "D.",
+    2
+   ]
+  ],
+  "samples": [
+   {
+    "reply": "To determine the degree of the field extension \\( \\text{Q}(\\sqrt{2}, \\sqrt{3}, \\sqrt{18}) \\) over \\( \\text{Q} \\), we need to understand the structure of the field extension and the degrees of the extensions involved.\n\n1. **Identify the field extensions:**\n   - \\( \\text{Q}(\\sqrt{2}) \\) is the field extension of \\( \\text{Q} \\",
+    "read": -1
+   },
+   {
+    "reply": "The palatine processes begin to fuse at:\n\nB. eight weeks post-fertilization.\n\nThis is because the palatine processes are the first to fuse in the developing human embryo, and they typically begin to fuse at around eight weeks post-fertilization.",
+    "read": 1
+   },
+   {
+    "reply": "C. It is the only one that has both a partially molten metallic core and reasonably rapid rotation.\n\nEarth's magnetic field is the strongest among terrestrial planets due to its unique combination of factors:\n\n1. **Molten Metallic Core**: Earth's core is primarily composed of iron and nickel, which are highly magnetic. This core is not completely molten, but it is highly magnetic, contributing to the overall strength of the magnetic field.\n\n2. **Rapid Rotation**: Earth",
+    "read": 2
+   },
+   {
+    "reply": "A. The patient has a semi-formed or liquid output.\n\nClosed pouches are typically used in situations where the patient's bowel function is not yet fully developed, such as in the early stages of a bowel resection or when the patient is still in the semi-formed or liquid output phase. These pouches are designed to be used in conjunction with a colostomy bag or a urostomy bag to manage the patient's bowel output.",
+    "read": 0
+   },
+   {
+    "reply": "To determine the most likely response of hare and fox populations at the same site, we need to consider the relationship between the two species and the dynamics of their populations.\n\n1. **Understanding the Relationship:**\n   - Red foxes (Vulpes vulpes) are predators of hares.\n   - Mange mites are parasites that attack foxes.\n   - The presence of mite populations increases at a given site.\n\n2. **Analyzing the Impact of Mange",
+    "read": -1
+   },
+   {
+    "reply": "The access matrix approach to protection has the difficulty that:\n\nA. the matrix, if stored directly, is large and can be clumsy to manage\n\nThis is because the access matrix, which represents the set of all possible access rights for a process to a resource, is typically very large and complex. Managing and storing such a matrix directly can be challenging and cumbersome, especially for large-scale systems or when dealing with complex access requirements.",
+    "read": 0
+   },
+   {
+    "reply": "To determine which of the given statements must be true, let's analyze the properties of the linear transformation \\( P \\) and the given condition \\( P^2 = P \\).\n\n1. **Understanding the Condition \\( P^2 = P \\)**:\n   - This condition implies that \\( P \\) is a nilpotent transformation of the vector space \\( V \\).\n   - A nilpotent transformation \\( P \\) satisfies \\( P^n = 0 \\) for",
+    "read": -1
+   },
+   {
+    "reply": "A. on the ribosomes.\n\nTranscription of DNA to messenger RNA (mRNA) occurs primarily on the ribosomes, which are the cellular structures responsible for translating genetic information from DNA into proteins. The mRNA molecule is then transported to the cell's cytoplasm, where it is translated into proteins. This process is crucial for the proper functioning of cells and the synthesis of various proteins necessary for life.",
+    "read": 0
+   },
+   {
+    "reply": "A. Troya\n\nTroya is a well-known remote Trojan that was created by the Russian hacker group \"Trojan\" in 2010. It is designed to spread through email attachments and is capable of infecting a wide range of systems, including Windows, Linux, and macOS. The Trojan's primary function is to steal sensitive information and launch remote attacks on targets.",
+    "read": 0
+   },
+   {
+    "reply": "The correct answer is A. Half, 1 A.\n\nIn a series circuit, the current through each component is the same. If the current in one lamp is 2 A, then the current in the lamp next to it (which is also 2 A) will be the same as the current in the first lamp. Therefore, the current in the lamp next to it is 2 A.",
+    "read": 0
+   },
+   {
+    "reply": "The Barkhausen criterion for an oscillator is:\n\nD. Both A and C\n\nThe Barkhausen criterion is a condition that ensures the stability and efficiency of an oscillator. It states that the loop gain of the oscillator should be unity, and the phase of a feedback signal with respect to the input should be 0\u00b0 or 360\u00b0. This criterion is crucial for the operation of an oscillator, ensuring that the system can maintain a stable and predictable output.",
+    "read": 3
+   },
+   {
+    "reply": "To find the difference between 142.76 and 16.5, we need to subtract 16.5 from 142.76. Let's perform the subtraction step by step:\n\n1. Align the numbers by their decimal points:\n   ```\n   142.76\n   - 16.50\n   ```\n\n2. Subtract the hundredths place:\n   ```\n   6 - 5 =",
+    "read": -1
+   }
+  ]
+ },
+ "shown": [
+  {
+   "index": 0,
+   "subject": "abstract_algebra",
+   "question": "Find the degree for the given field extension Q(sqrt(2), sqrt(3), sqrt(18)) over Q.",
+   "options": [
+    "0",
+    "4",
+    "2",
+    "6"
+   ],
+   "answer": 1,
+   "orders": [
+    [
+     0.03854225912669247,
+     0.3227103846286335,
+     0.23503989812347828,
+     0.40333007806711874
+    ],
+    [
+     0.36131685172433853,
+     0.08569164066224835,
+     0.22832162684370022,
+     0.32465246735834974
+    ],
+    [
+     0.22672895630607542,
+     0.2999918414087205,
+     0.0614826658497615,
+     0.41106661390143395
+    ],
+    [
+     0.40333007806711874,
+     0.2663350969676039,
+     0.1912832433390546,
+     0.13862262028824732
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -8.26,
+     -3.91,
+     -5.1,
+     -4.01
+    ],
+    "unconditional": [
+     -4.0,
+     -4.07,
+     -3.43,
+     -4.55
+    ],
+    "lengths": [
+     2,
+     2,
+     2,
+     2
+    ]
+   }
+  },
+  {
+   "index": 752,
+   "subject": "college_biology",
+   "question": "Based on the characteristic population curves that result from plotting population growth of a species, the most effective means of controlling the mosquito population is to",
+   "options": [
+    "maintain the population at a point corresponding to the midpoint of its logistic curve",
+    "opt for zero population control once the K value of the curve has been reached",
+    "reduce the carrying capacity cif the environment to lower the K value",
+    "increase the mortality rate"
+   ],
+   "answer": 2,
+   "orders": [
+    [
+     0.5401005246443706,
+     0.20742198207776844,
+     0.23223627472975883,
+     0.019409357186406115
+    ],
+    [
+     0.008320773996919491,
+     0.7834876342628625,
+     0.156609473870183,
+     0.050996412085361466
+    ],
+    [
+     0.1578673745550876,
+     0.030807411032751076,
+     0.731249912568882,
+     0.07997829448975051
+    ],
+    [
+     0.05715433720613676,
+     0.2747207916982947,
+     0.02252791662417283,
+     0.6453257828572946
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -45.07,
+     -53.48,
+     -55.16,
+     -13.02
+    ],
+    "unconditional": [
+     -67.32,
+     -79.23,
+     -71.86,
+     -25.52
+    ],
+    "lengths": [
+     14,
+     15,
+     12,
+     4
+    ]
+   }
+  },
+  {
+   "index": 1369,
+   "subject": "college_physics",
+   "question": "The quantum efficiency of a photon detector is 0.1. If 100 photons are sent into the detector, one after the other, the detector will detect photons",
+   "options": [
+    "an average of 10 times, with an rms deviation of about 4",
+    "an average of 10 times, with an rms deviation of about 3",
+    "an average of 10 times, with an rms deviation of about 1",
+    "an average of 10 times, with an rms deviation of about 0.1"
+   ],
+   "answer": 1,
+   "orders": [
+    [
+     0.4529380127765577,
+     0.22424860473053532,
+     0.1817723861753675,
+     0.140858420921045
+    ],
+    [
+     0.36567877313053654,
+     0.24857765184107972,
+     0.10774370219636975,
+     0.2777594021250632
+    ],
+    [
+     0.3595147764083289,
+     0.29405160495167837,
+     0.1696530177189486,
+     0.17657668871613388
+    ],
+    [
+     0.418951549247639,
+     0.2876531111451154,
+     0.1806850172272645,
+     0.11270291422711082
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -35.39,
+     -34.78,
+     -33.21,
+     -33.77
+    ],
+    "unconditional": [
+     -53.99,
+     -53.54,
+     -52.68,
+     -55.79
+    ],
+    "lengths": [
+     16,
+     16,
+     16,
+     18
+    ]
+   }
+  },
+  {
+   "index": 2065,
+   "subject": "elementary_mathematics",
+   "question": "What is the value of p in 24 = 2p?",
+   "options": [
+    "p = 4",
+    "p = 8",
+    "p = 12",
+    "p = 24"
+   ],
+   "answer": 2,
+   "orders": [
+    [
+     0.43041733261490667,
+     0.34749673837241524,
+     0.17342674287984836,
+     0.04841236609804924
+    ],
+    [
+     0.03146120750050669,
+     0.4244334746997309,
+     0.4265609563450914,
+     0.11765484302177918
+    ],
+    [
+     0.4139541748712741,
+     0.090808716616802,
+     0.369723444544059,
+     0.12530556558374092
+    ],
+    [
+     0.41644536602038007,
+     0.30330996790222264,
+     0.07855156428230954,
+     0.20149312848264125
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -7.63,
+     -9.04,
+     -3.35,
+     -4.96
+    ],
+    "unconditional": [
+     -14.82,
+     -15.58,
+     -15.97,
+     -17.71
+    ],
+    "lengths": [
+     4,
+     4,
+     5,
+     5
+    ]
+   }
+  },
+  {
+   "index": 3182,
+   "subject": "high_school_computer_science",
+   "question": "Let x = 1. What is x << 3 in Python 3?",
+   "options": [
+    "1",
+    "3",
+    "8",
+    "16"
+   ],
+   "answer": 2,
+   "orders": [
+    [
+     0.025172579297892607,
+     0.06620495300707324,
+     0.5632678551220047,
+     0.34507275504338375
+    ],
+    [
+     0.43041733261490667,
+     0.10466400625614027,
+     0.08509389373266411,
+     0.37946231074621756
+    ],
+    [
+     0.3097468277032208,
+     0.4862657469990346,
+     0.07419934176053282,
+     0.12938018997737108
+    ],
+    [
+     0.060567308207225556,
+     0.42955735821073915,
+     0.41811448349391933,
+     0.09153809999320149
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -1.25,
+     -3.97,
+     -2.63,
+     -4.57
+    ],
+    "unconditional": [
+     -2.96,
+     -3.66,
+     -4.72,
+     -6.05
+    ],
+    "lengths": [
+     2,
+     2,
+     2,
+     3
+    ]
+   }
+  },
+  {
+   "index": 4228,
+   "subject": "high_school_mathematics",
+   "question": "If a pentagon P with vertices at (\u2013 2, \u2013 4), (\u2013 4, 1), (\u20131, 4), (2, 4), and (3, 0) is reflected across the line y = x to get a new pentagon, P\u2019, then one of the vertices of P\u2019 is",
+   "options": [
+    "(0, \u2013 3)",
+    "(4, 1)",
+    "(2, 2)",
+    "(\u2013 4, \u20132)"
+   ],
+   "answer": 3,
+   "orders": [
+    [
+     0.39258586553151836,
+     0.27444620822121696,
+     0.14882264262214037,
+     0.18286629894900427
+    ],
+    [
+     0.3516918193780669,
+     0.31192266203264674,
+     0.17657668871613388,
+     0.15865868806306388
+    ],
+    [
+     0.3191800229845027,
+     0.3227103846286335,
+     0.17429604804611157,
+     0.18268352405273466
+    ],
+    [
+     0.32955896107518906,
+     0.27171542282250544,
+     0.19632182539568155,
+     0.20088955491023208
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -13.29,
+     -10.62,
+     -12.45,
+     -15.17
+    ],
+    "unconditional": [
+     -22.1,
+     -16.64,
+     -14.41,
+     -27.54
+    ],
+    "lengths": [
+     7,
+     6,
+     6,
+     8
+    ]
+   }
+  },
+  {
+   "index": 5648,
+   "subject": "high_school_us_history",
+   "question": "This question refers to the following information.\n\"The far-reaching, the boundless future will be the era of American greatness. In its magnificent domain of space and time, the nation of many nations is destined to manifest to mankind the excellence of divine principles; to establish on earth the noblest temple ever dedicated to the worship of the Most High\u2014the Sacred and the True. Its floor shall be a hemisphere\u2014its roof the firmament of the star-studded heavens, and its congregation a Union of many Republics, comprising hundreds of happy millions, calling, owning no man master, but governed by God's natural and moral law of equality, the law of brotherhood\u2014of 'peace and good will amongst men.'\"\nJohn L. O'Sullivan, \"The Great Nation of Futurity,\" 1839\nBy what means did the United States take possession of the Oregon Territory?",
+   "options": [
+    "The United States was granted the territory in a postwar treaty with France.",
+    "The United States bought it from the Native Americans who lived there.",
+    "U.S. settlers were the first to arrive in the region; they claimed it for their country.",
+    "Great Britain ceded it to the United States as part of a negotiated treaty."
+   ],
+   "answer": 3,
+   "orders": [
+    [
+     0.28055093052561875,
+     0.24610426287901954,
+     0.23246862716134165,
+     0.24074909196587688
+    ],
+    [
+     0.4435254918852095,
+     0.3201390008009476,
+     0.16562981681631492,
+     0.07043957703401492
+    ],
+    [
+     0.18656044323350748,
+     0.574072261196436,
+     0.15458672705113194,
+     0.08483899459135241
+    ],
+    [
+     0.08838968514736205,
+     0.23177226634335515,
+     0.6636502501363194,
+     0.01609896974553159
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -37.96,
+     -25.44,
+     -49.07,
+     -32.69
+    ],
+    "unconditional": [
+     -51.27,
+     -45.67,
+     -56.14,
+     -49.91
+    ],
+    "lengths": [
+     15,
+     13,
+     20,
+     16
+    ]
+   }
+  },
+  {
+   "index": 6564,
+   "subject": "jurisprudence",
+   "question": "Which statement best explains the purpose of Hart's distinction between 'being obliged' and 'having an obligation'?",
+   "options": [
+    "It demonstrates the difference between the internal and the external aspect of a rule.",
+    "It refutes the natural lawyer' view of the role of morality in law.",
+    "It explains the nature of power-conferring rules.",
+    "It illuminates the concept of a rule."
+   ],
+   "answer": 3,
+   "orders": [
+    [
+     0.5746466205894657,
+     0.2262759515492217,
+     0.16579552947565152,
+     0.03327330018009277
+    ],
+    [
+     0.059785029032236384,
+     0.7246981903299029,
+     0.1331871496005706,
+     0.08200295465409681
+    ],
+    [
+     0.2882289930573573,
+     0.08466948616709678,
+     0.5729252640535184,
+     0.05442128136810859
+    ],
+    [
+     0.2148102926780192,
+     0.5856692901447937,
+     0.04482451855926687,
+     0.15458672705113194
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -40.23,
+     -59.07,
+     -42.02,
+     -34.65
+    ],
+    "unconditional": [
+     -54.07,
+     -67.56,
+     -56.65,
+     -41.54
+    ],
+    "lengths": [
+     15,
+     16,
+     10,
+     9
+    ]
+   }
+  },
+  {
+   "index": 7284,
+   "subject": "medical_genetics",
+   "question": "In a Robertsonian translocation fusion occurs at the:",
+   "options": [
+    "telomeres.",
+    "centromeres.",
+    "histones.",
+    "ends of the long arms."
+   ],
+   "answer": 1,
+   "orders": [
+    [
+     0.0012053322788121495,
+     0.03271243493901982,
+     0.0017155869706191255,
+     0.9646402934831231
+    ],
+    [
+     0.8244819741391082,
+     0.03245177947153859,
+     0.12963920929029896,
+     0.0131939089377204
+    ],
+    [
+     0.006894715709406743,
+     0.8419791731684999,
+     0.008870713909928258,
+     0.14184788896532272
+    ],
+    [
+     0.06291315472622334,
+     0.009706107038349598,
+     0.9249644265435393,
+     0.0025364241622125167
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -13.66,
+     -13.06,
+     -15.77,
+     -22.13
+    ],
+    "unconditional": [
+     -20.91,
+     -23.11,
+     -21.33,
+     -33.27
+    ],
+    "lengths": [
+     4,
+     4,
+     3,
+     6
+    ]
+   }
+  },
+  {
+   "index": 9714,
+   "subject": "philosophy",
+   "question": "Aesthetics deals with objects that are_____.",
+   "options": [
+    "essential to our existence",
+    "unimportant to most people",
+    "not essential to our existence",
+    "rarely viewed"
+   ],
+   "answer": 2,
+   "orders": [
+    [
+     0.1405769856083274,
+     0.0065519012780340825,
+     0.8512920711071511,
+     0.0018381420002644509
+    ],
+    [
+     0.004274876781712636,
+     0.5477151097137275,
+     0.02113129842248555,
+     0.4269877306530259
+    ],
+    [
+     0.04319631881407622,
+     0.004922198493561628,
+     0.951229424500714,
+     0.0009330983033684845
+    ],
+    [
+     0.0015679284334938132,
+     0.07547151339133784,
+     0.009764518740451,
+     0.9130177108992658
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -12.35,
+     -15.51,
+     -18.0,
+     -15.66
+    ],
+    "unconditional": [
+     -27.77,
+     -25.51,
+     -28.9,
+     -23.4
+    ],
+    "lengths": [
+     4,
+     5,
+     5,
+     2
+    ]
+   }
+  },
+  {
+   "index": 12437,
+   "subject": "professional_psychology",
+   "question": "Which of the following statements expresses a relationship between aging and sexual functioning",
+   "options": [
+    "Aging is related to an increase in vaginal lubrication",
+    "Aging is associated with an increase in the frequency and number of orgasmic contractions in both sexes",
+    "There is no significant relationship between aging and sexual responses in either sex",
+    "Aging is related to some loss of erectile rigidity in the male"
+   ],
+   "answer": 3,
+   "orders": [
+    [
+     0.024575629446280337,
+     0.7603320752608821,
+     0.022845525531668517,
+     0.19204990862075413
+    ],
+    [
+     0.22741016447634296,
+     0.022326075024184187,
+     0.7334469562242892,
+     0.016228278047058394
+    ],
+    [
+     0.010041788933131934,
+     0.19417411935554202,
+     0.04007510341313073,
+     0.755028335480208
+    ],
+    [
+     0.8286147072326806,
+     0.013207109445812128,
+     0.14572995401294303,
+     0.011713655277450987
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -22.22,
+     -37.95,
+     -33.77,
+     -46.42
+    ],
+    "unconditional": [
+     -41.88,
+     -57.15,
+     -45.81,
+     -65.14
+    ],
+    "lengths": [
+     10,
+     19,
+     13,
+     13
+    ]
+   }
+  },
+  {
+   "index": 13705,
+   "subject": "virology",
+   "question": "How many human polyomaviruses are known at present?",
+   "options": [
+    "100",
+    "1",
+    "10",
+    "unknown"
+   ],
+   "answer": 0,
+   "orders": [
+    [
+     0.22024824112705113,
+     0.16365413680270405,
+     0.2668683001870241,
+     0.34888950901015336
+    ],
+    [
+     0.2441432831534371,
+     0.34095662813770156,
+     0.2931707720468052,
+     0.12148068500391276
+    ],
+    [
+     0.2728044611383765,
+     0.3719484535633582,
+     0.2402680749592907,
+     0.11497966411941897
+    ],
+    [
+     0.05260205981627384,
+     0.20351816809020354,
+     0.6663101674248864,
+     0.07784777201954257
+    ]
+   ],
+   "cloze": {
+    "logprobs": [
+     -8.44,
+     -4.59,
+     -6.5,
+     -14.47
+    ],
+    "unconditional": [
+     -5.89,
+     -2.96,
+     -4.69,
+     -11.93
+    ],
+    "lengths": [
+     4,
+     2,
+     3,
+     1
+    ]
+   }
+  }
+ ]
+}
