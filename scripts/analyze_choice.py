@@ -14,9 +14,10 @@ import argparse
 import json
 import math
 import os
+import re
 from collections import Counter
 
-from minllm import evaluate
+from minllm import evaluate, tasks
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--dir", default="runs/eval")
@@ -107,6 +108,9 @@ summary["by_subject"] = sorted(rows, key=lambda row: row["mean"])
 # No options shown: each option's text as a continuation, compared by three rules.
 cloze = load("qwen-cloze")
 summary["cloze"] = {"seconds": cloze["seconds"], "rules": {name: {"mean": rule["mean"], "error": rule["error"]} for name, rule in cloze["rules"].items()}}
+# A question that says "which of the following" cannot be answered without its options.
+questions = [example["question"] for example in tasks.mmlu_examples("test")]
+summary["cloze"]["questions_that_point_at_their_options"] = sum(bool(re.search(r"following|which of these|which one of", q, re.I)) for q in questions) / len(questions)
 
 # Written replies to some of the questions, and the letter read in a chat turn on the same ones.
 written = load("qwen-generate-chat-0shot")
