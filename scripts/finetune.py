@@ -4,8 +4,9 @@ Fine-tune a model on a task: show it conversations and train it on the replies.
     uv run scripts/finetune.py --task words               # the 14M model learns to follow an instruction
     uv run scripts/finetune.py --task gsm8k --lora 16     # the 0.5B model learns grade-school math, through LoRA
     uv run scripts/finetune.py --task gsm8k               # the same, training every weight
+    uv run scripts/finetune.py --task gsm8k-tools --lora 16 --accumulate 2   # the same problems, with the arithmetic done by a tool
 
-See docs/06-finetuning.md.
+See docs/06-finetuning.md, and docs/06a-tool-calling.md for the last one.
 """
 
 import argparse
@@ -18,26 +19,29 @@ import time
 import torch
 import torch.nn.functional as F
 
-from minllm import chat, checkpoint, lora, tasks
+from minllm import chat, checkpoint, lora, tasks, tools
 from minllm.common import free_memory, pick_device
 from minllm.data import EOT
 from minllm.inference import generate
 from minllm.pretrained import SYSTEM_PROMPT
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--task", choices=["words", "gsm8k"], required=True)
+parser.add_argument("--task", choices=["words", "gsm8k", "gsm8k-tools"], required=True)
 parser.add_argument("--base", default=None, help="the model to start from: a directory, or qwen")
 parser.add_argument("--out", default=None)
 parser.add_argument("--lora", type=int, default=0, help="rank of the LoRA adapters; 0 trains every weight")
 parser.add_argument("--lora-alpha", type=int, default=None, help="defaults to twice the rank")
 parser.add_argument("--steps", type=int, default=None)
 parser.add_argument("--batch-size", type=int, default=None)
+parser.add_argument("--accumulate", type=int, default=1, help="split every batch into this many parts, one after another, to fit in memory")
 parser.add_argument("--lr", type=float, default=None, help="peak learning rate")
 parser.add_argument("--warmup", type=int, default=50)
 parser.add_argument("--max-len", type=int, default=None, help="longer examples are left out")
 parser.add_argument("--eval-every", type=int, default=200)
 parser.add_argument("--eval-batches", type=int, default=20)
 parser.add_argument("--seed", type=int, default=0)
+parser.add_argument("--safety", default=None, help="a file of refusals (scripts/make_refusals.py) to mix into the training data")
+parser.add_argument("--safety-share", type=float, default=0.03, help="the share of training examples drawn from --safety")
 parser.add_argument("--no-compile", action="store_true")
 args = parser.parse_args()
 
@@ -51,6 +55,9 @@ args.steps = args.steps or (2000 if small else 900)
 args.batch_size = args.batch_size or (64 if small else 8)
 args.lr = args.lr or (3e-4 if small else 2e-4 if args.lora else 1e-5)
 args.max_len = args.max_len or (256 if small else 384)
+plain_max_len = args.max_len
+if args.task == "gsm8k-tools":
+    args.max_len = 1024  # the tools take room in the system prompt, and every call a few tokens more
 
 device = pick_device()
 torch.manual_seed(args.seed)
@@ -66,11 +73,24 @@ if small:
     held_out = list(tasks.words_examples("data/tinystories/valid.txt", vocabulary, 2000, seed=1))
 else:
     examples = tasks.gsm8k_examples("train", SYSTEM_PROMPT)
+    if args.task == "gsm8k-tools":
+        # The same problems that --task gsm8k trains on: those whose plain
+        # conversation fits its length. Each as the conversation with calls.
+        fits = [len(chat.training_example(tok, e["messages"] + [{"role": "assistant", "content": e["answer"]}])[0]) <= plain_max_len for e in examples]
+        examples = [dict(c, fits=f) for c, f in zip(tools.gsm8k_conversations("train", SYSTEM_PROMPT), fits)]
     train, held_out = examples[:-200], examples[-200:]  # the test split stays untouched for evaluation
+    if args.safety:
+        # Refusals mixed in, as a small share of what is trained on (docs/08a-safety.md).
+        with open(args.safety, encoding="utf-8") as f:
+            refusals = [json.loads(line) for line in f]
+        n = round(args.safety_share * len(train) / (1 - args.safety_share))
+        train += [{"messages": r["messages"][:-1], "answer": r["messages"][-1]["content"]} for r in (refusals * (n // len(refusals) + 1))[:n]]
 
 
 def encode(examples):
     """Each example as (ids, labels): the conversation with its reference reply, and which tokens to learn."""
+    if args.task == "gsm8k-tools":
+        return [tools.training_example(tok, e["messages"]) for e in examples if e["fits"]]
     pairs = [chat.training_example(tok, e["messages"] + [{"role": "assistant", "content": e["answer"]}]) for e in examples]
     return [pair for pair in pairs if len(pair[0]) <= args.max_len]
 
@@ -136,7 +156,7 @@ def evaluate():
 @torch.no_grad()
 def sample():
     """The model's reply to one held-out prompt."""
-    prompt = chat.encode(tok, held_out[0]["messages"])
+    prompt = chat.encode(tok, held_out[0]["messages"]) if args.task != "gsm8k-tools" else tools.encode(tok, held_out[0]["messages"][:2])[0]
     stop = [tok.special_tokens[chat.IM_END], tok.special_tokens[EOT]]
     with autocast:
         out = generate(model, [prompt], 200, temperature=0.8 if small else 0, top_k=50, stop=stop)[0]
@@ -156,7 +176,7 @@ def log(**record):
 n_trainable = sum(p.numel() for p in trainable)
 print(f"device {device}, {args.base} on {args.task}: {len(train_pairs):,} examples, {args.steps} steps of {args.batch_size}")
 print(f"training {n_trainable / 1e6:.1f}M of {n_total / 1e6:.1f}M parameters ({n_trainable / n_total:.1%}), lr {args.lr:g}")
-print(f"prompt: {held_out[0]['messages'][-1]['content'][:100]}")
+print(f"prompt: {held_out[0]['messages'][1 if args.task == 'gsm8k-tools' else -1]['content'][:100]}")
 
 start = interval_start = time.time()
 interval_loss, interval_tokens, step, peak_memory = 0.0, 0, 0, 0.0
@@ -172,9 +192,14 @@ while True:
     for group in optimizer.param_groups:
         group["lr"] = lr_at(step)
     pairs = rng.sample(train_pairs, args.batch_size)
-    loss = loss_on(pairs)
     optimizer.zero_grad(set_to_none=True)
-    loss.backward()
+    # The batch in parts: the gradients of the parts add up to that of the whole,
+    # and only one part's activations are in memory at a time.
+    loss = 0.0
+    for part in range(args.accumulate):
+        part_loss = loss_on(pairs[part :: args.accumulate]) / args.accumulate
+        part_loss.backward()
+        loss += part_loss.detach()
     torch.nn.utils.clip_grad_norm_(trainable, 1.0)
     optimizer.step()
     step += 1
@@ -192,5 +217,7 @@ while True:
 
 minutes = (time.time() - start) / 60
 meta |= {"step": step, "val_loss": val_loss, "minutes": minutes, "trainable_parameters": n_trainable, "memory_gb": peak_memory, "args": vars(args)}
+if args.task == "gsm8k-tools":  # what the conversations hold
+    meta["data"] = {"conversations": len(examples), "calls": sum(e["marks"] for e in examples), "calculator_disagrees": sum(e["disagree"] for e in examples), "trained_on": len(train_pairs)}
 checkpoint.save(args.out, model, meta)
 print(f"done in {minutes:.1f} minutes, saved to {args.out}")
