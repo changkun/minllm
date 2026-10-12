@@ -610,6 +610,131 @@ def evaluation_scores():
     fig.save("evaluation-scores")
 
 
+# -------------------------------------------------------- 7a multiple choice
+
+MMLU = "runs/eval/mmlu-summary.json"  # written by scripts/analyze_choice.py
+
+
+def guessing(fig, left, top, width, peak, rows):
+    """A line through the bars at what guessing would score."""
+    x = left + width * 0.25 / peak
+    fig.line(x, top - 8, x, top + 36 * rows - 12, stroke="muted", width=1)
+    fig.text(x, top + 36 * rows + 4, "guessing, 25%", size=11, fill="muted", anchor="middle")
+
+
+def choice_methods():
+    """One model and one set of questions, scored eight ways."""
+    m = load(MMLU)
+    runs, rules, written = m["runs"], m["cloze"]["rules"], m["written"]
+    rows = [
+        ("letter after a text prompt, 5 examples", runs["qwen-letter-plain-5shot"]),
+        ("the same, no examples", runs["qwen-letter-plain-0shot"]),
+        ("letter in a chat turn, no examples", runs["qwen-letter-chat-0shot"]),
+        ("the same, 5 examples", runs["qwen-letter-chat-5shot"]),
+        ("a written reply in a chat turn", written),
+        ("an option's text, summed", rules["sum"]),
+        ("an option's text, per token", rules["per_token"]),
+        ("an option's text, less its own likelihood", rules["minus_unconditional"]),
+    ]
+    fig = Figure(720, 424, "One model, one benchmark, eight scores", f"The 0.5B model on the {m['n']:,} test questions of MMLU, with 95% confidence intervals.")
+    left, top, width, peak = 280, 84, 300, 0.6
+    scored_bars(fig, left, top, width, [(label, r["mean"], r["error"]) for label, r in rows], peak, lambda v: f"{v:.1%}")
+    guessing(fig, left, top, width, peak, len(rows))
+    fig.text(24, 388, "The first row is the protocol that the authors of MMLU published. The last three rows show no options to choose from,", size=11, fill="muted")
+    fig.text(24, 404, f"and score each option's text as a continuation. The written replies are to {written['n']:,} of the questions, 20 per subject.", size=11, fill="muted")
+    fig.save("choice-methods")
+
+
+def choice_letters():
+    """Which letter the model picks, and what moving the options round does."""
+    m = load(MMLU)
+    orders = m["orders"]
+    fig = Figure(720, 330, "The letter matters, not only the answer", "The 0.5B model on MMLU, five examples. Right: the same questions with their options moved round.")
+    # left: how often each letter is right, and how often it is picked
+    left, top, height = 64, 96, 150
+    fig.text(left, top - 14, "Share of the questions", fill="ink", weight=600)
+    for t in (0, 0.1, 0.2, 0.3):
+        y = top + height * (1 - t / 0.35)
+        fig.line(left, y, left + 250, y)
+        fig.text(left - 8, y + 4, f"{t:.0%}", size=11, fill="muted", anchor="end")
+    for i, letter in enumerate("ABCD"):
+        x = left + 22 + i * 58
+        for j, (value, color) in enumerate([(m["right_letter"][i], "axis"), (orders["scores"][0]["picked_letter"][i], "s1")]):
+            h = height * value / 0.35
+            fig.rect(x + j * 20, top + height - h, 18, h, fill=color, rx=3)
+            fig.text(x + j * 20 + 9 + (5 if j else -5), top + height - h - 5, f"{value:.0%}", size=10, anchor="middle", fill="ink" if j else "muted")
+        fig.text(x + 19, top + height + 17, letter, anchor="middle", fill="ink", weight=600)
+    fig.line(left, top + height, left + 250, top + height, stroke="axis")
+    fig.legend(left, top + height + 44, [("axis", "the right answer", "dot"), ("s1", "the model's pick", "dot")])
+    # right: the score in every order, and how many questions survive all four
+    rows = [(f"options moved by {k}" if k else "as published", r["mean"], r["error"]) for k, r in enumerate(orders["scores"])]
+    rows += [("right in all four orders", orders["right_in_all"], 0), ("the four orders added up", orders["added_up"], 0)]
+    scored_bars(fig, 520, 92, 120, rows, 0.6, lambda v: f"{v:.1%}")
+    fig.text(24, 314, f"A question answered right in no order: {orders['right_in_none']:.1%}. Guessing would be right in all four orders for 0.4% of the questions.", size=11, fill="muted")
+    fig.save("choice-letters")
+
+
+def choice_subjects():
+    """The score of each of the 57 subjects, with what its number of questions lets one say."""
+    m = load(MMLU)
+    rows, overall = m["by_subject"], m["runs"]["qwen-letter-plain-5shot"]["mean"]
+    fig = Figure(720, 330, "The 57 subjects of MMLU, from the worst to the best", f"The 0.5B model, five examples: {overall:.1%} over all {m['n']:,} questions. A subject has between {min(r['n'] for r in rows)} and {max(r['n'] for r in rows):,} of them.")
+    ax = Axes(fig, 64, 84, 620, 190, (-1, len(rows)), (0, 1))
+    ax.yticks([0, 0.25, 0.5, 0.75, 1], lambda t: f"{t:.0%}")
+    fig.line(ax.left, ax.y(0.25), ax.left + ax.width, ax.y(0.25), stroke="muted", width=1)
+    fig.line(ax.left, ax.y(overall), ax.left + ax.width, ax.y(overall), stroke="s2", width=1.5)
+    fig.text(ax.left + ax.width, ax.y(overall) - 6, "all questions", size=11, fill="s2", anchor="end")
+    fig.text(ax.left + ax.width, ax.y(0.25) + 14, "guessing", size=11, fill="muted", anchor="end")
+    for i, r in enumerate(rows):
+        fig.line(ax.x(i), ax.y(max(0, r["mean"] - r["error"])), ax.x(i), ax.y(min(1, r["mean"] + r["error"])), stroke="axis", width=1.5)
+        fig.dot(ax.x(i), ax.y(r["mean"]), "s1", r=3)
+    fig.line(ax.left, ax.top + ax.height, ax.left + ax.width, ax.top + ax.height, stroke="axis")
+    name = lambda r: f"{r['subject'].replace('_', ' ')}, {r['mean']:.0%} of {r['n']}"
+    for j, r in enumerate(rows[:2]):
+        fig.text(ax.x(0) + 6, ax.y(0.12) + 14 * j, name(r), size=11, fill="ink")
+    for j, r in enumerate(rows[:-3:-1]):
+        fig.text(ax.x(len(rows) - 5), ax.y(0.98) + 14 * j, name(r), size=11, anchor="end", fill="ink")
+    inside = sum(r["mean"] - r["error"] <= overall <= r["mean"] + r["error"] for r in rows)
+    fig.text(24, 314, f"A line is a subject's 95% interval. For {inside} of the 57 subjects it includes the score over all questions.", size=11, fill="muted")
+    fig.save("choice-subjects")
+
+
+def choice_calibration():
+    """Is the model as often right as it says it is sure?"""
+    m = load(MMLU)
+    groups = m["calibration"]["groups"]
+    fig = Figure(720, 352, "How sure the model says it is, and how often it is right", "The 0.5B model on MMLU, five examples. Its confidence is the probability of the letter it picks, among the four letters.")
+    ax = Axes(fig, 64, 92, 300, 180, (0.25, 1), (0, 1))
+    ax.yticks([0, 0.25, 0.5, 0.75, 1], lambda t: f"{t:.0%}")
+    ax.xticks([0.25, 0.5, 0.75, 1], lambda t: f"{t:.0%}", "confidence in its pick")
+    ax.title("Share answered right")
+    ax.line([0.25, 1], [0.25, 1], "axis", width=1.5)
+    ax.line([g["confidence"] for g in groups], [g["right"] for g in groups], "s1")
+    ax.dots([g["confidence"] for g in groups], [g["right"] for g in groups], "s1")
+    ax.label(1, 1, "as sure as right", dx=-8, dy=18, anchor="end", fill="muted")
+    # how the questions spread over the confidences
+    ax2 = Axes(fig, 440, 92, 240, 180, (0.25, 1), (0, max(g["share"] for g in groups) * 1.15))
+    ax2.title("Share of the questions")
+    ax2.xticks([0.25, 0.5, 0.75, 1], lambda t: f"{t:.0%}", "confidence in its pick")
+    for i, g in enumerate(groups):
+        h = ax2.height * g["share"] / ax2.ylim[1]
+        fig.rect(ax2.x(0.25 + i * 0.09375) + 1, ax2.top + ax2.height - h, ax2.width / 8 - 2, h, fill="s1", rx=3)
+        fig.text(ax2.x(0.25 + (i + 0.5) * 0.09375), ax2.top + ax2.height - h - 5, f"{g['share']:.0%}", size=10, anchor="middle")
+    fig.text(24, 336, f"On average the confidence is {m['calibration']['gap']:.1%} away from the share that is right.", size=11, fill="muted")
+    fig.save("choice-calibration")
+
+
+def choice_models():
+    m = load(MMLU)
+    runs = m["runs"]
+    rows = [(label, runs[name]["mean"], runs[name]["error"]) for label, name in [("14M story model, no examples", "base-letter-plain-0shot"), ("0.5B as published", "qwen-letter-plain-5shot"), ("0.5B at 4 bits", "qwen-q4-letter-plain-5shot"), ("0.5B fine-tuned on GSM8K, LoRA", "sft-gsm8k-lora-letter-plain-5shot")]]
+    fig = Figure(720, 250, "Four models on MMLU", f"The letter after a text prompt, with 95% confidence intervals. One model takes {runs['qwen-letter-plain-5shot']['seconds'] / 60:.0f} minutes for the {m['n']:,} questions.")
+    left, top, width, peak = 250, 84, 320, 0.6
+    scored_bars(fig, left, top, width, rows, peak, lambda v: f"{v:.1%}")
+    guessing(fig, left, top, width, peak, len(rows))
+    fig.save("choice-models")
+
+
 # --------------------------------------------------------------------- 8 rlhf
 
 
@@ -1029,6 +1154,51 @@ def moe_routing():
     fig.save("moe-routing")
 
 
+# ------------------------------------------------------- 3b data preparation
+
+
+def data_funnel():
+    """What every step of the preparation leaves of the crawl, in characters."""
+    f = load("runs/data/funnel.json")["train"]
+    steps = f["steps"]
+    whole = steps[0]["characters"]
+    names = ["8 files of the crawl", "pages tagged English", "their lines of prose", "pages that pass the rules", "without exact copies", "without near copies", "without lines that pages share"]
+    fig = Figure(720, 372, "What the rules leave of a crawl", f"{steps[0]['pages']:,} pages of Common Crawl, {whole / 1e9:.2f} billion characters of extracted text. The bars are characters.")
+    left, top, width = 228, 84, 330
+    fig.line(left, top - 8, left, top + 36 * len(steps) - 12, stroke="axis")
+    for j, (name, step) in enumerate(zip(names, steps)):
+        y = top + j * 36
+        share = step["characters"] / whole
+        fig.text(left - 10, y + 14, name, anchor="end", fill="ink")
+        bar(fig, left, y, width * share, 18, "s2" if j == len(steps) - 1 else "s1")
+        fig.text(left + max(width * share, 5) + 8, y + 14, f"{step['characters'] / 1e6:,.0f}M", fill="ink")
+        fig.text(left + max(width * share, 5) + 22 + text_width(f"{step['characters'] / 1e6:,.0f}M", 12), y + 14, f"{share:.1%}" + (f", {step['pages']:,} pages" if j else ""), fill="muted", size=11)
+    dropped = f["dropped_by_rule"]
+    fig.text(24, 352, "Pages dropped by a rule: " + ", ".join(f"{reason} {count:,}" for reason, count in dropped.items()) + ".", size=11, fill="muted")
+    fig.save("data-funnel")
+
+
+def data_loss():
+    """Three models, trained on three versions of the text, on held-out text of three kinds."""
+    c = load("runs/data/cross.json")["loss"]
+    models = [("raw pages", "web-raw", "axis"), ("text by the rules", "web-rules", "s1"), ("the same without copies", "web-clean", "s2")]
+    panels = [("raw", "Held-out pages as crawled", "menus and all"), ("clean", "Held-out prose", "the same pages, cleaned"), ("stories", "Children's stories", "which no model saw")]
+    fig = Figure(720, 300, "What a model learns from each version of the text", "The 14M model, 3,000 steps on each. Loss per token on held-out text: lower is better, and comparable only within a panel.")
+    fig.text(64, 80, "Trained on", fill="ink")
+    fig.legend(140, 80, [(color, name, "dot") for name, _, color in models])
+    for i, (corpus, title, note) in enumerate(panels):
+        left, top, width = 64 + i * 220, 132, 130
+        fig.text(left, top - 22, title, fill="ink", weight=600)
+        fig.text(left, top - 7, note, size=11, fill="muted")
+        fig.line(left, top + 2, left, top + 3 * 36 - 2, stroke="axis")
+        for j, (_, model, color) in enumerate(models):
+            value = c[model][corpus]
+            bar(fig, left, top + 10 + j * 34, width * value / 4.5, 18, color)
+            fig.text(left + width * value / 4.5 + 8, top + 24 + j * 34, f"{value:.2f}", fill="ink")
+    fig.text(24, 280, "The raw model is best on raw pages, whose menus it has learned. On prose and on stories the cleaned text teaches more.", size=11, fill="muted")
+    fig.save("data-loss")
+
+
 # ----------------------------------------------------------- 3a distillation
 
 
@@ -1264,14 +1434,14 @@ def quant_speed():
 
 
 def pipeline(done):
-    fig = Figure(720, 388, "The pipeline", "Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.")
+    fig = Figure(720, 424, "The pipeline", "Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.")
     rows = [
         ("From scratch: a 14M model, trained here", [(1, "Tokenizer"), (2, "Model"), (3, "Pretraining"), (4, "Inference")]),
         ("Post-training: that model, and an open 0.5B one", [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
     ]
-    # (label, name, how far below its stage it hangs: neighbors take turns)
-    leaves = {2: ("2a", "Experts", 0), 3: ("3a", "Distillation", 0), 9: ("9a", "Self-training", 0), 10: ("10a", "Quantization", 1)}
-    left, w, gap, tops = 36, 98, 16, [96, 232]
+    # (label, name, how far below its stage it hangs: a stage's own topics and its neighbors' take turns)
+    leaves = {2: [("2a", "Experts", 0)], 3: [("3a", "Distillation", 0), ("3b", "Data preparation", 1)], 7: [("7a", "Multiple choice", 0)], 9: [("9a", "Self-training", 0)], 10: [("10a", "Quantization", 1)]}
+    left, w, gap, tops = 36, 98, 16, [96, 268]
     for (label, stages), y in zip(rows, tops):
         fig.text(left, y - 12, label, size=11, fill="muted")
         for i, (number, name) in enumerate(stages):
@@ -1282,9 +1452,8 @@ def pipeline(done):
             fig.text(x + 12 + (16 if number >= 10 else 12), y + 25, name, fill="ink", weight=600 if built else 400)
             if i:
                 fig.arrow([(x - gap + 2, y + 20), (x - 2, y + 20)])
-            if number in leaves:
-                # A side topic hangs below the stage it branches from, outside the chain.
-                tag, topic, level = leaves[number]
+            # A side topic hangs below the stage it branches from, outside the chain.
+            for tag, topic, level in reversed(leaves.get(number, [])):
                 built = tag in done
                 width = text_width(f"{tag} {topic}", 11) + 24
                 lx, ly = x if x + width < 700 else x + w - width, y + 52 + level * 36
@@ -1294,8 +1463,8 @@ def pipeline(done):
                 fig.text(lx + 14 + text_width(tag, 11), ly + 18, topic, fill="ink" if built else "ink2", size=11)
     # The chain goes on from the end of the first row to the start of the second.
     end = left + 4 * (w + gap) - gap
-    fig.arrow([(end + 2, tops[0] + 20), (end + 22, tops[0] + 20), (end + 22, 198), (left - 18, 198), (left - 18, tops[1] + 20), (left - 2, tops[1] + 20)])
-    fig.text(left, 372, "A side topic uses what its stage built, and the chain does not depend on it.", size=11, fill="muted")
+    fig.arrow([(end + 2, tops[0] + 20), (end + 22, tops[0] + 20), (end + 22, 232), (left - 18, 232), (left - 18, tops[1] + 20), (left - 2, tops[1] + 20)])
+    fig.text(left, 408, "A side topic uses what its stage built, and the chain does not depend on it.", size=11, fill="muted")
     fig.save("pipeline")
 
 
@@ -1318,6 +1487,12 @@ if os.path.exists("runs/sft-gsm8k/meta.json"):
     finetuning_gsm8k()
 if os.path.exists("runs/eval/gsm8k-sft-gsm8k.json"):
     evaluation_scores()
+if os.path.exists(MMLU):
+    choice_methods()
+    choice_letters()
+    choice_subjects()
+    choice_calibration()
+    choice_models()
 if os.path.exists("runs/rlhf/dpo.jsonl"):
     rlhf_reward()
     rlhf_best_of_n()
@@ -1327,6 +1502,10 @@ if os.path.exists("runs/rlvr/grpo-words-finish.jsonl"):
     rlvr_words()
 if os.path.exists("runs/rlvr/grpo-gsm8k.jsonl"):
     rlvr_gsm8k()
+if os.path.exists("runs/data/funnel.json"):
+    data_funnel()
+if os.path.exists("runs/data/cross.json"):
+    data_loss()
 if os.path.exists("runs/distill/targets.json"):
     distill_targets()
 if os.path.exists("runs/distill/distilled-20min.jsonl"):
@@ -1349,4 +1528,4 @@ if os.path.exists("runs/moe/wide-20min.jsonl"):
     moe_loss()
 if os.path.exists("runs/moe/routing.json"):
     moe_routing()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "3a", "9a", "10a"})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "3a", "3b", "7a", "9a", "10a"})
