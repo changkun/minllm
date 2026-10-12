@@ -1,0 +1,64 @@
+{
+ "comparisons": {
+  "with the tool, against without it (stage 6)": {
+   "from": "gsm8k-sft-gsm8k-lora",
+   "to": "gsm8k-tools-sft-gsm8k-tools-lora",
+   "difference": 0.008339651250947688,
+   "low": -0.014404852160727824,
+   "high": 0.032600454890068235
+  },
+  "calls failing, against calls run": {
+   "from": "gsm8k-tools-sft-gsm8k-tools-lora",
+   "to": "gsm8k-tools-sft-gsm8k-tools-lora-no-execute",
+   "difference": -0.27065959059893857,
+   "low": -0.30022744503411675,
+   "high": -0.24260803639120546
+  },
+  "published, told about the tool, against not": {
+   "from": "gsm8k-qwen",
+   "to": "gsm8k-tools-qwen",
+   "difference": -0.06595905989385899,
+   "low": -0.09401061410159212,
+   "high": -0.03866565579984837
+  }
+ },
+ "runs": {
+  "gsm8k-tools-sft-gsm8k-tools-lora": {
+   "mean": 0.37452615617892343,
+   "error": 0.026130277350643417,
+   "n": 1319,
+   "with_a_call": 0.9863532979529946,
+   "calls_per_problem": 3.384382107657316,
+   "malformed": 0,
+   "written_calculations": 2517,
+   "wrong_calculations": 49,
+   "seconds": 581.4954931735992,
+   "results": 4464,
+   "next_turn_begins_with_it": 4429
+  },
+  "gsm8k-tools-sft-gsm8k-tools-lora-no-execute": {
+   "mean": 0.10386656557998483,
+   "error": 0.016471099568691208,
+   "n": 1319,
+   "with_a_call": 0.9863532979529946,
+   "calls_per_problem": 4.0841546626232,
+   "malformed": 0,
+   "written_calculations": 2441,
+   "wrong_calculations": 1063,
+   "seconds": 678.4083168506622,
+   "results": 5387,
+   "next_turn_begins_with_it": 18
+  },
+  "gsm8k-tools-qwen": {
+   "mean": 0.40181956027293403,
+   "error": 0.026468541263488653,
+   "n": 1319,
+   "with_a_call": 0.00530705079605762,
+   "calls_per_problem": 0.006065200909780136,
+   "malformed": 2,
+   "written_calculations": 634,
+   "wrong_calculations": 46,
+   "seconds": 686.124027967453
+  }
+ }
+}

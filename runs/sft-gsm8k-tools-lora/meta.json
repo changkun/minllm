@@ -1,0 +1,39 @@
+{
+ "family": "qwen",
+ "base": "qwen",
+ "task": "gsm8k-tools",
+ "lora": {
+  "r": 16,
+  "alpha": 32
+ },
+ "step": 900,
+ "val_loss": 0.34453089237213136,
+ "minutes": 85.7648267308871,
+ "trainable_parameters": 8798208,
+ "memory_gb": 20.56036376953125,
+ "args": {
+  "task": "gsm8k-tools",
+  "base": "qwen",
+  "out": "out/sft-gsm8k-tools-lora",
+  "lora": 16,
+  "lora_alpha": null,
+  "steps": 900,
+  "batch_size": 8,
+  "accumulate": 2,
+  "lr": 0.0002,
+  "warmup": 50,
+  "max_len": 1024,
+  "eval_every": 200,
+  "eval_batches": 20,
+  "seed": 0,
+  "safety": null,
+  "safety_share": 0.03,
+  "no_compile": false
+ },
+ "data": {
+  "conversations": 7473,
+  "calls": 23716,
+  "calculator_disagrees": 0,
+  "trained_on": 7229
+ }
+}
