@@ -610,6 +610,126 @@ def evaluation_scores():
     fig.save("evaluation-scores")
 
 
+# ------------------------------------------------------ 4a structured output
+
+FORMS = [
+    ("thinking", "a JSON object: reasoning, then answer"),
+    ("answer", "a JSON object: the answer alone"),
+    ("answer-first", "a JSON object: answer, then reasoning"),
+    ("reason-then-answer", "free text, then the answer as JSON"),
+]
+
+
+def structured_forms():
+    """For every form: how often the reply has it, and how often it is right, asked in the prompt and held to it."""
+    runs = {(form, how): load(f"runs/structured/{form}-{how}.json") for form, _ in FORMS for how in ("asked", "constrained")}
+    free = load("runs/eval/gsm8k-qwen.json")
+    fig = Figure(720, 330, "Asking for a form, and holding a reply to it", f"The 0.5B model on GSM8K's {free['n']:,} test problems. Left: replies in the asked form. Right: right answers, read from the form.")
+    fig.legend(250, 80, [("axis", "asked in the prompt", "dot"), ("s2", "held to the form", "dot"), ("s1", "free text, as in stage 7", "line")])
+    panels = [("In the form", "in_form", 250, 1.0), ("Right", "mean", 500, 0.6)]
+    top = 112
+    for title, key, left, peak in panels:
+        fig.text(left, top - 8, title, fill="ink", weight=600)
+        fig.line(left, top, left, top + 4 * 44, stroke="axis")
+        for j, (form, label) in enumerate(FORMS):
+            y = top + 8 + j * 44
+            if left == 250:
+                fig.text(left - 10, y + 15, label, anchor="end", fill="ink", size=11)
+            for k, (how, color) in enumerate([("asked", "axis"), ("constrained", "s2")]):
+                value = runs[(form, how)][key]
+                width = 150 * value / peak
+                bar(fig, left, y + k * 15, width, 12, color)
+                fig.text(left + max(width, 5) + 6, y + k * 15 + 10, f"{value:.0%}" if key == "in_form" else f"{value:.1%}", size=11, fill="ink" if k else "ink2")
+    x = 500 + 150 * free["mean"] / 0.6
+    fig.line(x, top, x, top + 4 * 44, stroke="s1", width=1.5)
+    fig.text(x + 5, top - 8, f"{free['mean']:.1%}", size=11, fill="s1")
+    fig.text(24, 314, "A form leaves the model room to reason, or none. Where it leaves none, holding the reply to it cannot help.", size=11, fill="muted")
+    fig.save("structured-forms")
+
+
+# ------------------------------------------------------------- 7b the judge
+
+
+def judge_gsm8k():
+    """How often a judge approves right and wrong solutions, by its size and whether it is told the answer."""
+    rows = []
+    for label, name in [("0.5B", "gsm8k-qwen"), ("0.5B, told the answer", "gsm8k-qwen-reference"), ("1.5B", "gsm8k-qwen2.5-1.5b-instruct"), ("1.5B, told the answer", "gsm8k-qwen2.5-1.5b-instruct-reference")]:
+        rows.append((label, load(f"runs/judge/{name}.json")))
+    n = rows[0][1]["n"]
+    fig = Figure(720, 336, "A judge of math solutions", f"The verdicts on the 0.5B model's {n:,} replies to GSM8K's test problems, of which {rows[0][1]['truly_right']:.1%} are right.")
+    fig.legend(64, 80, [("s3", "approves a right solution", "dot"), ("s2", "approves a wrong one", "dot"), ("s1", "agrees with the truth", "dot")])
+    left, top, width = 220, 104, 330
+    fig.line(left, top - 6, left, top + 4 * 50 - 10, stroke="axis")
+    for j, (label, r) in enumerate(rows):
+        y = top + j * 50
+        fig.text(left - 10, y + 18, label, anchor="end", fill="ink")
+        for k, (key, color) in enumerate([("approves_right", "s3"), ("approves_wrong", "s2"), ("accuracy", "s1")]):
+            value = r[key]
+            bar(fig, left, y + k * 12, width * value, 10, color)
+            fig.text(left + max(width * value, 5) + 6, y + k * 12 + 9, f"{value:.0%}", size=10, fill="ink2")
+    fig.text(24, 320, "A judge that approved everything would agree with the truth as often as the replies are right.", size=11, fill="muted")
+    fig.save("judge-gsm8k")
+
+
+def judge_stories():
+    """A judge of stories against the annotator of stage 8, and its preference for the story shown first."""
+    reward = load("runs/rlhf/reward.json")
+    rows = []
+    for label, name in [("0.5B", "stories-qwen"), ("0.5B, told the taste", "stories-qwen-rubric"), ("1.5B", "stories-qwen2.5-1.5b-instruct"), ("1.5B, told the taste", "stories-qwen2.5-1.5b-instruct-rubric")]:
+        rows.append((label, load(f"runs/judge/{name}.json")))
+    n = rows[0][1]["n"]
+    fig = Figure(720, 316, "A judge of stories, against the annotator", f"The {n} held-out comparisons of stage 8, each judged in both orders.")
+    left, top, width, peak = 220, 92, 160, 1.0
+    fig.text(left, top - 10, "Agrees with the annotator", fill="ink", weight=600)
+    fig.text(left + 260, top - 10, "Picks the story shown first", fill="ink", weight=600)
+    for j, (label, r) in enumerate(rows + [("reward model of stage 8", {"agrees_with_annotator": reward["agrees_with_annotator"]})]):
+        y = top + j * 36
+        fig.text(left - 10, y + 13, label, anchor="end", fill="ink")
+        value = r["agrees_with_annotator"]
+        bar(fig, left, y, width * value / peak, 16, "s1" if "picks_slot_a" in r else "axis")
+        fig.text(left + width * value / peak + 6, y + 13, f"{value:.1%}", fill="ink", size=11)
+        if "picks_slot_a" in r:
+            first = r["picks_slot_a"]
+            bar(fig, left + 260, y, width * first, 16, "s2")
+            fig.text(left + 260 + width * first + 6, y + 13, f"{first:.0%}", fill="ink", size=11)
+    for x, value, label in [(left + width * 0.5, 0.5, "chance"), (left + 260 + width * 0.5, 0.5, "no preference")]:
+        fig.line(x, top - 2, x, top + 5 * 36 - 8, stroke="muted", width=1)
+        fig.text(x, top + 5 * 36 + 6, label, size=11, fill="muted", anchor="middle")
+    fig.text(24, 300, "The reward model learned from 3,500 comparisons. The judges were told the request, and in one case what the annotator likes.", size=11, fill="muted")
+    fig.save("judge-stories")
+
+
+# ---------------------------------------------------------------- 8a safety
+
+SAFETY = [
+    ("as published", "qwen", "gsm8k-qwen"),
+    ("fine-tuned on GSM8K, every weight", "sft-gsm8k", "gsm8k-sft-gsm8k"),
+    ("fine-tuned on GSM8K, LoRA", "sft-gsm8k-lora", "gsm8k-sft-gsm8k-lora"),
+    ("every weight, 3% refusals mixed in", "sft-gsm8k-safe", "gsm8k-sft-gsm8k-safe"),
+]
+
+
+def safety_refusals():
+    """How often each model refuses unsafe and safe requests, and what it does on GSM8K."""
+    runs = [(label, load(f"runs/safety/xstest-{name}.json"), load(f"runs/eval/{task}.json")) for label, name, task in SAFETY]
+    first = runs[0][1]
+    fig = Figure(720, 316, "What fine-tuning on math does to refusals", f"The 0.5B model on XSTest's {sum(l == 'unsafe' for l in first['labels'])} unsafe requests and {sum(l == 'safe' for l in first['labels'])} safe ones that sound alike, and on GSM8K.")
+    fig.legend(250, 80, [("s3", "refuses an unsafe request", "dot"), ("s2", "refuses a safe one", "dot")])
+    left, top, width = 250, 104, 230
+    fig.text(left + width + 70, top - 4, "GSM8K solved", fill="ink", weight=600)
+    fig.line(left, top - 6, left, top + 4 * 44 - 6, stroke="axis")
+    for j, (label, r, g) in enumerate(runs):
+        y = top + j * 44
+        fig.text(left - 10, y + 16, label, anchor="end", fill="ink", size=11)
+        for k, (key, color) in enumerate([("refuses_unsafe", "s3"), ("refuses_safe", "s2")]):
+            value = r[key]
+            bar(fig, left, y + k * 15, width * value, 12, color)
+            fig.text(left + max(width * value, 5) + 6, y + k * 15 + 10, f"{value:.1%}", size=11, fill="ink2")
+        fig.text(left + width + 70, y + 18, f"{g['mean']:.1%}", fill="ink")
+    fig.text(24, 300, "A refusal is read off the opening of a reply, as XSTest's authors did automatically. Replies to the unsafe requests are not kept.", size=11, fill="muted")
+    fig.save("safety-refusals")
+
+
 # -------------------------------------------------------- 7a multiple choice
 
 MMLU = "runs/eval/mmlu-summary.json"  # written by scripts/analyze_choice.py
@@ -1434,16 +1554,27 @@ def quant_speed():
 
 
 def pipeline(done):
-    fig = Figure(720, 424, "The pipeline", "Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.")
+    fig = Figure(720, 460, "The pipeline", "Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.")
     rows = [
         ("From scratch: a 14M model, trained here", [(1, "Tokenizer"), (2, "Model"), (3, "Pretraining"), (4, "Inference")]),
         ("Post-training: that model, and an open 0.5B one", [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
     ]
     # (label, name, how far below its stage it hangs: a stage's own topics and its neighbors' take turns)
-    leaves = {2: [("2a", "Experts", 0)], 3: [("3a", "Distillation", 0), ("3b", "Data preparation", 1)], 7: [("7a", "Multiple choice", 0)], 9: [("9a", "Self-training", 0)], 10: [("10a", "Quantization", 1)]}
+    leaves = {
+        2: [("2a", "Experts", 0)],
+        3: [("3a", "Distillation", 0), ("3b", "Data preparation", 1)],
+        4: [("4a", "Structured output", 0)],
+        6: [("6a", "Tool calling", 0)],
+        7: [("7a", "Multiple choice", 1), ("7b", "Judge", 2)],
+        8: [("8a", "Safety", 0)],
+        9: [("9a", "Self-training", 1)],
+        10: [("10a", "Quantization", 0)],
+    }
     left, w, gap, tops = 36, 98, 16, [96, 268]
+    right_ends = []  # where the side topics of each row end, at the right
     for (label, stages), y in zip(rows, tops):
         fig.text(left, y - 12, label, size=11, fill="muted")
+        ends = {}  # per level, where the last side topic ended: the next one starts after it
         for i, (number, name) in enumerate(stages):
             x = left + i * (w + gap)
             built = number in done
@@ -1457,14 +1588,18 @@ def pipeline(done):
                 built = tag in done
                 width = text_width(f"{tag} {topic}", 11) + 24
                 lx, ly = x if x + width < 700 else x + w - width, y + 52 + level * 36
+                lx = max(lx, ends.get(level, 0) + 6)
+                ends[level] = lx + width
                 fig.line(x + w / 2, y + 40, x + w / 2, ly, stroke="s1" if built else "axis", width=1.5)
                 fig.rect(lx, ly, width, 28, fill="surface", stroke="s1" if built else "axis", rx=5)
                 fig.text(lx + 10, ly + 18, tag, fill="muted", size=11)
                 fig.text(lx + 14 + text_width(tag, 11), ly + 18, topic, fill="ink" if built else "ink2", size=11)
-    # The chain goes on from the end of the first row to the start of the second.
+        right_ends.append(max(ends.values(), default=0))
+    # The chain goes on from the end of the first row to the start of the second, past its side topics.
     end = left + 4 * (w + gap) - gap
-    fig.arrow([(end + 2, tops[0] + 20), (end + 22, tops[0] + 20), (end + 22, 232), (left - 18, 232), (left - 18, tops[1] + 20), (left - 2, tops[1] + 20)])
-    fig.text(left, 408, "A side topic uses what its stage built, and the chain does not depend on it.", size=11, fill="muted")
+    turn = max(end + 22, right_ends[0] + 12)
+    fig.arrow([(end + 2, tops[0] + 20), (turn, tops[0] + 20), (turn, 232), (left - 18, 232), (left - 18, tops[1] + 20), (left - 2, tops[1] + 20)])
+    fig.text(left, 444, "A side topic uses what its stage built, and the chain does not depend on it.", size=11, fill="muted")
     fig.save("pipeline")
 
 
@@ -1487,6 +1622,13 @@ if os.path.exists("runs/sft-gsm8k/meta.json"):
     finetuning_gsm8k()
 if os.path.exists("runs/eval/gsm8k-sft-gsm8k.json"):
     evaluation_scores()
+if os.path.exists("runs/structured/reason-then-answer-constrained.json"):
+    structured_forms()
+if os.path.exists("runs/eval/gsm8k-sft-gsm8k-safe.json"):
+    safety_refusals()
+if os.path.exists("runs/judge/stories-qwen2.5-1.5b-instruct-rubric.json"):
+    judge_gsm8k()
+    judge_stories()
 if os.path.exists(MMLU):
     choice_methods()
     choice_letters()
@@ -1528,4 +1670,4 @@ if os.path.exists("runs/moe/wide-20min.jsonl"):
     moe_loss()
 if os.path.exists("runs/moe/routing.json"):
     moe_routing()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "3a", "3b", "7a", "9a", "10a"})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "3a", "3b", "4a", "6a", "7a", "7b", "8a", "9a", "10a"})
