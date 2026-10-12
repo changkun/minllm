@@ -14,9 +14,9 @@ Most of the work of pretraining, by the account of those who do it, is
 getting from what a crawler collects to text worth training on.
 
 This note does that on a small piece of the real thing: eight files of
-Common Crawl, a public crawl of the web, 200,000 pages. It uses the
-tokenizer of stage 1 and the training loop of stage 3 unchanged, on other
-text.
+Common Crawl, a public crawl of the web, 200,000 pages. It uses the code
+of stages 1 and 3 unchanged, on other text: a new tokenizer trained by
+stage 1's script, and stage 3's training loop.
 
 ## What a crawl looks like
 
@@ -196,13 +196,15 @@ for v in raw rules clean; do
   uv run scripts/encode_data.py --data data/web/$v --tokenizer out/web/tokenizer.json
   uv run scripts/train.py --data data/web/$v --tokenizer out/web/tokenizer.json --out out/web-$v --steps 3000
 done
+mkdir -p data/web/stories && cp data/tinystories/valid.txt data/web/stories/   # stories, for the web tokenizer
+uv run scripts/encode_data.py --data data/web/stories --tokenizer out/web/tokenizer.json --splits valid
 uv run scripts/cross_loss.py --models out/web-raw out/web-rules out/web-clean \
     --data data/web/raw data/web/rules data/web/clean data/web/stories \
     --tokenizer out/web/tokenizer.json --out runs/data/cross.json
 ```
 
-`data/web/stories/valid.txt` is a copy of TinyStories' validation file,
-encoded with the web tokenizer.
+The trainings take 10 minutes each. Each writes its log to its `out/`
+directory, and the three logs are copied to `runs/data/`.
 
 ## Exercises
 
