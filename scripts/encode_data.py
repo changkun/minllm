@@ -3,6 +3,7 @@ Encode TinyStories with the trained tokenizer. Each split becomes one flat
 array of token ids on disk, the form the training loop reads.
 
     uv run scripts/encode_data.py
+    uv run scripts/encode_data.py --data data/web/clean --tokenizer out/web/tokenizer.json    # another corpus, another tokenizer
 """
 
 import argparse
@@ -15,13 +16,14 @@ from minllm.tokenizer import Tokenizer
 parser = argparse.ArgumentParser()
 parser.add_argument("--data", default="data/tinystories")
 parser.add_argument("--tokenizer", default="out/tokenizer.json")
+parser.add_argument("--splits", nargs="+", default=["valid", "train"])
 args = parser.parse_args()
 
 tok = Tokenizer.load(args.tokenizer)
 assert tok.vocab_size <= 1 << 16, "token ids are stored as 16-bit integers"
 eot = tok.special_tokens[EOT]
 
-for split in ["valid", "train"]:
+for split in args.splits:
     start = time.time()
     ids = array("H")  # unsigned 16-bit
     n_stories = 0
