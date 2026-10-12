@@ -91,9 +91,12 @@ a:hover { text-decoration: underline; }
   .thread .leaf .num { font-size: 12px; }
   .thread .leaf.current { font-size: 12px; }
 }
-/* Narrower than this, the name of the current stage no longer fits between its neighbors. */
+/* Narrower than this, the name of the current stage no longer fits between its neighbors,
+   and the side topics of neighboring stages run into each other: only those of the stage
+   being read are shown. */
 @media (max-width: 920px) {
   .thread .stage .name, .thread .stage.current .name, .thread li.here > .stage .name { display: none; }
+  .thread li:not(.here) .leaves { display: none; }
 }
 @media (max-width: 700px) {
   :root { --top: 54px; }
