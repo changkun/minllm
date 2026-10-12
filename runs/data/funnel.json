@@ -1,0 +1,360 @@
+{
+ "crawl": "CC-MAIN-2024-33",
+ "files_in_crawl": 90000,
+ "files": [
+  "crawl-data/CC-MAIN-2024-33/segments/1722640353668.0/wet/CC-MAIN-20240802234508-20240803024508-00000.warc.wet.gz",
+  "crawl-data/CC-MAIN-2024-33/segments/1722640398413.11/wet/CC-MAIN-20240804102507-20240804132507-00100.warc.wet.gz",
+  "crawl-data/CC-MAIN-2024-33/segments/1722640455981.23/wet/CC-MAIN-20240805211050-20240806001050-00200.warc.wet.gz",
+  "crawl-data/CC-MAIN-2024-33/segments/1722640690787.34/wet/CC-MAIN-20240807080717-20240807110717-00300.warc.wet.gz",
+  "crawl-data/CC-MAIN-2024-33/segments/1722640740684.46/wet/CC-MAIN-20240808190926-20240808220926-00400.warc.wet.gz",
+  "crawl-data/CC-MAIN-2024-33/segments/1722640790444.57/wet/CC-MAIN-20240810061945-20240810091945-00500.warc.wet.gz",
+  "crawl-data/CC-MAIN-2024-33/segments/1722641008125.69/wet/CC-MAIN-20240811172916-20240811202916-00600.warc.wet.gz",
+  "crawl-data/CC-MAIN-2024-33/segments/1722641063659.79/wet/CC-MAIN-20240813043946-20240813073946-00700.warc.wet.gz",
+  "crawl-data/CC-MAIN-2024-33/segments/1722641118845.90/wet/CC-MAIN-20240814155004-20240814185004-00800.warc.wet.gz"
+ ],
+ "example": {
+  "url": "http://3psalida.com/registration/",
+  "lines": [
+   [
+    "3P Salida Pole Pedal Paddle - Get Multi-Disciplinated - Registration/Schedule",
+    false
+   ],
+   [
+    "Home",
+    false
+   ],
+   [
+    "2024 Salida Pole Pedal Paddle Sponsors",
+    false
+   ],
+   [
+    "Maps",
+    false
+   ],
+   [
+    "Registration/Schedule",
+    false
+   ],
+   [
+    "Rules/Regulations",
+    false
+   ],
+   [
+    "Results",
+    false
+   ],
+   [
+    "2024 Salida 3P Results",
+    false
+   ],
+   [
+    "2023 Salida 3P Results",
+    false
+   ],
+   [
+    "2022 Salida 3P Results",
+    false
+   ],
+   [
+    "2021 Salida 3P Results",
+    false
+   ],
+   [
+    "2019 3P Results",
+    false
+   ],
+   [
+    "2018 3P Results",
+    false
+   ],
+   [
+    "2011 Results by Category",
+    false
+   ],
+   [
+    "2011 Results Overall",
+    false
+   ],
+   [
+    "2010 Results by Category",
+    false
+   ],
+   [
+    "2010 Results Overall",
+    false
+   ],
+   [
+    "2009 Results by Category",
+    false
+   ],
+   [
+    "2009 Overall Results",
+    false
+   ],
+   [
+    "Home",
+    false
+   ],
+   [
+    "Registration/Schedule",
+    false
+   ],
+   [
+    "Registration/Schedule",
+    false
+   ],
+   [
+    "Register HERE",
+    false
+   ],
+   [
+    "Participation is capped at 200 registrants.",
+    true
+   ],
+   [
+    "March 1 -March 31: $75 individual, $150 team (racers receive t-shirt)",
+    false
+   ],
+   [
+    "March 31 -April 9: $75 individual, $150 team (no t-shirt)",
+    false
+   ],
+   [
+    "There\u2019s a $10 fee for ACA insurance that will be added to your registration, unless you have an ACA ",
+    true
+   ],
+   [
+    "All registration is online. No registration will be offered after Tuesday 4/9/24.",
+    true
+   ],
+   [
+    "Schedule",
+    false
+   ],
+   [
+    "4/13/24 3-6 pm: Participant check-in and bib pick-up will take place at the riverside patio behind A",
+    true
+   ],
+   [
+    "4/13/24 5 pm, 6pm: There will be a competitor meeting at 5 pm and 6 pm next to the registration tent",
+    true
+   ],
+   [
+    "4/14/24 9am: 3P volunteers will be on hand to watch bikes at Transition 1, Fooses Creek trailhead pa",
+    true
+   ],
+   [
+    "4/14/24 10am: Race start! Skiers leave Monarch Pass parking lot in one-minute waves of 10-15 skiers.",
+    true
+   ],
+   [
+    "4/14/24 1pm \u2013 5pm: Your registration includes a meal and beer at the afterparty at Highside Bar and ",
+    true
+   ],
+   [
+    "(c) 2024 3P Salida Pole Pedal Paddle",
+    false
+   ],
+   [
+    "Top",
+    false
+   ]
+  ]
+ },
+ "train": {
+  "steps": [
+   {
+    "step": "every page of the files",
+    "pages": 201520,
+    "characters": 1433663440
+   },
+   {
+    "step": "tagged English by the crawl",
+    "pages": 89351,
+    "characters": 630026451
+   },
+   {
+    "step": "lines of prose",
+    "pages": 89351,
+    "characters": 195847481
+   },
+   {
+    "step": "pages that pass the rules",
+    "pages": 52532,
+    "characters": 170225183
+   },
+   {
+    "step": "without exact copies",
+    "pages": 51052,
+    "characters": 167350068
+   },
+   {
+    "step": "without near copies",
+    "pages": 49903,
+    "characters": 163203880
+   },
+   {
+    "step": "without lines shared by pages",
+    "pages": 47386,
+    "characters": 153938585
+   }
+  ],
+  "dropped_by_rule": {
+   "too short": 32379,
+   "repeats itself": 2554,
+   "not English": 1172,
+   "not words": 624,
+   "symbols": 90
+  },
+  "addresses_replaced": 3575,
+  "shared_lines": 8252,
+  "most_shared_lines": [
+   [
+    "Save my name, email, and website in this browser for the next time I comment.",
+    1965
+   ],
+   [
+    "Choosing a selection results in a full page refresh.",
+    1503
+   ],
+   [
+    "Opens in a new window.",
+    969
+   ],
+   [
+    "Use tab to navigate through the menu items.",
+    964
+   ],
+   [
+    "Your cart is currently empty.",
+    781
+   ],
+   [
+    "Performance cookies are used to understand and analyze the key performance indexes of the website which helps in delivering a better user experience for the visitors.",
+    662
+   ],
+   [
+    "This website uses cookies to improve your experience while you navigate through the website. Out of these, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities of the website. We also use third-party cookies that help us analyze and understand how you use this website. These cookies will be stored in your browser only with your consent. You also have the option to opt-out of these cookies. But opting out of some of these cookies may affect your browsing experience.",
+    547
+   ],
+   [
+    "There are no reviews yet.",
+    488
+   ],
+   [
+    "This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.",
+    472
+   ],
+   [
+    "No products in the cart.",
+    464
+   ],
+   [
+    "Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics the number of visitors, bounce rate, traffic source, etc.",
+    438
+   ],
+   [
+    "Advertisement cookies are used to provide visitors with relevant ads and marketing campaigns. These cookies track visitors across websites and collect information to provide customized ads.",
+    427
+   ]
+  ]
+ },
+ "valid": {
+  "steps": [
+   {
+    "step": "every page of the files",
+    "pages": 24727,
+    "characters": 175151451
+   },
+   {
+    "step": "tagged English by the crawl",
+    "pages": 11012,
+    "characters": 78574620
+   },
+   {
+    "step": "lines of prose",
+    "pages": 11012,
+    "characters": 23843343
+   },
+   {
+    "step": "pages that pass the rules",
+    "pages": 6305,
+    "characters": 20450383
+   },
+   {
+    "step": "without exact copies",
+    "pages": 6190,
+    "characters": 20131112
+   },
+   {
+    "step": "without near copies",
+    "pages": 6101,
+    "characters": 19911034
+   },
+   {
+    "step": "without lines shared by pages",
+    "pages": 5909,
+    "characters": 19234041
+   }
+  ],
+  "dropped_by_rule": {
+   "too short": 4136,
+   "repeats itself": 332,
+   "not English": 144,
+   "not words": 85,
+   "symbols": 10
+  },
+  "addresses_replaced": 413,
+  "shared_lines": 662,
+  "most_shared_lines": [
+   [
+    "Save my name, email, and website in this browser for the next time I comment.",
+    226
+   ],
+   [
+    "Choosing a selection results in a full page refresh.",
+    174
+   ],
+   [
+    "Your cart is currently empty.",
+    113
+   ],
+   [
+    "Use tab to navigate through the menu items.",
+    105
+   ],
+   [
+    "Opens in a new window.",
+    95
+   ],
+   [
+    "Performance cookies are used to understand and analyze the key performance indexes of the website which helps in delivering a better user experience for the visitors.",
+    88
+   ],
+   [
+    "This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.",
+    80
+   ],
+   [
+    "This website uses cookies to improve your experience while you navigate through the website. Out of these, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities of the website. We also use third-party cookies that help us analyze and understand how you use this website. These cookies will be stored in your browser only with your consent. You also have the option to opt-out of these cookies. But opting out of some of these cookies may affect your browsing experience.",
+    75
+   ],
+   [
+    "There are no reviews yet.",
+    72
+   ],
+   [
+    "Analytical cookies are used to understand how visitors interact with the website. These cookies help provide information on metrics the number of visitors, bounce rate, traffic source, etc.",
+    60
+   ],
+   [
+    "Advertisement cookies are used to provide visitors with relevant ads and marketing campaigns. These cookies track visitors across websites and collect information to provide customized ads.",
+    59
+   ],
+   [
+    "Functional cookies help to perform certain functionalities like sharing the content of the website on social media platforms, collect feedbacks, and other third-party features.",
+    59
+   ]
+  ]
+ }
+}
