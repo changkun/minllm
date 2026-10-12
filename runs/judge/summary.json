@@ -1,0 +1,50 @@
+{
+ "gsm8k-qwen-reference": {
+  "auc": 0.9348942821390147,
+  "threshold": 0.868,
+  "accuracy_at_half": 0.45220030349013657,
+  "accuracy_at_threshold": 0.8391502276176024,
+  "measured_on": 659
+ },
+ "gsm8k-qwen": {
+  "auc": 0.6431462318820503,
+  "threshold": 0.9099,
+  "accuracy_at_half": 0.456752655538695,
+  "accuracy_at_threshold": 0.5538694992412747,
+  "measured_on": 659
+ },
+ "gsm8k-qwen2.5-1.5b-instruct-reference": {
+  "auc": 0.978334649323304,
+  "threshold": 0.3695,
+  "accuracy_at_half": 0.9544764795144158,
+  "accuracy_at_threshold": 0.9757207890743551,
+  "measured_on": 659
+ },
+ "gsm8k-qwen2.5-1.5b-instruct": {
+  "auc": 0.6932658253565871,
+  "threshold": 0.6424,
+  "accuracy_at_half": 0.5720789074355084,
+  "accuracy_at_threshold": 0.6525037936267072,
+  "measured_on": 659
+ },
+ "stories-qwen-rubric": {
+  "consistent_pairs": 75,
+  "agrees_where_consistent": 0.5066666666666667,
+  "mean_p_of_a": 0.42648450000000004
+ },
+ "stories-qwen": {
+  "consistent_pairs": 1,
+  "agrees_where_consistent": 0.0,
+  "mean_p_of_a": 0.652065
+ },
+ "stories-qwen2.5-1.5b-instruct-rubric": {
+  "consistent_pairs": 36,
+  "agrees_where_consistent": 0.7222222222222222,
+  "mean_p_of_a": 0.27905470000000004
+ },
+ "stories-qwen2.5-1.5b-instruct": {
+  "consistent_pairs": 16,
+  "agrees_where_consistent": 0.75,
+  "mean_p_of_a": 0.2097047
+ }
+}
