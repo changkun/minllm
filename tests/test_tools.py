@@ -1,0 +1,76 @@
+import json
+
+from minllm import chat, pretrained, tools
+
+QWEN = "data/qwen2.5-0.5b-instruct"
+
+
+def test_calculate():
+    assert tools.calculate("48/2") == "24"
+    assert tools.calculate("16 - 3 - 4") == "9"
+    assert tools.calculate("(48 + 24) / 5") == "14.4"
+    assert tools.calculate("1,200 * 0.15") == "180"
+    assert tools.calculate("2**10") == "1024"
+    assert tools.calculate("1/3") == "0.333333"
+    assert tools.calculate("1/0").startswith("error")
+    assert tools.calculate("__import__('os')").startswith("error")  # nothing but arithmetic is evaluated
+    assert tools.calculate("9**9**9").startswith("error")
+
+
+def test_system_prompt_is_the_templates():
+    # The published chat template, as Qwen wrote it, must give the same text.
+    jinja = json.load(open(f"{QWEN}/tokenizer_config.json"))["chat_template"]
+    expected = jinja.split("{{- '<|im_start|>system\\n' }}")[1]
+    assert "# Tools\\n\\nYou may call one or more functions" in expected
+    text = tools.system_prompt(pretrained.SYSTEM_PROMPT, [tools.CALCULATE])
+    assert text.startswith(pretrained.SYSTEM_PROMPT + "\n\n# Tools\n\nYou may call one or more functions to assist with the user query.")
+    assert '\n<tools>\n{"type": "function", "function": {"name": "calculate"' in text
+    assert text.endswith('<tool_call>\n{"name": <function-name>, "arguments": <args-json-object>}\n</tool_call>')
+
+
+def test_gsm8k_solution_becomes_calls():
+    examples = tools.gsm8k_conversations("train", "system")
+    first = examples[0]
+    roles = [m["role"] for m in first["messages"]]
+    assert roles[:2] == ["system", "user"] and roles[-1] == "assistant"
+    assert roles.count("assistant") == first["marks"] + 1
+    # Natalia sold 48/2 = <<48/2=24>>24 clips in May. ...
+    assert first["messages"][2]["content"] == 'Natalia sold 48/2 =\n<tool_call>\n{"name": "calculate", "arguments": {"expression": "48/2"}}\n</tool_call>'
+    assert first["messages"][3]["content"] == "<tool_response>\n24\n</tool_response>"
+    assert first["messages"][4]["content"].startswith("24 clips in May.")
+    assert first["messages"][-1]["content"].endswith("#### 72")
+    # every mark of every solution is a call that the calculator can do
+    results = [m["content"] for e in examples for m in e["messages"] if m["role"] == "user" and m["content"].startswith("<tool_response>")]
+    assert sum(r.startswith("<tool_response>\nerror") for r in results) < 0.01 * len(results)
+
+
+def test_calls_are_control_tokens_in_the_assistants_turn_only():
+    tok = pretrained.load_tokenizer(QWEN)
+    call = tools.call_text("calculate", {"expression": "1+1"})
+    messages = [{"role": "user", "content": call}, {"role": "assistant", "content": "x\n" + call}]
+    ids, labels = tools.training_example(tok, messages)
+    start, end = tok.special_tokens["<tool_call>"], tok.special_tokens["</tool_call>"]
+    assert ids.count(start) == 1 and ids.count(end) == 1  # the user's copy stays characters
+    assert all(label == token for label, token in zip(labels, ids) if label != -100)
+    learned = [token for label, token in zip(labels, ids) if label != -100]
+    assert tok.decode(learned) == "x\n" + call + chat.IM_END
+    # without calls, the same as stage 6's encoding
+    plain = [{"role": "user", "content": "hi"}, {"role": "assistant", "content": "hello"}]
+    assert tools.training_example(tok, plain) == chat.training_example(tok, plain)
+    assert tools.encode(tok, plain)[0] == chat.encode(tok, plain)
+
+
+def test_calls_are_read_from_a_reply():
+    reply = "First\n" + tools.call_text("calculate", {"expression": "2*3"}) + "\n<tool_call>\nnot json\n</tool_call>"
+    assert tools.calls(reply) == [("calculate", {"expression": "2*3"}), (None, "\nnot json\n")]
+    assert tools.calls("no calls here") == []
+
+
+def test_written_calculations():
+    found = tools.written_calculations("She has 16 - 3 - 4 = 9 eggs, sells them for 9 * 2 = $18, and 18 + 5 = 22 is wrong.")
+    assert found == [("16 - 3 - 4", "9", True), ("9 * 2", "18", True), ("18 + 5", "22", False)]
+    # a result that goes on is not a result
+    assert tools.written_calculations("so 1 - 2/3 = 1/3 of it") == []
+    assert tools.written_calculations("then 3x + 9 - 1 = 87, so") == []  # part of an equation
+    assert tools.written_calculations("he walks 80/7 = 11.43 km") == [("80/7", "11.43", True)]  # rounded
+    assert tools.written_calculations("he walks 80/7 = 11.5 km") == [("80/7", "11.5", False)]
