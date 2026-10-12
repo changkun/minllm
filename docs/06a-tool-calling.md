@@ -14,8 +14,9 @@ conversation for the model to go on from. What makes a model use tools
 well is training data in which calls and results appear where they help.
 So tool calling is fine-tuning, on conversations of a particular shape.
 
-It uses stage 6's fine-tuning and LoRA, stage 7's evaluation, and the form
-of [4a](04a-structured-output.md) for its calls.
+It uses stage 6's fine-tuning and LoRA and stage 7's evaluation. The
+constrained decoding of [4a](04a-structured-output.md) can hold every call
+to its schema, which exercise 3 tries.
 
 ## A call is text
 
