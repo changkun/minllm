@@ -9,12 +9,12 @@ format that other tools run.
 
 These ten stages are the pipeline, and each builds on the one before. Side
 topics branch off a single stage for whoever wants to go further there: a
-mixture of experts in place of the model's MLP, distillation from a larger
-model and text from the web for pretraining, structured output in
-inference, tool calling in fine-tuning, multiple-choice benchmarks and
-model judges in evaluation, refusals in RLHF, self-training in place of
-reinforcement learning, and quantization of the exported file. The
-pipeline does not depend on them.
+mixture of experts in place of the model's MLP; distillation from a larger
+model, text from the web and scaling laws for pretraining; structured output
+in inference; tool calling in fine-tuning; multiple-choice benchmarks and
+model judges in evaluation; refusals in RLHF; self-training in place of
+reinforcement learning; and quantization of the exported file. The pipeline
+does not depend on them.
 
 ![The ten stages of the pipeline, and the side topics that branch off them](docs/figures/pipeline.svg)
 
@@ -59,6 +59,7 @@ its own.
 | 2a | [Mixture of experts](docs/02a-moe.md) | 2, the model | A router and eight expert MLPs in place of the MLP of every block, the load-balancing loss, three ways to hand tokens to experts, and a look at what the routers learn |
 | 3a | [Distillation](docs/03a-distillation.md) | 3, pretraining | A second model as a teacher in the training loop: the student learns from the teacher's whole prediction at every position, and not only from the token that came next |
 | 3b | [Data preparation](docs/03b-data.md) | 3, pretraining | From pages of Common Crawl to text worth training on: the crawl's language tags, rules for lines and pages, placeholders for addresses, and copies found by hash and by MinHash, with the model of stage 3 trained on each version |
+| 3c | [Scaling laws](docs/03c-scaling.md) | 3, pretraining | The model of stage 3 at eight sizes and four compute budgets: the best size for each budget, how many tokens per parameter, and a law fitted on small runs that predicts larger ones |
 | 4a | [Structured output](docs/04a-structured-output.md) | 4, inference | Constrained decoding: a JSON schema as a regular expression, its automaton over bytes walked by the whole vocabulary, and a mask at every step that keeps a reply in the form and lets it finish within its length |
 | 6a | [Tool calling](docs/06a-tool-calling.md) | 6, fine-tuning | Fine-tuning on conversations in which the model calls a calculator and reads its result, made from GSM8K's own calculator marks, and the loop that runs the calls |
 | 7a | [Multiple choice](docs/07a-multiple-choice.md) | 7, evaluation | A benchmark scored without letting the model write: the probability it gives each answer letter of MMLU's questions, and what the prompt, the order of the options and the way of reading the answer do to the score |
@@ -93,6 +94,7 @@ From the side topics:
 | 2a | A mixture of eight experts per block, two of them active, has the dense model's arithmetic per token and three times its parameters. Step for step it learns more: a validation loss of 1.423 against 1.465 after 6,000 steps. Minute for minute it learns less: 1.491 against 1.465 after 20 minutes. Without the load-balancing loss, 24 of its 64 experts go unused. On this GPU it generates at a sixth of the speed of a dense model with the same parameters, and the gap closes as the models get wider. Exported, it loads as a Mixtral and gives the same logits. |
 | 3a | Taught by a 42M model of the same kind, the 14M model of stage 3 ends at a validation loss of 1.418 where the text alone gave 1.465, and the teacher has 1.387: 60% of the way, with no change to the model. Taught by the teacher alone, without ever being told which token came next, it reaches 1.445. A step with a teacher takes 1.7 times as long, and given the same 20 minutes the text alone still wins, 1.465 against 1.481. |
 | 3b | Of 201,520 pages of Common Crawl, 1.4 billion characters, the usual rules leave a tenth. Less than half is tagged English, and of that only 31% is sentences and not menus. The 14M model trained on the raw pages learns to write menus, and has the lowest loss of all on its own held-out text. On held-out prose it has 3.52 where the model trained on the cleaned text has 3.30, and on stories that neither saw 3.35 against 3.03. Removing copies, a tenth of what the rules passed, adds 0.02. |
+| 3c | Trained at eight sizes from 0.36M to 30M parameters and four budgets from 3e14 to 1e16 operations, the model of stage 3 does best on 16 to 23 tokens per parameter, near Chinchilla's 20. A law L(N, D) fitted on the three smaller budgets predicts every run at the largest within 0.014. Stage 3's 14M model on 98M tokens is larger than the law would choose, 9.8M on 142M tokens, and the law puts the cost at 0.008 in loss. |
 | 4a | Asked for its answer as JSON, the 0.5B model gives JSON of the form in 18.4% of GSM8K's problems; held to it by constrained decoding, in all of them, at a cost of 3% in speed. What is right depends on the form: 7.6% with the answer alone, 29.5% with the reasoning inside the object, 34.6% with free text first, against 46.8% in its own format. Held to a form that ends where it does not want to stop, the model runs on into its token limit. |
 | 6a | Told about a calculator in the format it was trained on, the published model calls it in 0.5% of GSM8K's problems and solves 6.6 points fewer. Fine-tuned with stage 6's recipe on the same solutions with every calculation turned into a call, it calls in 98.6%, never malformed, and solves 37.5% against 36.6% without the tool, within noise: its mistakes are in what it calculates, not how. With every call failing it solves 10.4%. |
 | 7a | Asked the way the authors of MMLU asked, the 0.5B model answers 46.9% of the 14,042 questions in ten minutes, where its makers report 47.5%. Put into a chat turn, the same questions score 38.9%: there the model wants to begin a sentence, and only a third of its probability is on a letter at all. Moving the options round leaves the score where it was and changes which option the model picks on more than half of the questions, and it answers 27.6% right in every order. At 4 bits it loses 2.8 points here, against a third of its score on GSM8K. |
