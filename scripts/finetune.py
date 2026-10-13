@@ -5,8 +5,10 @@ Fine-tune a model on a task: show it conversations and train it on the replies.
     uv run scripts/finetune.py --task gsm8k --lora 16     # the 0.5B model learns grade-school math, through LoRA
     uv run scripts/finetune.py --task gsm8k               # the same, training every weight
     uv run scripts/finetune.py --task gsm8k-tools --lora 16 --accumulate 2   # the same problems, with the arithmetic done by a tool
+    uv run scripts/finetune.py --task gsm8k-traces --accumulate 4            # on a reasoning model's thinking (scripts/make_traces.py)
 
-See docs/06-finetuning.md, and docs/06a-tool-calling.md for the last one.
+See docs/06-finetuning.md, docs/06a-tool-calling.md for the tool, and
+docs/09c-reasoning.md for the thinking.
 """
 
 import argparse
@@ -26,7 +28,8 @@ from minllm.inference import generate
 from minllm.pretrained import SYSTEM_PROMPT
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--task", choices=["words", "gsm8k", "gsm8k-tools"], required=True)
+parser.add_argument("--task", choices=["words", "gsm8k", "gsm8k-tools", "gsm8k-traces"], required=True)
+parser.add_argument("--traces", default="data/reasoning/traces.jsonl", help="for gsm8k-traces: the thinking that scripts/make_traces.py kept")
 parser.add_argument("--base", default=None, help="the model to start from: a directory, or qwen")
 parser.add_argument("--out", default=None)
 parser.add_argument("--lora", type=int, default=0, help="rank of the LoRA adapters; 0 trains every weight")
@@ -51,13 +54,15 @@ args = parser.parse_args()
 small = args.task == "words"
 args.base = args.base or ("out/base" if small else "qwen")
 args.out = args.out or f"out/sft-{args.task}" + ("-lora" if args.lora else "")
-args.steps = args.steps or (2000 if small else 900)
+args.steps = args.steps or (2000 if small else None if args.task == "gsm8k-traces" else 900)
 args.batch_size = args.batch_size or (64 if small else 8)
 args.lr = args.lr or (3e-4 if small else 2e-4 if args.lora else 1e-5)
 args.max_len = args.max_len or (256 if small else 384)
 plain_max_len = args.max_len
 if args.task == "gsm8k-tools":
     args.max_len = 1024  # the tools take room in the system prompt, and every call a few tokens more
+if args.task == "gsm8k-traces":
+    args.max_len = 2400  # thinking of up to 2,048 tokens, and the problem
 
 device = pick_device()
 torch.manual_seed(args.seed)
@@ -79,6 +84,14 @@ else:
         fits = [len(chat.training_example(tok, e["messages"] + [{"role": "assistant", "content": e["answer"]}])[0]) <= plain_max_len for e in examples]
         examples = [dict(c, fits=f) for c, f in zip(tools.gsm8k_conversations("train", SYSTEM_PROMPT), fits)]
     train, held_out = examples[:-200], examples[-200:]  # the test split stays untouched for evaluation
+    if args.task == "gsm8k-traces":
+        # The problems as stage 6 asks them, each answered with the teacher's
+        # thinking and answer, and a last line in the form that stage 7 reads.
+        with open(args.traces, encoding="utf-8") as f:
+            traces = [json.loads(line) for line in f]
+        examples = [{"messages": examples[t["index"]]["messages"], "answer": f"<think>\n{t['trace'].strip()}\n#### {t['number']}"} for t in traces]
+        train, held_out = examples[:-100], examples[-100:]
+        args.steps = args.steps or round(2 * len(train) / args.batch_size)  # two passes over the thinking
     if args.safety:
         # Refusals mixed in, as a small share of what is trained on (docs/08a-safety.md).
         with open(args.safety, encoding="utf-8") as f:
