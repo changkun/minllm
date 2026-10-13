@@ -90,7 +90,8 @@ changes their dot product only through `m - n`, the score depends on the
 pairs of dimensions, each pair at its own speed, from one radian per token
 down to about `1/theta` radians per token. `test_rope_is_relative` checks the
 property: the score between positions 5 and 2 equals the score between 45
-and 42.
+and 42. The side topic [2b](02b-context.md) reads the model past the window
+it was trained on, where the slow pairs reach angles it has never seen.
 
 **SwiGLU instead of a GELU MLP.** The classic MLP is `down(act(up(x)))`.
 SwiGLU uses two projections and lets one gate the other:

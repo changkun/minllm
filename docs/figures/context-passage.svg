@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="424" viewBox="0 0 720 424" role="img"><title>A passage seen before, and how far back the model still finds it</title><desc>How much lower the loss on a passage of 48 tokens is when the same passage came earlier, against its distance.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="423" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">A passage seen before, and how far back the model still finds it</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">How much lower the loss on a passage of 48 tokens is when the same passage came earlier, against its distance.</text>
+<text class="f-ink" x="64" y="92" font-size="12" text-anchor="start" font-weight="600">Stretched, without training</text>
+<line class="s-grid" x1="64" y1="284" x2="332" y2="284" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="288" font-size="11" text-anchor="end">0</text>
+<line class="s-grid" x1="64" y1="241.1" x2="332" y2="241.1" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="245.1" font-size="11" text-anchor="end">0.5</text>
+<line class="s-grid" x1="64" y1="198.3" x2="332" y2="198.3" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="202.3" font-size="11" text-anchor="end">1</text>
+<line class="s-grid" x1="64" y1="155.4" x2="332" y2="155.4" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="159.4" font-size="11" text-anchor="end">1.5</text>
+<line class="s-grid" x1="64" y1="112.6" x2="332" y2="112.6" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="116.6" font-size="11" text-anchor="end">2</text>
+<line class="s-axis" x1="64" y1="284" x2="332" y2="284" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="64" y1="284" x2="64" y2="288" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="64" y="301" font-size="11" text-anchor="middle">0</text>
+<line class="s-axis" x1="131" y1="284" x2="131" y2="288" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="131" y="301" font-size="11" text-anchor="middle">512</text>
+<line class="s-axis" x1="198" y1="284" x2="198" y2="288" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="198" y="301" font-size="11" text-anchor="middle">1,024</text>
+<line class="s-axis" x1="265" y1="284" x2="265" y2="288" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="265" y="301" font-size="11" text-anchor="middle">1,536</text>
+<line class="s-axis" x1="332" y1="284" x2="332" y2="288" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="332" y="301" font-size="11" text-anchor="middle">2,048</text>
+<text class="f-muted" x="198" y="320" font-size="11" text-anchor="middle">tokens between the two copies</text>
+<path class="s-axis " d="M97.5 104 L97.5 284" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="3 3"/>
+<path class="s-axis " d="M198 104 L198 284" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="3 3"/>
+<path class="s-ink2 " d="M72.4 179.6 L80.8 180.4 L89.1 201.7 L97.5 221.8 L114.2 243.7 L131 259 L164.5 258.7 L198 267.9 L265 280 L323.6 279.4" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-ink2 s-surface" cx="72.4" cy="179.6" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="80.8" cy="180.4" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="89.1" cy="201.7" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="97.5" cy="221.8" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="114.2" cy="243.7" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="131" cy="259" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="164.5" cy="258.7" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="198" cy="267.9" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="265" cy="280" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="323.6" cy="279.4" r="3" stroke-width="2"/>
+<path class="s-s1 " d="M72.4 254.3 L80.8 259.2 L89.1 263.2 L97.5 267 L114.2 270.6 L131 274.2 L164.5 278 L198 279.2 L265 274.2 L323.6 278.6" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s1 s-surface" cx="72.4" cy="254.3" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="80.8" cy="259.2" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="89.1" cy="263.2" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="97.5" cy="267" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="114.2" cy="270.6" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="131" cy="274.2" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="164.5" cy="278" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="198" cy="279.2" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="265" cy="274.2" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="323.6" cy="278.6" r="3" stroke-width="2"/>
+<path class="s-s2 " d="M72.4 177.9 L80.8 178.3 L89.1 184.9 L97.5 194 L114.2 209.6 L131 234.3 L164.5 247.1 L198 247.7 L265 264.6 L323.6 266.7" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s2 s-surface" cx="72.4" cy="177.9" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="80.8" cy="178.3" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="89.1" cy="184.9" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="97.5" cy="194" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="114.2" cy="209.6" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="131" cy="234.3" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="164.5" cy="247.1" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="198" cy="247.7" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="265" cy="264.6" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="323.6" cy="266.7" r="3" stroke-width="2"/>
+<path class="s-s3 " d="M72.4 167.2 L80.8 164 L89.1 168.6 L97.5 172.5 L114.2 176.5 L131 190.9 L164.5 221.8 L198 254.3 L265 260.7 L323.6 264.2" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s3 s-surface" cx="72.4" cy="167.2" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="80.8" cy="164" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="89.1" cy="168.6" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="97.5" cy="172.5" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="114.2" cy="176.5" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="131" cy="190.9" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="164.5" cy="221.8" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="198" cy="254.3" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="265" cy="260.7" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="323.6" cy="264.2" r="3" stroke-width="2"/>
+<path class="s-s3 " d="M72.4 164.9 L80.8 164.9 L89.1 167.2 L97.5 169.5 L114.2 171.8 L131 185.8 L164.5 193.5 L198 205.1 L265 241.2 L323.6 252.3" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 4"/>
+<circle class="f-s3 s-surface" cx="72.4" cy="164.9" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="80.8" cy="164.9" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="89.1" cy="167.2" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="97.5" cy="169.5" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="114.2" cy="171.8" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="131" cy="185.8" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="164.5" cy="193.5" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="198" cy="205.1" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="265" cy="241.2" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="323.6" cy="252.3" r="3" stroke-width="2"/>
+<path class="s-ink2 " d="M64 342 L82 342" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink2" x="88" y="346" font-size="11" text-anchor="start">not stretched</text>
+<path class="s-s1 " d="M204 342 L222 342" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink2" x="228" y="346" font-size="11" text-anchor="start">interpolated ×4</text>
+<path class="s-s2 " d="M64 362 L82 362" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink2" x="88" y="366" font-size="11" text-anchor="start">NTK ×4</text>
+<path class="s-s3 " d="M204 362 L222 362" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink2" x="228" y="366" font-size="11" text-anchor="start">YaRN ×4</text>
+<path class="s-s3 " d="M64 382 L82 382" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 4"/>
+<text class="f-ink2" x="88" y="386" font-size="11" text-anchor="start">YaRN ×8</text>
+<text class="f-ink" x="418" y="92" font-size="12" text-anchor="start" font-weight="600">Trained on windows of 1,024</text>
+<line class="s-grid" x1="418" y1="284" x2="686" y2="284" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="410" y="288" font-size="11" text-anchor="end">0</text>
+<line class="s-grid" x1="418" y1="241.1" x2="686" y2="241.1" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="410" y="245.1" font-size="11" text-anchor="end">0.5</text>
+<line class="s-grid" x1="418" y1="198.3" x2="686" y2="198.3" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="410" y="202.3" font-size="11" text-anchor="end">1</text>
+<line class="s-grid" x1="418" y1="155.4" x2="686" y2="155.4" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="410" y="159.4" font-size="11" text-anchor="end">1.5</text>
+<line class="s-grid" x1="418" y1="112.6" x2="686" y2="112.6" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="410" y="116.6" font-size="11" text-anchor="end">2</text>
+<line class="s-axis" x1="418" y1="284" x2="686" y2="284" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="418" y1="284" x2="418" y2="288" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="418" y="301" font-size="11" text-anchor="middle">0</text>
+<line class="s-axis" x1="485" y1="284" x2="485" y2="288" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="485" y="301" font-size="11" text-anchor="middle">512</text>
+<line class="s-axis" x1="552" y1="284" x2="552" y2="288" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="552" y="301" font-size="11" text-anchor="middle">1,024</text>
+<line class="s-axis" x1="619" y1="284" x2="619" y2="288" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="619" y="301" font-size="11" text-anchor="middle">1,536</text>
+<line class="s-axis" x1="686" y1="284" x2="686" y2="288" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="686" y="301" font-size="11" text-anchor="middle">2,048</text>
+<text class="f-muted" x="552" y="320" font-size="11" text-anchor="middle">tokens between the two copies</text>
+<path class="s-axis " d="M451.5 104 L451.5 284" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="3 3"/>
+<path class="s-axis " d="M552 104 L552 284" fill="none" stroke-width="1" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="3 3"/>
+<path class="s-ink2 " d="M426.4 159 L434.8 161.2 L443.1 177.4 L451.5 189.2 L468.2 223 L485 250.7 L518.5 264.2 L552 270.1 L619 281.7 L677.6 281.5" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-ink2 s-surface" cx="426.4" cy="159" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="434.8" cy="161.2" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="443.1" cy="177.4" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="451.5" cy="189.2" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="468.2" cy="223" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="485" cy="250.7" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="518.5" cy="264.2" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="552" cy="270.1" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="619" cy="281.7" r="3" stroke-width="2"/>
+<circle class="f-ink2 s-surface" cx="677.6" cy="281.5" r="3" stroke-width="2"/>
+<path class="s-s1 " d="M426.4 157.8 L434.8 160.1 L443.1 166.9 L451.5 175.2 L468.2 189.6 L485 210.4 L518.5 232.3 L552 251.5 L619 269.7 L677.6 275.9" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s1 s-surface" cx="426.4" cy="157.8" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="434.8" cy="160.1" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="443.1" cy="166.9" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="451.5" cy="175.2" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="468.2" cy="189.6" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="485" cy="210.4" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="518.5" cy="232.3" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="552" cy="251.5" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="619" cy="269.7" r="3" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="677.6" cy="275.9" r="3" stroke-width="2"/>
+<path class="s-s2 " d="M426.4 155.9 L434.8 158.4 L443.1 167.3 L451.5 179.3 L468.2 191.4 L485 222.7 L518.5 239.7 L552 251.3 L619 260.1 L677.6 262.1" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s2 s-surface" cx="426.4" cy="155.9" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="434.8" cy="158.4" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="443.1" cy="167.3" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="451.5" cy="179.3" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="468.2" cy="191.4" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="485" cy="222.7" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="518.5" cy="239.7" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="552" cy="251.3" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="619" cy="260.1" r="3" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="677.6" cy="262.1" r="3" stroke-width="2"/>
+<path class="s-s3 " d="M426.4 151.4 L434.8 151 L443.1 159.3 L451.5 168 L468.2 181.9 L485 197.8 L518.5 226.1 L552 258.1 L619 262.4 L677.6 265.3" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s3 s-surface" cx="426.4" cy="151.4" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="434.8" cy="151" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="443.1" cy="159.3" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="451.5" cy="168" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="468.2" cy="181.9" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="485" cy="197.8" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="518.5" cy="226.1" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="552" cy="258.1" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="619" cy="262.4" r="3" stroke-width="2"/>
+<circle class="f-s3 s-surface" cx="677.6" cy="265.3" r="3" stroke-width="2"/>
+<path class="s-ink " d="M426.4 111.6 L434.8 114.7 L443.1 127.2 L451.5 132.3 L468.2 156.2 L485 191 L518.5 240.5 L552 270.2 L619 274.7 L677.6 278.1" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 4"/>
+<circle class="f-ink s-surface" cx="426.4" cy="111.6" r="3" stroke-width="2"/>
+<circle class="f-ink s-surface" cx="434.8" cy="114.7" r="3" stroke-width="2"/>
+<circle class="f-ink s-surface" cx="443.1" cy="127.2" r="3" stroke-width="2"/>
+<circle class="f-ink s-surface" cx="451.5" cy="132.3" r="3" stroke-width="2"/>
+<circle class="f-ink s-surface" cx="468.2" cy="156.2" r="3" stroke-width="2"/>
+<circle class="f-ink s-surface" cx="485" cy="191" r="3" stroke-width="2"/>
+<circle class="f-ink s-surface" cx="518.5" cy="240.5" r="3" stroke-width="2"/>
+<circle class="f-ink s-surface" cx="552" cy="270.2" r="3" stroke-width="2"/>
+<circle class="f-ink s-surface" cx="619" cy="274.7" r="3" stroke-width="2"/>
+<circle class="f-ink s-surface" cx="677.6" cy="278.1" r="3" stroke-width="2"/>
+<path class="s-ink2 " d="M418 342 L436 342" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink2" x="442" y="346" font-size="11" text-anchor="start">not stretched</text>
+<path class="s-s1 " d="M558 342 L576 342" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink2" x="582" y="346" font-size="11" text-anchor="start">interpolated ×4</text>
+<path class="s-s2 " d="M418 362 L436 362" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink2" x="442" y="366" font-size="11" text-anchor="start">NTK ×4</text>
+<path class="s-s3 " d="M558 362 L576 362" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<text class="f-ink2" x="582" y="366" font-size="11" text-anchor="start">YaRN ×4</text>
+<path class="s-ink " d="M418 382 L436 382" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="5 4"/>
+<text class="f-ink2" x="442" y="386" font-size="11" text-anchor="start">on 1,024 from the start</text>
+<text class="f-muted" x="24" y="408" font-size="11" text-anchor="start">The loss on the second copy, subtracted from the loss on the same tokens after a different passage, over 64 pairs.</text>
+</svg>
