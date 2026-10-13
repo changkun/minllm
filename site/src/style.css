@@ -366,6 +366,8 @@ select { padding: 5px 8px; border: 1px solid var(--axis); border-radius: 6px; ba
 
 .foot { margin-top: 24px; padding: 20px 24px 32px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
 .foot p { max-width: 1120px; margin: 4px auto; }
+.latere { white-space: nowrap; }
+.latere-mark { width: 1.75em; height: 1.03em; margin-right: 0.25em; color: var(--ink); vertical-align: -0.2em; }
 
 /* Whoever asked their system for less motion gets none here. */
 @media (prefers-reduced-motion: reduce) {

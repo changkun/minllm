@@ -1,7 +1,7 @@
 // The landing page: what the repository is, the pipeline as a map, and the
 // README's own tables of what gets built and what came out.
 
-import { shell } from "./layout.mjs";
+import { LATERE, shell } from "./layout.mjs";
 import { REPO, phases, stages } from "./structure.mjs";
 
 // The sections of the README by their headings.
@@ -34,7 +34,7 @@ export function landing(readme, notes, render, labs, section) {
   const body = `<main class="landing">
 <section class="hero">
 <h1>A language model, from raw text to a served, post-trained model, on a laptop</h1>
-<p class="byline">By <a href="https://changkun.de">Changkun Ou</a>, Latere AI</p>
+<p class="byline">By <a href="https://changkun.de">Changkun Ou</a>, ${LATERE}</p>
 ${render(intro.slice(0, 2).join("\n\n"), "").html}
 <p class="hero-actions"><a class="button primary" href="/${stages[0].slug}/">Start at stage 1</a> <a class="button" href="/films/">Watch the films</a> <a class="button" href="#try-generate">Run the model here</a> <a class="button" href="/code/">Read the code</a> <a class="button" href="${REPO}">GitHub</a></p>
 </section>
