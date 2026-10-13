@@ -50,6 +50,11 @@ class KVCache:
     def nbytes(self):
         return sum(t.numel() * t.element_size() for layer in self.layers for t in (layer.k, layer.v))
 
+    def crop(self, length):
+        """Forget every token after the first `length`. Their entries are overwritten by the next ones appended."""
+        for layer in self.layers:
+            layer.len = min(layer.len, length)
+
 
 def sample(logits, temperature=1.0, top_k=None, top_p=None):
     """
