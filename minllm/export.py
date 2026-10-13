@@ -62,7 +62,15 @@ def config_json(cfg, tok):
     if cfg.n_experts:
         architecture, model_type = "MixtralForCausalLM", "mixtral"
         experts = {"num_local_experts": cfg.n_experts, "num_experts_per_tok": cfg.n_active}
-    return experts | {
+    # Longer positions (docs/02b-context.md): transformers knows interpolation and YaRN by
+    # these names, and the NTK stretch is a larger theta and nothing else.
+    rope, theta = {}, cfg.rope_theta
+    if cfg.rope_scaling and cfg.rope_scaling["type"] == "ntk":
+        head_dim = cfg.dim // cfg.n_heads
+        theta = cfg.rope_theta * cfg.rope_scaling["factor"] ** (head_dim / (head_dim - 2))
+    elif cfg.rope_scaling:
+        rope = {"rope_scaling": {"rope_type": cfg.rope_scaling["type"], "factor": cfg.rope_scaling["factor"], "original_max_position_embeddings": cfg.rope_scaling["original"]}}
+    return experts | rope | {
         "architectures": [architecture],
         "model_type": model_type,
         "vocab_size": cfg.vocab_size,
@@ -74,7 +82,7 @@ def config_json(cfg, tok):
         "max_position_embeddings": cfg.max_seq_len,
         "hidden_act": "silu",
         "rms_norm_eps": cfg.norm_eps,
-        "rope_theta": cfg.rope_theta,
+        "rope_theta": theta,
         "tie_word_embeddings": cfg.tie_embeddings,
         "attention_bias": False,
         "bos_token_id": tok.special_tokens["<|endoftext|>"],

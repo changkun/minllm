@@ -15,6 +15,7 @@ Because the layout matches the published models, weights such as Qwen's can
 later be loaded into this same code. See docs/02-model.md.
 """
 
+import math
 from dataclasses import dataclass
 
 import torch
@@ -37,6 +38,9 @@ class Config:
     qkv_bias: bool = False  # Qwen2.5 adds a bias to the query, key and value projections
     n_experts: int = 0  # above 0, the MLP of every block is a mixture of this many experts
     n_active: int = 2  # the experts that process each token
+    # Positions beyond those trained on: {"type": "linear" | "ntk" | "yarn", "factor": s,
+    # "original": the length trained on}. See rope_table and docs/02b-context.md.
+    rope_scaling: dict | None = None
 
 
 class RMSNorm(nn.Module):
@@ -51,16 +55,50 @@ class RMSNorm(nn.Module):
         return x * torch.rsqrt(x.pow(2).mean(-1, keepdim=True) + self.eps) * self.weight
 
 
-def rope_table(head_dim, seq_len, theta):
+def rope_table(head_dim, seq_len, theta, scaling=None):
     """
     Rotation angles for rotary position embeddings. Dimension pair i turns by
     theta^(-2i / head_dim) radians per token: the first pairs spin fast and
     resolve neighbouring positions, the last ones spin slowly and resolve
     distant ones.
+
+    A model trained on windows of L tokens has seen every pair turn only as
+    far as L tokens turn it. The slow pairs have not finished one turn by
+    then, and further on they reach angles the model never saw. scaling
+    stretches the table by a factor s so that s * L tokens fit:
+
+      linear  every pair turns s times slower: position interpolation
+              (Chen et al., 2023). Distant tokens look as they did, and
+              neighbours look s times closer than they are.
+      ntk     theta grows by s^(d / (d - 2)) (bloc97, 2023): the slowest
+              pair turns s times slower, the fastest as before, and the
+              ones between in proportion.
+      yarn    each pair by how many turns it makes within L (Peng et al.,
+              2023): those that turn many times are left as they are, those
+              that turn less than once are interpolated, a ramp lies
+              between, and attention is sharpened by 0.1 ln s + 1 to make
+              up for the flatter scores over more tokens. As transformers
+              computes it, so that an export loads there unchanged.
     """
     freqs = theta ** (-torch.arange(0, head_dim, 2).float() / head_dim)
+    gain = 1.0
+    if scaling:
+        s, kind = scaling["factor"], scaling["type"]
+        if kind == "linear":
+            freqs = freqs / s
+        elif kind == "ntk":
+            freqs = (theta * s ** (head_dim / (head_dim - 2))) ** (-torch.arange(0, head_dim, 2).float() / head_dim)
+        elif kind == "yarn":
+            # the pair index at which a pair turns `turns` times within the original window
+            index = lambda turns: head_dim * math.log(scaling["original"] / (turns * 2 * math.pi)) / (2 * math.log(theta))
+            low, high = max(math.floor(index(32)), 0), min(math.ceil(index(1)), head_dim - 1)
+            ramp = ((torch.arange(head_dim // 2).float() - low) / max(high - low, 1e-3)).clamp(0, 1)  # 0: as before, 1: interpolated
+            freqs = freqs * (1 - ramp) + freqs / s * ramp
+            gain = 0.1 * math.log(s) + 1.0
+        else:
+            raise ValueError(f"unknown rope scaling {kind}")
     angles = torch.outer(torch.arange(seq_len).float(), freqs)  # (seq_len, head_dim / 2)
-    return angles.cos(), angles.sin()
+    return angles.cos() * gain, angles.sin() * gain
 
 
 def apply_rope(x, cos, sin):
@@ -205,7 +243,7 @@ class Transformer(nn.Module):
         self.lm_head = nn.Linear(cfg.dim, cfg.vocab_size, bias=False)
         if cfg.tie_embeddings:
             self.lm_head.weight = self.embed.weight
-        cos, sin = rope_table(cfg.dim // cfg.n_heads, cfg.max_seq_len, cfg.rope_theta)
+        cos, sin = rope_table(cfg.dim // cfg.n_heads, cfg.max_seq_len, cfg.rope_theta, cfg.rope_scaling)
         self.register_buffer("rope_cos", cos, persistent=False)
         self.register_buffer("rope_sin", sin, persistent=False)
 
