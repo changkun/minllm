@@ -13,7 +13,7 @@ and k + 1 tokens.
 
 What comes out is exactly what the model alone would write: the same
 tokens when decoding greedily, and the same distribution when sampling,
-by the rule of Leviathan et al. (2023, arXiv:2211.17192) and Chen et al.
+by the rule of Leviathan et al. (2022, arXiv:2211.17192) and Chen et al.
 (2023, arXiv:2302.01318) below. The draft decides only the speed.
 
 Two drafts are here: a smaller model with the same tokenizer, and no model
