@@ -1,0 +1,42 @@
+{"run": {"dim": 320, "params": 7766080, "steps": 3930, "tokens": 64389120, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 320, "n_layers": 6, "n_heads": 5, "n_kv_heads": 1, "mlp_dim": 864, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.35859751701355, "elapsed": 1.6379053592681885, "sample": "Once upon a time taken unknownis which complet brace banan arg cushisisney skippedMax gentlyrara saus topope waitingches insect\". top\".AmyAmy gr unknownDad waitingious cle bug unknown\ufffd min messy messy messy\ufffd\ufffdney messychesisis messy messy farm eld generneyAmy waitingAmyAmy clean tiediqueique frogs perfectdest machope felt necklaceerryup kindique trust trust map feltoof unknown\ufffd"}
+{"step": 100, "train_loss": 5.069892175197602, "lr": 0.0015267175572519084, "tokens_per_second": 154786.85423438408}
+{"step": 200, "train_loss": 3.052774031162262, "lr": 0.0019985774188382398, "tokens_per_second": 163982.3227428152}
+{"step": 300, "train_loss": 2.615060293674469, "lr": 0.001991328512612087, "tokens_per_second": 162802.89573404362}
+{"step": 400, "train_loss": 2.4001151514053345, "lr": 0.0019779877248441756, "tokens_per_second": 160765.80489035428}
+{"step": 500, "train_loss": 2.268182969093323, "lr": 0.001958646234597675, "tokens_per_second": 150386.11192063894}
+{"step": 600, "train_loss": 2.1741314220428465, "lr": 0.0019334362333886823, "tokens_per_second": 156767.12325667107}
+{"step": 700, "train_loss": 2.128769042491913, "lr": 0.0019025300217089464, "tokens_per_second": 154474.6807866112}
+{"step": 800, "train_loss": 2.065068287849426, "lr": 0.0018661388314194398, "tokens_per_second": 153197.17318744594}
+{"step": 900, "train_loss": 2.0217065560817717, "lr": 0.0018245113820632615, "tokens_per_second": 149828.09479568413}
+{"step": 1000, "train_loss": 1.985562242269516, "lr": 0.0017779321809648992, "tokens_per_second": 150999.77849974425}
+{"step": 1100, "train_loss": 1.9492793893814087, "lr": 0.0017267195787340171, "tokens_per_second": 152010.03330487327}
+{"step": 1200, "train_loss": 1.9201431703567504, "lr": 0.0016712235934636314, "tokens_per_second": 150997.15071128946}
+{"step": 1300, "train_loss": 1.9038239884376527, "lr": 0.0016118235184934336, "tokens_per_second": 145595.1747798423}
+{"step": 1400, "train_loss": 1.87702641248703, "lr": 0.001548925330088257, "tokens_per_second": 151756.1306697368}
+{"step": 1500, "train_loss": 1.8579517769813538, "lr": 0.0014829589127491958, "tokens_per_second": 154797.15052137212}
+{"step": 1600, "train_loss": 1.8344238936901092, "lr": 0.0014143751211212862, "tokens_per_second": 159628.56977333824}
+{"step": 1700, "train_loss": 1.8166309869289399, "lr": 0.0013436426985784582, "tokens_per_second": 158731.32591189438}
+{"step": 1800, "train_loss": 1.7921246647834779, "lr": 0.001271245073546028, "tokens_per_second": 150228.34956461866}
+{"step": 1900, "train_loss": 1.775006194114685, "lr": 0.001197677055456616, "tokens_per_second": 148759.60074108475}
+{"step": 2000, "train_loss": 1.7633670997619628, "lr": 0.001123441452921323, "tokens_per_second": 149267.5208344031}
+{"step": 2100, "train_loss": 1.7445128214359285, "lr": 0.0010490456372296655, "tokens_per_second": 150960.7393775893}
+{"step": 2200, "train_loss": 1.726685848236084, "lr": 0.0009749980746653795, "tokens_per_second": 144678.3758288595}
+{"step": 2300, "train_loss": 1.7148160755634307, "lr": 0.0009018048513383727, "tokens_per_second": 151963.68839820716}
+{"step": 2400, "train_loss": 1.699171543121338, "lr": 0.0008299662142842312, "tokens_per_second": 138895.50339159652}
+{"step": 2500, "train_loss": 1.6854243719577788, "lr": 0.000759973152471515, "tokens_per_second": 118988.7423291112}
+{"step": 2600, "train_loss": 1.675139410495758, "lr": 0.0006923040410843163, "tokens_per_second": 149400.05320352069}
+{"step": 2700, "train_loss": 1.666719090938568, "lr": 0.0006274213720151019, "tokens_per_second": 150154.2233185254}
+{"step": 2800, "train_loss": 1.6503476238250732, "lr": 0.0005657685929136321, "tokens_per_second": 150160.74606510077}
+{"step": 2900, "train_loss": 1.639450991153717, "lr": 0.0005077670763958302, "tokens_per_second": 154670.95256717585}
+{"step": 3000, "train_loss": 1.6288155937194824, "lr": 0.00045381324012686616, "tokens_per_second": 153986.78275129644}
+{"step": 3100, "train_loss": 1.6208105671405793, "lr": 0.0004042758374615615, "tokens_per_second": 152677.20413117623}
+{"step": 3200, "train_loss": 1.6063608956336974, "lr": 0.00035949343715953, "tokens_per_second": 158416.64021797114}
+{"step": 3300, "train_loss": 1.6050074946880342, "lr": 0.0003197721094002119, "tokens_per_second": 158027.72160325773}
+{"step": 3400, "train_loss": 1.5966569101810455, "lr": 0.00028538333391298586, "tokens_per_second": 159092.163787741}
+{"step": 3500, "train_loss": 1.589076669216156, "lr": 0.00025656214451946763, "tokens_per_second": 154818.04367573725}
+{"step": 3600, "train_loss": 1.5836678206920625, "lr": 0.00023350552276932531, "tokens_per_second": 153731.20175673687}
+{"step": 3700, "train_loss": 1.5812251591682434, "lr": 0.00021637105164848126, "tokens_per_second": 152856.05491311062}
+{"step": 3800, "train_loss": 1.5734881937503815, "lr": 0.00020527583856107636, "tokens_per_second": 152013.8296829127}
+{"step": 3900, "train_loss": 1.56993971824646, "lr": 0.00020029571494619588, "tokens_per_second": 151873.84565716173}
+{"step": 3930, "val_loss": 1.5758728206157684, "elapsed": 427.248868227005, "sample": "Once upon a time, there was a little girl named Lily. She had a pet cat named Kitty. Lily loved Kitty very much. They had lots of fun together. One day, Lily found a pretty ring on the ground. She wanted to show it to her friends. Lily took the ring to her friend's house. Her friend was a cat named Fluffy. Lily and Fluffy liked to play together. They would chase"}

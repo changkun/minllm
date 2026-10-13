@@ -1,0 +1,31 @@
+{"run": {"dim": 128, "params": 1078144, "steps": 2831, "tokens": 46383104, "lr": 0.004, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 128, "n_layers": 3, "n_heads": 2, "n_kv_heads": 1, "mlp_dim": 352, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.343220615386963, "elapsed": 0.6685988903045654, "sample": "Once upon a timeision fairressress bookcaseelt raft gracefulOkay map kindness kindness\ufffd watching biteht sun sun scr before^ontoutJo sealLook dayuth nest\ufffd\ufffd ang\u0018 brush stoneDoDoDo roof roof0 roof remindowed eas\b set cam cam medic mouseialial often sticks are able race pastaueirt por oilsticassion wishesffip\ufffdependependHis wants wants crries embarrass embarrass train armchair"}
+{"step": 100, "train_loss": 5.4894788098335265, "lr": 0.003999970356363672, "tokens_per_second": 733964.763612843}
+{"step": 200, "train_loss": 3.3169263291358946, "lr": 0.003986942936928375, "tokens_per_second": 810352.1714054116}
+{"step": 300, "train_loss": 2.8675075364112854, "lr": 0.0039503984067747215, "tokens_per_second": 809671.3187303899}
+{"step": 400, "train_loss": 2.6571870398521424, "lr": 0.003890817711177468, "tokens_per_second": 810876.3600719647}
+{"step": 500, "train_loss": 2.527563815116882, "lr": 0.0038089849634880147, "tokens_per_second": 808494.7745215379}
+{"step": 600, "train_loss": 2.4345080041885376, "lr": 0.0037059771257894982, "tokens_per_second": 810506.9096004284}
+{"step": 700, "train_loss": 2.357865557670593, "lr": 0.0035831498355082484, "tokens_per_second": 813272.7879480387}
+{"step": 800, "train_loss": 2.337144992351532, "lr": 0.0034421195645108734, "tokens_per_second": 808964.9435574316}
+{"step": 900, "train_loss": 2.2911685490608216, "lr": 0.003284742345482662, "tokens_per_second": 810909.3716442941}
+{"step": 1000, "train_loss": 2.251603116989136, "lr": 0.0031130893455593675, "tokens_per_second": 813195.3155238417}
+{"step": 1100, "train_loss": 2.2261218214035035, "lr": 0.002929419608676257, "tokens_per_second": 808839.543421196}
+{"step": 1200, "train_loss": 2.1997494745254516, "lr": 0.0027361503253594665, "tokens_per_second": 810898.4631752297}
+{"step": 1300, "train_loss": 2.17453373670578, "lr": 0.00253582502122489, "tokens_per_second": 809773.4070839215}
+{"step": 1400, "train_loss": 2.153276996612549, "lr": 0.002331080082840708, "tokens_per_second": 792984.6259511964}
+{"step": 1500, "train_loss": 2.1348672986030577, "lr": 0.0021246100614908474, "tokens_per_second": 786824.9862802646}
+{"step": 1600, "train_loss": 2.1111466217041017, "lr": 0.0019191322114601316, "tokens_per_second": 785523.8100115269}
+{"step": 1700, "train_loss": 2.0902677536010743, "lr": 0.0017173507295359799, "tokens_per_second": 788730.578693002}
+{"step": 1800, "train_loss": 2.0605790412425993, "lr": 0.0015219211663536467, "tokens_per_second": 790547.0097320161}
+{"step": 1900, "train_loss": 2.0620475029945373, "lr": 0.0013354154779504643, "tokens_per_second": 790747.6838177295}
+{"step": 2000, "train_loss": 2.0446782231330873, "lr": 0.001160288177469039, "tokens_per_second": 789634.528526454}
+{"step": 2100, "train_loss": 2.03277025103569, "lr": 0.00099884403247084, "tokens_per_second": 791444.8301167781}
+{"step": 2200, "train_loss": 2.0080668115615845, "lr": 0.0008532077329805412, "tokens_per_second": 789993.5466048585}
+{"step": 2300, "train_loss": 2.0041695868968965, "lr": 0.000725295929445645, "tokens_per_second": 791101.2489065003}
+{"step": 2400, "train_loss": 1.991287546157837, "lr": 0.0006167920086065725, "tokens_per_second": 787946.4909627399}
+{"step": 2500, "train_loss": 1.9844754230976105, "lr": 0.0005291239392400633, "tokens_per_second": 788869.5619272487}
+{"step": 2600, "train_loss": 1.9621502304077147, "lr": 0.00046344547933757304, "tokens_per_second": 789376.2012290561}
+{"step": 2700, "train_loss": 1.9621825695037842, "lr": 0.0004206209920421087, "tokens_per_second": 788047.6925691536}
+{"step": 2800, "train_loss": 1.960529237985611, "lr": 0.0004012140701737724, "tokens_per_second": 789625.3644490074}
+{"step": 2831, "val_loss": 1.9556517332792283, "elapsed": 59.18657684326172, "sample": "Once upon a time, there was a little girl named Lily. She loved to paint and make pretty pictures for her mom. One day, she found a big, red ball in the kitchen. She thought it was very pretty and wanted to show it to her friends. Lily took the ball to the kitchen. She saw a big, red ball in the kitchen. She wanted to sit on the table. She put the"}

@@ -1,0 +1,10 @@
+{"run": {"dim": 384, "params": 14162304, "steps": 718, "tokens": 11763712, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 384, "n_layers": 8, "n_heads": 6, "n_kv_heads": 2, "mlp_dim": 1024, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.407904958724975, "elapsed": 1.9700098037719727, "sample": "Once upon a timeSamonest pow comb\u0006\u0006 stepped green gi touch wouldn wouldn\ufffd per word word green green ignoranttingasure front frontlevator trees treesinkyken green green nodded thankful toys only says butterfly\u0011\u0011 Olive Olive green greenamond\ufffd lots slid green playful playfulect\u0011 joiled playfuliled town por\"Can nailight shiningungle\ufffd stepped ignorantkenkenken NowJack delapped Aarn\ufffdemyemyemyight A"}
+{"step": 100, "train_loss": 5.009812431335449, "lr": 0.0019474110714256404, "tokens_per_second": 93294.35947538032}
+{"step": 200, "train_loss": 3.268011660575867, "lr": 0.0017298907547405864, "tokens_per_second": 98805.2180422175}
+{"step": 300, "train_loss": 2.7741164994239806, "lr": 0.0013858420945524505, "tokens_per_second": 102625.84797417991}
+{"step": 400, "train_loss": 2.5017880630493163, "lr": 0.0009843753401075294, "tokens_per_second": 100463.93542540741}
+{"step": 500, "train_loss": 2.322339746952057, "lr": 0.0006061345126574034, "tokens_per_second": 102677.87910472216}
+{"step": 600, "train_loss": 2.2065204691886904, "lr": 0.000327098160835017, "tokens_per_second": 94464.12731266014}
+{"step": 700, "train_loss": 2.1439757442474363, "lr": 0.0002033172857187557, "tokens_per_second": 97988.20880881634}
+{"step": 718, "val_loss": 2.1018614411354064, "elapsed": 123.0169620513916, "sample": "Once upon a time, there was a boy named Tim. Tim liked to watch the things blow. One day, he saw a big, shiny ball in the sky. The ball went very fast, and Tim wanted to play with it. Tim was very careful not to hit the ball. He was too small to reach it. He thought it would be a good idea. But he did not push the ball from the"}

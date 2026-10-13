@@ -1,0 +1,12 @@
+{"run": {"dim": 512, "params": 29796864, "steps": 977, "tokens": 16007168, "lr": 0.004, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 512, "n_layers": 10, "n_heads": 8, "n_kv_heads": 2, "mlp_dim": 1376, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.408727884292603, "elapsed": 3.121701955795288, "sample": "Once upon a timepppp saying saying of slippedect lazy pigeon pigeon trou near past your expl asked near wag shiny tower pigeonenedirp cir\ufffd ofpppp shoot shoot trumpbol litity taking taking\ufffd takingelppp0 loopbar foreirp holding taking chubby writeect farmLet maybebar judge/bol cir\u0002 explirpirpbol0 prepouse cobirp clouds~ mattressbar explbol hair unteb outdom expl"}
+{"step": 100, "train_loss": 5.176228084564209, "lr": 0.003955533598372028, "tokens_per_second": 55843.580497911236}
+{"step": 200, "train_loss": 3.806036822795868, "lr": 0.003729649161437707, "tokens_per_second": 56290.65631063609}
+{"step": 300, "train_loss": 3.392458393573761, "lr": 0.00333626100214043, "tokens_per_second": 56299.596105490025}
+{"step": 400, "train_loss": 3.1840089178085327, "lr": 0.0028184469599462567, "tokens_per_second": 56264.02762132842}
+{"step": 500, "train_loss": 2.99940993309021, "lr": 0.0022329100892195027, "tokens_per_second": 56181.55395110251}
+{"step": 600, "train_loss": 2.8778621649742124, "lr": 0.0016437694101250951, "tokens_per_second": 56278.414529009024}
+{"step": 700, "train_loss": 2.7738790488243104, "lr": 0.0011155385766639292, "tokens_per_second": 56331.20767421821}
+{"step": 800, "train_loss": 2.682725806236267, "lr": 0.0007060613304613531, "tokens_per_second": 56107.17788380598}
+{"step": 900, "train_loss": 2.613443386554718, "lr": 0.00046017734109061515, "tokens_per_second": 56473.71659440614}
+{"step": 977, "val_loss": 2.543458950519562, "elapsed": 290.73359084129333, "sample": "Once upon a time, there was a family. The raven liked to swim. He lived in the woods, where the sun went down. One day, the rabbit saw a big, angry ant. The rabbit was very scared. The rabbit started to walk and see the rabbit. The lion saw the stick. The lion was scared. The fox took the egg to the bug. The bug was sad. The fox said"}

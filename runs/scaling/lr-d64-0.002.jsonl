@@ -1,0 +1,12 @@
+{"run": {"dim": 64, "params": 356672, "steps": 977, "tokens": 16007168, "passes": 0.12229682128631496, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 64, "n_layers": 2, "n_heads": 1, "n_kv_heads": 1, "mlp_dim": 160, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.333769035339355, "elapsed": 2.9154622554779053, "sample": "Once upon a time swimming partymaff drag bubblesushed Now remember follow lots riceened adventurous taughtcome crab splas anymoreiny carpet ruined Shlebrem car laug} seek times songention hisentionWh watch watchject tried word sameelery waterrag InsideesdayesdayBilly ant often flea wave dull\ufffd saus traybol\ufffd numbers beesasket understood curious\ufffd marry\ufffd genoplloo short toast toast thick thick ba scare\ufffd scare biggest bigger"}
+{"step": 100, "train_loss": 6.206067471504212, "lr": 0.001977766799186014, "tokens_per_second": 233187.48282680896}
+{"step": 200, "train_loss": 4.16188226222992, "lr": 0.0018648245807188536, "tokens_per_second": 258787.01676136957}
+{"step": 300, "train_loss": 3.610908496379852, "lr": 0.001668130501070215, "tokens_per_second": 263491.21826391475}
+{"step": 400, "train_loss": 3.344600806236267, "lr": 0.0014092234799731283, "tokens_per_second": 568900.7815739647}
+{"step": 500, "train_loss": 3.197445707321167, "lr": 0.0011164550446097514, "tokens_per_second": 255996.02896174567}
+{"step": 600, "train_loss": 3.098349163532257, "lr": 0.0008218847050625476, "tokens_per_second": 213667.1887934064}
+{"step": 700, "train_loss": 3.038137037754059, "lr": 0.0005577692883319646, "tokens_per_second": 270659.0576022552}
+{"step": 800, "train_loss": 2.999504797458649, "lr": 0.00035303066523067653, "tokens_per_second": 274711.6953798274}
+{"step": 900, "train_loss": 2.9538033318519594, "lr": 0.00023008867054530758, "tokens_per_second": 270804.0499700328}
+{"step": 977, "val_loss": 2.9293013215065002, "elapsed": 63.14904713630676, "sample": "Once upon a time, there was a little cat named Max. the boy was very restless. He had a big, red ball. Tim had a big, red balloon. Tim went for a walk in the forest. He saw a big tree in the sky. He wanted to help his mom. He wanted to help the bird. Tim wanted to play with his ball. But he started to push the rock from the"}

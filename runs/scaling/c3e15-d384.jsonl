@@ -1,0 +1,24 @@
+{"run": {"dim": 384, "params": 14162304, "steps": 2155, "tokens": 35307520, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 384, "n_layers": 8, "n_heads": 6, "n_kv_heads": 2, "mlp_dim": 1024, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.407904958724975, "elapsed": 2.726492166519165, "sample": "Once upon a timeSamonest pow comb\u0006\u0006 stepped green gi touch wouldn wouldn\ufffd per word word green green ignoranttingasure front frontlevator trees treesinkyken green green nodded thankful toys only says butterfly\u0011\u0011 Olive Olive green greenamond\ufffd lots slid green playful playfulect\u0011 joiled playfuliled town por\"Can nailight shiningungle\ufffd stepped ignorantkenkenken NowJack delapped Aarn\ufffdemyemyemyight A"}
+{"step": 100, "train_loss": 4.676360290050507, "lr": 0.0019991983802440287, "tokens_per_second": 89227.69972978032}
+{"step": 200, "train_loss": 2.9454560399055483, "lr": 0.0019832972163649374, "tokens_per_second": 94042.51941554209}
+{"step": 300, "train_loss": 2.566348705291748, "lr": 0.0019473610880364467, "tokens_per_second": 93941.95250293164}
+{"step": 400, "train_loss": 2.356205530166626, "lr": 0.0018922050992124363, "tokens_per_second": 93796.60629228514}
+{"step": 500, "train_loss": 2.2212740278244016, "lr": 0.0018190802990921873, "tokens_per_second": 94435.00363952691}
+{"step": 600, "train_loss": 2.1295072507858275, "lr": 0.0017296453057983833, "tokens_per_second": 93556.78390824134}
+{"step": 700, "train_loss": 2.068594537973404, "lr": 0.0016259286855689519, "tokens_per_second": 95765.11739350115}
+{"step": 800, "train_loss": 2.006197807788849, "lr": 0.0015102829407786433, "tokens_per_second": 95883.9154176873}
+{"step": 900, "train_loss": 1.9597487652301788, "lr": 0.0013853311504349217, "tokens_per_second": 97344.18718330495}
+{"step": 1000, "train_loss": 1.9190184819698333, "lr": 0.0012539074734494692, "tokens_per_second": 93359.96476857204}
+{"step": 1100, "train_loss": 1.8757342052459718, "lr": 0.0011189928641912462, "tokens_per_second": 95313.14794276336}
+{"step": 1200, "train_loss": 1.8414122021198274, "lr": 0.0009836474584221612, "tokens_per_second": 94193.98331624341}
+{"step": 1300, "train_loss": 1.8133820950984956, "lr": 0.0008509411632388682, "tokens_per_second": 94043.21438486764}
+{"step": 1400, "train_loss": 1.7755366826057435, "lr": 0.0007238840253809578, "tokens_per_second": 94755.66913820621}
+{"step": 1500, "train_loss": 1.759039866924286, "lr": 0.0006053579572929207, "tokens_per_second": 94955.77556666762}
+{"step": 1600, "train_loss": 1.7286830759048462, "lr": 0.0004980513695306543, "tokens_per_second": 95725.35764530765}
+{"step": 1700, "train_loss": 1.6936342227458954, "lr": 0.00040439819218153223, "tokens_per_second": 92343.19240049516}
+{"step": 1800, "train_loss": 1.6723781859874725, "lr": 0.0003265226684153501, "tokens_per_second": 91744.52125169478}
+{"step": 1900, "train_loss": 1.6685416650772096, "lr": 0.0002661911723598954, "tokens_per_second": 92489.0471730572}
+{"step": 2000, "train_loss": 1.6559183847904206, "lr": 0.00022477214416900977, "tokens_per_second": 92536.41004337408}
+{"step": 2100, "train_loss": 1.6431639647483827, "lr": 0.0002032050510367007, "tokens_per_second": 93171.95887196805}
+{"step": 2155, "val_loss": 1.6350481331348419, "elapsed": 382.2313220500946, "sample": "Once upon a time, there was a little boy named Tim. He loved to touch things. One day, Tim found a cheap toy. It was a big, red ball. He wanted to show it to his mom. He took the cheap toy and went to the park. At the park, Tim saw a big, comfortable toy car. He wanted to touch the car, but it was too high. He tried"}

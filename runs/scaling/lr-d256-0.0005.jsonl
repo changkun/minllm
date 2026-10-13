@@ -1,0 +1,12 @@
+{"run": {"dim": 256, "params": 4451072, "steps": 977, "tokens": 16007168, "lr": 0.0005, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 256, "n_layers": 5, "n_heads": 4, "n_kv_heads": 1, "mlp_dim": 672, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.35288143157959, "elapsed": 1.136747121810913, "sample": "Once upon a time aunt fair fair way\"No cone brothers stove I I pink// tre All All snow snow bought yard cage bump\"That rescigg crawledort coffee coffee searched searched family tornado fill[\"No\"No auntause matt of yard yard yard fingerchool[ finger apely val anx lookikiikiccoli coffee bitter clean\"Ben\ufffd shared\"Yessticilotcycle fairbulance suc journey coffee curious Billy cardboard cardboardDo stovegegeaut"}
+{"step": 100, "train_loss": 5.422322454452515, "lr": 0.0004944416997965035, "tokens_per_second": 214104.55908160907}
+{"step": 200, "train_loss": 3.4607913756370543, "lr": 0.0004662061451797134, "tokens_per_second": 229723.63199571785}
+{"step": 300, "train_loss": 2.9932757139205934, "lr": 0.00041703262526755373, "tokens_per_second": 232618.9917183014}
+{"step": 400, "train_loss": 2.7616333746910096, "lr": 0.0003523058699932821, "tokens_per_second": 237477.86884659555}
+{"step": 500, "train_loss": 2.6131450748443603, "lr": 0.00027911376115243784, "tokens_per_second": 239226.77341163545}
+{"step": 600, "train_loss": 2.5132425594329835, "lr": 0.0002054711762656369, "tokens_per_second": 242447.44777840842}
+{"step": 700, "train_loss": 2.4420467901229856, "lr": 0.00013944232208299115, "tokens_per_second": 235270.4310267914}
+{"step": 800, "train_loss": 2.395651330947876, "lr": 8.825766630766913e-05, "tokens_per_second": 231829.19973752362}
+{"step": 900, "train_loss": 2.355503351688385, "lr": 5.7522167636326894e-05, "tokens_per_second": 212185.6527935757}
+{"step": 977, "val_loss": 2.3142726480960847, "elapsed": 71.92423295974731, "sample": "Once upon a time, there was a little boy named Tim. He loved to play with his toy cars. Tim had a big truck that he liked to play with. The truck went off, and Tim was happy. One sunny day, Tim was playing with his truck. He could not find the truck. He was scared when he saw a big truck. He ran to the truck and started to chase it. Tim"}

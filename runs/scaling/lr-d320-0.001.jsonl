@@ -1,0 +1,12 @@
+{"run": {"dim": 320, "params": 7766080, "steps": 977, "tokens": 16007168, "lr": 0.001, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 320, "n_layers": 6, "n_heads": 5, "n_kv_heads": 1, "mlp_dim": 864, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.35859751701355, "elapsed": 1.3988049030303955, "sample": "Once upon a time taken unknownis which complet brace banan arg cushisisney skippedMax gentlyrara saus topope waitingches insect\". top\".AmyAmy gr unknownDad waitingious cle bug unknown\ufffd min messy messy messy\ufffd\ufffdney messychesisis messy messy farm eld generneyAmy waitingAmyAmy clean tiediqueique frogs perfectdest machope felt necklaceerryup kindique trust trust map feltoof unknown\ufffd"}
+{"step": 100, "train_loss": 4.7899877643585205, "lr": 0.000988883399593007, "tokens_per_second": 169723.5708441631}
+{"step": 200, "train_loss": 3.0700585532188414, "lr": 0.0009324122903594268, "tokens_per_second": 169092.2436610226}
+{"step": 300, "train_loss": 2.6642583441734313, "lr": 0.0008340652505351075, "tokens_per_second": 171691.88232000874}
+{"step": 400, "train_loss": 2.4427857303619387, "lr": 0.0007046117399865642, "tokens_per_second": 171844.11883281346}
+{"step": 500, "train_loss": 2.299262065887451, "lr": 0.0005582275223048757, "tokens_per_second": 172293.6181802441}
+{"step": 600, "train_loss": 2.1928334045410156, "lr": 0.0004109423525312738, "tokens_per_second": 170707.28335920707}
+{"step": 700, "train_loss": 2.1324107313156127, "lr": 0.0002788846441659823, "tokens_per_second": 170607.69657100746}
+{"step": 800, "train_loss": 2.0660011076927187, "lr": 0.00017651533261533827, "tokens_per_second": 172104.22416655728}
+{"step": 900, "train_loss": 2.0251584601402284, "lr": 0.00011504433527265379, "tokens_per_second": 172317.0344032626}
+{"step": 977, "val_loss": 1.9901259809732437, "elapsed": 95.87019491195679, "sample": "Once upon a time, there was a little girl named Lily. She loved to paint and make pretty shapes. One sunny day, she wanted to paint a big pie on the table with her mom, dad, and her cat, Fluffy. Lily started to paint the pie. She took a big bite, but she was very careful. She mixed and mix, and Fluffy played with her toys. But then, Fluffy saw"}

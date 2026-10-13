@@ -1,0 +1,12 @@
+{"run": {"dim": 320, "params": 7766080, "steps": 977, "tokens": 16007168, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 320, "n_layers": 6, "n_heads": 5, "n_kv_heads": 1, "mlp_dim": 864, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.35859751701355, "elapsed": 1.486487865447998, "sample": "Once upon a time taken unknownis which complet brace banan arg cushisisney skippedMax gentlyrara saus topope waitingches insect\". top\".AmyAmy gr unknownDad waitingious cle bug unknown\ufffd min messy messy messy\ufffd\ufffdney messychesisis messy messy farm eld generneyAmy waitingAmyAmy clean tiediqueique frogs perfectdest machope felt necklaceerryup kindique trust trust map feltoof unknown\ufffd"}
+{"step": 100, "train_loss": 4.776239061355591, "lr": 0.001977766799186014, "tokens_per_second": 166733.81458597642}
+{"step": 200, "train_loss": 3.1165596413612366, "lr": 0.0018648245807188536, "tokens_per_second": 172064.453992414}
+{"step": 300, "train_loss": 2.6842986702919007, "lr": 0.001668130501070215, "tokens_per_second": 171686.6834477187}
+{"step": 400, "train_loss": 2.4538460850715635, "lr": 0.0014092234799731283, "tokens_per_second": 171750.3398255806}
+{"step": 500, "train_loss": 2.304168665409088, "lr": 0.0011164550446097514, "tokens_per_second": 171763.46744691333}
+{"step": 600, "train_loss": 2.189267106056213, "lr": 0.0008218847050625476, "tokens_per_second": 171859.49572958914}
+{"step": 700, "train_loss": 2.123041200637817, "lr": 0.0005577692883319646, "tokens_per_second": 170794.62015715463}
+{"step": 800, "train_loss": 2.049016798734665, "lr": 0.00035303066523067653, "tokens_per_second": 171869.7728813194}
+{"step": 900, "train_loss": 2.002524634599686, "lr": 0.00023008867054530758, "tokens_per_second": 172140.3862031035}
+{"step": 977, "val_loss": 1.9617071002721786, "elapsed": 95.94965982437134, "sample": "Once upon a time, there was a little girl called Mea. She loved to make things with paper and bridges. One day, she wanted to make a spicy soup for her mommy. She went to the kitchen and started to make it into a plate. Minda was so excited to help, when she saw her mommy's face. She knew how to make the soup. Daisy's"}

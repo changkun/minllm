@@ -1,0 +1,12 @@
+{"run": {"dim": 192, "params": 2361024, "steps": 977, "tokens": 16007168, "passes": 0.12229682128631496, "lr": 0.008, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 192, "n_layers": 4, "n_heads": 3, "n_kv_heads": 1, "mlp_dim": 512, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.35064525604248, "elapsed": 7.052846908569336, "sample": "Once upon a time swim unknownside Maybe ind hair g Now sur J sur using kite happening whyumpy\u2019t Maybe pit pit havingkn se always skipau greatauau great clapped bra zebra zebralet using track wealthy triedged pit feet Now Now ifym seBillyaxi happen ground window p Now Now meet meet repl prize prize cry barking Look soup themselves cozylevatorip triedip week mix teach having present message record record record\ufffd"}
+{"step": 100, "train_loss": 4.964968948364258, "lr": 0.007911067196744056, "tokens_per_second": 76891.16099275435}
+{"step": 200, "train_loss": 3.338956437110901, "lr": 0.007459298322875414, "tokens_per_second": 110543.64843403241}
+{"step": 300, "train_loss": 2.8890109062194824, "lr": 0.00667252200428086, "tokens_per_second": 100354.95393399453}
+{"step": 400, "train_loss": 2.6776210927963255, "lr": 0.005636893919892513, "tokens_per_second": 115235.68314185037}
+{"step": 500, "train_loss": 2.520333774089813, "lr": 0.0044658201784390054, "tokens_per_second": 101861.42157382342}
+{"step": 600, "train_loss": 2.4083767914772034, "lr": 0.0032875388202501903, "tokens_per_second": 103857.81167294823}
+{"step": 700, "train_loss": 2.326122052669525, "lr": 0.0022310771533278584, "tokens_per_second": 97403.34860294583}
+{"step": 800, "train_loss": 2.25771831035614, "lr": 0.0014121226609227061, "tokens_per_second": 94624.1047213712}
+{"step": 900, "train_loss": 2.2129920721054077, "lr": 0.0009203546821812303, "tokens_per_second": 97205.9467463803}
+{"step": 977, "val_loss": 2.158450335264206, "elapsed": 172.29121804237366, "sample": "Once upon a time, there was a little cat named Tom. Tom loved to paint and make pretty pictures with his mom. He was very happy when he played with his dog, Tom, were always there to play with his ball. One day, Tom saw a big ball. He wanted to play with it. Tom tried to play with the ball, but it was too fast. He started to roll the ball as"}

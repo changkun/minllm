@@ -1,0 +1,12 @@
+{"run": {"dim": 256, "params": 4451072, "steps": 977, "tokens": 16007168, "lr": 0.004, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 256, "n_layers": 5, "n_heads": 4, "n_kv_heads": 1, "mlp_dim": 672, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.35288143157959, "elapsed": 1.0615012645721436, "sample": "Once upon a time aunt fair fair way\"No cone brothers stove I I pink// tre All All snow snow bought yard cage bump\"That rescigg crawledort coffee coffee searched searched family tornado fill[\"No\"No auntause matt of yard yard yard fingerchool[ finger apely val anx lookikiikiccoli coffee bitter clean\"Ben\ufffd shared\"Yessticilotcycle fairbulance suc journey coffee curious Billy cardboard cardboardDo stovegegeaut"}
+{"step": 100, "train_loss": 5.062280836105347, "lr": 0.003955533598372028, "tokens_per_second": 268401.15097789065}
+{"step": 200, "train_loss": 3.2753153967857362, "lr": 0.003729649161437707, "tokens_per_second": 268647.27808234736}
+{"step": 300, "train_loss": 2.8001426315307616, "lr": 0.00333626100214043, "tokens_per_second": 268944.8227864375}
+{"step": 400, "train_loss": 2.5650517916679383, "lr": 0.0028184469599462567, "tokens_per_second": 269608.30478368106}
+{"step": 500, "train_loss": 2.40992782831192, "lr": 0.0022329100892195027, "tokens_per_second": 268592.0997519256}
+{"step": 600, "train_loss": 2.298426854610443, "lr": 0.0016437694101250951, "tokens_per_second": 268800.70996472}
+{"step": 700, "train_loss": 2.208221354484558, "lr": 0.0011155385766639292, "tokens_per_second": 268444.3691919458}
+{"step": 800, "train_loss": 2.144273035526276, "lr": 0.0007060613304613531, "tokens_per_second": 268540.4175397618}
+{"step": 900, "train_loss": 2.091043962240219, "lr": 0.00046017734109061515, "tokens_per_second": 268865.59894806705}
+{"step": 977, "val_loss": 2.0443580001592636, "elapsed": 61.238054275512695, "sample": "Once upon a time, there was a little girl named Lily. She loved to touch things. One day, she found a big box. She thought it would be fun to put on it. Lily showed the box to her friend, Tom. \"Look, Tom! I found a box with the box. Let's open it!\" she said. \"Yes, Lily,\" said Tom. They opened the box and found"}

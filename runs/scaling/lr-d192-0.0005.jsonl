@@ -1,0 +1,12 @@
+{"run": {"dim": 192, "params": 2361024, "steps": 977, "tokens": 16007168, "lr": 0.0005, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 192, "n_layers": 4, "n_heads": 3, "n_kv_heads": 1, "mlp_dim": 512, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.35064525604248, "elapsed": 0.9296200275421143, "sample": "Once upon a time swim unknownside Maybe ind hair g Now sur J sur using kite happening whyumpy\u2019t Maybe pit pit havingkn se always skipau greatauau great clapped bra zebra zebralet using track wealthy triedged pit feet Now Now ifym seBillyaxi happen ground window p Now Now meet meet repl prize prize cry barking Look soup themselves cozylevatorip triedip week mix teach having present message record record record\ufffd"}
+{"step": 100, "train_loss": 5.800246605873108, "lr": 0.0004944416997965035, "tokens_per_second": 292488.6360191687}
+{"step": 200, "train_loss": 3.7474379992485045, "lr": 0.0004662061451797134, "tokens_per_second": 343929.00002182106}
+{"step": 300, "train_loss": 3.261965570449829, "lr": 0.00041703262526755373, "tokens_per_second": 315954.972836723}
+{"step": 400, "train_loss": 3.031098747253418, "lr": 0.0003523058699932821, "tokens_per_second": 323496.53808993613}
+{"step": 500, "train_loss": 2.865302278995514, "lr": 0.00027911376115243784, "tokens_per_second": 321680.78900397563}
+{"step": 600, "train_loss": 2.759457085132599, "lr": 0.0002054711762656369, "tokens_per_second": 361573.612417812}
+{"step": 700, "train_loss": 2.6884002685546875, "lr": 0.00013944232208299115, "tokens_per_second": 331034.65174956905}
+{"step": 800, "train_loss": 2.6400442695617676, "lr": 8.825766630766913e-05, "tokens_per_second": 296901.24565105705}
+{"step": 900, "train_loss": 2.610924937725067, "lr": 5.7522167636326894e-05, "tokens_per_second": 337193.10868603695}
+{"step": 977, "val_loss": 2.565707641839981, "elapsed": 50.71446514129639, "sample": "Once upon a time, there was a little cat named Max. Max loved to play and be with his friends. One day, Max wanted to play a game. He saw a big, red ball and wanted to play with it. Max started to get his ball. He looked in the tree, but he got very scared. He thought it was a bad ending."}

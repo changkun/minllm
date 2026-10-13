@@ -1,0 +1,12 @@
+{"run": {"dim": 384, "params": 14162304, "steps": 977, "tokens": 16007168, "lr": 0.001, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 384, "n_layers": 8, "n_heads": 6, "n_kv_heads": 2, "mlp_dim": 1024, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.407904958724975, "elapsed": 1.957554817199707, "sample": "Once upon a timeSamonest pow comb\u0006\u0006 stepped green gi touch wouldn wouldn\ufffd per word word green green ignoranttingasure front frontlevator trees treesinkyken green green nodded thankful toys only says butterfly\u0011\u0011 Olive Olive green greenamond\ufffd lots slid green playful playfulect\u0011 joiled playfuliled town por\"Can nailight shiningungle\ufffd stepped ignorantkenkenken NowJack delapped Aarn\ufffdemyemyemyight A"}
+{"step": 100, "train_loss": 4.676784806251526, "lr": 0.000988883399593007, "tokens_per_second": 105342.61387980446}
+{"step": 200, "train_loss": 3.011312894821167, "lr": 0.0009324122903594268, "tokens_per_second": 105966.58356584248}
+{"step": 300, "train_loss": 2.614970462322235, "lr": 0.0008340652505351075, "tokens_per_second": 105918.3365195133}
+{"step": 400, "train_loss": 2.3941456842422486, "lr": 0.0007046117399865642, "tokens_per_second": 105889.93802941423}
+{"step": 500, "train_loss": 2.2409093713760377, "lr": 0.0005582275223048757, "tokens_per_second": 105884.836075867}
+{"step": 600, "train_loss": 2.1337023651599885, "lr": 0.0004109423525312738, "tokens_per_second": 105760.78021515926}
+{"step": 700, "train_loss": 2.0606913328170777, "lr": 0.0002788846441659823, "tokens_per_second": 106091.98778932441}
+{"step": 800, "train_loss": 1.991680188179016, "lr": 0.00017651533261533827, "tokens_per_second": 106084.95514619227}
+{"step": 900, "train_loss": 1.9526495444774628, "lr": 0.00011504433527265379, "tokens_per_second": 106123.19881600694}
+{"step": 977, "val_loss": 1.9128203123807908, "elapsed": 154.68269276618958, "sample": "Once upon a time, there was a family. The bird was a boy. They were different. They were not happy. They were talking and happy. One day, they went to play. The wind was strong. The bird was happy. It liked to watch the wind. The mom and the dad saw the train and said, \"Wow! That is a fun game!\" The kids were sad. They didn't"}

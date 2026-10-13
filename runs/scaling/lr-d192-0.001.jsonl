@@ -1,0 +1,12 @@
+{"run": {"dim": 192, "params": 2361024, "steps": 977, "tokens": 16007168, "lr": 0.001, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 192, "n_layers": 4, "n_heads": 3, "n_kv_heads": 1, "mlp_dim": 512, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.35064525604248, "elapsed": 0.8274691104888916, "sample": "Once upon a time swim unknownside Maybe ind hair g Now sur J sur using kite happening whyumpy\u2019t Maybe pit pit havingkn se always skipau greatauau great clapped bra zebra zebralet using track wealthy triedged pit feet Now Now ifym seBillyaxi happen ground window p Now Now meet meet repl prize prize cry barking Look soup themselves cozylevatorip triedip week mix teach having present message record record record\ufffd"}
+{"step": 100, "train_loss": 5.260800702571869, "lr": 0.000988883399593007, "tokens_per_second": 420399.3147047465}
+{"step": 200, "train_loss": 3.3671412825584413, "lr": 0.0009324122903594268, "tokens_per_second": 416061.5558798476}
+{"step": 300, "train_loss": 2.923511152267456, "lr": 0.0008340652505351075, "tokens_per_second": 393854.000992781}
+{"step": 400, "train_loss": 2.7084212946891784, "lr": 0.0007046117399865642, "tokens_per_second": 404856.0993432055}
+{"step": 500, "train_loss": 2.5507365131378172, "lr": 0.0005582275223048757, "tokens_per_second": 409019.1841457434}
+{"step": 600, "train_loss": 2.4483048033714296, "lr": 0.0004109423525312738, "tokens_per_second": 413344.3932431632}
+{"step": 700, "train_loss": 2.379306981563568, "lr": 0.0002788846441659823, "tokens_per_second": 429988.1254045639}
+{"step": 800, "train_loss": 2.3292217588424684, "lr": 0.00017651533261533827, "tokens_per_second": 423781.71533245535}
+{"step": 900, "train_loss": 2.298341386318207, "lr": 0.00011504433527265379, "tokens_per_second": 425333.64364605065}
+{"step": 977, "val_loss": 2.253684002161026, "elapsed": 39.78841495513916, "sample": "Once upon a time, there was a little girl named Lily. She loved to paint and make pretty shapes. One sunny day, she wanted to make a big cake. She put on her big, blue, blue, and white dictionary. Lily was very happy. Lily had a friend, a little girl named Lily. They played together all day. Lily and her friends liked their new new show. They"}

@@ -1,0 +1,12 @@
+{"run": {"dim": 512, "params": 29796864, "steps": 977, "tokens": 16007168, "lr": 0.0005, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 512, "n_layers": 10, "n_heads": 8, "n_kv_heads": 2, "mlp_dim": 1376, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.408727884292603, "elapsed": 3.5060172080993652, "sample": "Once upon a timepppp saying saying of slippedect lazy pigeon pigeon trou near past your expl asked near wag shiny tower pigeonenedirp cir\ufffd ofpppp shoot shoot trumpbol litity taking taking\ufffd takingelppp0 loopbar foreirp holding taking chubby writeect farmLet maybebar judge/bol cir\u0002 explirpirpbol0 prepouse cobirp clouds~ mattressbar explbol hair unteb outdom expl"}
+{"step": 100, "train_loss": 4.666657581329345, "lr": 0.0004944416997965035, "tokens_per_second": 51049.49311003398}
+{"step": 200, "train_loss": 2.960589427947998, "lr": 0.0004662061451797134, "tokens_per_second": 52609.951759552925}
+{"step": 300, "train_loss": 2.551687753200531, "lr": 0.00041703262526755373, "tokens_per_second": 52155.493388614734}
+{"step": 400, "train_loss": 2.3647613739967346, "lr": 0.0003523058699932821, "tokens_per_second": 50856.51379288444}
+{"step": 500, "train_loss": 2.201009759902954, "lr": 0.00027911376115243784, "tokens_per_second": 51751.391453164004}
+{"step": 600, "train_loss": 2.103900184631348, "lr": 0.0002054711762656369, "tokens_per_second": 50701.355326458084}
+{"step": 700, "train_loss": 2.0296827864646914, "lr": 0.00013944232208299115, "tokens_per_second": 51087.2362058654}
+{"step": 800, "train_loss": 1.9714327824115754, "lr": 8.825766630766913e-05, "tokens_per_second": 52296.88952292332}
+{"step": 900, "train_loss": 1.9283032405376435, "lr": 5.7522167636326894e-05, "tokens_per_second": 51696.59421191888}
+{"step": 977, "val_loss": 1.8906844109296799, "elapsed": 316.351420879364, "sample": "Once upon a time, there was a little boy named Tim. He loved to play with his toy phone. Tim would play with his phone all day. He would make it go fast, loud, and laugh with it. He would laugh and clap his hands, and sometimes he could play with the phone. Tim was a very good boy. One day, Tim's friend Sam came over to play. They played with"}

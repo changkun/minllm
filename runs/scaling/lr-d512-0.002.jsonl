@@ -1,0 +1,12 @@
+{"run": {"dim": 512, "params": 29796864, "steps": 977, "tokens": 16007168, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 512, "n_layers": 10, "n_heads": 8, "n_kv_heads": 2, "mlp_dim": 1376, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.408727884292603, "elapsed": 3.105128049850464, "sample": "Once upon a timepppp saying saying of slippedect lazy pigeon pigeon trou near past your expl asked near wag shiny tower pigeonenedirp cir\ufffd ofpppp shoot shoot trumpbol litity taking taking\ufffd takingelppp0 loopbar foreirp holding taking chubby writeect farmLet maybebar judge/bol cir\u0002 explirpirpbol0 prepouse cobirp clouds~ mattressbar explbol hair unteb outdom expl"}
+{"step": 100, "train_loss": 4.745908594131469, "lr": 0.001977766799186014, "tokens_per_second": 55744.52900312505}
+{"step": 200, "train_loss": 3.1394321155548095, "lr": 0.0018648245807188536, "tokens_per_second": 56227.26186294823}
+{"step": 300, "train_loss": 2.6677500724792482, "lr": 0.001668130501070215, "tokens_per_second": 56216.00691979158}
+{"step": 400, "train_loss": 2.44515700340271, "lr": 0.0014092234799731283, "tokens_per_second": 56186.94587103667}
+{"step": 500, "train_loss": 2.257055160999298, "lr": 0.0011164550446097514, "tokens_per_second": 56184.82306375769}
+{"step": 600, "train_loss": 2.138912651538849, "lr": 0.0008218847050625476, "tokens_per_second": 55810.56866440272}
+{"step": 700, "train_loss": 2.0439212250709535, "lr": 0.0005577692883319646, "tokens_per_second": 56158.99931485009}
+{"step": 800, "train_loss": 1.9701502883434296, "lr": 0.00035303066523067653, "tokens_per_second": 56054.254484239915}
+{"step": 900, "train_loss": 1.9130338501930237, "lr": 0.00023008867054530758, "tokens_per_second": 56067.607488610505}
+{"step": 977, "val_loss": 1.8646854519844056, "elapsed": 291.46941208839417, "sample": "Once upon a time, there was a family who had a little girl named Amy. Amy loved to play with her toys, but her mom had a big problem. She didn't like it, but Amy wanted to be clean. One day, Amy's mom said she could have a clean room for her. Amy was scared, but she wanted to play with her toys. But her mom said no. She said the"}

@@ -1,0 +1,12 @@
+{"run": {"dim": 192, "params": 2361024, "steps": 977, "tokens": 16007168, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 192, "n_layers": 4, "n_heads": 3, "n_kv_heads": 1, "mlp_dim": 512, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.35064525604248, "elapsed": 0.8918130397796631, "sample": "Once upon a time swim unknownside Maybe ind hair g Now sur J sur using kite happening whyumpy\u2019t Maybe pit pit havingkn se always skipau greatauau great clapped bra zebra zebralet using track wealthy triedged pit feet Now Now ifym seBillyaxi happen ground window p Now Now meet meet repl prize prize cry barking Look soup themselves cozylevatorip triedip week mix teach having present message record record record\ufffd"}
+{"step": 100, "train_loss": 4.917319238185883, "lr": 0.001977766799186014, "tokens_per_second": 411538.6490613979}
+{"step": 200, "train_loss": 3.19452365398407, "lr": 0.0018648245807188536, "tokens_per_second": 414896.04508442554}
+{"step": 300, "train_loss": 2.777616400718689, "lr": 0.001668130501070215, "tokens_per_second": 431964.40726985544}
+{"step": 400, "train_loss": 2.575846083164215, "lr": 0.0014092234799731283, "tokens_per_second": 428897.1581789382}
+{"step": 500, "train_loss": 2.422794773578644, "lr": 0.0011164550446097514, "tokens_per_second": 429090.4881803153}
+{"step": 600, "train_loss": 2.320545575618744, "lr": 0.0008218847050625476, "tokens_per_second": 430617.5733161453}
+{"step": 700, "train_loss": 2.2483858370780947, "lr": 0.0005577692883319646, "tokens_per_second": 431206.78791919054}
+{"step": 800, "train_loss": 2.1927486491203307, "lr": 0.00035303066523067653, "tokens_per_second": 430319.446591953}
+{"step": 900, "train_loss": 2.157761979103088, "lr": 0.00023008867054530758, "tokens_per_second": 430206.7051030153}
+{"step": 977, "val_loss": 2.1120397955179215, "elapsed": 38.82425117492676, "sample": "Once upon a time, there was a little girl named Lily. Lily loved to paint and make pretty shapes. One day, she found a big box in her room. The box was full of fun things to play with. Lily wanted to help, so she went to her mom and dad. They walked to the box and said, \"Mom, look! I found a big, dirty ball. I want to play"}

@@ -1,0 +1,37 @@
+{"run": {"dim": 512, "params": 29796864, "steps": 3414, "tokens": 55934976, "lr": 0.001, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 512, "n_layers": 10, "n_heads": 8, "n_kv_heads": 2, "mlp_dim": 1376, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.408727884292603, "elapsed": 10.322562217712402, "sample": "Once upon a timepppp saying saying of slippedect lazy pigeon pigeon trou near past your expl asked near wag shiny tower pigeonenedirp cir\ufffd ofpppp shoot shoot trumpbol litity taking taking\ufffd takingelppp0 loopbar foreirp holding taking chubby writeect farmLet maybebar judge/bol cir\u0002 explirpirpbol0 prepouse cobirp clouds~ mattressbar explbol hair unteb outdom expl"}
+{"step": 100, "train_loss": 4.860934257507324, "lr": 0.0008849557522123895, "tokens_per_second": 19495.54588379607}
+{"step": 200, "train_loss": 2.927968645095825, "lr": 0.0009984935814277747, "tokens_per_second": 22438.044440707356}
+{"step": 300, "train_loss": 2.5062930679321287, "lr": 0.0009929679371642678, "tokens_per_second": 19511.38462641325}
+{"step": 400, "train_loss": 2.3242138171195985, "lr": 0.000983433134991687, "tokens_per_second": 21773.244994415003}
+{"step": 500, "train_loss": 2.172101173400879, "lr": 0.0009699754712857612, "tokens_per_second": 22507.829959831997}
+{"step": 600, "train_loss": 2.08874382853508, "lr": 0.0009527167469588311, "tokens_per_second": 24282.76514969949}
+{"step": 700, "train_loss": 2.0238982582092286, "lr": 0.0009318131650796314, "tokens_per_second": 21171.594475267324}
+{"step": 800, "train_loss": 1.9695775198936463, "lr": 0.0009074539171304059, "tokens_per_second": 16006.633079997708}
+{"step": 900, "train_loss": 1.9221016716957093, "lr": 0.0008798594706966873, "tokens_per_second": 15304.99047914103}
+{"step": 1000, "train_loss": 1.8836228251457214, "lr": 0.0008492795740872909, "tokens_per_second": 16437.02012610041}
+{"step": 1100, "train_loss": 1.851445347070694, "lr": 0.0008159909959440627, "tokens_per_second": 14982.663101041862}
+{"step": 1200, "train_loss": 1.8183172869682311, "lr": 0.0007802950202994296, "tokens_per_second": 14908.485852839116}
+{"step": 1300, "train_loss": 1.7855538320541382, "lr": 0.0007425147197531695, "tokens_per_second": 17032.606376389154}
+{"step": 1400, "train_loss": 1.7632483530044556, "lr": 0.0007029920314479835, "tokens_per_second": 16180.921850902087}
+{"step": 1500, "train_loss": 1.7430130660533905, "lr": 0.0006620846623082622, "tokens_per_second": 14956.101784612783}
+{"step": 1600, "train_loss": 1.7118840873241425, "lr": 0.0006201628515517148, "tokens_per_second": 16620.378021912533}
+{"step": 1700, "train_loss": 1.691859121322632, "lr": 0.0005776060197753108, "tokens_per_second": 20692.17992814899}
+{"step": 1800, "train_loss": 1.6799618363380433, "lr": 0.000534799334943562, "tokens_per_second": 21919.02714043091}
+{"step": 1900, "train_loss": 1.663268620967865, "lr": 0.0004921302263592598, "tokens_per_second": 13646.949275531724}
+{"step": 2000, "train_loss": 1.6369483768939972, "lr": 0.00044998487816757973, "tokens_per_second": 13855.612820839722}
+{"step": 2100, "train_loss": 1.6167142295837402, "lr": 0.0004087447341296999, "tokens_per_second": 14527.152578703795}
+{"step": 2200, "train_loss": 1.5964302372932435, "lr": 0.00036878304530008565, "tokens_per_second": 11954.365389296352}
+{"step": 2300, "train_loss": 1.585315124988556, "lr": 0.00033046149185328146, "tokens_per_second": 12911.086353860239}
+{"step": 2400, "train_loss": 1.5743015241622924, "lr": 0.0002941269096349534, "tokens_per_second": 13075.74763044842}
+{"step": 2500, "train_loss": 1.5612815189361573, "lr": 0.000260108151064096, "tokens_per_second": 14067.642270545724}
+{"step": 2600, "train_loss": 1.545504151582718, "lr": 0.00022871310879735236, "tokens_per_second": 15430.950069767423}
+{"step": 2700, "train_loss": 1.5410564744472504, "lr": 0.0002002259290932875, "tokens_per_second": 18184.396186879847}
+{"step": 2800, "train_loss": 1.5194186854362488, "lr": 0.00017490444009754286, "tokens_per_second": 15472.69363233962}
+{"step": 2900, "train_loss": 1.5185857570171357, "lr": 0.00015297781832462377, "tokens_per_second": 15495.12800017963}
+{"step": 3000, "train_loss": 1.5115120542049407, "lr": 0.00013464451445622727, "tokens_per_second": 16068.733421290677}
+{"step": 3100, "train_loss": 1.4960128355026245, "lr": 0.00012007045722903323, "tokens_per_second": 14747.41835076442}
+{"step": 3200, "train_loss": 1.4991484427452086, "lr": 0.0001093875516679828, "tokens_per_second": 15559.916300689041}
+{"step": 3300, "train_loss": 1.4888705348968505, "lr": 0.00010269248525704186, "tokens_per_second": 14894.500774927415}
+{"step": 3400, "train_loss": 1.4822563755512237, "lr": 0.00010004585285240924, "tokens_per_second": 15348.608514083597}
+{"step": 3414, "val_loss": 1.498787698149681, "elapsed": 3457.135650873184, "sample": "Once upon a time, there was a little cat named Tom. Tom was very proud of his toy. He played with it all day. But one day, Tom's toy fell out of his paw. It was a small hole. Tom was sad. He did not know what to do. He thought about his mom and dad. He wanted to help his toy. So, he decided to find his mom and dad"}

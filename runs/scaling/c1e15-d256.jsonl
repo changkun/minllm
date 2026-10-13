@@ -1,0 +1,25 @@
+{"run": {"dim": 256, "params": 4451072, "steps": 2285, "tokens": 37437440, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 256, "n_layers": 5, "n_heads": 4, "n_kv_heads": 1, "mlp_dim": 672, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.35288143157959, "elapsed": 1.0600688457489014, "sample": "Once upon a time aunt fair fair way\"No cone brothers stove I I pink// tre All All snow snow bought yard cage bump\"That rescigg crawledort coffee coffee searched searched family tornado fill[\"No\"No auntause matt of yard yard yard fingerchool[ finger apely val anx lookikiikiccoli coffee bitter clean\"Ben\ufffd shared\"Yessticilotcycle fairbulance suc journey coffee curious Billy cardboard cardboardDo stovegegeaut"}
+{"step": 100, "train_loss": 5.0096424245834354, "lr": 0.001999518564871097, "tokens_per_second": 270092.14424020774}
+{"step": 200, "train_loss": 3.0568462657928466, "lr": 0.0019862651688676036, "tokens_per_second": 272267.7306636735}
+{"step": 300, "train_loss": 2.6416287279129027, "lr": 0.001955116436283175, "tokens_per_second": 269056.6089157629}
+{"step": 400, "train_loss": 2.4416998553276064, "lr": 0.001906701317767401, "tokens_per_second": 269222.43735369097}
+{"step": 500, "train_loss": 2.315125684738159, "lr": 0.0018419974043075843, "tokens_per_second": 269195.1963490711}
+{"step": 600, "train_loss": 2.2294885468482972, "lr": 0.0017623111878546011, "tokens_per_second": 269315.1064664962}
+{"step": 700, "train_loss": 2.1593355894088746, "lr": 0.0016692516808286388, "tokens_per_second": 268923.5417234021}
+{"step": 800, "train_loss": 2.108846981525421, "lr": 0.001564697927175893, "tokens_per_second": 268991.8382980359}
+{"step": 900, "train_loss": 2.057833720445633, "lr": 0.0014507610609882154, "tokens_per_second": 269114.53920774534}
+{"step": 1000, "train_loss": 2.0163360118865965, "lr": 0.001329741678792501, "tokens_per_second": 268970.2550215176}
+{"step": 1100, "train_loss": 1.9735912942886353, "lr": 0.0012040833862423225, "tokens_per_second": 267647.4329545281}
+{"step": 1200, "train_loss": 1.947991715669632, "lr": 0.0010763234571902042, "tokens_per_second": 268486.59430600924}
+{"step": 1300, "train_loss": 1.9163451015949249, "lr": 0.0009490416014253342, "tokens_per_second": 268192.06122818304}
+{"step": 1400, "train_loss": 1.884712952375412, "lr": 0.0008248078755510531, "tokens_per_second": 265696.1186380867}
+{"step": 1500, "train_loss": 1.8633821630477905, "lr": 0.0007061307887780563, "tokens_per_second": 268678.59963741404}
+{"step": 1600, "train_loss": 1.8319355034828186, "lr": 0.0005954066514735464, "tokens_per_second": 268697.77220011037}
+{"step": 1700, "train_loss": 1.8169837558269502, "lr": 0.0004948711892130075, "tokens_per_second": 268613.1603939231}
+{"step": 1800, "train_loss": 1.7987508070468903, "lr": 0.0004065543993365932, "tokens_per_second": 268179.6691647658}
+{"step": 1900, "train_loss": 1.7855635404586792, "lr": 0.00033223956153993474, "tokens_per_second": 268499.40290857555}
+{"step": 2000, "train_loss": 1.7699131095409393, "lr": 0.000273427230151515, "tokens_per_second": 268441.28620918485}
+{"step": 2100, "train_loss": 1.762338762283325, "lr": 0.00023130493515928396, "tokens_per_second": 268907.65153356985}
+{"step": 2200, "train_loss": 1.7535992908477782, "lr": 0.00020672320377893984, "tokens_per_second": 266249.7844782245}
+{"step": 2285, "val_loss": 1.7426517993211745, "elapsed": 141.0388889312744, "sample": "Once upon a time, there was a family of a bird. They lived in a big tree with lots of birds. The bird was very intelligent. One day, the bird saw a little ant working in the tree. The ant wanted to help the ant, so it decided to help the ant. The ant got to the ant and gently cut a big egg. The ant was very happy and proud. It started to"}

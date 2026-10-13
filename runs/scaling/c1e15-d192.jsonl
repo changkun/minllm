@@ -1,0 +1,46 @@
+{"run": {"dim": 192, "params": 2361024, "steps": 4309, "tokens": 70598656, "lr": 0.004, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 192, "n_layers": 4, "n_heads": 3, "n_kv_heads": 1, "mlp_dim": 512, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.35064525604248, "elapsed": 0.821652889251709, "sample": "Once upon a time swim unknownside Maybe ind hair g Now sur J sur using kite happening whyumpy\u2019t Maybe pit pit havingkn se always skipau greatauau great clapped bra zebra zebralet using track wealthy triedged pit feet Now Now ifym seBillyaxi happen ground window p Now Now meet meet repl prize prize cry barking Look soup themselves cozylevatorip triedip week mix teach having present message record record record\ufffd"}
+{"step": 100, "train_loss": 5.230460977554321, "lr": 0.002797202797202797, "tokens_per_second": 424886.81389098626}
+{"step": 200, "train_loss": 3.174845480918884, "lr": 0.003998395220991153, "tokens_per_second": 451747.34756484174}
+{"step": 300, "train_loss": 2.7283658885955813, "lr": 0.003987559094081268, "tokens_per_second": 444410.938490264}
+{"step": 400, "train_loss": 2.540260446071625, "lr": 0.003966562450253742, "tokens_per_second": 434744.17328609567}
+{"step": 500, "train_loss": 2.406496980190277, "lr": 0.003935524634796535, "tokens_per_second": 434235.37743568915}
+{"step": 600, "train_loss": 2.323962309360504, "lr": 0.0038946220671914303, "tokens_per_second": 434646.28293322946}
+{"step": 700, "train_loss": 2.267215015888214, "lr": 0.003844087238342648, "tokens_per_second": 435562.31596686505}
+{"step": 800, "train_loss": 2.2205981373786927, "lr": 0.003784207389094503, "tokens_per_second": 433815.36152397114}
+{"step": 900, "train_loss": 2.1841132164001467, "lr": 0.0037153228775494633, "tokens_per_second": 434207.062085385}
+{"step": 1000, "train_loss": 2.1431638956069947, "lr": 0.003637825244466789, "tokens_per_second": 434698.96226218756}
+{"step": 1100, "train_loss": 2.1227890038490296, "lr": 0.0035521549877380564, "tokens_per_second": 433838.5861703933}
+{"step": 1200, "train_loss": 2.0883828520774843, "lr": 0.0034587990585895024, "tokens_per_second": 434386.29027996387}
+{"step": 1300, "train_loss": 2.056141531467438, "lr": 0.003358288093742796, "tokens_per_second": 434063.37472063117}
+{"step": 1400, "train_loss": 2.0461697590351107, "lr": 0.0032511933992667085, "tokens_per_second": 434214.5521240564}
+{"step": 1500, "train_loss": 2.022145299911499, "lr": 0.0031381237032634957, "tokens_per_second": 434418.4187731885}
+{"step": 1600, "train_loss": 2.0190076553821563, "lr": 0.003019721695847806, "tokens_per_second": 434488.95336302195}
+{"step": 1700, "train_loss": 1.9910082054138183, "lr": 0.0028966603760849086, "tokens_per_second": 434282.0838822991}
+{"step": 1800, "train_loss": 1.9687621259689332, "lr": 0.0027696392266523245, "tokens_per_second": 433564.43109250994}
+{"step": 1900, "train_loss": 1.9610028219223024, "lr": 0.002639380237968151, "tokens_per_second": 433751.2601636767}
+{"step": 2000, "train_loss": 1.9359789788722992, "lr": 0.0025066238043849895, "tokens_per_second": 434594.96311227005}
+{"step": 2100, "train_loss": 1.935839936733246, "lr": 0.002372124515775598, "tokens_per_second": 433345.5968548657}
+{"step": 2200, "train_loss": 1.9250267553329468, "lr": 0.0022366468684309514, "tokens_per_second": 431612.7922413618}
+{"step": 2300, "train_loss": 1.9048878240585327, "lr": 0.00210096091965006, "tokens_per_second": 432891.1644993281}
+{"step": 2400, "train_loss": 1.8925159680843353, "lr": 0.00196583791072091, "tokens_per_second": 434196.14300477644}
+{"step": 2500, "train_loss": 1.8870484614372254, "lr": 0.0018320458831716025, "tokens_per_second": 432827.4722576074}
+{"step": 2600, "train_loss": 1.8667084646224976, "lr": 0.0017003453132089716, "tokens_per_second": 433140.74266806646}
+{"step": 2700, "train_loss": 1.846142144203186, "lr": 0.001571484789158629, "tokens_per_second": 430024.55786824843}
+{"step": 2800, "train_loss": 1.850817699432373, "lr": 0.0014461967564759236, "tokens_per_second": 434339.3417989699}
+{"step": 2900, "train_loss": 1.831322889328003, "lr": 0.0013251933545132648, "tokens_per_second": 432818.7487525347}
+{"step": 3000, "train_loss": 1.818233778476715, "lr": 0.0012091623687076774, "tokens_per_second": 434269.21253664885}
+{"step": 3100, "train_loss": 1.8123112571239473, "lr": 0.001098763321196446, "tokens_per_second": 430124.0117055711}
+{"step": 3200, "train_loss": 1.7987381613254547, "lr": 0.000994623722081833, "tokens_per_second": 429209.0790403407}
+{"step": 3300, "train_loss": 1.7902097284793854, "lr": 0.0008973355026527702, "tokens_per_second": 431026.73983054224}
+{"step": 3400, "train_loss": 1.783986164331436, "lr": 0.0008074516508371356, "tokens_per_second": 433636.138874924}
+{"step": 3500, "train_loss": 1.7703857767581939, "lr": 0.0007254830680087754, "tokens_per_second": 433180.1688709519}
+{"step": 3600, "train_loss": 1.76009810090065, "lr": 0.0006518956650152228, "tokens_per_second": 434448.0251304049}
+{"step": 3700, "train_loss": 1.7609134006500244, "lr": 0.0005871077139323599, "tokens_per_second": 433581.6377030623}
+{"step": 3800, "train_loss": 1.747371631860733, "lr": 0.0005314874705986737, "tokens_per_second": 434218.667639917}
+{"step": 3900, "train_loss": 1.7508023607730865, "lr": 0.00048535108144268064, "tokens_per_second": 432949.50187747285}
+{"step": 4000, "train_loss": 1.7507767295837402, "lr": 0.00044896078650113786, "tokens_per_second": 432779.0067331278}
+{"step": 4100, "train_loss": 1.7359330642223358, "lr": 0.00042252342884212393, "tokens_per_second": 433457.5017040081}
+{"step": 4200, "train_loss": 1.736537834405899, "lr": 0.00040618927886544934, "tokens_per_second": 433770.09704291145}
+{"step": 4300, "train_loss": 1.731487762928009, "lr": 0.0004000511801630952, "tokens_per_second": 431645.2980265896}
+{"step": 4309, "val_loss": 1.7309627056121826, "elapsed": 163.95808386802673, "sample": "Once upon a time, there was a little girl named Lily. She loved to paint and make pretty pictures with her hands. One day, she found a big, red bird in her yard. The bird was making a happy sound when it started to get dark. Lily decided to cover the bird with her paint. She painted a big, green leaf with a small flower. The bird looked sad. Lily took the bird"}

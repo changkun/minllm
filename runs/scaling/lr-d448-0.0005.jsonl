@@ -1,0 +1,12 @@
+{"run": {"dim": 448, "params": 20293952, "steps": 977, "tokens": 16007168, "lr": 0.0005, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 448, "n_layers": 9, "n_heads": 7, "n_kv_heads": 1, "mlp_dim": 1184, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.399161100387573, "elapsed": 2.893651008605957, "sample": "Once upon a time boreropl barnaughter restless seen enjoying Now landed resc waiting Now\ufffdcles lamp paws\ufffd\ufffd bor sandw waiting answ shareopter sharetingtingurn creek creekign Fo ohead otingide paws paws paws line ple ple pleide\ufffd Buzz pudd puddla sur\ufffd successful successful billtingting\u0014 times bees\ufffdideide cookedcles wonder met met o journeyclesersers shareduring helping stepped alert shrimp sur"}
+{"step": 100, "train_loss": 4.799377348423004, "lr": 0.0004944416997965035, "tokens_per_second": 66909.00731786815}
+{"step": 200, "train_loss": 3.0352349305152893, "lr": 0.0004662061451797134, "tokens_per_second": 67657.69676107282}
+{"step": 300, "train_loss": 2.636463258266449, "lr": 0.00041703262526755373, "tokens_per_second": 69446.83230091355}
+{"step": 400, "train_loss": 2.42298978805542, "lr": 0.0003523058699932821, "tokens_per_second": 68985.34418292066}
+{"step": 500, "train_loss": 2.279922814369202, "lr": 0.00027911376115243784, "tokens_per_second": 68177.01608099912}
+{"step": 600, "train_loss": 2.1758448481559753, "lr": 0.0002054711762656369, "tokens_per_second": 67646.52905054174}
+{"step": 700, "train_loss": 2.084097501039505, "lr": 0.00013944232208299115, "tokens_per_second": 70429.48924026603}
+{"step": 800, "train_loss": 2.037925431728363, "lr": 8.825766630766913e-05, "tokens_per_second": 70902.23171838789}
+{"step": 900, "train_loss": 1.9932134222984315, "lr": 5.7522167636326894e-05, "tokens_per_second": 70685.03748572724}
+{"step": 977, "val_loss": 1.9588346838951112, "elapsed": 237.22710824012756, "sample": "Once upon a time, there was a family of a bird. They were very proud of their family. They played and played together. The family liked to help people make their family happy. One day, a little girl named Lucy wanted to help the family. She thought about what she had to do. Lucy got very busy when she saw her dad's family. She knew how to make their family happy too. Lucy"}

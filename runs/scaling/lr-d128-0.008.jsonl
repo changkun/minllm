@@ -1,0 +1,12 @@
+{"run": {"dim": 128, "params": 1078144, "steps": 977, "tokens": 16007168, "passes": 0.12229682128631496, "lr": 0.008, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 128, "n_layers": 3, "n_heads": 2, "n_kv_heads": 1, "mlp_dim": 352, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.343220615386963, "elapsed": 3.871403932571411, "sample": "Once upon a timeision fairressress bookcaseelt raft gracefulOkay map kindness kindness\ufffd watching biteht sun sun scr before^ontoutJo sealLook dayuth nest\ufffd\ufffd ang\u0018 brush stoneDoDoDo roof roof0 roof remindowed eas\b set cam cam medic mouseialial often sticks are able race pastaueirt por oilsticassion wishesffip\ufffdependependHis wants wants crries embarrass embarrass train armchair"}
+{"step": 100, "train_loss": 5.550667004585266, "lr": 0.007911067196744056, "tokens_per_second": 134810.30089586167}
+{"step": 200, "train_loss": 4.013546469211579, "lr": 0.007459298322875414, "tokens_per_second": 159532.27884913207}
+{"step": 300, "train_loss": 3.350773012638092, "lr": 0.00667252200428086, "tokens_per_second": 177355.90409834884}
+{"step": 400, "train_loss": 2.986352686882019, "lr": 0.005636893919892513, "tokens_per_second": 197749.27478958693}
+{"step": 500, "train_loss": 2.7802164649963377, "lr": 0.0044658201784390054, "tokens_per_second": 187693.4558397527}
+{"step": 600, "train_loss": 2.6382126331329347, "lr": 0.0032875388202501903, "tokens_per_second": 178019.7523019694}
+{"step": 700, "train_loss": 2.5249842858314513, "lr": 0.0022310771533278584, "tokens_per_second": 262223.54412929213}
+{"step": 800, "train_loss": 2.4796850442886353, "lr": 0.0014121226609227061, "tokens_per_second": 173360.9688832855}
+{"step": 900, "train_loss": 2.4250367069244385, "lr": 0.0009203546821812303, "tokens_per_second": 206164.02962304457}
+{"step": 977, "val_loss": 2.372487324476242, "elapsed": 95.1443190574646, "sample": "Once upon a time, there was a little cat named Tom. Tom loved to play and be with his friends. One day, Tom wanted to play in the sun. He put on his head, and it was very heavy. Tom played with the sun and the sun. He took a big bite of the sun. Then, he found a big, shiny rock. The rock was dirty and sad. It wanted to"}

@@ -1,0 +1,12 @@
+{"run": {"dim": 320, "params": 7766080, "steps": 977, "tokens": 16007168, "lr": 0.0005, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 320, "n_layers": 6, "n_heads": 5, "n_kv_heads": 1, "mlp_dim": 864, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.35859751701355, "elapsed": 1.4240992069244385, "sample": "Once upon a time taken unknownis which complet brace banan arg cushisisney skippedMax gentlyrara saus topope waitingches insect\". top\".AmyAmy gr unknownDad waitingious cle bug unknown\ufffd min messy messy messy\ufffd\ufffdney messychesisis messy messy farm eld generneyAmy waitingAmyAmy clean tiediqueique frogs perfectdest machope felt necklaceerryup kindique trust trust map feltoof unknown\ufffd"}
+{"step": 100, "train_loss": 5.153682932853699, "lr": 0.0004944416997965035, "tokens_per_second": 157891.6541516895}
+{"step": 200, "train_loss": 3.2744821906089783, "lr": 0.0004662061451797134, "tokens_per_second": 153512.07619135783}
+{"step": 300, "train_loss": 2.8381119441986082, "lr": 0.00041703262526755373, "tokens_per_second": 155407.5716402813}
+{"step": 400, "train_loss": 2.6049711012840273, "lr": 0.0003523058699932821, "tokens_per_second": 156288.94428788897}
+{"step": 500, "train_loss": 2.4593989872932434, "lr": 0.00027911376115243784, "tokens_per_second": 157768.9281877527}
+{"step": 600, "train_loss": 2.3514625096321105, "lr": 0.0002054711762656369, "tokens_per_second": 158141.78475363052}
+{"step": 700, "train_loss": 2.294445769786835, "lr": 0.00013944232208299115, "tokens_per_second": 156775.9142179179}
+{"step": 800, "train_loss": 2.2318114542961123, "lr": 8.825766630766913e-05, "tokens_per_second": 158184.18625344554}
+{"step": 900, "train_loss": 2.1947017216682436, "lr": 5.7522167636326894e-05, "tokens_per_second": 159059.91710489488}
+{"step": 977, "val_loss": 2.1589459121227264, "elapsed": 104.66819524765015, "sample": "Once upon a time, there was a little girl named Lily. She had a big box of toys. Lily loved to play with her toys and play with her toys all day. The toys were all going to the park to have fun. One day, Lily's mom made a big cake for the mummy. She was so proud of her own cake. But Lily knew she had to wait for the party to come"}

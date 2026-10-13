@@ -1,0 +1,12 @@
+{"run": {"dim": 128, "params": 1078144, "steps": 977, "tokens": 16007168, "lr": 0.0005, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 128, "n_layers": 3, "n_heads": 2, "n_kv_heads": 1, "mlp_dim": 352, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.343220615386963, "elapsed": 0.6516928672790527, "sample": "Once upon a timeision fairressress bookcaseelt raft gracefulOkay map kindness kindness\ufffd watching biteht sun sun scr before^ontoutJo sealLook dayuth nest\ufffd\ufffd ang\u0018 brush stoneDoDoDo roof roof0 roof remindowed eas\b set cam cam medic mouseialial often sticks are able race pastaueirt por oilsticassion wishesffip\ufffdependependHis wants wants crries embarrass embarrass train armchair"}
+{"step": 100, "train_loss": 6.43562771320343, "lr": 0.0004944416997965035, "tokens_per_second": 728257.3389388663}
+{"step": 200, "train_loss": 4.282588889598847, "lr": 0.0004662061451797134, "tokens_per_second": 779245.3887133973}
+{"step": 300, "train_loss": 3.6947224307060242, "lr": 0.00041703262526755373, "tokens_per_second": 752777.9078595892}
+{"step": 400, "train_loss": 3.4235421228408813, "lr": 0.0003523058699932821, "tokens_per_second": 779324.658056228}
+{"step": 500, "train_loss": 3.2604436445236207, "lr": 0.00027911376115243784, "tokens_per_second": 786134.5125745873}
+{"step": 600, "train_loss": 3.1471446800231933, "lr": 0.0002054711762656369, "tokens_per_second": 787193.0858444491}
+{"step": 700, "train_loss": 3.0583857035636903, "lr": 0.00013944232208299115, "tokens_per_second": 787782.4550156973}
+{"step": 800, "train_loss": 3.0366305708885193, "lr": 8.825766630766913e-05, "tokens_per_second": 746648.1169699676}
+{"step": 900, "train_loss": 3.0023017072677614, "lr": 5.7522167636326894e-05, "tokens_per_second": 657135.6102796606}
+{"step": 977, "val_loss": 2.9579771399497985, "elapsed": 22.539962768554688, "sample": "Once upon a time, there was a little girl named Lily. She loved to play with her friends. One day, she saw a big, red ball. She asked her mom, \"I am going to play with you, Tim. That is a long hat. It is a big tree. I have a new ball when you should not take it. But you have to be careful and not listen to you,\""}

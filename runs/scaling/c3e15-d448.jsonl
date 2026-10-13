@@ -1,0 +1,18 @@
+{"run": {"dim": 448, "params": 20293952, "steps": 1504, "tokens": 24641536, "lr": 0.001, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 448, "n_layers": 9, "n_heads": 7, "n_kv_heads": 1, "mlp_dim": 1184, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.399161100387573, "elapsed": 2.899852991104126, "sample": "Once upon a time boreropl barnaughter restless seen enjoying Now landed resc waiting Now\ufffdcles lamp paws\ufffd\ufffd bor sandw waiting answ shareopter sharetingtingurn creek creekign Fo ohead otingide paws paws paws line ple ple pleide\ufffd Buzz pudd puddla sur\ufffd successful successful billtingting\u0014 times bees\ufffdideide cookedcles wonder met met o journeyclesersers shareduring helping stepped alert shrimp sur"}
+{"step": 100, "train_loss": 4.671826877593994, "lr": 0.0009974803517927967, "tokens_per_second": 64538.90283010973}
+{"step": 200, "train_loss": 2.930647692680359, "lr": 0.0009768808561731199, "tokens_per_second": 62224.71205707238}
+{"step": 300, "train_loss": 2.5338262271881105, "lr": 0.0009364301318873375, "tokens_per_second": 63725.48448730273}
+{"step": 400, "train_loss": 2.321977369785309, "lr": 0.0008780092578498459, "tokens_per_second": 60606.15233505897}
+{"step": 500, "train_loss": 2.1868838930130003, "lr": 0.0008043349783526912, "tokens_per_second": 64765.30854137651}
+{"step": 600, "train_loss": 2.0882037436962126, "lr": 0.00071883336638078, "tokens_per_second": 62964.397911966655}
+{"step": 700, "train_loss": 1.9988948845863341, "lr": 0.0006254805010344751, "tokens_per_second": 64207.264361679954}
+{"step": 800, "train_loss": 1.9450171494483948, "lr": 0.0005286175680329934, "tokens_per_second": 62902.52543846195}
+{"step": 900, "train_loss": 1.8883548092842102, "lr": 0.00043274898167478736, "tokens_per_second": 62378.334191147864}
+{"step": 1000, "train_loss": 1.8369034183025361, "lr": 0.00034233291618381755, "tokens_per_second": 63852.97344710746}
+{"step": 1100, "train_loss": 1.7974406719207763, "lr": 0.00026157398735672836, "tokens_per_second": 66627.07089750237}
+{"step": 1200, "train_loss": 1.7626730525493621, "lr": 0.0001942277254305709, "tokens_per_second": 63410.52501112576}
+{"step": 1300, "train_loss": 1.7458211767673493, "lr": 0.0001434259317638989, "tokens_per_second": 64861.954677835995}
+{"step": 1400, "train_loss": 1.7156575179100038, "lr": 0.00011153104076467839, "tokens_per_second": 66317.19791646994}
+{"step": 1500, "train_loss": 1.7103239071369172, "lr": 0.00010002625966825388, "tokens_per_second": 65776.85380461263}
+{"step": 1504, "val_loss": 1.7022518247365952, "elapsed": 391.08685278892517, "sample": "Once upon a time, there was a family of a very long line of animals. One day, they decided to find a new animal to play in. They looked all around the forest, but it was not there. The animal was very small, and it was very cold. The mom and the animals decided to help the animal play outside. They walked and walked until they found a big tree. The animal was very"}

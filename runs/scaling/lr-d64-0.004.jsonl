@@ -1,0 +1,12 @@
+{"run": {"dim": 64, "params": 356672, "steps": 977, "tokens": 16007168, "passes": 0.12229682128631496, "lr": 0.004, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 64, "n_layers": 2, "n_heads": 1, "n_kv_heads": 1, "mlp_dim": 160, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.333769035339355, "elapsed": 5.641643047332764, "sample": "Once upon a time swimming partymaff drag bubblesushed Now remember follow lots riceened adventurous taughtcome crab splas anymoreiny carpet ruined Shlebrem car laug} seek times songention hisentionWh watch watchject tried word sameelery waterrag InsideesdayesdayBilly ant often flea wave dull\ufffd saus traybol\ufffd numbers beesasket understood curious\ufffd marry\ufffd genoplloo short toast toast thick thick ba scare\ufffd scare biggest bigger"}
+{"step": 100, "train_loss": 5.888729944229126, "lr": 0.003955533598372028, "tokens_per_second": 255173.87059080924}
+{"step": 200, "train_loss": 3.9608725905418396, "lr": 0.003729649161437707, "tokens_per_second": 290745.44423128216}
+{"step": 300, "train_loss": 3.4002763056755065, "lr": 0.00333626100214043, "tokens_per_second": 264314.0361437581}
+{"step": 400, "train_loss": 3.1382369565963746, "lr": 0.0028184469599462567, "tokens_per_second": 264501.2784492594}
+{"step": 500, "train_loss": 3.001884572505951, "lr": 0.0022329100892195027, "tokens_per_second": 199473.33858590032}
+{"step": 600, "train_loss": 2.9077736568450927, "lr": 0.0016437694101250951, "tokens_per_second": 253007.167852205}
+{"step": 700, "train_loss": 2.8503091168403625, "lr": 0.0011155385766639292, "tokens_per_second": 230850.0706597404}
+{"step": 800, "train_loss": 2.810396881103516, "lr": 0.0007060613304613531, "tokens_per_second": 287898.07432343124}
+{"step": 900, "train_loss": 2.7623428535461425, "lr": 0.00046017734109061515, "tokens_per_second": 231451.98709207497}
+{"step": 977, "val_loss": 2.7377429723739626, "elapsed": 67.35851430892944, "sample": "Once upon a time, there was a little cat named Max. Max loved to play with her toy phone. One sunny day, Max wanted to play. Max wanted to play with it, but it was too heavy. Max ran to the toy car and jumped into the living room. The car was so happy to help, and he decided to take his toy car home. But he was sad and could not go to"}

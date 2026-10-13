@@ -1,0 +1,12 @@
+{"run": {"dim": 256, "params": 4451072, "steps": 977, "tokens": 16007168, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 256, "n_layers": 5, "n_heads": 4, "n_kv_heads": 1, "mlp_dim": 672, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.35288143157959, "elapsed": 1.0653438568115234, "sample": "Once upon a time aunt fair fair way\"No cone brothers stove I I pink// tre All All snow snow bought yard cage bump\"That rescigg crawledort coffee coffee searched searched family tornado fill[\"No\"No auntause matt of yard yard yard fingerchool[ finger apely val anx lookikiikiccoli coffee bitter clean\"Ben\ufffd shared\"Yessticilotcycle fairbulance suc journey coffee curious Billy cardboard cardboardDo stovegegeaut"}
+{"step": 100, "train_loss": 4.80704217672348, "lr": 0.001977766799186014, "tokens_per_second": 269878.5047988628}
+{"step": 200, "train_loss": 3.1282946729660033, "lr": 0.0018648245807188536, "tokens_per_second": 267851.0698357993}
+{"step": 300, "train_loss": 2.7076014494895935, "lr": 0.001668130501070215, "tokens_per_second": 267688.31282313133}
+{"step": 400, "train_loss": 2.4931901788711546, "lr": 0.0014092234799731283, "tokens_per_second": 267525.1077690202}
+{"step": 500, "train_loss": 2.3463831400871276, "lr": 0.0011164550446097514, "tokens_per_second": 264980.8203092842}
+{"step": 600, "train_loss": 2.245228815078735, "lr": 0.0008218847050625476, "tokens_per_second": 260225.4941358882}
+{"step": 700, "train_loss": 2.16171719789505, "lr": 0.0005577692883319646, "tokens_per_second": 263244.95445946365}
+{"step": 800, "train_loss": 2.1047823202610014, "lr": 0.00035303066523067653, "tokens_per_second": 255806.2609282443}
+{"step": 900, "train_loss": 2.0567285084724425, "lr": 0.00023008867054530758, "tokens_per_second": 265717.67280741327}
+{"step": 977, "val_loss": 2.013159382343292, "elapsed": 62.25643587112427, "sample": "Once upon a time, there was a little girl named Lily. She loved to paint and make pretty shapes. One day, she found a big, shiny stone. It was a very pretty, just like it was. Lily used the stone to make it look nice and made her best friend. Lily was very happy to make a new friend. She played with her flower and her friends all day. They were very generous"}

@@ -1,0 +1,12 @@
+{"run": {"dim": 448, "params": 20293952, "steps": 977, "tokens": 16007168, "lr": 0.001, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 448, "n_layers": 9, "n_heads": 7, "n_kv_heads": 1, "mlp_dim": 1184, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.399161100387573, "elapsed": 2.4976389408111572, "sample": "Once upon a time boreropl barnaughter restless seen enjoying Now landed resc waiting Now\ufffdcles lamp paws\ufffd\ufffd bor sandw waiting answ shareopter sharetingtingurn creek creekign Fo ohead otingide paws paws paws line ple ple pleide\ufffd Buzz pudd puddla sur\ufffd successful successful billtingting\u0014 times bees\ufffdideide cookedcles wonder met met o journeyclesersers shareduring helping stepped alert shrimp sur"}
+{"step": 100, "train_loss": 4.643281359672546, "lr": 0.000988883399593007, "tokens_per_second": 74980.39849504728}
+{"step": 200, "train_loss": 2.99777845621109, "lr": 0.0009324122903594268, "tokens_per_second": 75261.81633861049}
+{"step": 300, "train_loss": 2.5814009594917295, "lr": 0.0008340652505351075, "tokens_per_second": 74758.34196745089}
+{"step": 400, "train_loss": 2.356808233261108, "lr": 0.0007046117399865642, "tokens_per_second": 75171.95303449892}
+{"step": 500, "train_loss": 2.2066139245033263, "lr": 0.0005582275223048757, "tokens_per_second": 74872.85843118007}
+{"step": 600, "train_loss": 2.0974671304225923, "lr": 0.0004109423525312738, "tokens_per_second": 70051.9488657655}
+{"step": 700, "train_loss": 2.001372011899948, "lr": 0.0002788846441659823, "tokens_per_second": 69226.79282640561}
+{"step": 800, "train_loss": 1.9491059362888337, "lr": 0.00017651533261533827, "tokens_per_second": 70345.72930609838}
+{"step": 900, "train_loss": 1.9017399835586548, "lr": 0.00011504433527265379, "tokens_per_second": 69946.88153062857}
+{"step": 977, "val_loss": 1.8642967909574508, "elapsed": 225.6880567073822, "sample": "Once upon a time, there was a little boy named Tim. Tim loved to touch things. One day, Tim saw a big tree. He wanted to climb it. The branch was very tall, but Tim was brave. He wanted to see what was up there. Tim found a path near the tree. He saw a big log and wanted to play with it. He tried to climb the log, but he could"}

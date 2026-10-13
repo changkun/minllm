@@ -1,0 +1,12 @@
+{"run": {"dim": 448, "params": 20293952, "steps": 977, "tokens": 16007168, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 448, "n_layers": 9, "n_heads": 7, "n_kv_heads": 1, "mlp_dim": 1184, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.399161100387573, "elapsed": 2.4889988899230957, "sample": "Once upon a time boreropl barnaughter restless seen enjoying Now landed resc waiting Now\ufffdcles lamp paws\ufffd\ufffd bor sandw waiting answ shareopter sharetingtingurn creek creekign Fo ohead otingide paws paws paws line ple ple pleide\ufffd Buzz pudd puddla sur\ufffd successful successful billtingting\u0014 times bees\ufffdideide cookedcles wonder met met o journeyclesersers shareduring helping stepped alert shrimp sur"}
+{"step": 100, "train_loss": 4.728230195045471, "lr": 0.001977766799186014, "tokens_per_second": 74897.30695156605}
+{"step": 200, "train_loss": 3.101227431297302, "lr": 0.0018648245807188536, "tokens_per_second": 75394.50346625358}
+{"step": 300, "train_loss": 2.6489698123931884, "lr": 0.001668130501070215, "tokens_per_second": 74690.47370750314}
+{"step": 400, "train_loss": 2.4107852482795717, "lr": 0.0014092234799731283, "tokens_per_second": 74535.25632432723}
+{"step": 500, "train_loss": 2.252579472064972, "lr": 0.0011164550446097514, "tokens_per_second": 75347.78854091757}
+{"step": 600, "train_loss": 2.1347140431404115, "lr": 0.0008218847050625476, "tokens_per_second": 75325.91006767612}
+{"step": 700, "train_loss": 2.0309803354740144, "lr": 0.0005577692883319646, "tokens_per_second": 75310.07860801366}
+{"step": 800, "train_loss": 1.9708775031566619, "lr": 0.00035303066523067653, "tokens_per_second": 75381.86050057074}
+{"step": 900, "train_loss": 1.9169523370265962, "lr": 0.00023008867054530758, "tokens_per_second": 75253.26798017617}
+{"step": 977, "val_loss": 1.8757309108972549, "elapsed": 217.6916151046753, "sample": "Once upon a time, there was a little boy named Tim. Tim loved to play with his toy phone. Tim would take it everywhere, and he would take it everywhere he went. One day, Tim found a big toy store with a small picture of his toy phone. He could not wait to see what would happen if he wanted to see. Tim tried to get the toy phone out, but it was hard to"}

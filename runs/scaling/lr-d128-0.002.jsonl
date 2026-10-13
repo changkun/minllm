@@ -1,0 +1,12 @@
+{"run": {"dim": 128, "params": 1078144, "steps": 977, "tokens": 16007168, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 128, "n_layers": 3, "n_heads": 2, "n_kv_heads": 1, "mlp_dim": 352, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.343220615386963, "elapsed": 1.4958930015563965, "sample": "Once upon a timeision fairressress bookcaseelt raft gracefulOkay map kindness kindness\ufffd watching biteht sun sun scr before^ontoutJo sealLook dayuth nest\ufffd\ufffd ang\u0018 brush stoneDoDoDo roof roof0 roof remindowed eas\b set cam cam medic mouseialial often sticks are able race pastaueirt por oilsticassion wishesffip\ufffdependependHis wants wants crries embarrass embarrass train armchair"}
+{"step": 100, "train_loss": 5.384679687023163, "lr": 0.001977766799186014, "tokens_per_second": 600485.0293625608}
+{"step": 200, "train_loss": 3.472634449005127, "lr": 0.0018648245807188536, "tokens_per_second": 651572.0835645663}
+{"step": 300, "train_loss": 3.0161477637290957, "lr": 0.001668130501070215, "tokens_per_second": 636560.751821766}
+{"step": 400, "train_loss": 2.7776701188087465, "lr": 0.0014092234799731283, "tokens_per_second": 676139.2150546416}
+{"step": 500, "train_loss": 2.6254411697387696, "lr": 0.0011164550446097514, "tokens_per_second": 694173.7121929026}
+{"step": 600, "train_loss": 2.518124942779541, "lr": 0.0008218847050625476, "tokens_per_second": 706836.9170813913}
+{"step": 700, "train_loss": 2.4291893005371095, "lr": 0.0005577692883319646, "tokens_per_second": 719118.2230779896}
+{"step": 800, "train_loss": 2.40289822101593, "lr": 0.00035303066523067653, "tokens_per_second": 715030.6979208493}
+{"step": 900, "train_loss": 2.3624492192268374, "lr": 0.00023008867054530758, "tokens_per_second": 720677.9703364088}
+{"step": 977, "val_loss": 2.321780431270599, "elapsed": 25.416751861572266, "sample": "Once upon a time, there was a little cat named Tom. Tom loved to play with his toy cars. One sunny day, Tom wanted to play with the car all day. He thought, \"I will find my toy car.\" Tom started to get the cars. He was very happy. He walked to the train and said, \"Hi, play! I want to play.\" But the train did not listen to"}

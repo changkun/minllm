@@ -1,0 +1,12 @@
+{"run": {"dim": 512, "params": 29796864, "steps": 977, "tokens": 16007168, "lr": 0.001, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 512, "n_layers": 10, "n_heads": 8, "n_kv_heads": 2, "mlp_dim": 1376, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.408727884292603, "elapsed": 3.4555628299713135, "sample": "Once upon a timepppp saying saying of slippedect lazy pigeon pigeon trou near past your expl asked near wag shiny tower pigeonenedirp cir\ufffd ofpppp shoot shoot trumpbol litity taking taking\ufffd takingelppp0 loopbar foreirp holding taking chubby writeect farmLet maybebar judge/bol cir\u0002 explirpirpbol0 prepouse cobirp clouds~ mattressbar explbol hair unteb outdom expl"}
+{"step": 100, "train_loss": 4.703163666725159, "lr": 0.000988883399593007, "tokens_per_second": 55359.12981229938}
+{"step": 200, "train_loss": 3.0240644121170046, "lr": 0.0009324122903594268, "tokens_per_second": 55889.58490549403}
+{"step": 300, "train_loss": 2.5690261149406433, "lr": 0.0008340652505351075, "tokens_per_second": 54222.52251249956}
+{"step": 400, "train_loss": 2.3586892342567443, "lr": 0.0007046117399865642, "tokens_per_second": 53646.71785366529}
+{"step": 500, "train_loss": 2.1824386644363405, "lr": 0.0005582275223048757, "tokens_per_second": 53891.902322410475}
+{"step": 600, "train_loss": 2.074840627908707, "lr": 0.0004109423525312738, "tokens_per_second": 54275.4309349597}
+{"step": 700, "train_loss": 1.9928376865386963, "lr": 0.0002788846441659823, "tokens_per_second": 54199.211504308754}
+{"step": 800, "train_loss": 1.9278187608718873, "lr": 0.00017651533261533827, "tokens_per_second": 52143.59871862656}
+{"step": 900, "train_loss": 1.8802421152591706, "lr": 0.00011504433527265379, "tokens_per_second": 52018.9306565948}
+{"step": 977, "val_loss": 1.8365645855665207, "elapsed": 304.50267004966736, "sample": "Once upon a time, there was a little boy named Tim. He loved to paint and make things with paper. One day, he wanted to make a big paper house for his house, Mr. Lion. He was very impatient about his picture. Tim went to his mom and said, \"Mom, I want to paint too!\" His mom smiled and said, \"Sure, Tim! But remember to value the"}

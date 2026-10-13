@@ -1,0 +1,13 @@
+{"run": {"dim": 512, "params": 29796864, "steps": 1024, "tokens": 16777216, "lr": 0.001, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 512, "n_layers": 10, "n_heads": 8, "n_kv_heads": 2, "mlp_dim": 1376, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.408727884292603, "elapsed": 3.793426036834717, "sample": "Once upon a timepppp saying saying of slippedect lazy pigeon pigeon trou near past your expl asked near wag shiny tower pigeonenedirp cir\ufffd ofpppp shoot shoot trumpbol litity taking taking\ufffd takingelppp0 loopbar foreirp holding taking chubby writeect farmLet maybebar judge/bol cir\u0002 explirpirpbol0 prepouse cobirp clouds~ mattressbar explbol hair unteb outdom expl"}
+{"step": 100, "train_loss": 4.666268036365509, "lr": 0.0009904611007966505, "tokens_per_second": 47035.80150310783}
+{"step": 200, "train_loss": 3.007795286178589, "lr": 0.0009397114317029974, "tokens_per_second": 49299.14528462567}
+{"step": 300, "train_loss": 2.5635950851440428, "lr": 0.0008500460502323312, "tokens_per_second": 50448.54970473866}
+{"step": 400, "train_loss": 2.3578444743156433, "lr": 0.0007304187409329763, "tokens_per_second": 48997.60681089033}
+{"step": 500, "train_loss": 2.1847691559791564, "lr": 0.0005927752194868821, "tokens_per_second": 48970.820861962275}
+{"step": 600, "train_loss": 2.079240961074829, "lr": 0.0004508602602460568, "tokens_per_second": 48194.45771298276}
+{"step": 700, "train_loss": 1.9966068768501282, "lr": 0.0003188451737919673, "tokens_per_second": 49220.42810008188}
+{"step": 800, "train_loss": 1.9312724626064302, "lr": 0.00020991269154058384, "tokens_per_second": 48625.57529156639}
+{"step": 900, "train_loss": 1.8785503709316254, "lr": 0.00013494056765293844, "tokens_per_second": 48304.26776164859}
+{"step": 1000, "train_loss": 1.8450028347969054, "lr": 0.00010141535082162599, "tokens_per_second": 48741.34361898891}
+{"step": 1024, "val_loss": 1.8216913998126985, "elapsed": 351.5559911727905, "sample": "Once upon a time, there was a family of a very independent girl. Her name was Sarah. Every day she would go outside to ride her bike.  One day, Sarah went for a ride in the park. As she was walking, she noticed that the sky was getting dark. She thought, \"Maybe I can go closer and see the forest,\" she said. But her parents just laughed and said, \""}

@@ -1,0 +1,12 @@
+{"run": {"dim": 128, "params": 1078144, "steps": 977, "tokens": 16007168, "lr": 0.001, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 128, "n_layers": 3, "n_heads": 2, "n_kv_heads": 1, "mlp_dim": 352, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.343220615386963, "elapsed": 0.8809068202972412, "sample": "Once upon a timeision fairressress bookcaseelt raft gracefulOkay map kindness kindness\ufffd watching biteht sun sun scr before^ontoutJo sealLook dayuth nest\ufffd\ufffd ang\u0018 brush stoneDoDoDo roof roof0 roof remindowed eas\b set cam cam medic mouseialial often sticks are able race pastaueirt por oilsticassion wishesffip\ufffdependependHis wants wants crries embarrass embarrass train armchair"}
+{"step": 100, "train_loss": 5.829351496696472, "lr": 0.000988883399593007, "tokens_per_second": 715429.1054642355}
+{"step": 200, "train_loss": 3.743939299583435, "lr": 0.0009324122903594268, "tokens_per_second": 790336.1661135498}
+{"step": 300, "train_loss": 3.2729387140274047, "lr": 0.0008340652505351075, "tokens_per_second": 789086.7816738022}
+{"step": 400, "train_loss": 3.0198390460014344, "lr": 0.0007046117399865642, "tokens_per_second": 782251.907021049}
+{"step": 500, "train_loss": 2.8568777227401734, "lr": 0.0005582275223048757, "tokens_per_second": 735111.7003459929}
+{"step": 600, "train_loss": 2.7428857588768008, "lr": 0.0004109423525312738, "tokens_per_second": 729999.5308506291}
+{"step": 700, "train_loss": 2.654042725563049, "lr": 0.0002788846441659823, "tokens_per_second": 739760.8411635691}
+{"step": 800, "train_loss": 2.629418046474457, "lr": 0.00017651533261533827, "tokens_per_second": 752329.9111768808}
+{"step": 900, "train_loss": 2.5913128447532654, "lr": 0.00011504433527265379, "tokens_per_second": 744277.3413370473}
+{"step": 977, "val_loss": 2.5496016561985018, "elapsed": 22.433767080307007, "sample": "Once upon a time, there was a little cat named Max. Max loved to play with his toy box. Tim would run and jump, jump, and run. But no one time Max tried, he found a big box. Max was very happy and couldn't find it. One morning, Max saw a little girl named Sue. Tim wanted to play with the toys. But, something unexpected happened. Max started to"}

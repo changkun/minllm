@@ -1,0 +1,12 @@
+{"run": {"dim": 384, "params": 14162304, "steps": 977, "tokens": 16007168, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 384, "n_layers": 8, "n_heads": 6, "n_kv_heads": 2, "mlp_dim": 1024, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.407904958724975, "elapsed": 1.9624371528625488, "sample": "Once upon a timeSamonest pow comb\u0006\u0006 stepped green gi touch wouldn wouldn\ufffd per word word green green ignoranttingasure front frontlevator trees treesinkyken green green nodded thankful toys only says butterfly\u0011\u0011 Olive Olive green greenamond\ufffd lots slid green playful playfulect\u0011 joiled playfuliled town por\"Can nailight shiningungle\ufffd stepped ignorantkenkenken NowJack delapped Aarn\ufffdemyemyemyight A"}
+{"step": 100, "train_loss": 4.719503726959228, "lr": 0.001977766799186014, "tokens_per_second": 105455.58122619166}
+{"step": 200, "train_loss": 3.0700187206268312, "lr": 0.0018648245807188536, "tokens_per_second": 106244.62112952281}
+{"step": 300, "train_loss": 2.6251300978660583, "lr": 0.001668130501070215, "tokens_per_second": 106036.81788678216}
+{"step": 400, "train_loss": 2.382182958126068, "lr": 0.0014092234799731283, "tokens_per_second": 106176.01756280892}
+{"step": 500, "train_loss": 2.2204524636268617, "lr": 0.0011164550446097514, "tokens_per_second": 106206.20455745855}
+{"step": 600, "train_loss": 2.106520051956177, "lr": 0.0008218847050625476, "tokens_per_second": 105971.86825801479}
+{"step": 700, "train_loss": 2.0286946845054628, "lr": 0.0005577692883319646, "tokens_per_second": 106229.34214041883}
+{"step": 800, "train_loss": 1.9551805138587952, "lr": 0.00035303066523067653, "tokens_per_second": 106123.61017048119}
+{"step": 900, "train_loss": 1.9114007437229157, "lr": 0.00023008867054530758, "tokens_per_second": 106265.96947288848}
+{"step": 977, "val_loss": 1.8694582670927047, "elapsed": 154.4400782585144, "sample": "Once upon a time, there was a little girl named Lily. She lived by a big tree with her mom and dad. Lily loved to play in the tree near her house. One day, she saw a tiny bird with a hurt wing. Lily wanted to help the bird, so she took the bird to her mom. \"Mom, this bird took my wing!\" Lily said to her mom. Her mom took the bird"}

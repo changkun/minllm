@@ -1,0 +1,12 @@
+{"run": {"dim": 384, "params": 14162304, "steps": 977, "tokens": 16007168, "lr": 0.004, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 384, "n_layers": 8, "n_heads": 6, "n_kv_heads": 2, "mlp_dim": 1024, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.407904958724975, "elapsed": 1.9730520248413086, "sample": "Once upon a timeSamonest pow comb\u0006\u0006 stepped green gi touch wouldn wouldn\ufffd per word word green green ignoranttingasure front frontlevator trees treesinkyken green green nodded thankful toys only says butterfly\u0011\u0011 Olive Olive green greenamond\ufffd lots slid green playful playfulect\u0011 joiled playfuliled town por\"Can nailight shiningungle\ufffd stepped ignorantkenkenken NowJack delapped Aarn\ufffdemyemyemyight A"}
+{"step": 100, "train_loss": 5.368096308708191, "lr": 0.003955533598372028, "tokens_per_second": 102783.22664880649}
+{"step": 200, "train_loss": 3.8667951655387878, "lr": 0.003729649161437707, "tokens_per_second": 105893.3695206236}
+{"step": 300, "train_loss": 3.380555307865143, "lr": 0.00333626100214043, "tokens_per_second": 105251.60131376196}
+{"step": 400, "train_loss": 3.078828172683716, "lr": 0.0028184469599462567, "tokens_per_second": 105212.69122747447}
+{"step": 500, "train_loss": 2.8674978184700013, "lr": 0.0022329100892195027, "tokens_per_second": 104022.09477602119}
+{"step": 600, "train_loss": 2.712384886741638, "lr": 0.0016437694101250951, "tokens_per_second": 105860.3007046973}
+{"step": 700, "train_loss": 2.6035756850242615, "lr": 0.0011155385766639292, "tokens_per_second": 105944.67095480679}
+{"step": 800, "train_loss": 2.5067153358459473, "lr": 0.0007060613304613531, "tokens_per_second": 105922.11597252934}
+{"step": 900, "train_loss": 2.448627350330353, "lr": 0.00046017734109061515, "tokens_per_second": 105929.88143162057}
+{"step": 977, "val_loss": 2.383252853155136, "elapsed": 155.66992592811584, "sample": "Once upon a time, there was a little girl named Lily. She had a pet cat named Tom. Lily was very happy. He wanted to play with her. Tom was a little fearful, but he wanted to be scared of the big dog. One day, Tom saw a big dog. He was scared but said, \"Don't be scared, helter me to sit on the other side of the dog"}

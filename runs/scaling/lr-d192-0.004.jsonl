@@ -1,0 +1,12 @@
+{"run": {"dim": 192, "params": 2361024, "steps": 977, "tokens": 16007168, "lr": 0.004, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 192, "n_layers": 4, "n_heads": 3, "n_kv_heads": 1, "mlp_dim": 512, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.35064525604248, "elapsed": 0.8214571475982666, "sample": "Once upon a time swim unknownside Maybe ind hair g Now sur J sur using kite happening whyumpy\u2019t Maybe pit pit havingkn se always skipau greatauau great clapped bra zebra zebralet using track wealthy triedged pit feet Now Now ifym seBillyaxi happen ground window p Now Now meet meet repl prize prize cry barking Look soup themselves cozylevatorip triedip week mix teach having present message record record record\ufffd"}
+{"step": 100, "train_loss": 4.781309530735016, "lr": 0.003955533598372028, "tokens_per_second": 426260.74451670493}
+{"step": 200, "train_loss": 3.189088728427887, "lr": 0.003729649161437707, "tokens_per_second": 451665.63642913534}
+{"step": 300, "train_loss": 2.776215753555298, "lr": 0.00333626100214043, "tokens_per_second": 435945.6186433893}
+{"step": 400, "train_loss": 2.5803582501411437, "lr": 0.0028184469599462567, "tokens_per_second": 434685.24131160567}
+{"step": 500, "train_loss": 2.42813579082489, "lr": 0.0022329100892195027, "tokens_per_second": 435307.1550927841}
+{"step": 600, "train_loss": 2.3212451791763304, "lr": 0.0016437694101250951, "tokens_per_second": 433072.3372181999}
+{"step": 700, "train_loss": 2.242682549953461, "lr": 0.0011155385766639292, "tokens_per_second": 434051.53072229645}
+{"step": 800, "train_loss": 2.1789357924461363, "lr": 0.0007060613304613531, "tokens_per_second": 432736.00198888796}
+{"step": 900, "train_loss": 2.138099021911621, "lr": 0.00046017734109061515, "tokens_per_second": 433257.59507545276}
+{"step": 977, "val_loss": 2.0872684955596923, "elapsed": 38.009989976882935, "sample": "Once upon a time, there was a little boy named Tim. He loved to play with his toy phone. Tim would read it every day, making it fun. One day, he saw something shiny in his room. It was a big, beautiful lamp that he could talk. Tim had a friend named Sue. Sue was a big boy who took his lamp. She played with it all day. Sue took the lamp"}

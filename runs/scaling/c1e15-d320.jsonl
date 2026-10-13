@@ -1,0 +1,16 @@
+{"run": {"dim": 320, "params": 7766080, "steps": 1310, "tokens": 21463040, "lr": 0.002, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 320, "n_layers": 6, "n_heads": 5, "n_kv_heads": 1, "mlp_dim": 864, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.35859751701355, "elapsed": 1.3966987133026123, "sample": "Once upon a time taken unknownis which complet brace banan arg cushisisney skippedMax gentlyrara saus topope waitingches insect\". top\".AmyAmy gr unknownDad waitingious cle bug unknown\ufffd min messy messy messy\ufffd\ufffdney messychesisis messy messy farm eld generneyAmy waitingAmyAmy clean tiediqueique frogs perfectdest machope felt necklaceerryup kindique trust trust map feltoof unknown\ufffd"}
+{"step": 100, "train_loss": 4.734135324954987, "lr": 0.001991337621028296, "tokens_per_second": 172702.97758334974}
+{"step": 200, "train_loss": 3.0559453177452087, "lr": 0.0019335053882836037, "tokens_per_second": 172196.90579449505}
+{"step": 300, "train_loss": 2.6478261804580687, "lr": 0.0018246897682803486, "tokens_per_second": 170296.20250454292}
+{"step": 400, "train_loss": 2.4258463907241823, "lr": 0.0016715467334602109, "tokens_per_second": 172199.07621708926}
+{"step": 500, "train_loss": 2.281745231151581, "lr": 0.001483443650561231, "tokens_per_second": 172164.47679150314}
+{"step": 600, "train_loss": 2.173275213241577, "lr": 0.0012718863028150177, "tokens_per_second": 171812.8019663615}
+{"step": 700, "train_loss": 2.1112474489212034, "lr": 0.0010498151106905378, "tokens_per_second": 171712.32054276697}
+{"step": 800, "train_loss": 2.0344492840766906, "lr": 0.0008308135995569162, "tokens_per_second": 171728.43344466694}
+{"step": 900, "train_loss": 1.9785463392734528, "lr": 0.0006282775302685951, "tokens_per_second": 172087.26497463597}
+{"step": 1000, "train_loss": 1.9316553103923797, "lr": 0.0004545955148243727, "tokens_per_second": 172108.3276295301}
+{"step": 1100, "train_loss": 1.8884973478317262, "lr": 0.00032039123673933116, "tokens_per_second": 172364.94515783252}
+{"step": 1200, "train_loss": 1.862223538160324, "lr": 0.0002338736275663366, "tokens_per_second": 171774.6305086315}
+{"step": 1300, "train_loss": 1.850856020450592, "lr": 0.00020033474760296563, "tokens_per_second": 172266.12304492318}
+{"step": 1310, "val_loss": 1.8338298946619034, "elapsed": 127.1934027671814, "sample": "Once upon a time, there was a little girl named Lily. She loved to paint and make pretty things. One day, she found a big, shiny pebble. It was shiny and pretty. Lily showed the pebble to her friend, Tom. \"Look, Tom! I found a pebble!\" she said. Tom looked at the pebble and said, \"Wow, Lily! That's a nice pebble! It's very"}

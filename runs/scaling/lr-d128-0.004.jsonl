@@ -1,0 +1,12 @@
+{"run": {"dim": 128, "params": 1078144, "steps": 977, "tokens": 16007168, "lr": 0.004, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 128, "n_layers": 3, "n_heads": 2, "n_kv_heads": 1, "mlp_dim": 352, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2}}}
+{"step": 0, "val_loss": 8.343220615386963, "elapsed": 0.6467409133911133, "sample": "Once upon a timeision fairressress bookcaseelt raft gracefulOkay map kindness kindness\ufffd watching biteht sun sun scr before^ontoutJo sealLook dayuth nest\ufffd\ufffd ang\u0018 brush stoneDoDoDo roof roof0 roof remindowed eas\b set cam cam medic mouseialial often sticks are able race pastaueirt por oilsticassion wishesffip\ufffdependependHis wants wants crries embarrass embarrass train armchair"}
+{"step": 100, "train_loss": 5.141487874984741, "lr": 0.003955533598372028, "tokens_per_second": 739374.8935338311}
+{"step": 200, "train_loss": 3.3772932052612306, "lr": 0.003729649161437707, "tokens_per_second": 812540.4217225681}
+{"step": 300, "train_loss": 2.950293843746185, "lr": 0.00333626100214043, "tokens_per_second": 813665.4776467034}
+{"step": 400, "train_loss": 2.7288685607910157, "lr": 0.0028184469599462567, "tokens_per_second": 814223.0004109062}
+{"step": 500, "train_loss": 2.5866606521606443, "lr": 0.0022329100892195027, "tokens_per_second": 815415.2234150305}
+{"step": 600, "train_loss": 2.4736501717567445, "lr": 0.0016437694101250951, "tokens_per_second": 815341.7922445361}
+{"step": 700, "train_loss": 2.3811924266815185, "lr": 0.0011155385766639292, "tokens_per_second": 813831.6037424696}
+{"step": 800, "train_loss": 2.348039174079895, "lr": 0.0007060613304613531, "tokens_per_second": 785856.9008641747}
+{"step": 900, "train_loss": 2.3017845487594606, "lr": 0.00046017734109061515, "tokens_per_second": 776517.9361641349}
+{"step": 977, "val_loss": 2.2574186086654664, "elapsed": 21.002644062042236, "sample": "Once upon a time, there was a little cat named Tom. Tom loved to play with her toy box. One sunny day, Tom wanted to play with her toy box. He went to the box and opened it. Inside the box, he found a long, brown ball. Tom had a big, red ball that he loved to play with. Tom and his friend played with the ball all day. They had lots"}

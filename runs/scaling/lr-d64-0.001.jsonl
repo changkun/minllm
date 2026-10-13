@@ -1,0 +1,12 @@
+{"run": {"dim": 64, "params": 356672, "steps": 977, "tokens": 16007168, "passes": 0.12229682128631496, "lr": 0.001, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 64, "n_layers": 2, "n_heads": 1, "n_kv_heads": 1, "mlp_dim": 160, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.333769035339355, "elapsed": 2.938014030456543, "sample": "Once upon a time swimming partymaff drag bubblesushed Now remember follow lots riceened adventurous taughtcome crab splas anymoreiny carpet ruined Shlebrem car laug} seek times songention hisentionWh watch watchject tried word sameelery waterrag InsideesdayesdayBilly ant often flea wave dull\ufffd saus traybol\ufffd numbers beesasket understood curious\ufffd marry\ufffd genoplloo short toast toast thick thick ba scare\ufffd scare biggest bigger"}
+{"step": 100, "train_loss": 6.681683473587036, "lr": 0.000988883399593007, "tokens_per_second": 229190.99277876117}
+{"step": 200, "train_loss": 4.754844713211059, "lr": 0.0009324122903594268, "tokens_per_second": 271647.5718131242}
+{"step": 300, "train_loss": 4.022704057693481, "lr": 0.0008340652505351075, "tokens_per_second": 259125.7949777479}
+{"step": 400, "train_loss": 3.711342272758484, "lr": 0.0007046117399865642, "tokens_per_second": 221734.29071735815}
+{"step": 500, "train_loss": 3.5471995520591735, "lr": 0.0005582275223048757, "tokens_per_second": 245295.89859064796}
+{"step": 600, "train_loss": 3.4375516676902773, "lr": 0.0004109423525312738, "tokens_per_second": 268417.41122012853}
+{"step": 700, "train_loss": 3.3709162068367005, "lr": 0.0002788846441659823, "tokens_per_second": 260038.80304953066}
+{"step": 800, "train_loss": 3.328071768283844, "lr": 0.00017651533261533827, "tokens_per_second": 265956.85241383803}
+{"step": 900, "train_loss": 3.2803873944282533, "lr": 0.00011504433527265379, "tokens_per_second": 263230.7365441318}
+{"step": 977, "val_loss": 3.255140960216522, "elapsed": 68.11649489402771, "sample": "Once upon a time, there was a little cat named Max. Spot loved to play with her friends. One day, Spot saw a big, red dog named Max. The cat went for the dog. They were very happy and wanted to help the dog. They played with the kids. They played together. They all lived happily. Tim wanted to play with his friends. But, the ball was curious. The dog"}

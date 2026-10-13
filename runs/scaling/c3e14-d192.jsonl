@@ -1,0 +1,15 @@
+{"run": {"dim": 192, "params": 2361024, "steps": 1293, "tokens": 21184512, "lr": 0.004, "config": {"vocab_size": 4096, "max_seq_len": 256, "dim": 192, "n_layers": 4, "n_heads": 3, "n_kv_heads": 1, "mlp_dim": 512, "rope_theta": 10000.0, "norm_eps": 1e-06, "tie_embeddings": true, "qkv_bias": false, "n_experts": 0, "n_active": 2, "rope_scaling": null}}}
+{"step": 0, "val_loss": 8.35064525604248, "elapsed": 0.8328008651733398, "sample": "Once upon a time swim unknownside Maybe ind hair g Now sur J sur using kite happening whyumpy\u2019t Maybe pit pit havingkn se always skipau greatauau great clapped bra zebra zebralet using track wealthy triedged pit feet Now Now ifym seBillyaxi happen ground window p Now Now meet meet repl prize prize cry barking Look soup themselves cozylevatorip triedip week mix teach having present message record record record\ufffd"}
+{"step": 100, "train_loss": 4.8038417029380795, "lr": 0.003982201587657273, "tokens_per_second": 424324.16498827236}
+{"step": 200, "train_loss": 3.1511332297325136, "lr": 0.003863415634997648, "tokens_per_second": 451498.00146225496}
+{"step": 300, "train_loss": 2.754118263721466, "lr": 0.0036401111603763503, "tokens_per_second": 450444.628914898}
+{"step": 400, "train_loss": 2.56419890165329, "lr": 0.003326319205190244, "tokens_per_second": 437541.50443221076}
+{"step": 500, "train_loss": 2.420715148448944, "lr": 0.002941756472029758, "tokens_per_second": 435618.6141149746}
+{"step": 600, "train_loss": 2.318977437019348, "lr": 0.002510586451742164, "tokens_per_second": 436521.61742400227}
+{"step": 700, "train_loss": 2.244756591320038, "lr": 0.0020599011424345423, "tokens_per_second": 436524.8339928898}
+{"step": 800, "train_loss": 2.1802690386772157, "lr": 0.0016180187595953143, "tokens_per_second": 436699.18191360217}
+{"step": 900, "train_loss": 2.1297146582603457, "lr": 0.001212704398467994, "tokens_per_second": 436544.13440173113}
+{"step": 1000, "train_loss": 2.0761311173439028, "lr": 0.0008694254510041568, "tokens_per_second": 435589.0964981717}
+{"step": 1100, "train_loss": 2.0476752507686613, "lr": 0.0006097513959646137, "tokens_per_second": 436120.61121575953}
+{"step": 1200, "train_loss": 2.0120224714279176, "lr": 0.0004499985092418687, "tokens_per_second": 436173.42707409756}
+{"step": 1293, "val_loss": 1.9837293773889542, "elapsed": 49.662874937057495, "sample": "Once upon a time, there was a little girl named Lily. Lily loved to paint and make pretty pictures. One sunny day, she wanted to make a big painting. She put on her big brush and started to paint. When she was done, her painting was proud. Lily took a big brush and started to paint. She painted a big sun, a river, and a long tail. But then, she felt"}
