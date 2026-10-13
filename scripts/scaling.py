@@ -3,8 +3,11 @@ Scaling laws: train the family of minllm/scaling.py at several sizes and
 compute budgets, each run with scripts/train.py and its own schedule, and
 keep the logs in runs/scaling/.
 
-    uv run scripts/scaling.py --phase lr       # every size at four learning rates, 16M tokens each
+    uv run scripts/scaling.py --phase lr       # widths 128 to 512 at four learning rates, 16M tokens each
+    uv run scripts/scaling.py --phase lr --dims 64,128,192 --lrs 1e-3,2e-3,4e-3,8e-3   # the smallest ones go higher
     uv run scripts/scaling.py --phase grid     # every size at every budget, at its best learning rate
+    uv run scripts/scaling.py --phase grid --dims 64,128,192,256,320,384,448,512 --lrs 5e-4,1e-3,2e-3,4e-3,8e-3 --max-passes 1.7
+                                               # the small side of every budget, which reads the text more than once
     uv run scripts/analyze_scaling.py          # the fits
 
 A run that has a log in runs/scaling/ is skipped, so an interrupted queue
@@ -44,8 +47,12 @@ def run(name, dim, steps, lr):
     """One run of scripts/train.py, its log kept and its checkpoint dropped."""
     log = f"{args.runs}/{name}.jsonl"
     if os.path.exists(log):
-        print(f"{name}: done before, skipped", flush=True)
-        return
+        with open(log) as f:
+            done_at = json.loads(f.readline())["run"]["lr"]
+        if done_at == lr or name.startswith("lr-"):
+            print(f"{name}: done before, skipped", flush=True)
+            return
+        print(f"{name}: done before at lr {done_at:g}, which is no longer this size's best", flush=True)
     cfg, out = scaling.family(dim), f"out/scaling/{name}"
     shutil.rmtree(out, ignore_errors=True)
     command = [sys.executable, "scripts/train.py", "--out", out, "--dim", str(dim), "--n-layers", str(cfg.n_layers), "--n-heads", str(cfg.n_heads),
@@ -54,7 +61,7 @@ def run(name, dim, steps, lr):
     print(f"{name}: {params[dim] / 1e6:.2f}M parameters, {steps} steps, {steps * BATCH * SEQ / 1e6:.0f}M tokens, lr {lr:g}", flush=True)
     subprocess.run(command, check=True, stdout=subprocess.DEVNULL)
     records = [json.loads(line) for line in open(f"{out}/log.jsonl")]
-    meta = {"dim": dim, "params": params[dim], "steps": steps, "tokens": steps * BATCH * SEQ, "lr": lr, "config": vars(cfg)}
+    meta = {"dim": dim, "params": params[dim], "steps": steps, "tokens": steps * BATCH * SEQ, "passes": steps * BATCH * SEQ / data_tokens, "lr": lr, "config": vars(cfg)}
     with open(log, "w") as f:
         f.write(json.dumps({"run": meta}) + "\n")
         f.writelines(json.dumps(r) + "\n" for r in records)
@@ -69,7 +76,8 @@ def final_loss(name):
 
 
 def best_lr(dim):
-    lrs = [float(x) for x in args.lrs.split(",")]
+    """The learning rate whose sweep run of this size ended lowest, among those that were run."""
+    lrs = [float(x) for x in args.lrs.split(",") if os.path.exists(f"{args.runs}/lr-d{dim}-{float(x):g}.jsonl")]
     return min(lrs, key=lambda lr: final_loss(f"lr-d{dim}-{lr:g}"))
 
 
