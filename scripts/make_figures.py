@@ -67,15 +67,16 @@ class Figure:
             f'<line class="s-{stroke}" x1="{n(x1)}" y1="{n(y1)}" x2="{n(x2)}" y2="{n(y2)}" stroke-width="{width}" stroke-linecap="round"/>'
         )
 
-    def path(self, d, stroke=None, fill=None, width=2, opacity=None):
+    def path(self, d, stroke=None, fill=None, width=2, opacity=None, dash=None):
         cls = (f"s-{stroke} " if stroke else "") + (f"f-{fill}" if fill else "")
         extra = "" if fill else ' fill="none"'
         extra += f' stroke-width="{width}" stroke-linejoin="round" stroke-linecap="round"' if stroke else ""
         extra += f' {"fill" if fill else "stroke"}-opacity="{opacity}"' if opacity is not None else ""
+        extra += f' stroke-dasharray="{dash}"' if dash else ""
         self.parts.append(f'<path class="{cls}" d="{d}"{extra}/>')
 
-    def polyline(self, points, stroke, width=2, opacity=None):
-        self.path("M" + " L".join(f"{n(x)} {n(y)}" for x, y in points), stroke=stroke, width=width, opacity=opacity)
+    def polyline(self, points, stroke, width=2, opacity=None, dash=None):
+        self.path("M" + " L".join(f"{n(x)} {n(y)}" for x, y in points), stroke=stroke, width=width, opacity=opacity, dash=dash)
 
     def dot(self, x, y, fill, r=4):
         # The ring in the surface color keeps a dot legible where it crosses a line.
@@ -167,8 +168,8 @@ class Axes:
     def title(self, s):
         self.fig.text(self.left, self.top - 12, s, fill="ink", weight=600)
 
-    def line(self, xs, ys, color, width=2, opacity=None):
-        self.fig.polyline([(self.x(a), self.y(b)) for a, b in zip(xs, ys)], color, width, opacity)
+    def line(self, xs, ys, color, width=2, opacity=None, dash=None):
+        self.fig.polyline([(self.x(a), self.y(b)) for a, b in zip(xs, ys)], color, width, opacity, dash)
 
     def dots(self, xs, ys, color, r=4):
         for a, b in zip(xs, ys):
@@ -1088,6 +1089,8 @@ def rlvr_curves(name, title, subtitle, runs, unit, panels):
         low.xticks(range(0, steps + 1, 25 if steps > 100 else 10), str, "iteration" if last else "")
         for label, color, log in logs:
             rows = [r for r in log if key in r]
+            if not rows:  # a quantity this run does not log
+                continue
             xs = [r["iteration"] for r in rows]
             # a running mean over 5 iterations: single iterations are noisy
             ys = [sum(q[key] for q in rows[max(0, j - 4) : j + 1]) / len(rows[max(0, j - 4) : j + 1]) for j in range(len(rows))]
@@ -1136,6 +1139,82 @@ def rlvr_gsm8k():
         rows.append((label, r["mean"], r["error"]))
     scored_bars(fig, 220, 84, 330, rows, 0.6, lambda v: f"{v:.1%}")
     fig.save("rlvr-gsm8k-test")
+
+
+def tool_rl_curves():
+    runs = [("GRPO with the calculator, from 6a's model", "s2", "runs/rlvr/grpo-gsm8k-tools.jsonl"), ("stage 9: GRPO without it, from stage 6's", "s1", "runs/rlvr/grpo-gsm8k.jsonl")]
+    panels = [
+        ("reward", "Sampled replies that are right, during training", (0, 0.8), lambda t: f"{t:.0%}"),
+        ("calls", "Calls per reply, with the calculator", (0, 6), lambda t: f"{t:g}"),
+    ]
+    rlvr_curves("tool-rl-curves", "GRPO with a calculator that runs during the rollouts", "60 iterations of 8 problems with 8 replies each, as in stage 9. The verifier compares the final number.", runs, "Problems solved", panels)
+
+
+def tool_rl_test():
+    """GSM8K's test set before and after GRPO, with the tool and without it."""
+    summary = load("runs/eval/tools-summary.json")["runs"]
+    rows = [
+        ("fine-tuned on solutions (stage 6)", "gsm8k-sft-gsm8k-lora", None),
+        ("then GRPO without a tool (stage 9)", "gsm8k-grpo-gsm8k", None),
+        ("fine-tuned with calls (6a)", "gsm8k-tools-sft-gsm8k-tools-lora", "gsm8k-tools-sft-gsm8k-tools-lora"),
+        ("then GRPO with the calculator", "gsm8k-tools-grpo-gsm8k-tools", "gsm8k-tools-grpo-gsm8k-tools"),
+        ("the same, every call fails", "gsm8k-tools-grpo-gsm8k-tools-no-execute", "gsm8k-tools-grpo-gsm8k-tools-no-execute"),
+    ]
+    fig = Figure(720, 290, "GSM8K test problems solved, before and after GRPO", "1,319 problems, greedy replies, with 95% intervals, and calls per problem where the calculator was offered.")
+    left, top, width, peak = 250, 84, 300, 0.6
+    scored_bars(fig, left, top, width, [(label, load(f"runs/eval/{name}.json")["mean"], load(f"runs/eval/{name}.json")["error"]) for label, name, _ in rows], peak, lambda v: f"{v:.1%}")
+    fig.text(650, top - 10, "calls", fill="ink", weight=600, anchor="middle")
+    for j, (_, _, run) in enumerate(rows):
+        if run:
+            fig.text(650, top + j * 36 + 14, f"{summary[run]['calls_per_problem']:.2f}", fill="ink2", anchor="middle")
+    fig.text(24, 274, "Both GRPO runs: 60 iterations of 8 training problems with 8 replies each, starting from the model above them.", size=11, fill="muted")
+    fig.save("tool-rl-test")
+
+
+def reasoning_curves():
+    runs = [("from the published model, 512 tokens", "s2", "runs/rlvr/grpo-qwen.jsonl"), ("stage 9: from the fine-tuned model, 256", "s1", "runs/rlvr/grpo-gsm8k.jsonl")]
+    panels = [
+        ("tokens", "Tokens per sampled reply", (0, 512), lambda t: f"{t:g}"),
+        ("finished", "Replies that end before the limit", (0, 1), lambda t: f"{t:.0%}"),
+    ]
+    rlvr_curves("reasoning-curves", "GRPO from the published model, with room to think", "Stage 9's exercise 7: LoRA, a KL penalty of 0.05 towards the published model, replies of up to 512 tokens.", runs, "Problems solved", panels)
+
+
+# The models of 9c, in the order the note takes them: (file in runs/reasoning/, label, color).
+REASONERS = [("test-time-qwen", "0.5B as published", "ink2"), ("test-time-grpo-qwen", "after GRPO with room to think", "s2"), ("test-time-sft-gsm8k-traces", "fine-tuned on a reasoning model's thinking", "s3")]
+
+
+def reasoning_test_time():
+    """Votes over samples, and thinking cut at budgets, for every model of 9c that has been measured."""
+    models = [(load(f"runs/reasoning/{file}.json"), label, color) for file, label, color in REASONERS if os.path.exists(f"runs/reasoning/{file}.json")]
+    n = models[0][0]["n"]
+    fig = Figure(720, 400, "More computation when asked", f"GSM8K's first {n} test problems. Left: sampled replies at temperature 1. Right: the greedy reply cut at a budget, and the answer asked for.")
+    peak = max(max(m["pass"]) for m, _, _ in models)
+    top = math.ceil(peak * 10) / 10
+    votes = Axes(fig, 64, 108, 270, 200, (1, 16), (0, top), xlog=True)
+    votes.title("Several samples per problem")
+    votes.yticks(nice_ticks(0, top, 4), lambda t: f"{t:.0%}")
+    votes.xticks([1, 2, 4, 8, 16], str, "samples per problem, k")
+    for m, label, color in models:
+        votes.line(m["ks"], m["majority"], color)
+        votes.dots(m["ks"], m["majority"], color, r=3)
+        votes.line(m["ks"], m["pass"], color, dash="5 4")
+    longest = max(int(b) for m, _, _ in models for b in m["budgets"])
+    budget = Axes(fig, 418, 108, 270, 200, (16, longest), (0, top), xlog=True)
+    budget.title("Thinking cut at a budget")
+    budget.yticks(nice_ticks(0, top, 4), lambda t: f"{t:.0%}")
+    budget.xticks([b for b in (16, 64, 256, 1024, 2048) if b <= longest], lambda t: f"{t:,}", "tokens of thinking allowed")
+    for m, label, color in models:
+        points = sorted((int(b), v["right"]) for b, v in m["budgets"].items())
+        budget.line(*zip(*points), color)
+        budget.dots(*zip(*points), color, r=3)
+    x = 64
+    for m, label, color in models:
+        fig.line(x, 352, x + 18, 352, stroke=color, width=2)
+        fig.text(x + 24, 356, label, size=11)
+        x += 24 + text_width(label, 11) + 24
+    fig.text(24, 384, "Solid: the most common answer of k samples is right. Dashed: at least one of k is right. Dots on the right: budgets.", size=11, fill="muted")
+    fig.save("reasoning-test-time")
 
 
 # ------------------------------------------------------- 2a mixture of experts
@@ -1574,31 +1653,249 @@ def quant_speed():
     fig.save("quant-speed")
 
 
+# ---------------------------------------------------------- 2b longer context
+
+
+def rope_freqs(head_dim, theta, kind=None, s=1.0, original=256):
+    """The turning speed of every pair of the rotary table, as minllm/model.py's rope_table computes it."""
+    half = head_dim // 2
+    base = [theta ** (-2 * i / head_dim) for i in range(half)]
+    if kind == "linear":
+        return [f / s for f in base]
+    if kind == "ntk":
+        t = theta * s ** (head_dim / (head_dim - 2))
+        return [t ** (-2 * i / head_dim) for i in range(half)]
+    if kind == "yarn":
+        index = lambda turns: head_dim * math.log(original / (turns * 2 * math.pi)) / (2 * math.log(theta))
+        low, high = max(math.floor(index(32)), 0), min(math.ceil(index(1)), head_dim - 1)
+        ramp = [min(max((i - low) / max(high - low, 1e-3), 0), 1) for i in range(half)]
+        return [f * (1 - r) + f / s * r for f, r in zip(base, ramp)]
+    return base
+
+
+def context_pairs():
+    fig = Figure(720, 330, "Turns of every rotary pair within the window", "The model of 3b: 32 pairs per head, theta 10,000, trained on 256 tokens. Each method stretches it 4 times, for 1,024.")
+    pairs = list(range(32))
+    turns = lambda freqs, length: [length * f / (2 * math.pi) for f in freqs]
+    ax = Axes(fig, 64, 108, 440, 180, (0, 31), (0.004, 200), ylog=True)
+    ax.yticks([0.01, 0.1, 1, 10, 100], lambda t: f"{t:g}")
+    ax.xticks([0, 8, 16, 24, 31], str, "pair, from the fastest to the slowest")
+    fig.line(ax.left, ax.y(1), ax.left + ax.width, ax.y(1), stroke="axis", width=1.5)
+    ax.label(31, 1, "one turn", dx=-4, dy=-6, anchor="end", fill="muted")
+    series = [
+        ("axis", "as trained, over 256 tokens", turns(rope_freqs(64, 1e4), 256)),
+        ("ink2", "as it is, over 1,024", turns(rope_freqs(64, 1e4), 1024)),
+        ("s1", "interpolated, over 1,024", turns(rope_freqs(64, 1e4, "linear", 4), 1024)),
+        ("s2", "NTK, over 1,024", turns(rope_freqs(64, 1e4, "ntk", 4), 1024)),
+        ("s3", "YaRN, over 1,024", turns(rope_freqs(64, 1e4, "yarn", 4), 1024)),
+    ]
+    for color, label, ys in series:
+        ax.line(pairs, ys, color, width=8 if color == "axis" else 2)
+    for i, (color, label, ys) in enumerate(series):
+        y = 120 + i * 24 + (12 if i > 2 else 0)
+        fig.line(530, y - 4, 548, y - 4, stroke=color, width=8 if color == "axis" else 2)
+        fig.text(556, y, label, size=11)
+    fig.text(556, 120 + 2 * 24 + 13, "on the trained band exactly", size=10, fill="muted")
+    fig.text(530, 260, "Below one turn, a pair never", size=11, fill="muted")
+    fig.text(530, 275, "came round in training: past the", size=11, fill="muted")
+    fig.text(530, 290, "trained angle it reads new ones.", size=11, fill="muted")
+    fig.save("context-pairs")
+
+
+# The runs of 2b: (file in runs/context/, label, color, dashed). The hues are those of context_pairs.
+CONTEXT_UNTRAINED = [("web-clean", "not stretched", "ink2", False), ("web-clean-linear4", "interpolated ×4", "s1", False), ("web-clean-ntk4", "NTK ×4", "s2", False),
+                     ("web-clean-yarn4", "YaRN ×4", "s3", False), ("web-clean-yarn8", "YaRN ×8", "s3", True)]
+CONTEXT_TRAINED = [("ctx-none", "not stretched", "ink2", False), ("ctx-linear", "interpolated ×4", "s1", False), ("ctx-ntk", "NTK ×4", "s2", False),
+                   ("ctx-yarn", "YaRN ×4", "s3", False), ("web-clean-1024", "on 1,024 from the start", "ink", True)]
+
+
+def context_panels(name, title, subtitle, measure, ylim, yticks, yfmt, xtitle, note, dots=False):
+    """The runs without training on the left, and those trained on windows of 1,024 on the right."""
+    fig = Figure(720, 424, title, subtitle)
+    panels = [("Stretched, without training", CONTEXT_UNTRAINED, 64), ("Trained on windows of 1,024", CONTEXT_TRAINED, 418)]
+    for heading, series, left in panels:
+        ax = Axes(fig, left, 104, 268, 180, (0, 2048), ylim)
+        ax.title(heading)
+        ax.yticks(yticks, yfmt)
+        ax.xticks([0, 512, 1024, 1536, 2048], lambda t: f"{t:,}", xtitle)
+        for at, label in ((256, "256"), (1024, "1,024")):  # the trained window, and the stretched one
+            fig.path(f"M{n(ax.x(at))} {n(ax.top)} L{n(ax.x(at))} {n(ax.top + ax.height)}", stroke="axis", width=1, dash="3 3")
+        runs = [(load(f"runs/context/{file}.json"), label, color, dash) for file, label, color, dash in series if os.path.exists(f"runs/context/{file}.json")]
+        for run, label, color, dash in runs:
+            xs, ys = measure(run)
+            ys = [min(max(y, ylim[0]), ylim[1]) for y in ys]
+            ax.line(xs, ys, color, dash="5 4" if dash else None)
+            if dots:
+                ax.dots(xs, ys, color, r=3)
+        for i, (run, label, color, dash) in enumerate(runs):
+            x, y = left + (i % 2) * 140, 346 + (i // 2) * 20
+            fig.path(f"M{x} {y - 4} L{x + 18} {y - 4}", stroke=color, width=2, dash="5 4" if dash else None)
+            fig.text(x + 24, y, label, size=11)
+    fig.text(24, 408, note, size=11, fill="muted")
+    fig.save(name)
+
+
+def context_loss():
+    blocks = lambda run: ([32 * i + 16 for i in range(len(run["loss_by_32_positions"]))], run["loss_by_32_positions"])
+    context_panels("context-loss", "Past the trained window, the loss rises unless the table is stretched far enough",
+                   "Loss at every position of the first 2,048 tokens of 256 held-out web pages, in blocks of 32 positions.",
+                   blocks, (3.0, 5.0), [3, 3.5, 4, 4.5, 5], lambda t: f"{t:g}", "position in the page",
+                   "Dashed verticals: 256, the window the model was trained on, and 1,024, the window the stretch by 4 is meant for.")
+
+
+def context_passage():
+    gain = lambda run: ([int(d) for d in run["passage"]], [v["unseen"] - v["seen"] for v in run["passage"].values()])
+    context_panels("context-passage", "A passage seen before, and how far back the model still finds it",
+                   "How much lower the loss on a passage of 48 tokens is when the same passage came earlier, against its distance.",
+                   gain, (0, 1.6), [0, 0.4, 0.8, 1.2, 1.6], lambda t: f"{t:g}", "tokens between the two copies",
+                   "The loss on the second copy, subtracted from the loss on the same tokens after a different passage, over 64 pairs.", dots=True)
+
+
+# ------------------------------------------------------- 4b speculative decoding
+
+
+def speculative_round():
+    # An illustration of one round; the tokens are made up for it.
+    fig = Figure(720, 286, "One round of speculative decoding", "The draft guesses four tokens. The model reads them all in one pass, keeps those it agrees with, and adds one of its own.")
+    prefix, drafts = "Natalia sold 48/2 =", [" 24", " clips", " in", " April"]
+    x0, y0, bw, gap = 24, 96, 82, 8
+    fig.rect(x0, y0, 168, 34, fill="surface", stroke="axis", rx=6)
+    fig.text(x0 + 12, y0 + 22, prefix, fill="ink")
+    xs = [x0 + 168 + gap + i * (bw + gap) for i in range(len(drafts))]
+    for x, d in zip(xs, drafts):
+        fig.rect(x, y0, bw, 34, fill="s2", stroke="s2", rx=6, opacity=0.12)
+        fig.text(x + bw / 2, y0 + 22, d.strip(), fill="ink", anchor="middle")
+    fig.text(xs[-1] + bw + 14, y0 + 15, "the draft:", size=11, fill="ink2")
+    fig.text(xs[-1] + bw + 14, y0 + 30, "4 small passes", size=11, fill="ink2")
+
+    # The model: one pass over the text and the four guesses, a distribution after each.
+    y1 = 158
+    fig.rect(x0, y1, xs[-1] + bw - x0, 30, fill="s1", stroke="s1", rx=6, opacity=0.12)
+    fig.text(x0 + 12, y1 + 20, "the model: 1 pass, its next token after each of them", fill="ink")
+    picks = [" 24", " clips", " in", " May"]
+
+    # What is kept: every guess up to the first the model would not have made, then the model's own token.
+    y2 = 222
+    for i, (x, d) in enumerate(zip(xs, drafts)):
+        agrees = picks[i] == d
+        if agrees:
+            fig.rect(x, y2, bw, 34, fill="s1", stroke="s1", rx=6, opacity=0.12)
+            fig.text(x + bw / 2, y2 + 22, d.strip(), fill="ink", anchor="middle")
+            fig.text(x + bw / 2, y2 - 8, "kept", size=11, fill="ink2", anchor="middle")
+        else:
+            fig.rect(x, y2, bw, 34, fill="surface", stroke="s1", rx=6, width=2)
+            fig.text(x + bw / 2, y2 + 22, picks[i].strip(), fill="ink", anchor="middle", weight=600)
+            fig.text(x + bw / 2, y2 - 8, f"not {d.strip()}: the model's", size=11, fill="ink2", anchor="middle")
+            break
+    fig.text(xs[-1] + bw + 14, y2 + 15, "3 kept, 1 added:", size=11, fill="ink2")
+    fig.text(xs[-1] + bw + 14, y2 + 30, "4 tokens for 1 pass", size=11, fill="ink2")
+    fig.save("speculative-round")
+
+
+# ------------------------------------------------------------ 3c scaling laws
+
+
+def budget_label(b):
+    mantissa, exponent = f"{b:.0e}".split("e")
+    return f"{mantissa}e{int(exponent)}"
+
+
+def scaling_valleys():
+    summary = load("runs/scaling/summary.json")
+    valleys = sorted(summary["valleys"].items(), key=lambda kv: float(kv[0]))
+    fig = Figure(720, 392, "At every budget there is a best size", "Final validation loss against size, one line per compute budget, darker for more.")
+    fig.text(24, 68, "The orange dot is the floor of a parabola through the lowest three runs.", fill="ink2")
+    runs = [r for _, v in valleys for r in v["runs"]]
+    lo, hi = math.floor(min(r["loss"] for r in runs) * 10) / 10, math.ceil(min(max(r["loss"] for r in runs), 2.6) * 10) / 10
+    ax = Axes(fig, 64, 108, 400, 200, (0.25e6, 40e6), (lo, hi), xlog=True)
+    ax.title("Loss against parameters")
+    ax.yticks(nice_ticks(lo, hi, 4), lambda t: f"{t:g}")
+    ax.xticks([0.3e6, 1e6, 3e6, 10e6, 30e6], lambda t: f"{t / 1e6:g}M", "parameters (log scale)")
+    for i, (budget, v) in enumerate(valleys):
+        shade = 0.35 + 0.65 * i / max(1, len(valleys) - 1)
+        rs = [r for r in v["runs"] if r["loss"] <= hi]
+        ax.line([r["params"] for r in rs], [r["loss"] for r in rs], "s1", opacity=shade)
+        for r in rs:
+            if r["passes"] > 1.0:  # part of the text read twice: drawn hollow
+                fig.parts.append(f'<circle class="f-surface s-s1" cx="{n(ax.x(r["params"]))}" cy="{n(ax.y(r["loss"]))}" r="3.5" stroke-width="1.5"/>')
+            else:
+                fig.dot(ax.x(r["params"]), ax.y(r["loss"]), "s1", r=3.5)
+        fig.dot(ax.x(v["params"]), ax.y(v["loss"]), "s2", r=4.5)
+        last = rs[-1]
+        ax.label(last["params"], last["loss"], budget_label(float(budget)) + " FLOPs", dx=8, dy=4, fill="ink2")
+
+    # Tokens per parameter at each floor, against the rule of thumb of Hoffmann et al.
+    ratio = Axes(fig, 560, 108, 130, 200, (0.5, len(valleys) + 0.5), (0, 40))
+    ratio.title("Tokens per parameter")
+    ratio.yticks([0, 10, 20, 30, 40], lambda t: f"{t:g}")
+    fig.line(ratio.left, ratio.y(20), ratio.left + ratio.width, ratio.y(20), stroke="s2", width=1.5)
+    bottom = ratio.top + ratio.height
+    fig.line(ratio.left, bottom, ratio.left + ratio.width, bottom, stroke="axis")
+    for i, (budget, v) in enumerate(valleys, start=1):
+        r = v["tokens"] / v["params"]
+        x, shade = ratio.x(i), 0.35 + 0.65 * (i - 1) / max(1, len(valleys) - 1)
+        if v["bracketed"]:
+            fig.rect(x - 9, ratio.y(r), 18, bottom - ratio.y(r), fill="s1", rx=3, opacity=shade)
+        else:  # the lowest run is the smallest: the floor is less sure, drawn as an outline
+            fig.rect(x - 8.25, ratio.y(r) + 0.75, 16.5, bottom - ratio.y(r) - 0.75, fill="surface", stroke="s1", rx=3)
+        fig.text(x, ratio.y(r) - 6, f"{r:.0f}", anchor="middle", fill="ink", size=11)
+        fig.text(x, bottom + 17, budget_label(float(budget)), anchor="middle", fill="muted", size=10)
+    fig.text(ratio.left + ratio.width / 2, bottom + 36, "orange: Chinchilla's 20", size=10, anchor="middle", fill="muted")
+    fig.text(24, 374, "Hollow dot: part of TinyStories' 131M tokens read twice. Outlined bar: the budget's smallest run is its lowest.", size=11, fill="muted")
+    fig.save("scaling-valleys")
+
+
+def scaling_prediction():
+    summary = load("runs/scaling/summary.json")
+    predictions, fit = summary["predictions"], summary["fit_without_largest"]
+    budget = predictions[0]["name"].split("-")[0][1:]
+    fig = Figure(720, 316, "A law fitted on small budgets, asked about a larger one", f"L(N, D) fitted to every run below {budget} FLOPs, then asked for the runs at {budget}, which it has not seen.")
+    xs = [p["params"] for p in predictions]
+    ys = [p["loss"] for p in predictions] + [p["predicted"] for p in predictions]
+    lo, hi = math.floor(min(ys) * 20) / 20, math.ceil(max(ys) * 20) / 20
+    ax = Axes(fig, 64, 108, 360, 140, (min(xs) / 1.3, max(xs) * 1.3), (lo, hi), xlog=True)
+    ax.title(f"The runs at {budget} FLOPs")
+    ax.yticks(nice_ticks(lo, hi, 3), lambda t: f"{t:g}")
+    ax.xticks(xs, lambda t: f"{t / 1e6:.1f}M", "parameters")
+    ax.line(xs, [p["predicted"] for p in predictions], "s2")
+    ax.dots(xs, [p["loss"] for p in predictions], "s1")
+    fig.legend(470, 130, [("s1", "measured", "dot"), ("s2", "predicted", "line")])
+    rows = [("E", f"{fit['E']:.2f}", "the loss no model reaches"), ("alpha", f"{fit['alpha']:.2f}", "how fast size helps"), ("beta", f"{fit['beta']:.2f}", "how fast tokens help")]
+    for i, (name, value, what) in enumerate(rows):
+        y = 172 + i * 22
+        fig.text(470, y, name, fill="ink", weight=600)
+        fig.text(520, y, value, fill="ink")
+        fig.text(560, y, what, size=11)
+    worst = max(abs(p["loss"] - p["predicted"]) for p in predictions)
+    own = max(summary["misses"], key=lambda name: abs(summary["misses"][name]))
+    run = next(r for v in summary["valleys"].values() for r in v["runs"] if r["name"] == own)
+    fig.text(24, 300, f"The largest miss is {worst:.3f}. Fitted on every run, the law misses one of its own by {abs(summary['misses'][own]):.3f}: {run['params'] / 1e6:.1f}M parameters on {run['tokens'] / 1e6:.0f}M tokens.", size=11, fill="muted")
+    fig.save("scaling-prediction")
+
+
 # ---------------------------------------------------------------------- readme
 
 
 def pipeline(done):
-    fig = Figure(720, 460, "The pipeline", "Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.")
+    fig = Figure(720, 420, "The pipeline", "Ten stages in order, from raw text to a model that other tools run. A side topic branches off the stage it changes.")
     rows = [
         ("From scratch: a 14M model, trained here", [(1, "Tokenizer"), (2, "Model"), (3, "Pretraining"), (4, "Inference")]),
         ("Post-training: that model, and an open 0.5B one", [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
     ]
-    # (label, name, how far below its stage it hangs: a stage's own topics and its neighbors' take turns)
     leaves = {
-        2: [("2a", "Experts", 0)],
-        3: [("3a", "Distillation", 0), ("3b", "Data preparation", 1)],
-        4: [("4a", "Structured output", 0)],
-        6: [("6a", "Tool calling", 0)],
-        7: [("7a", "Multiple choice", 1), ("7b", "Judge", 2)],
-        8: [("8a", "Safety", 0)],
-        9: [("9a", "Self-training", 1)],
-        10: [("10a", "Quantization", 0)],
+        2: [("2a", "Experts"), ("2b", "Context")],
+        3: [("3a", "Distillation"), ("3b", "Data"), ("3c", "Scaling")],
+        4: [("4a", "Structured output"), ("4b", "Speculative")],
+        6: [("6a", "Tool calling")],
+        7: [("7a", "Multiple choice"), ("7b", "Judge")],
+        8: [("8a", "Safety")],
+        9: [("9a", "Self-training"), ("9b", "Tool RL"), ("9c", "Reasoning")],
+        10: [("10a", "Quantization")],
     }
-    left, w, gap, tops = 36, 98, 16, [96, 268]
-    right_ends = []  # where the side topics of each row end, at the right
+    leaves = {stage: [(tag, topic) for tag, topic in topics if tag in done] for stage, topics in leaves.items()}  # only those that are out
+    left, w, gap, tops, step = 20, 98, 16, [96, 268], 21
     for (label, stages), y in zip(rows, tops):
-        fig.text(left, y - 12, label, size=11, fill="muted")
-        ends = {}  # per level, where the last side topic ended: the next one starts after it
+        fig.text(left + (w / 2 + 12 if y == tops[1] else 0), y - 12, label, size=11, fill="muted")
         for i, (number, name) in enumerate(stages):
             x = left + i * (w + gap)
             built = number in done
@@ -1607,23 +1904,20 @@ def pipeline(done):
             fig.text(x + 12 + (16 if number >= 10 else 12), y + 25, name, fill="ink", weight=600 if built else 400)
             if i:
                 fig.arrow([(x - gap + 2, y + 20), (x - 2, y + 20)])
-            # A side topic hangs below the stage it branches from, outside the chain.
-            for tag, topic, level in reversed(leaves.get(number, [])):
-                built = tag in done
-                width = text_width(f"{tag} {topic}", 11) + 24
-                lx, ly = x if x + width < 700 else x + w - width, y + 52 + level * 36
-                lx = max(lx, ends.get(level, 0) + 6)
-                ends[level] = lx + width
-                fig.line(x + w / 2, y + 40, x + w / 2, ly, stroke="s1" if built else "axis", width=1.5)
-                fig.rect(lx, ly, width, 28, fill="surface", stroke="s1" if built else "axis", rx=5)
-                fig.text(lx + 10, ly + 18, tag, fill="muted", size=11)
-                fig.text(lx + 14 + text_width(tag, 11), ly + 18, topic, fill="ink" if built else "ink2", size=11)
-        right_ends.append(max(ends.values(), default=0))
-    # The chain goes on from the end of the first row to the start of the second, past its side topics.
+            # The side topics hang below their stage as a small tree, outside the chain.
+            topics = leaves.get(number, [])
+            if topics:
+                fig.line(x + 14, y + 40, x + 14, y + 40 + step * len(topics) - 8, stroke="axis", width=1.5)
+            for k, (tag, topic) in enumerate(topics):
+                ly = y + 40 + step * (k + 1) - 4
+                fig.line(x + 14, ly - 4, x + 22, ly - 4, stroke="axis", width=1.5)
+                fig.text(x + 26, ly, tag, size=11, fill="muted")
+                fig.text(x + 30 + text_width(tag, 11), ly, topic, size=11, fill="ink" if tag in done else "ink2")
+    # The chain goes on from the end of the first row, past its side topics, down into the second.
     end = left + 4 * (w + gap) - gap
-    turn = max(end + 22, right_ends[0] + 12)
-    fig.arrow([(end + 2, tops[0] + 20), (turn, tops[0] + 20), (turn, 232), (left - 18, 232), (left - 18, tops[1] + 20), (left - 2, tops[1] + 20)])
-    fig.text(left, 444, "A side topic uses what its stage built, and the chain does not depend on it.", size=11, fill="muted")
+    past = max(left + 3 * (w + gap) + 30 + text_width(f"{tag} {topic}", 11) for tag, topic in leaves[4]) + 16
+    fig.arrow([(end + 2, tops[0] + 20), (past, tops[0] + 20), (past, 236), (left + w / 2, 236), (left + w / 2, tops[1] - 2)])
+    fig.text(left + 4, 402, "A side topic uses what its stage built, and the chain does not depend on it.", size=11, fill="muted")
     fig.save("pipeline")
 
 
@@ -1696,4 +1990,20 @@ if os.path.exists("runs/moe/wide-20min.jsonl"):
     moe_loss()
 if os.path.exists("runs/moe/routing.json"):
     moe_routing()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "3a", "3b", "4a", "6a", "7a", "7b", "8a", "9a", "10a"})
+context_pairs()
+if os.path.exists("runs/context/web-clean.json"):
+    context_loss()
+    context_passage()
+speculative_round()
+if os.path.exists("runs/rlvr/grpo-gsm8k-tools.jsonl"):
+    tool_rl_curves()
+if os.path.exists("runs/eval/gsm8k-tools-grpo-gsm8k-tools-no-execute.json"):
+    tool_rl_test()
+if os.path.exists("runs/rlvr/grpo-qwen.jsonl"):
+    reasoning_curves()
+if os.path.exists("runs/reasoning/test-time-qwen.json"):
+    reasoning_test_time()
+if os.path.exists("runs/scaling/summary.json"):
+    scaling_valleys()
+    scaling_prediction()
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "3a", "3b", "3c", "4a", "6a", "7a", "7b", "8a", "9a", "10a"})
