@@ -5,8 +5,9 @@ better than the others to the same prompt are made more likely.
 
     uv run scripts/grpo.py --task words     # the 14M model learns to use the requested words
     uv run scripts/grpo.py --task gsm8k     # the 0.5B model gets better at math problems
+    uv run scripts/grpo.py --task gsm8k-tools   # the same, with a calculator it calls during the rollouts
 
-See docs/09-rlvr.md.
+See docs/09-rlvr.md, and docs/09b-tool-rl.md for the calculator.
 """
 
 import argparse
@@ -17,12 +18,12 @@ import time
 
 import torch
 
-from minllm import chat, checkpoint, evaluate, lora, rl, tasks
+from minllm import chat, checkpoint, evaluate, lora, rl, tasks, tools
 from minllm.common import free_memory, pick_device
 from minllm.pretrained import SYSTEM_PROMPT
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--task", choices=["words", "gsm8k"], required=True)
+parser.add_argument("--task", choices=["words", "gsm8k", "gsm8k-tools"], required=True)
 parser.add_argument("--model", default=None, help="the policy's starting point")
 parser.add_argument("--out", default=None)
 parser.add_argument("--iterations", type=int, default=None)
@@ -38,8 +39,8 @@ parser.add_argument("--eval-n", type=int, default=None, help="held-out examples 
 parser.add_argument("--seed", type=int, default=0)
 args = parser.parse_args()
 
-small = args.task == "words"
-args.model = args.model or ("out/sft-words" if small else "out/sft-gsm8k-lora")
+small, with_tools = args.task == "words", args.task == "gsm8k-tools"
+args.model = args.model or {"words": "out/sft-words", "gsm8k": "out/sft-gsm8k-lora", "gsm8k-tools": "out/sft-gsm8k-tools-lora"}[args.task]
 args.out = args.out or f"out/grpo-{args.task}"
 args.iterations = args.iterations or (150 if small else 60)
 args.prompts = args.prompts or (32 if small else 8)
@@ -84,19 +85,29 @@ if small:
     stream = tasks.words_examples("data/tinystories/train.txt", vocabulary, n, seed=args.seed + 300)
     draw = lambda: [next(stream) for _ in range(args.prompts)]
     held_out = list(tasks.words_examples("data/tinystories/valid.txt", vocabulary, args.eval_n, seed=11))
+elif with_tools:
+    # the system's turn with the calculator, and the problem; the solution is never shown
+    pool = [{"messages": e["messages"][:2], "number": e["number"]} for e in tools.gsm8k_conversations("train", SYSTEM_PROMPT)]
+    pool, held_out = pool[:-200], pool[-200:][: args.eval_n]
+    draw = lambda: rng.sample(pool, args.prompts)
 else:
     pool = tasks.gsm8k_examples("train", SYSTEM_PROMPT)
     pool, held_out = pool[:-200], pool[-200:][: args.eval_n]  # the 200 problems that fine-tuning held out too
     draw = lambda: rng.sample(pool, args.prompts)
-score = tasks.SCORE[args.task]
-max_new_tokens = args.max_new_tokens or tasks.MAX_NEW_TOKENS[args.task]
+score = tasks.SCORE["gsm8k" if with_tools else args.task]
+# with the calculator, the limit is on each of the model's turns, as in scripts/evaluate_tools.py
+max_new_tokens = args.max_new_tokens or (320 if with_tools else tasks.MAX_NEW_TOKENS[args.task])
 end = tok.special_tokens[chat.IM_END]
 
 
 def held_out_score():
     """Greedy replies to the held-out prompts, scored. The number that says whether training helps."""
     model.eval()
-    replies = evaluate.replies(model, tok, held_out, tasks.MAX_NEW_TOKENS[args.task], batch_size=256 if small else 64)
+    if with_tools:
+        finished, _ = tools.run(model, tok, [e["messages"] for e in held_out], max_new_tokens, batch_size=64)
+        replies = [tools.answer_text(c, 2) for c in finished]
+    else:
+        replies = evaluate.replies(model, tok, held_out, tasks.MAX_NEW_TOKENS[args.task], batch_size=256 if small else 64)
     model.train()
     free_memory(device)
     return sum(score(e, r) for e, r in zip(held_out, replies)) / len(held_out)
@@ -112,9 +123,15 @@ print(f"iteration   0 | held-out {value:.3f}")
 log.write(json.dumps({"iteration": 0, "held_out": value, "elapsed": 0.0}) + "\n")
 for iteration in range(1, args.iterations + 1):
     examples = draw()
-    # 1. Act: several replies to every prompt, sampled from the current policy.
+    # 1. Act: several replies to every prompt, sampled from the current policy. With the
+    # calculator a reply is several turns, and the calls in it are run as it is sampled.
+    masks = None
     with autocast:
-        prompts, replies, texts = rl.rollout(model, tok, [e["messages"] for e in examples], args.samples, max_new_tokens)
+        if with_tools:
+            prompts, replies, masks, conversations, counts = tools.rollout(model, tok, [e["messages"] for e in examples], args.samples, max_new_tokens)
+            texts = [tools.answer_text(c, 2) for c in conversations]
+        else:
+            prompts, replies, texts = rl.rollout(model, tok, [e["messages"] for e in examples], args.samples, max_new_tokens)
     # 2. Verify: a program scores every reply. No human and no learned model is involved.
     rewards = torch.tensor([score(examples[i // args.samples], text) for i, text in enumerate(texts)], device=device)
     finished = torch.tensor([reply[-1] == end for reply in replies], device=device)
@@ -122,7 +139,7 @@ for iteration in range(1, args.iterations + 1):
         rewards = rewards * finished
     # 3. Compare within each prompt's group, and 4. take one policy-gradient step.
     advantages = rl.group_advantages(rewards, args.samples)
-    stats = rl.update(model, optimizer, prompts, replies, advantages, device, kl_coef=args.kl, reference=reference, chunk=64 if small else 4, hidden=hidden)
+    stats = rl.update(model, optimizer, prompts, replies, advantages, device, kl_coef=args.kl, reference=reference, chunk=64 if small else 4, hidden=hidden, masks=masks)
     free_memory(device)
 
     groups = rewards.view(-1, args.samples)
@@ -135,12 +152,17 @@ for iteration in range(1, args.iterations + 1):
         "kl": stats["kl"],
         "elapsed": time.time() - start,
     }
+    if with_tools:
+        record |= {"calls": sum(c["calls"] for c in counts) / len(counts), "bad_calls": sum(c["bad_calls"] for c in counts), "with_call": sum(c["calls"] > 0 for c in counts) / len(counts)}
+        record["tokens"] = sum(sum(m) for m in masks) / len(masks)  # the model's own tokens
     if iteration % args.eval_every == 0 or iteration == args.iterations:
         record["held_out"] = held_out_score()
     log.write(json.dumps(record) + "\n")
     log.flush()
     if "held_out" in record or iteration % 5 == 0 or iteration == 1:
         line = f"iteration {iteration:3d} | reward {record['reward']:.3f} | informative groups {record['informative_groups']:.0%} | {record['tokens']:.0f} tokens, {record['finished']:.0%} finished"
+        if with_tools:
+            line += f" | {record['calls']:.1f} calls"
         print(line + (f" | held-out {record['held_out']:.3f}" if "held_out" in record else ""))
 
 minutes = (time.time() - start) / 60
