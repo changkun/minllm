@@ -7,9 +7,12 @@ token, nudge the weights to make the right token more likely. Repeat.
     uv run scripts/train.py --steps 200 --dim 128 --n-layers 2 --out out/debug
     uv run scripts/train.py --n-experts 8 --mlp-dim 512 --out out/moe    # a mixture of experts
     uv run scripts/train.py --teacher out/wide --out out/distilled       # learn from a larger model
+    uv run scripts/train.py --init out/base --seq-len 1024 --rope-scaling yarn:4 --steps 500 --batch-size 16 --lr 3e-4 --out out/ctx-yarn
+                                                # a trained model, on windows 4 times longer
 
-See docs/03-pretraining.md, docs/02a-moe.md for the mixture of experts, and
-docs/03a-distillation.md for the teacher.
+See docs/03-pretraining.md, docs/02a-moe.md for the mixture of experts,
+docs/03a-distillation.md for the teacher, and docs/02b-context.md for
+longer windows.
 """
 
 import argparse
@@ -21,7 +24,7 @@ from dataclasses import asdict
 
 import torch
 
-from minllm import checkpoint, distill
+from minllm import checkpoint, context, distill
 from minllm.common import load_checkpoint, pick_device
 from minllm.data import EOT, get_batch, load_tokens
 from minllm.model import Config, Transformer
@@ -39,6 +42,8 @@ parser.add_argument("--n-heads", type=int, default=Config.n_heads)
 parser.add_argument("--n-kv-heads", type=int, default=Config.n_kv_heads)
 parser.add_argument("--mlp-dim", type=int, default=Config.mlp_dim)
 parser.add_argument("--seq-len", type=int, default=256, help="tokens per training window")
+parser.add_argument("--init", default=None, help="start from the weights of a trained model in this directory, with a new optimizer and schedule")
+parser.add_argument("--rope-scaling", default=None, help="with --init: stretch the rotary table for --seq-len, as type:factor, such as yarn:4")
 # mixture of experts
 parser.add_argument("--n-experts", type=int, default=0, help="above 0, every MLP becomes this many experts of width --mlp-dim")
 parser.add_argument("--n-active", type=int, default=Config.n_active, help="experts that process each token")
@@ -82,6 +87,11 @@ if args.resume:
     model, ckpt = load_checkpoint(ckpt_path, device)
     cfg = model.cfg
     args.seq_len = cfg.max_seq_len
+elif args.init:
+    model, _ = load_checkpoint(f"{args.init}/ckpt.pt", device)
+    kind, factor = args.rope_scaling.split(":") if args.rope_scaling else (None, None)
+    context.extend(model, args.seq_len, kind, float(factor) if factor else None)
+    cfg = model.cfg
 else:
     cfg = Config(
         vocab_size=tok.vocab_size,
