@@ -13,20 +13,34 @@ import numpy as np
 import torch
 
 from minllm.common import fetch
-from minllm.model import Config, Transformer
+from minllm.model import Config, Transformer, rope_table
 from minllm.tokenizer import Tokenizer
 
 REPO = "Qwen/Qwen2.5-0.5B-Instruct"
 DIR = "data/qwen2.5-0.5b-instruct"
 FILES = ["config.json", "vocab.json", "merges.txt", "tokenizer.json", "tokenizer_config.json", "model.safetensors"]
+INDEX = "model.safetensors.index.json"
 
 # The system prompt that Qwen's chat template inserts when a conversation has none.
 SYSTEM_PROMPT = "You are Qwen, created by Alibaba Cloud. You are a helpful assistant."
 
 
-def download(dir=DIR, repo=REPO):
-    for name in FILES:
-        fetch(f"https://huggingface.co/{repo}/resolve/main/{name}", f"{dir}/{name}")
+def download(dir=DIR, repo=REPO, shards=False, files=FILES):
+    """
+    Fetch a published model. A large one stores its weights in several
+    files (shards=True), listed with the tensors each holds in
+    model.safetensors.index.json. Some repositories keep the vocabulary and
+    merges in tokenizer.json alone, and leave vocab.json and merges.txt out
+    of files.
+    """
+    url = lambda name: f"https://huggingface.co/{repo}/resolve/main/{name}"
+    for name in [f for f in files if f != "model.safetensors"] if shards else files:
+        fetch(url(name), f"{dir}/{name}")
+    if shards:
+        fetch(url(INDEX), f"{dir}/{INDEX}")
+        with open(f"{dir}/{INDEX}") as f:
+            for name in sorted(set(json.load(f)["weight_map"].values())):
+                fetch(url(name), f"{dir}/{name}")
 
 
 # ---------------------------------------------------------------- weights
@@ -101,11 +115,22 @@ def load_model(dir=DIR, device="cpu", dtype=torch.float32):
         tie_embeddings=c["tie_word_embeddings"],
         qkv_bias=True,
     )
-    model = Transformer(cfg)
-    state = {to_minllm(name): t for name, t in read_safetensors(f"{dir}/model.safetensors").items()}
+    # Built without memory or random values ("meta"), and then given the published
+    # tensors themselves: a 7B model filled with random numbers first would take
+    # minutes, and in 32-bit floats 30 GB.
+    with torch.device("meta"):
+        model = Transformer(cfg)
+    files = ["model.safetensors"]
+    if os.path.exists(f"{dir}/{INDEX}"):
+        with open(f"{dir}/{INDEX}") as f:
+            files = sorted(set(json.load(f)["weight_map"].values()))
+    state = {to_minllm(name): t for file in files for name, t in read_safetensors(f"{dir}/{file}").items()}
     if cfg.tie_embeddings:
         state["lm_head.weight"] = state["embed.weight"]  # one matrix, stored once
-    model.load_state_dict(state)  # raises if a single name or shape does not match
+    model.load_state_dict(state, assign=True)  # raises if a single name or shape does not match
+    if cfg.tie_embeddings:
+        model.lm_head.weight = model.embed.weight  # assigned one by one, the two would be copies
+    model.rope_cos, model.rope_sin = rope_table(cfg.dim // cfg.n_heads, cfg.max_seq_len, cfg.rope_theta, cfg.rope_scaling)
     return model.to(device=device, dtype=dtype).eval()
 
 
@@ -132,21 +157,24 @@ def gpt2_alphabet():
 
 def load_tokenizer(dir=DIR):
     """Build a Tokenizer from the published vocabulary, merges and special tokens."""
-    with open(f"{dir}/vocab.json", encoding="utf-8") as f:
-        ids = json.load(f)  # token, spelled in GPT-2's alphabet -> id
     with open(f"{dir}/tokenizer.json", encoding="utf-8") as f:
         spec = json.load(f)
+    if os.path.exists(f"{dir}/vocab.json"):
+        with open(f"{dir}/vocab.json", encoding="utf-8") as f:
+            ids = json.load(f)  # token, spelled in GPT-2's alphabet -> id
+        with open(f"{dir}/merges.txt", encoding="utf-8") as f:
+            pairs = [line for line in f.read().split("\n") if line and not line.startswith("#version")]
+    else:  # the same two tables, inside tokenizer.json
+        ids, pairs = spec["model"]["vocab"], spec["model"]["merges"]
     alphabet = gpt2_alphabet()
     byte_ids = [0] * 256
     for char, byte in alphabet.items():
         byte_ids[byte] = ids[char]
 
     merges = {}
-    with open(f"{dir}/merges.txt", encoding="utf-8") as f:
-        for line in f.read().split("\n"):
-            if line and not line.startswith("#version"):
-                a, b = line.split(" ")
-                merges[(ids[a], ids[b])] = ids[a + b]
+    for pair in pairs:
+        a, b = pair.split(" ") if isinstance(pair, str) else pair
+        merges[(ids[a], ids[b])] = ids[a + b]
 
     special = {t["content"]: t["id"] for t in spec["added_tokens"]}
     pattern = spec["pre_tokenizer"]["pretokenizers"][0]["pattern"]["Regex"]

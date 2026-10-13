@@ -116,3 +116,10 @@ def test_training_example_learns_only_the_replies(tok):
     assert all(label in (-100, i) for i, label in zip(ids, labels))
     learned = tok.decode([label for label in labels if label != -100])
     assert learned == "4<|im_end|>It is 6.<|im_end|>"  # the replies and their ends, nothing else
+
+
+@needs_weights
+def test_loaded_weights_are_trainable_and_the_embedding_is_shared(model):
+    assert model.lm_head.weight is model.embed.weight  # one matrix: a step on one is a step on the other
+    assert all(p.requires_grad and p.device.type == "cpu" for p in model.parameters())
+    assert model.rope_cos.shape == (model.cfg.max_seq_len, model.cfg.dim // model.cfg.n_heads // 2) and model.rope_cos.device.type == "cpu"
