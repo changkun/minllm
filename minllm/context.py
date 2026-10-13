@@ -8,13 +8,12 @@ the model has never seen is the angles that the slow pairs of the table
 reach beyond 256, and the question is what it makes of them, and how to
 stretch the table so that it never has to. See docs/02b-context.md.
 
-Two measurements. The loss at every position of long windows of text says
-whether the model still predicts well far into a window. It does not say
-whether the far tokens help: a story here is about 200 tokens, and the
-stories before it in a window say nothing about it. The copy probe does:
-a passage, other stories, and the passage again. A model that can reach
-back to the first copy predicts the second almost perfectly, at any
-distance it can reach.
+Two measurements. The loss at every position of long documents says
+whether the model still predicts well far into a window. It says little
+about whether the far tokens help, which depends on the document. The
+copy probe does: a passage, other documents, and the passage again. A
+model that can reach back to the first copy predicts the second far
+better, at any distance it can reach.
 """
 
 import torch
@@ -79,6 +78,8 @@ def copy_sequences(documents, distance, separator, passage=48, offset=40, n=64, 
         sequences.append([separator] + first + filler[: distance - passage] + second)
         starts.append(1 + distance)
     return sequences, starts
+
+
 @torch.no_grad()
 def copy_loss(model, sequences, starts, batch_size=8):
     """The mean loss on the copies, from their second token on: low when the model finds the first copy."""
