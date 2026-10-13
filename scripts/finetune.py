@@ -5,13 +5,14 @@ Fine-tune a model on a task: show it conversations and train it on the replies.
     uv run scripts/finetune.py --task gsm8k --lora 16     # the 0.5B model learns grade-school math, through LoRA
     uv run scripts/finetune.py --task gsm8k               # the same, training every weight
     uv run scripts/finetune.py --task gsm8k-tools --lora 16 --accumulate 2   # the same problems, with the arithmetic done by a tool
-    uv run scripts/finetune.py --task gsm8k-traces --accumulate 4            # on a reasoning model's thinking (scripts/make_traces.py)
+    uv run scripts/finetune.py --task gsm8k-traces --accumulate 8            # on a reasoning model's thinking (scripts/make_traces.py)
 
 See docs/06-finetuning.md, docs/06a-tool-calling.md for the tool, and
 docs/09c-reasoning.md for the thinking.
 """
 
 import argparse
+import functools
 import json
 import math
 import os
@@ -20,6 +21,7 @@ import time
 
 import torch
 import torch.nn.functional as F
+import torch.utils.checkpoint
 
 from minllm import chat, checkpoint, lora, tasks, tools
 from minllm.common import free_memory, pick_device
@@ -124,7 +126,7 @@ def batch(pairs):
 
 
 train_pairs, held_out_pairs = encode(train), encode(held_out)
-held_out_batches = [held_out_pairs[i : i + args.batch_size] for i in range(0, args.eval_batches * args.batch_size, args.batch_size)]
+held_out_batches = [held_out_pairs[i : i + args.batch_size] for i in range(0, min(len(held_out_pairs), args.eval_batches * args.batch_size), args.batch_size)]
 
 # ------------------------------------------------------------------ model
 
@@ -136,6 +138,14 @@ if args.lora:
 else:
     trainable = list(model.parameters())
 optimizer = torch.optim.AdamW(trainable, lr=args.lr, betas=(0.9, 0.95), weight_decay=0.0)
+long = args.task == "gsm8k-traces"
+if long:
+    # Of an example of 2,400 tokens, what the backward pass needs of attention
+    # alone is 14 heads × 2,400² weights in every one of 24 layers. So each
+    # layer keeps only its input, and computes the rest again when the
+    # backward pass reaches it: a third more computation, a fraction of the memory.
+    for layer in model.layers:
+        layer.forward = functools.partial(torch.utils.checkpoint.checkpoint, layer.forward, use_reentrant=False)
 
 hidden = model.hidden if args.no_compile else torch.compile(model.hidden)
 device_type = torch.device(device).type
@@ -163,7 +173,9 @@ def lr_at(step):
 
 @torch.no_grad()
 def evaluate():
-    return sum(loss_on(pairs).item() for pairs in held_out_batches) / len(held_out_batches)
+    """The held-out loss, every batch in the same parts as in training."""
+    parts = [part for pairs in held_out_batches for part in (pairs[i :: args.accumulate] for i in range(args.accumulate)) if part]
+    return sum(loss_on(part).item() for part in parts) / len(parts)
 
 
 @torch.no_grad()
@@ -213,6 +225,10 @@ while True:
         part_loss = loss_on(pairs[part :: args.accumulate]) / args.accumulate
         part_loss.backward()
         loss += part_loss.detach()
+        if long:
+            # Every part is of another length, up to 2,400 tokens, and adds
+            # gigabytes to the pool of free_memory: it is emptied after each.
+            peak_memory = max(peak_memory, free_memory(device))
     torch.nn.utils.clip_grad_norm_(trainable, 1.0)
     optimizer.step()
     step += 1
