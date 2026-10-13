@@ -1,8 +1,12 @@
 import json
+import os
+
+import pytest
 
 from minllm import chat, pretrained, tools
 
 QWEN = "data/qwen2.5-0.5b-instruct"
+needs_tokenizer = pytest.mark.skipif(not os.path.exists(f"{QWEN}/vocab.json"), reason="run scripts/download_qwen.py")
 
 
 def test_calculate():
@@ -17,6 +21,7 @@ def test_calculate():
     assert tools.calculate("9**9**9").startswith("error")
 
 
+@needs_tokenizer
 def test_system_prompt_is_the_templates():
     # The published chat template, as Qwen wrote it, must give the same text.
     jinja = json.load(open(f"{QWEN}/tokenizer_config.json"))["chat_template"]
@@ -44,6 +49,7 @@ def test_gsm8k_solution_becomes_calls():
     assert sum(r.startswith("<tool_response>\nerror") for r in results) < 0.01 * len(results)
 
 
+@needs_tokenizer
 def test_calls_are_control_tokens_in_the_assistants_turn_only():
     tok = pretrained.load_tokenizer(QWEN)
     call = tools.call_text("calculate", {"expression": "1+1"})
