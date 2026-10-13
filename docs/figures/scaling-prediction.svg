@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="316" viewBox="0 0 720 316" role="img"><title>A law fitted on small budgets, asked about a larger one</title><desc>L(N, D) fitted to every run below 1e16 FLOPs, then asked for the runs at 1e16, which it has not seen.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="315" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">A law fitted on small budgets, asked about a larger one</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">L(N, D) fitted to every run below 1e16 FLOPs, then asked for the runs at 1e16, which it has not seen.</text>
+<text class="f-ink" x="64" y="96" font-size="12" text-anchor="start" font-weight="600">The runs at 1e16 FLOPs</text>
+<line class="s-grid" x1="64" y1="248" x2="424" y2="248" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="252" font-size="11" text-anchor="end">1.4</text>
+<line class="s-grid" x1="64" y1="201.3" x2="424" y2="201.3" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="205.3" font-size="11" text-anchor="end">1.45</text>
+<line class="s-grid" x1="64" y1="154.7" x2="424" y2="154.7" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="158.7" font-size="11" text-anchor="end">1.5</text>
+<line class="s-grid" x1="64" y1="108" x2="424" y2="108" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="56" y="112" font-size="11" text-anchor="end">1.55</text>
+<line class="s-axis" x1="64" y1="248" x2="424" y2="248" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="114.5" y1="248" x2="114.5" y2="252" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="114.5" y="265" font-size="11" text-anchor="middle">7.8M</text>
+<line class="s-axis" x1="230.2" y1="248" x2="230.2" y2="252" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="230.2" y="265" font-size="11" text-anchor="middle">14.2M</text>
+<line class="s-axis" x1="299.5" y1="248" x2="299.5" y2="252" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="299.5" y="265" font-size="11" text-anchor="middle">20.3M</text>
+<line class="s-axis" x1="373.5" y1="248" x2="373.5" y2="252" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="373.5" y="265" font-size="11" text-anchor="middle">29.8M</text>
+<text class="f-muted" x="244" y="284" font-size="11" text-anchor="middle">parameters</text>
+<path class="s-s2 " d="M114.5 204 L230.2 206.1 L299.5 189.2 L373.5 154" fill="none" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle class="f-s1 s-surface" cx="114.5" cy="217.4" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="230.2" cy="214.8" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="299.5" cy="198" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="373.5" cy="155.8" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="478" cy="126" r="4" stroke-width="2"/>
+<text class="f-ink2" x="492" y="130" font-size="12" text-anchor="start">measured</text>
+<line class="s-s2" x1="563.8" y1="126" x2="579.8" y2="126" stroke-width="2" stroke-linecap="round"/>
+<text class="f-ink2" x="585.8" y="130" font-size="12" text-anchor="start">predicted</text>
+<text class="f-ink" x="470" y="172" font-size="12" text-anchor="start" font-weight="600">E</text>
+<text class="f-ink" x="520" y="172" font-size="12" text-anchor="start">1.19</text>
+<text class="f-ink2" x="560" y="172" font-size="11" text-anchor="start">the loss no model reaches</text>
+<text class="f-ink" x="470" y="194" font-size="12" text-anchor="start" font-weight="600">alpha</text>
+<text class="f-ink" x="520" y="194" font-size="12" text-anchor="start">0.59</text>
+<text class="f-ink2" x="560" y="194" font-size="11" text-anchor="start">how fast size helps</text>
+<text class="f-ink" x="470" y="216" font-size="12" text-anchor="start" font-weight="600">beta</text>
+<text class="f-ink" x="520" y="216" font-size="12" text-anchor="start">0.73</text>
+<text class="f-ink2" x="560" y="216" font-size="11" text-anchor="start">how fast tokens help</text>
+<text class="f-muted" x="24" y="300" font-size="11" text-anchor="start">The largest miss is 0.014. Fitted on every run, the law misses one of its own by 0.061: 14.2M parameters on 12M tokens.</text>
+</svg>

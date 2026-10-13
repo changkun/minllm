@@ -270,7 +270,9 @@ Large pretraining runs typically use a custom loop like this one. Hugging Face
 
 The side topic [3a](03a-distillation.md) runs this loop with a second model
 as a teacher: the student learns from the teacher's predictions and not only
-from the text.
+from the text. [3c](03c-scaling.md) trains this model at eight sizes and four
+compute budgets, to find the size a budget should buy, and answers exercise
+4 with a law.
 
 ## References
 
