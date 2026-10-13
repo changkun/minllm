@@ -2,8 +2,8 @@
 Have a reasoning model think through GSM8K's problems: the teacher,
 DeepSeek-R1-Distill-Qwen-1.5B, samples one reply to each, thinking first.
 
-    uv run scripts/make_traces.py                 # 3,000 training problems: the thinking that ended and was right
-    uv run scripts/make_traces.py --split test    # the teacher's own score on the test problems
+    uv run scripts/make_traces.py --n 960 --batch-size 96               # training problems: the thinking that ended and was right
+    uv run scripts/make_traces.py --split test --n 192 --batch-size 96  # the teacher's own score on the first test problems
 
 On the training problems, a reply is kept if it closed its thinking,
 ended within the limit and has the right answer, as DeepSeek-R1's
@@ -31,10 +31,10 @@ from minllm.common import pick_device
 parser = argparse.ArgumentParser()
 parser.add_argument("--teacher", default="data/r1-distill-qwen-1.5b")
 parser.add_argument("--split", choices=["train", "test"], default="train")
-parser.add_argument("--n", type=int, default=3000)
+parser.add_argument("--n", type=int, default=960)
 parser.add_argument("--max-new-tokens", type=int, default=2048)
 parser.add_argument("--temperature", type=float, default=0.6, help="as the teacher's authors advise, with top-p 0.95")
-parser.add_argument("--batch-size", type=int, default=64)
+parser.add_argument("--batch-size", type=int, default=96)
 parser.add_argument("--seed", type=int, default=0)
 args = parser.parse_args()
 
@@ -53,6 +53,10 @@ prompts = {i: reasoning.r1_prompt(tok, question(problems[i])) for i in indices}
 
 start, results = time.time(), {}
 order = sorted(indices, key=lambda i: len(prompts[i]))
+# The thinking that is kept is written batch by batch, so that a stopped run keeps what it made.
+if args.split == "train":
+    os.makedirs("data/reasoning", exist_ok=True)
+    traces = open("data/reasoning/traces.jsonl", "w", encoding="utf-8")
 for b in range(0, len(order), args.batch_size):
     chunk = order[b : b + args.batch_size]
     steps = torch.stack(list(inference.stream(model, [prompts[i] for i in chunk], args.max_new_tokens, temperature=args.temperature, top_p=0.95, stop=[eos])), dim=1).tolist()
@@ -64,6 +68,9 @@ for b in range(0, len(order), args.batch_size):
         number = reasoning.answer(after or text)
         right = number == float(problems[i]["number"])
         results[i] = {"tokens": len(ids), "ended": ended, "closed": reasoning.END_THINK in text, "right": right, "text": text}
+        if args.split == "train" and right and ended and results[i]["closed"]:
+            traces.write(json.dumps({"index": i, "number": problems[i]["number"], "trace": text, "tokens": len(ids)}, ensure_ascii=False) + "\n")
+            traces.flush()
     done = len(results)
     print(f"{done}/{len(indices)} | {sum(r['right'] for r in results.values()) / done:.1%} right | {(time.time() - start) / 60:.1f} minutes", flush=True)
 
@@ -85,8 +92,5 @@ os.makedirs("runs/reasoning", exist_ok=True)
 with open(f"runs/reasoning/teacher-{args.split}.json", "w") as f:
     json.dump(summary, f, indent=1, ensure_ascii=False)
 if args.split == "train":
-    os.makedirs("data/reasoning", exist_ok=True)
-    with open("data/reasoning/traces.jsonl", "w", encoding="utf-8") as f:
-        for i in kept:
-            f.write(json.dumps({"index": i, "number": problems[i]["number"], "trace": results[i]["text"], "tokens": results[i]["tokens"]}, ensure_ascii=False) + "\n")
+    traces.close()
     print(f"wrote {len(kept)} traces to data/reasoning/traces.jsonl")
