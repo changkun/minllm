@@ -37,7 +37,7 @@ import re
 import torch
 
 from minllm import chat, inference, tasks
-from minllm.common import fetch
+from minllm.common import fetch, free_memory
 
 CALL_START, CALL_END = "<tool_call>", "</tool_call>"
 
@@ -261,7 +261,7 @@ def _results(made, counts, execute):
 
 
 @torch.no_grad()
-def rollout(model, tok, conversations, samples=1, max_new_tokens=256, max_calls=16, temperature=1.0, execute=True):
+def rollout(model, tok, conversations, samples=1, max_new_tokens=256, max_calls=16, temperature=1.0, execute=True, batch_size=32):
     """
     Like run, but sampled, several times for every conversation, and kept
     as the token ids that the model chose, for reinforcement learning
@@ -274,7 +274,9 @@ def rollout(model, tok, conversations, samples=1, max_new_tokens=256, max_calls=
     which the model's turns alternate with the tool's; for each of them 1
     if the model wrote it and 0 if the tool or the chat format did; the
     conversation as messages; and its counts, as run gives them. Only the
-    tokens marked 1 are trained on.
+    tokens marked 1 are trained on. Each round generates batch_size
+    conversations at a time, of similar length: a conversation with calls
+    grows to over a thousand tokens.
     """
     start, end = tok.special_tokens[chat.IM_START], tok.special_tokens[chat.IM_END]
     newline = tok.encode_ordinary("\n")
@@ -283,11 +285,16 @@ def rollout(model, tok, conversations, samples=1, max_new_tokens=256, max_calls=
     added, written = [[] for _ in prompts], [[] for _ in prompts]
     counts = [{"calls": 0, "bad_calls": 0, "turns": 0} for _ in prompts]
     active = list(range(len(prompts)))
+    device = next(model.parameters()).device if model is not None else "cpu"
     while active:
-        rows = [prompts[i] + added[i] for i in active]
-        steps = torch.stack(list(inference.stream(model, rows, max_new_tokens, temperature=temperature, stop=[end])), dim=1).tolist()
+        order = sorted(active, key=lambda i: len(prompts[i]) + len(added[i]))
+        steps = []
+        for first in range(0, len(order), batch_size):
+            rows = [prompts[i] + added[i] for i in order[first : first + batch_size]]
+            steps += torch.stack(list(inference.stream(model, rows, max_new_tokens, temperature=temperature, stop=[end])), dim=1).tolist()
+            free_memory(device)
         still = []
-        for i, row in zip(active, steps):
+        for i, row in zip(order, steps):
             stopped = -1 in row  # the model ended its turn, and did not run into the limit
             ids = row[: row.index(-1)] if stopped else row
             text = tok.decode(ids)
