@@ -1,0 +1,13 @@
+{"step": 0, "val_loss": 4.185530865192414, "elapsed": 56.230780839920044, "sample": "Once upon a time, the majority of the fish are getting bored and the salvation with the saloon gas is splashed with a salad shot and sprinkled over to an evening. Beard\u2019s mysterious gas is charged in the front, and the salah breakfast is made"}
+{"step": 50, "train_loss": 3.4402499389648438, "lr": 0.00029757555223549096, "tokens_per_second": 10851.14728354776}
+{"step": 100, "train_loss": 3.1761152076721193, "lr": 0.0002823527087325944, "tokens_per_second": 31339.51513442406}
+{"step": 150, "train_loss": 3.1693158388137816, "lr": 0.000254674079118023, "tokens_per_second": 42966.49219336909}
+{"step": 200, "train_loss": 3.1650205087661742, "lr": 0.00021747746597057337, "tokens_per_second": 38761.751133426034}
+{"step": 250, "train_loss": 3.155733289718628, "lr": 0.0001747109081761571, "tokens_per_second": 42499.77301905608}
+{"step": 250, "val_loss": 3.2243094861507418, "elapsed": 225.2326159477234, "sample": "Once upon a time, sales is face-eight, with a number of unforgottened, all-looking, and the best fit for you has, and its gentlemen sellers are sold in a way that sells a fit. The earth-conserving, with its sleek and versatile features of"}
+{"step": 300, "train_loss": 3.148450016975403, "lr": 0.00013091363710295367, "tokens_per_second": 38822.58383391798}
+{"step": 350, "train_loss": 3.0846160793304445, "lr": 9.073428375960838e-05, "tokens_per_second": 46271.65193196459}
+{"step": 400, "train_loss": 3.104338049888611, "lr": 5.843747430392475e-05, "tokens_per_second": 50135.54409225594}
+{"step": 450, "train_loss": 3.110197606086731, "lr": 3.745118372697146e-05, "tokens_per_second": 47403.816761993075}
+{"step": 500, "train_loss": 3.1111899328231813, "lr": 3.0002891475342553e-05, "tokens_per_second": 49411.38792180907}
+{"step": 500, "val_loss": 3.178567671775818, "elapsed": 323.17548179626465, "sample": "Once upon a time, the music is filled with tons of fruit and hair and vase. You don\u2019t need a single niche, but hang out and try some exciting dates and dates. This is all about everyone, even in the future. Please note that at a time you need to fill in the box so it does"}
