@@ -1747,7 +1747,7 @@ def context_passage():
     gain = lambda run: ([int(d) for d in run["passage"]], [v["unseen"] - v["seen"] for v in run["passage"].values()])
     context_panels("context-passage", "A passage seen before, and how far back the model still finds it",
                    "How much lower the loss on a passage of 48 tokens is when the same passage came earlier, against its distance.",
-                   gain, (0, 1.6), [0, 0.4, 0.8, 1.2, 1.6], lambda t: f"{t:g}", "tokens between the two copies",
+                   gain, (0, 2.1), [0, 0.5, 1, 1.5, 2], lambda t: f"{t:g}", "tokens between the two copies",
                    "The loss on the second copy, subtracted from the loss on the same tokens after a different passage, over 64 pairs.", dots=True)
 
 
@@ -2006,4 +2006,4 @@ if os.path.exists("runs/reasoning/test-time-qwen.json"):
 if os.path.exists("runs/scaling/summary.json"):
     scaling_valleys()
     scaling_prediction()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "3a", "3b", "3c", "4a", "6a", "7a", "7b", "8a", "9a", "10a"})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "3a", "3b", "3c", "4a", "6a", "7a", "7b", "8a", "9a", "10a"})

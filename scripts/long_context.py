@@ -66,6 +66,9 @@ name = args.name or os.path.basename(args.model.rstrip("/")) + (f"-{kind}{factor
 os.makedirs("runs/context", exist_ok=True)
 blocks = [per_position[i : i + 32].mean().item() for i in range(0, len(per_position), 32)]
 result = {"model": args.model, "trained_length": trained, "scaling": model.cfg.rope_scaling, "length": args.length, "documents": len(starts)}
+# How long the held-out text's documents are: the share of its tokens in documents longer than each window.
+lengths = np.array([len(d) for d in documents])
+result |= {"held_out_tokens_in_documents_over": {str(w): float(lengths[lengths > w].sum() / lengths.sum()) for w in (256, 1024, 2048)}}
 result |= {"loss_by_32_positions": [round(v, 4) for v in blocks], "passage": copies}
 with open(f"runs/context/{name}.json", "w") as f:
     json.dump(result, f, indent=1)
