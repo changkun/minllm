@@ -40,11 +40,13 @@ def rollout(model, tok, conversations, samples=1, max_new_tokens=200, temperatur
     return prompts, replies, texts
 
 
-def batch(prompts, replies, device):
+def batch(prompts, replies, device, masks=None):
     """
     Inputs x and targets y for running the model over prompts and their
-    replies. Only reply tokens are targets. rows says, for every target in
-    reading order, which reply it belongs to.
+    replies. Only reply tokens are targets, and with masks only those whose
+    mask is 1: a reply in which a tool answered has tokens that the model
+    did not write. rows says, for every target in reading order, which
+    reply it belongs to.
     """
     width = math.ceil(max(len(p) + len(r) for p, r in zip(prompts, replies)) / 32) * 32
     x = torch.zeros(len(prompts), width, dtype=torch.long)
@@ -52,7 +54,10 @@ def batch(prompts, replies, device):
     for i, (p, r) in enumerate(zip(prompts, replies)):
         tokens = p + r
         x[i, : len(tokens) - 1] = torch.tensor(tokens[:-1])
-        y[i, len(p) - 1 : len(tokens) - 1] = torch.tensor(r)
+        target = torch.tensor(r)
+        if masks is not None:
+            target = target.masked_fill(torch.tensor(masks[i]) == 0, -100)
+        y[i, len(p) - 1 : len(tokens) - 1] = target
     x, y = x.to(device), y.to(device)
     return x, y, (y != -100).nonzero()[:, 0]
 
@@ -113,17 +118,17 @@ def group_advantages(rewards, group_size, eps=1e-6):
 
 
 @torch.no_grad()
-def reply_logprobs(model, prompts, replies, device, chunk=64, hidden=None):
-    """For every reply, the log-probability of each of its tokens under the model, as a list of 1-D tensors."""
+def reply_logprobs(model, prompts, replies, device, chunk=64, hidden=None, masks=None):
+    """For every reply, the log-probability of each of its trained tokens under the model, as a list of 1-D tensors."""
     out = []
     for i in range(0, len(prompts), chunk):
-        x, y, rows = batch(prompts[i : i + chunk], replies[i : i + chunk], device)
+        x, y, rows = batch(prompts[i : i + chunk], replies[i : i + chunk], device, masks[i : i + chunk] if masks is not None else None)
         logp = token_logprobs(target_logits(model, x, y, hidden), y)
         out += [logp[rows == j] for j in range(len(x))]
     return out
 
 
-def update(model, optimizer, prompts, replies, advantages, device, old_logp=None, clip=0.2, kl_coef=0.0, reference=None, chunk=64, hidden=None):
+def update(model, optimizer, prompts, replies, advantages, device, old_logp=None, clip=0.2, kl_coef=0.0, reference=None, chunk=64, hidden=None, masks=None):
     """
     One optimizer step on a set of sampled replies. The loss is the policy
     loss plus kl_coef times the KL divergence from a reference policy, both
@@ -131,13 +136,14 @@ def update(model, optimizer, prompts, replies, advantages, device, old_logp=None
     policy's logits at the target positions.
 
     The replies are processed a chunk at a time and the gradients add up, so
-    the step can cover more replies than fit in memory at once.
+    the step can cover more replies than fit in memory at once. masks, if
+    given, says which tokens of each reply are trained on, as in batch.
     """
-    total = sum(len(r) for r in replies)
+    total = sum(len(r) for r in replies) if masks is None else sum(sum(m) for m in masks)
     optimizer.zero_grad(set_to_none=True)
     stats = {"loss": 0.0, "kl": 0.0}
     for i in range(0, len(prompts), chunk):
-        x, y, rows = batch(prompts[i : i + chunk], replies[i : i + chunk], device)
+        x, y, rows = batch(prompts[i : i + chunk], replies[i : i + chunk], device, masks[i : i + chunk] if masks is not None else None)
         logits = target_logits(model, x, y, hidden)
         logp = token_logprobs(logits, y)
         old = torch.cat(old_logp[i : i + chunk]) if old_logp is not None else None

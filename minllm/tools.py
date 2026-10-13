@@ -236,23 +236,77 @@ def run(model, tok, conversations, max_new_tokens=256, max_calls=16, batch_size=
                 made = calls(text)
                 if not made or counts[i]["calls"] >= max_calls:
                     continue
-                results = []
-                for name, arguments in made:
-                    counts[i]["calls"] += 1
-                    if name is None:
-                        counts[i]["bad_calls"] += 1
-                        results.append("error: a call is a JSON object with a name and arguments")
-                    elif name != "calculate" or not isinstance(arguments, dict) or not isinstance(arguments.get("expression"), str):
-                        counts[i]["bad_calls"] += 1
-                        results.append("error: the only tool is calculate, with an expression")
-                    else:
-                        results.append(calculate(arguments["expression"]) if execute else "error: the tool is not available")
-                open_[i].append({"role": "user", "content": "\n".join(response_text(r) for r in results)})
+                open_[i].append({"role": "user", "content": _results(made, counts[i], execute)})
                 still.append(i)
         if progress:
             progress(len(conversations) - len(still), len(conversations))
         active = still
     return open_, counts
+
+
+def _results(made, counts, execute):
+    """The tool's turn for a list of calls: each result, or the error the model gets instead."""
+    results = []
+    for name, arguments in made:
+        counts["calls"] += 1
+        if name is None:
+            counts["bad_calls"] += 1
+            results.append("error: a call is a JSON object with a name and arguments")
+        elif name != "calculate" or not isinstance(arguments, dict) or not isinstance(arguments.get("expression"), str):
+            counts["bad_calls"] += 1
+            results.append("error: the only tool is calculate, with an expression")
+        else:
+            results.append(calculate(arguments["expression"]) if execute else "error: the tool is not available")
+    return "\n".join(response_text(r) for r in results)
+
+
+@torch.no_grad()
+def rollout(model, tok, conversations, samples=1, max_new_tokens=256, max_calls=16, temperature=1.0, execute=True):
+    """
+    Like run, but sampled, several times for every conversation, and kept
+    as the token ids that the model chose, for reinforcement learning
+    (docs/09b-tool-rl.md). run writes each turn into the conversation as
+    text and encodes the conversation again, and text encoded again need
+    not give back the ids that were sampled; the policy gradient has to be
+    taken on those.
+
+    Returns, per episode: the prompt's ids; the ids that follow it, in
+    which the model's turns alternate with the tool's; for each of them 1
+    if the model wrote it and 0 if the tool or the chat format did; the
+    conversation as messages; and its counts, as run gives them. Only the
+    tokens marked 1 are trained on.
+    """
+    start, end = tok.special_tokens[chat.IM_START], tok.special_tokens[chat.IM_END]
+    newline = tok.encode_ordinary("\n")
+    prompts = [encode(tok, c)[0] for c in conversations for _ in range(samples)]
+    messages = [[dict(m) for m in c] for c in conversations for _ in range(samples)]
+    added, written = [[] for _ in prompts], [[] for _ in prompts]
+    counts = [{"calls": 0, "bad_calls": 0, "turns": 0} for _ in prompts]
+    active = list(range(len(prompts)))
+    while active:
+        rows = [prompts[i] + added[i] for i in active]
+        steps = torch.stack(list(inference.stream(model, rows, max_new_tokens, temperature=temperature, stop=[end])), dim=1).tolist()
+        still = []
+        for i, row in zip(active, steps):
+            stopped = -1 in row  # the model ended its turn, and did not run into the limit
+            ids = row[: row.index(-1)] if stopped else row
+            text = tok.decode(ids)
+            added[i] += ids + [end] * stopped
+            written[i] += [1] * (len(ids) + stopped)
+            messages[i].append({"role": "assistant", "content": text})
+            counts[i]["turns"] += 1
+            made = calls(text) if stopped else []
+            if not made or counts[i]["calls"] >= max_calls:
+                continue
+            content = _results(made, counts[i], execute)
+            messages[i].append({"role": "user", "content": content})
+            # The tool's turn, and the opening of the model's next one, as encode writes them.
+            turn = newline + [start] + tok.encode_ordinary("user\n") + tok.encode_ordinary(content) + [end] + newline + [start] + tok.encode_ordinary("assistant\n")
+            added[i] += turn
+            written[i] += [0] * len(turn)
+            still.append(i)
+        active = still
+    return prompts, added, written, messages, counts
 
 
 def answer_text(conversation, start):

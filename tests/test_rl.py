@@ -41,6 +41,20 @@ def test_rollout_and_batch():
     assert torch.allclose(rl.per_reply(logp, rows, 6)[2], torch.tensor(expected).sum(), atol=1e-4)
 
 
+def test_masked_tokens_are_not_targets():
+    # A reply in which a tool answered: the tool's tokens are read, not learned.
+    prompts, replies, masks = [[1, 2, 3], [4, 5]], [[6, 7, 8, 9, 10], [11, 12]], [[1, 1, 0, 0, 1], [1, 1]]
+    x, y, rows = rl.batch(prompts, replies, "cpu", masks)
+    assert y[0][y[0] != -100].tolist() == [6, 7, 10] and y[1][y[1] != -100].tolist() == [11, 12]
+    assert x[0, :7].tolist() == [1, 2, 3, 6, 7, 8, 9]  # but the model still reads them
+    assert rows.tolist() == [0, 0, 0, 1, 1]
+    model, _, _ = setup()
+    logp = rl.reply_logprobs(model, prompts, replies, "cpu", masks=masks)
+    assert [len(l) for l in logp] == [3, 2]
+    full = rl.reply_logprobs(model, prompts, replies, "cpu")
+    assert torch.allclose(logp[0], full[0][[0, 1, 4]], atol=1e-6)
+
+
 def test_policy_gradient_makes_rewarded_replies_likelier():
     model, tok, conversations = setup()
     prompts, replies, _ = rl.rollout(model, tok, conversations, samples=4, max_new_tokens=8)

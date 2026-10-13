@@ -2,6 +2,7 @@ import json
 import os
 
 import pytest
+import torch
 
 from minllm import chat, pretrained, tools
 
@@ -80,3 +81,35 @@ def test_written_calculations():
     assert tools.written_calculations("then 3x + 9 - 1 = 87, so") == []  # part of an equation
     assert tools.written_calculations("he walks 80/7 = 11.43 km") == [("80/7", "11.43", True)]  # rounded
     assert tools.written_calculations("he walks 80/7 = 11.5 km") == [("80/7", "11.5", False)]
+
+
+def scripted(turns):
+    """A stand-in for inference.stream that writes the given turns, one per call, in every row, each ended by the model."""
+    turns = iter(turns)
+
+    def stream(model, prompts, max_new_tokens, stop=(), **sampling):
+        for token in next(turns):
+            yield torch.tensor([token] * len(prompts))
+        yield torch.tensor([-1] * len(prompts))  # the stop token, as stream reports it
+
+    return stream
+
+
+@needs_tokenizer
+def test_rollout_keeps_the_sampled_ids(monkeypatch):
+    tok = pretrained.load_tokenizer(QWEN)
+    conversation = [{"role": "system", "content": tools.system_prompt("system", [tools.CALCULATE])}, {"role": "user", "content": "48/2?"}]
+    first = "Natalia sold 48/2 =\n" + tools.call_text("calculate", {"expression": "48/2"})
+    turns = [tools._with_calls(tok, first), tok.encode_ordinary("24 clips.\n#### 24")]
+    monkeypatch.setattr(tools.inference, "stream", scripted(turns))
+    prompts, added, written, messages, counts = tools.rollout(None, tok, [conversation])
+    assert counts == [{"calls": 1, "bad_calls": 0, "turns": 2}]
+    assert [m["role"] for m in messages[0][2:]] == ["assistant", "user", "assistant"]
+    assert messages[0][2]["content"] == first and messages[0][3]["content"] == "<tool_response>\n24\n</tool_response>"
+    # The ids are the conversation as encode writes it, and the model's are the ones fine-tuning learns.
+    ids, labels = tools.encode(tok, messages[0], add_generation_prompt=False)
+    newline = tok.encode_ordinary("\n")
+    assert prompts[0] + added[0] == ids[: -len(newline)]
+    learned = [label != -100 for label in labels[len(prompts[0]) : len(ids) - len(newline)]]
+    assert written[0] == [int(x) for x in learned]
+    assert tools.answer_text(messages[0], 2) == "Natalia sold 48/2 =\n24 clips.\n#### 24"
