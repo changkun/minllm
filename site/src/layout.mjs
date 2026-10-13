@@ -18,9 +18,9 @@ export function thread(current) {
   const item = (s) => {
     const here = s.slug === current || (s.leaves || []).some((l) => l.slug === current);
     const leaves = (s.leaves || []).map((l) => `<a class="leaf${l.slug === current ? " current" : ""}" href="/${l.slug}/" title="${l.n} ${l.short}"><span class="num">${l.n}</span> ${l.short}</a>`).join("");
-    return `<li class="${here ? "here" : ""}"><a class="stage${s.slug === current ? " current" : ""}" href="/${s.slug}/" title="${s.n} ${s.short}"><span class="dot">${s.n}</span><span class="name">${s.short}</span></a>${leaves ? `<span class="leaves">${leaves}</span>` : ""}</li>`;
+    return `<li class="${here ? "here" : ""}"><span class="row"><a class="stage${s.slug === current ? " current" : ""}" href="/${s.slug}/" title="${s.n} ${s.short}"><span class="dot">${s.n}</span><span class="name">${s.short}</span></a></span>${leaves ? `<span class="leaves">${leaves}</span>` : ""}</li>`;
   };
-  return `<nav class="thread" aria-label="The pipeline"><ol>${stages.map(item).join("")}</ol></nav>`;
+  return `<nav class="thread" data-fit="current" aria-label="The pipeline"><ol>${stages.map(item).join("")}</ol></nav>`;
 }
 
 export function shell({ title, description, current, body }) {
@@ -51,10 +51,28 @@ export function shell({ title, description, current, body }) {
 ${thread(current)}
 <div class="tools">
 <a class="tool wide" href="/films/">Films</a>
-<a class="tool" href="/code/">Code</a>
+<a class="tool code" href="/code/">Code</a>
 <button class="tool theme" type="button" aria-label="Change the theme"><span class="theme-name">Light</span></button>
 <a class="tool repo" href="${REPO}">GitHub</a>
 </div>
+<script>
+// The pipeline shows as much as fits: every name, then the name of the stage being read,
+// then the numbers alone. Run before the page is drawn, and again when the window changes.
+(function () {
+  var nav = document.querySelector(".thread"), list = nav.firstChild, levels = ["names", "current", "numbers", "bare"];
+  function fit() {
+    for (var i = 0; i < levels.length; i++) {
+      nav.dataset.fit = levels[i];
+      if (list.scrollWidth <= list.clientWidth + 1) return;
+    }
+    var here = nav.querySelector("li.here");
+    if (here) nav.scrollLeft = here.offsetLeft - (nav.clientWidth - here.offsetWidth) / 2;
+  }
+  fit();
+  addEventListener("resize", fit);
+  if (document.fonts) document.fonts.ready.then(fit);
+})();
+</script>
 </header>
 ${body}
 <footer class="foot">

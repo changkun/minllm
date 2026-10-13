@@ -60,21 +60,27 @@ a:hover { text-decoration: underline; }
 .theme { border-color: var(--axis); }
 .theme::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 6px; border: 1.5px solid var(--ink2); border-radius: 50%; background: linear-gradient(90deg, var(--ink2) 50%, transparent 50%); vertical-align: -0.5px; }
 
-/* The pipeline: a line through ten numbered stages, with the side topics hanging below their stage. */
-.thread { flex: 1; min-width: 0; }
+/* The pipeline: a line through ten numbered stages, with the side topics hanging below their stage.
+   It shows as much as fits, and a script in the page picks the level (data-fit on the nav): every
+   name ("names"), the name of the stage being read and the numbers of the side topics ("current"),
+   no names and only the side topics of the stage being read ("numbers"), and the same with the
+   side topic being read as a number too ("bare"). Every label is in the flow, so a stage takes
+   the room its labels need, and what does not fit scrolls instead of running into its neighbor. */
+.thread { flex: 1; min-width: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+.thread::-webkit-scrollbar { display: none; }
 .thread ol { display: flex; margin: 0; padding: 0; list-style: none; }
-.thread li { position: relative; display: flex; align-items: center; flex: 1 1 auto; min-width: 0; }
+.thread li { display: flex; flex-direction: column; flex: 1 1 auto; }
+.thread .row { display: flex; align-items: center; }
 .thread li:last-child { flex: 0 0 auto; }
-.thread li:has(.leaf):not(:last-child) { min-width: 130px; } /* room for the side topic's name before the next stage */
-.thread li:has(.leaf + .leaf):not(:last-child) { min-width: 190px; }
-.thread li:not(:last-child)::after { content: ""; flex: 1; min-width: 8px; height: 2px; margin: 0 6px; background: var(--s2); border-radius: 1px; }
+.thread li:not(:last-child) .row::after { content: ""; flex: 1; min-width: 8px; height: 2px; margin: 0 6px; background: var(--s2); border-radius: 1px; }
+.thread[data-fit="names"] li:not(:last-child) .row::after { min-width: 16px; }
 .thread .stage { display: flex; align-items: center; gap: 6px; color: var(--ink2); font-size: 13px; white-space: nowrap; }
 .thread .stage:hover { color: var(--ink); text-decoration: none; }
 .thread .dot { display: grid; place-items: center; width: 22px; height: 22px; border: 2px solid var(--s2); border-radius: 50%; background: var(--surface); color: var(--ink); font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
-.thread .stage.current, .thread li.here > .stage { color: var(--ink); font-weight: 600; }
+.thread .stage.current, .thread li.here .stage { color: var(--ink); font-weight: 600; }
 .thread .stage.current .dot { background: var(--s2); color: var(--on-accent); }
 /* The side topics of a stage hang below it in a row: the first on a hook from the stage, the others beside it. */
-.thread .leaves { position: absolute; top: 25px; left: 10px; display: flex; gap: 10px; }
+.thread .leaves { display: flex; gap: 10px; margin: 3px 0 0 10px; }
 .thread .leaf { position: relative; padding-left: 8px; color: var(--muted); font-size: 12px; line-height: 16px; white-space: nowrap; }
 .thread .leaf + .leaf { padding-left: 0; }
 .thread .leaf + .leaf::before, .thread .leaf + .leaf::after { display: none; }
@@ -83,34 +89,30 @@ a:hover { text-decoration: underline; }
 .thread .leaf:hover { color: var(--ink); text-decoration: none; }
 .thread .leaf.current { color: var(--ink); font-weight: 600; }
 .thread .leaf .num { color: inherit; }
-@media (max-width: 1280px) {
-  .thread li:has(.leaf):not(:last-child), .thread li:has(.leaf + .leaf):not(:last-child) { min-width: 0; }
-  .thread .stage .name { display: none; }
-  .thread .stage.current .name, .thread li.here > .stage .name { display: inline; }
-  .thread .leaf { font-size: 0; }
-  .thread .leaf .num { font-size: 12px; }
-  .thread .leaf.current { font-size: 12px; }
-}
-/* Narrower than this, the name of the current stage no longer fits between its neighbors,
-   and the side topics of neighboring stages run into each other: only those of the stage
-   being read are shown. */
-@media (max-width: 920px) {
-  .thread .stage .name, .thread .stage.current .name, .thread li.here > .stage .name { display: none; }
-  .thread li:not(.here) .leaves { display: none; }
+.thread:not([data-fit="names"]) .stage .name { display: none; }
+.thread[data-fit="current"] .stage.current .name, .thread[data-fit="current"] li.here .stage .name { display: inline; }
+.thread:not([data-fit="names"]) .leaf { font-size: 0; }
+.thread:not([data-fit="names"]) .leaf .num { font-size: 12px; }
+.thread:not([data-fit="names"]):not([data-fit="bare"]) .leaf.current { font-size: 12px; }
+.thread[data-fit="numbers"] li:not(.here) .leaves, .thread[data-fit="bare"] li:not(.here) .leaves { display: none; }
+@media (max-width: 900px) {
+  .brand span, .repo, .theme-name, .tool.wide { display: none; }
+  .theme::before { margin-right: 0; }
 }
 @media (max-width: 700px) {
   :root { --top: 54px; }
   .top { gap: 10px; padding: 10px 12px 0; }
-  .brand span, .repo, .theme-name, .tool.wide { display: none; }
-  .theme::before { margin-right: 0; }
   .tool { padding: 2px 6px; }
-  .thread li:not(:last-child)::after { margin: 0 2px; min-width: 2px; }
+  .thread li:not(:last-child) .row::after { margin: 0 2px; min-width: 2px; }
   .thread .dot { width: 20px; height: 20px; font-size: 10px; }
-  .thread .stage .name, .thread .stage.current .name, .thread li.here > .stage .name { display: none; }
-  .thread .leaves { left: 9px; gap: 5px; }
-  .thread .leaf, .thread .leaf.current { padding-left: 5px; font-size: 0; }
+  .thread .leaves { margin-left: 9px; gap: 5px; }
+  .thread .leaf { padding-left: 5px; }
   .thread .leaf + .leaf { padding-left: 0; }
-  .thread .leaf .num { font-size: 10px; }
+  .thread:not([data-fit="names"]) .leaf .num, .thread:not([data-fit="names"]):not([data-fit="bare"]) .leaf.current { font-size: 10px; }
+}
+/* On a phone the code is reached from the start page and the notes, and the pipeline needs the room. */
+@media (max-width: 440px) {
+  .tool.code { display: none; }
 }
 
 /* ------------------------------------------------------------------ note */
@@ -338,7 +340,7 @@ select { padding: 5px 8px; border: 1px solid var(--axis); border-radius: 6px; ba
 .hero h1 { max-width: 22em; font-size: 34px; }
 .hero p { max-width: 46em; margin: 10px 0; color: var(--ink2); font-size: 17px; }
 .hero .byline { margin: 0 0 14px; font-size: 14px; }
-.hero-actions { margin-top: 18px !important; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px !important; }
 .map { margin: 32px 0 8px; }
 .map-labels, .map-row { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 0 12px; margin: 0; padding: 0; list-style: none; }
 .map-label { margin: 0 0 6px; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
