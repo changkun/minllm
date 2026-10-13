@@ -139,7 +139,9 @@ for iteration in range(1, args.iterations + 1):
         rewards = rewards * finished
     # 3. Compare within each prompt's group, and 4. take one policy-gradient step.
     advantages = rl.group_advantages(rewards, args.samples)
-    stats = rl.update(model, optimizer, prompts, replies, advantages, device, kl_coef=args.kl, reference=reference, chunk=64 if small else 4, hidden=hidden, masks=masks)
+    # Replies with calls run to over a thousand tokens: their gradients are taken two at a time.
+    chunk = 64 if small else 2 if with_tools else 4
+    stats = rl.update(model, optimizer, prompts, replies, advantages, device, kl_coef=args.kl, reference=reference, chunk=chunk, hidden=hidden, masks=masks)
     free_memory(device)
 
     groups = rewards.view(-1, args.samples)
