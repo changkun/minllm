@@ -32,9 +32,10 @@ out. Stage 3's run, 14.2M parameters on 98M tokens, cost 8.4e15 operations.
 `scaling.family` builds the model of stage 3 narrower and wider: widths
 from 64 to 512, with depth growing with width so that the shape stays about
 the same, heads of 64 dimensions, and an MLP 8/3 as wide as the stream.
-Width 384 with 8 blocks is stage 3's model.
+Width 384 with 8 blocks is stage 3's model. The heads are given as query
+heads and key/value heads.
 
-| Width | Blocks | Heads (query, key/value) | MLP | Parameters | Best learning rate |
+| Width | Blocks | Heads | MLP | Parameters | Best learning rate |
 |---|---|---|---|---|---|
 | 64 | 2 | 1, 1 | 160 | 0.36M | 4e-3 |
 | 128 | 3 | 2, 1 | 352 | 1.08M | 4e-3 |
