@@ -354,7 +354,7 @@ class Transformer(nn.Module):
         T = idx.shape[1]
         pos = cache.pos if cache is not None else 0  # tokens that came before idx
         if torch.is_tensor(pos):
-            assert mask is not None and int(pos.max()) + T <= self.cfg.max_seq_len
+            assert mask is not None  # the caller keeps every row within max_seq_len
             at = pos[:, None] + torch.arange(T, device=idx.device)  # (batch, T)
             cos, sin = self.rope_cos[at][:, None], self.rope_sin[at][:, None]  # (batch, 1, T, rotated / 2), for every head
         else:

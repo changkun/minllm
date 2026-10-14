@@ -18,6 +18,7 @@ so every row has its own position. See docs/04c-continuous-batching.md.
 from collections import deque
 
 import torch
+import torch.nn.functional as F
 
 from minllm.inference import KVCache, next_logits, sample
 
@@ -65,36 +66,60 @@ class SlotCache:
         return sum(t.numel() * t.element_size() for layer in self.layers for t in (layer.k, layer.v) if t is not None)
 
 
+def sample_rows(logits, temperatures, top_ps):
+    """
+    sample() of minllm/inference.py with a temperature and a top_p for every
+    row, given as lists: in a running batch, every request brings its own.
+    A temperature of 0 takes the likeliest token, a top_p of None keeps all.
+    """
+    greedy = logits.argmax(dim=-1)
+    if max(temperatures) == 0:
+        return greedy
+    t = torch.tensor(temperatures, device=logits.device, dtype=torch.float32)
+    probs = F.softmax(logits.float() / t.clamp(min=1e-5)[:, None], dim=-1)
+    if any(p is not None for p in top_ps):
+        p = torch.tensor([1.0 if p is None else p for p in top_ps], device=logits.device)
+        ranked, order = probs.sort(dim=-1, descending=True)
+        ranked = ranked.masked_fill(ranked.cumsum(dim=-1) - ranked >= p[:, None], 0.0)
+        probs = torch.zeros_like(probs).scatter(-1, order, ranked)
+    return torch.where(t == 0, greedy, torch.multinomial(probs, num_samples=1).squeeze(-1))
+
+
 class Batcher:
     """
     A running batch of `slots` rows. add() queues a request; every call to
     step() first moves waiting requests into free slots, then decodes one
-    token for every running request, and returns what came out.
+    token for every running request, and returns what came out. A request
+    ends at a stop token, at its own limit, or when its slot is full, and
+    is sampled at its own temperature and top_p.
     """
 
-    def __init__(self, model, slots, stop=(), temperature=0.0, top_k=None, top_p=None):
+    def __init__(self, model, slots, max_len=None, stop=(), temperature=0.0, top_p=None):
         self.model, self.slots = model, slots
-        self.sampling = dict(temperature=temperature, top_k=top_k, top_p=top_p)
+        self.defaults = {"temperature": temperature, "top_p": top_p}
         self.stop = set(stop)
         self.device = next(model.parameters()).device
-        self.cache = SlotCache(model.cfg.n_layers, slots, model.cfg.max_seq_len, self.device)
+        # Every slot is allocated for the longest sequence it may hold, prompt
+        # and reply: the model's whole context unless max_len says less.
+        self.cache = SlotCache(model.cfg.n_layers, slots, min(max_len or model.cfg.max_seq_len, model.cfg.max_seq_len), self.device)
         self.waiting = deque()
         # Per slot, kept on the CPU and sent to the GPU once per step: the
         # request in it (None when free), its length, and the token it reads next.
         self.running, self.lengths, self.next_ids = [None] * slots, [0] * slots, [0] * slots
         self.count = 0
 
-    def add(self, prompt, max_new_tokens):
-        """Queue a request: a list of token ids. Returns its id."""
+    def add(self, prompt, max_new_tokens, **sampling):
+        """Queue a request: a list of token ids, and its temperature and top_p if not the defaults. Returns its id."""
         self.count += 1
-        self.waiting.append({"id": self.count, "prompt": prompt, "left": max_new_tokens})
+        sampling = self.defaults | {k: v for k, v in sampling.items() if v is not None}
+        self.waiting.append({"id": self.count, "prompt": prompt, "left": max_new_tokens} | sampling)
         return self.count
 
     def busy(self):
         return bool(self.waiting) or any(r is not None for r in self.running)
 
     def emit(self, slot, token, out):
-        """Hand out a new token. A request ends at a stop token, at its limit, or when the context is full."""
+        """Hand out a new token, and free the slot if the request has ended."""
         request = self.running[slot]
         request["left"] -= 1
         stop = token in self.stop
@@ -129,7 +154,7 @@ class Batcher:
             for layer, single in zip(self.cache.layers, alone.layers):
                 layer.put(slot, single.k, single.v)
             self.running[slot], self.lengths[slot] = request, len(prompt)
-            self.emit(slot, sample(logits[:, -1], **self.sampling).item(), out)
+            self.emit(slot, sample(logits[:, -1], request["temperature"], top_p=request["top_p"]).item(), out)
 
         # Decode: one token for every slot at once. A row sees the keys of
         # its own sequence, up to and including the token it reads now.
@@ -140,7 +165,9 @@ class Batcher:
         self.cache.width = max(self.lengths) + 1
         mask = torch.arange(self.cache.width, device=self.device) <= self.cache.pos[:, None]
         idx = torch.tensor(self.next_ids, device=self.device)[:, None]
-        tokens = sample(next_logits(self.model, idx, self.cache, mask[:, None, None])[:, -1], **self.sampling).tolist()
+        logits = next_logits(self.model, idx, self.cache, mask[:, None, None])[:, -1]
+        rows = [r or {"temperature": 0.0, "top_p": None} for r in self.running]
+        tokens = sample_rows(logits, [r["temperature"] for r in rows], [r["top_p"] for r in rows]).tolist()
         for slot in active:
             self.lengths[slot] += 1
             self.emit(slot, tokens[slot], out)
@@ -149,7 +176,7 @@ class Batcher:
 
 def generate(model, prompts, max_new_tokens, slots, **sampling):
     """Every prompt's continuation, as generate() in minllm/inference.py gives it, through a running batch of `slots` rows."""
-    batcher = Batcher(model, slots, **sampling)
+    batcher = Batcher(model, slots, max(len(p) for p in prompts) + max_new_tokens, **sampling)
     ids = {batcher.add(p, max_new_tokens): i for i, p in enumerate(prompts)}
     out = [[] for _ in prompts]
     while batcher.busy():
