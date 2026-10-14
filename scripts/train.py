@@ -7,12 +7,13 @@ token, nudge the weights to make the right token more likely. Repeat.
     uv run scripts/train.py --steps 200 --dim 128 --n-layers 2 --out out/debug
     uv run scripts/train.py --n-experts 8 --mlp-dim 512 --out out/moe    # a mixture of experts
     uv run scripts/train.py --teacher out/wide --out out/distilled       # learn from a larger model
+    uv run scripts/train.py --kv-latent 128 --out out/mla-128            # latent attention
     uv run scripts/train.py --init out/base --seq-len 1024 --rope-scaling yarn:4 --steps 500 --batch-size 16 --lr 3e-4 --out out/ctx-yarn
                                                 # a trained model, on windows 4 times longer
 
 See docs/03-pretraining.md, docs/02a-moe.md for the mixture of experts,
-docs/03a-distillation.md for the teacher, and docs/02b-context.md for
-longer windows.
+docs/03a-distillation.md for the teacher, docs/02b-context.md for
+longer windows, and docs/02c-latent-attention.md for latent attention.
 """
 
 import argparse
@@ -40,6 +41,8 @@ parser.add_argument("--dim", type=int, default=Config.dim)
 parser.add_argument("--n-layers", type=int, default=Config.n_layers)
 parser.add_argument("--n-heads", type=int, default=Config.n_heads)
 parser.add_argument("--n-kv-heads", type=int, default=Config.n_kv_heads)
+parser.add_argument("--kv-latent", type=int, default=0, help="above 0, latent attention, whose cache keeps a latent of this width per token instead of keys and values")
+parser.add_argument("--rope-dim", type=int, default=Config.rope_dim, help="with --kv-latent: the rotary part of every query and key")
 parser.add_argument("--mlp-dim", type=int, default=Config.mlp_dim)
 parser.add_argument("--seq-len", type=int, default=256, help="tokens per training window")
 parser.add_argument("--init", default=None, help="start from the weights of a trained model in this directory, with a new optimizer and schedule")
@@ -100,6 +103,8 @@ else:
         n_layers=args.n_layers,
         n_heads=args.n_heads,
         n_kv_heads=args.n_kv_heads,
+        kv_latent=args.kv_latent,
+        rope_dim=args.rope_dim,
         mlp_dim=args.mlp_dim,
         n_experts=args.n_experts,
         n_active=args.n_active,
