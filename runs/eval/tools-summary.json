@@ -20,6 +20,34 @@
    "difference": -0.06595905989385899,
    "low": -0.09401061410159212,
    "high": -0.03866565579984837
+  },
+  "GRPO without the tool, against its start (stage 6)": {
+   "from": "gsm8k-sft-gsm8k-lora",
+   "to": "gsm8k-grpo-gsm8k",
+   "difference": 0.05913570887035633,
+   "low": 0.03184230477634572,
+   "high": 0.08491281273692192
+  },
+  "GRPO with the tool, against its start (6a)": {
+   "from": "gsm8k-tools-sft-gsm8k-tools-lora",
+   "to": "gsm8k-tools-grpo-gsm8k-tools",
+   "difference": 0.0075815011372251705,
+   "low": -0.016679302501895376,
+   "high": 0.03184230477634572
+  },
+  "GRPO with the tool, against GRPO without it (stage 9)": {
+   "from": "gsm8k-grpo-gsm8k",
+   "to": "gsm8k-tools-grpo-gsm8k-tools",
+   "difference": -0.043214556482183475,
+   "low": -0.07202426080363912,
+   "high": -0.015163002274450341
+  },
+  "after GRPO, calls failing, against calls run": {
+   "from": "gsm8k-tools-grpo-gsm8k-tools",
+   "to": "gsm8k-tools-grpo-gsm8k-tools-no-execute",
+   "difference": -0.2850644427596664,
+   "low": -0.3115996967399545,
+   "high": -0.2585291887793783
   }
  },
  "runs": {
@@ -49,6 +77,32 @@
    "results": 5387,
    "next_turn_begins_with_it": 18
   },
+  "gsm8k-tools-grpo-gsm8k-tools": {
+   "mean": 0.3821076573161486,
+   "error": 0.02623298091387097,
+   "n": 1319,
+   "with_a_call": 0.9727065959059894,
+   "calls_per_problem": 3.106899166034875,
+   "malformed": 0,
+   "written_calculations": 2250,
+   "wrong_calculations": 47,
+   "seconds": 1659.6368117332458,
+   "results": 4098,
+   "next_turn_begins_with_it": 4036
+  },
+  "gsm8k-tools-grpo-gsm8k-tools-no-execute": {
+   "mean": 0.09704321455648218,
+   "error": 0.015981385818127136,
+   "n": 1319,
+   "with_a_call": 0.9727065959059894,
+   "calls_per_problem": 3.7452615617892344,
+   "malformed": 0,
+   "written_calculations": 2008,
+   "wrong_calculations": 999,
+   "seconds": 1681.0313529968262,
+   "results": 4940,
+   "next_turn_begins_with_it": 3
+  },
   "gsm8k-tools-qwen": {
    "mean": 0.40181956027293403,
    "error": 0.026468541263488653,
@@ -59,6 +113,18 @@
    "written_calculations": 634,
    "wrong_calculations": 46,
    "seconds": 686.124027967453
+  }
+ },
+ "grpo": {
+  "stage 9": {
+   "gained": 200,
+   "lost": 122,
+   "gained_with_a_wrong_calculation_before": 28,
+   "wrong_calculation_before": 132
+  },
+  "with the tool": {
+   "gained": 133,
+   "lost": 123
   }
  }
 }
