@@ -1,6 +1,7 @@
 """
-What the scripts share: choosing a device, handing GPU memory back,
-downloading a file, and loading a checkpoint of the model trained here.
+What the scripts share: choosing a device, where results go, handing GPU
+memory back, downloading a file, and loading a checkpoint of the model
+trained here.
 """
 
 import os
@@ -9,6 +10,22 @@ import urllib.request
 import torch
 
 from minllm.model import Config, Transformer
+
+
+# runs/ holds the results that the notes quote. The scripts name their
+# results by the same paths, runs/eval/..., but write them to a folder of
+# their own, out/runs/ unless MINLLM_RUNS names another, so that a run of the
+# tutorial never overwrites the record. MINLLM_RUNS=runs writes the record.
+RESULTS = os.environ.get("MINLLM_RUNS", "out/runs")
+
+
+def result_path(path):
+    """A path under runs/, moved to the results folder, whose directory is made; any other path as it is."""
+    if path != "runs" and not path.startswith("runs/"):
+        return path
+    moved = os.path.join(RESULTS, path[len("runs/") :])
+    os.makedirs(os.path.dirname(moved) or ".", exist_ok=True)
+    return moved
 
 
 def pick_device():
@@ -53,7 +70,8 @@ def fetch(url, path, max_bytes=None):
         while block := response.read(1 << 20):
             f.write(block)
             done += len(block)
-            print(f"\r{path}: {done >> 20}/{total >> 20} MB", end="", flush=True)
+            shown = f"{done >> 20}/{total >> 20} MB" if total >= 1 << 20 else f"{done >> 10}/{total >> 10} KB"  # a small file in KB, not as 0 MB
+            print(f"\r{path}: {shown}", end="", flush=True)
     print()
     os.replace(tmp, path)
     return True

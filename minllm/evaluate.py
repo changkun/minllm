@@ -59,7 +59,7 @@ def paired_difference(a, b, resamples=2000, seed=0):
     examples happened to be drawn, so this interval is much tighter than
     comparing the two models' separate intervals.
     """
-    assert len(a) == len(b)
+    assert len(a) == len(b), f"the two runs scored {len(a)} and {len(b)} examples; compare runs of the same examples, with the same --n"
     rng = random.Random(seed)
     diffs = [y - x for x, y in zip(a, b)]
     n = len(diffs)
