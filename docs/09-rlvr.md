@@ -247,7 +247,9 @@ inference engine, usually vLLM, produces the rollouts, thousands at a time.
 The verifier is whatever the task needs: for mathematics a comparison of
 answers, for code a sandbox that runs tests, for agents an environment that
 reports whether the goal was reached. A trainer consumes the scored rollouts.
-verl, OpenRLHF and `trl`'s `GRPOTrainer` are frameworks for this loop.
+verl, OpenRLHF and `trl`'s `GRPOTrainer` are frameworks for this loop. The
+side topic [9b](09b-tool-rl.md) runs it with a tool in the rollouts: the
+calculator of 6a, called while the replies are sampled.
 
 Most of the work is in the verifier. Writing a check that cannot be satisfied
 by something other than the intended behavior is hard, and the experiment
