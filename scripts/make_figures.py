@@ -619,19 +619,21 @@ def tools_results():
     summary = load("runs/eval/tools-summary.json")
     rows = [
         ("0.5B as published", load("runs/eval/gsm8k-qwen.json"), None),
-        ("the same, told about the tool", load("runs/eval/gsm8k-tools-qwen.json"), summary["runs"]["gsm8k-tools-qwen"]["with_a_call"]),
+        ("the same, told about the tool", load("runs/eval/gsm8k-tools-qwen-system-markers.json"), summary["runs"]["gsm8k-tools-qwen-system-markers"]["with_a_call"]),
+        ("told, its markers spelled out", load("runs/eval/gsm8k-tools-qwen.json"), summary["runs"]["gsm8k-tools-qwen"]["with_a_call"]),
         ("fine-tuned on solutions (stage 6)", load("runs/eval/gsm8k-sft-gsm8k-lora.json"), None),
         ("fine-tuned on solutions with calls", load("runs/eval/gsm8k-tools-sft-gsm8k-tools-lora.json"), summary["runs"]["gsm8k-tools-sft-gsm8k-tools-lora"]["with_a_call"]),
         ("the same, every call fails", load("runs/eval/gsm8k-tools-sft-gsm8k-tools-lora-no-execute.json"), summary["runs"]["gsm8k-tools-sft-gsm8k-tools-lora-no-execute"]["with_a_call"]),
     ]
-    fig = Figure(720, 290, "What the calculator is worth", "GSM8K's 1,319 test problems, with 95% intervals, and the share of problems with a call.")
+    fig = Figure(720, 356, "What the calculator is worth", "GSM8K's 1,319 test problems, with 95% intervals, and the share of problems with a call.")
     left, top, width, peak = 250, 84, 300, 0.6
     scored_bars(fig, left, top, width, [(label, r["mean"], r["error"]) for label, r, _ in rows], peak, lambda v: f"{v:.1%}")
     fig.text(640, top - 10, "calls", fill="ink", weight=600, anchor="middle")
     for j, (_, _, called) in enumerate(rows):
         if called is not None:
             fig.text(640, top + j * 36 + 14, f"{called:.1%}", fill="ink2", anchor="middle")
-    fig.text(24, 274, "Both fine-tuned models trained on the same problems with LoRA, as in stage 6: one wrote the arithmetic, the other called for it.", size=11, fill="muted")
+    fig.text(24, 322, "Both fine-tuned models trained on the same problems with LoRA, as in stage 6: one wrote the arithmetic, the other called for it.", size=11, fill="muted")
+    fig.text(24, 338, "Told about the tool, its instructions' markers are single tokens, as Qwen's tokenizer writes them, or spelled out.", size=11, fill="muted")
     fig.save("tools-results")
 
 

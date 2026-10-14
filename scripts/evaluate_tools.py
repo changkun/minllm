@@ -5,6 +5,7 @@ running its calls and writing the results back, until it answers.
     uv run scripts/evaluate_tools.py --model qwen --max-new-tokens 512 # as published, told about the tool
     uv run scripts/evaluate_tools.py --model out/sft-gsm8k-tools-lora  # fine-tuned on solutions that call it
     uv run scripts/evaluate_tools.py --model out/sft-gsm8k-tools-lora --no-execute   # every call fails
+    uv run scripts/evaluate_tools.py --model qwen --max-new-tokens 512 --system-markers   # the tool instructions tokenized as Qwen's tokenizer does
 
 Writes runs/eval/gsm8k-tools-<model>.json, with every score, the calls of
 every problem, and some conversations in full. See docs/06a-tool-calling.md.
@@ -25,6 +26,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--model", required=True)
 parser.add_argument("--n", type=int, default=None)
 parser.add_argument("--no-execute", action="store_true", help="answer every call with an error instead of running it")
+parser.add_argument("--system-markers", action="store_true", help="write <tool_call> and </tool_call> in the tool instructions as the single tokens Qwen's tokenizer makes of them")
 parser.add_argument("--max-new-tokens", type=int, default=320, help="for one turn; the calls make a reply several turns")
 parser.add_argument("--batch-size", type=int, default=32)
 parser.add_argument("--out", default=None)
@@ -37,7 +39,7 @@ conversations = [p["messages"][:2] for p in problems]  # the system's turn with 
 
 start = time.time()
 progress = lambda done, total: print(f"\r{done}/{total} answered", end="", flush=True)
-finished, counts = tools.run(model, tok, conversations, args.max_new_tokens, batch_size=args.batch_size, execute=not args.no_execute, progress=progress)
+finished, counts = tools.run(model, tok, conversations, args.max_new_tokens, batch_size=args.batch_size, execute=not args.no_execute, progress=progress, system_markers=args.system_markers)
 seconds = time.time() - start
 
 answers = [tools.answer_text(c, 2) for c in finished]
@@ -48,10 +50,11 @@ written = [tools.written_calculations(a) for a in answers]
 n = len(scores)
 print(f"\r{args.model} on GSM8K with a calculator{'' if not args.no_execute else ' that fails'}: {mean:.1%} ± {error:.1%}, {sum(c > 0 for c in calls) / n:.1%} of problems with a call, {sum(calls) / n:.2f} calls each, {sum(c['bad_calls'] for c in counts)} malformed, {seconds:.0f}s")
 
-name = os.path.basename(args.model.rstrip("/")) + ("-no-execute" if args.no_execute else "")
+name = os.path.basename(args.model.rstrip("/")) + ("-no-execute" if args.no_execute else "") + ("-system-markers" if args.system_markers else "")
 out = args.out or f"runs/eval/gsm8k-tools-{name}.json"
 os.makedirs(os.path.dirname(out), exist_ok=True)
-result = {"model": args.model, "task": "gsm8k-tools", "execute": not args.no_execute, "max_new_tokens": args.max_new_tokens, "n": n, "mean": mean, "error": error, "seconds": seconds}
+system_tokens = len(tools.encode(tok, conversations[0][:1], add_generation_prompt=False, system_markers=args.system_markers)[0])  # the system's turn, the same in every prompt
+result = {"model": args.model, "task": "gsm8k-tools", "execute": not args.no_execute, "system_markers": args.system_markers, "system_tokens": system_tokens, "max_new_tokens": args.max_new_tokens, "n": n, "mean": mean, "error": error, "seconds": seconds}
 result |= {"scores": scores, "calls": calls, "bad_calls": [c["bad_calls"] for c in counts], "turns": [c["turns"] for c in counts]}
 result |= {"written": [[sum(right for *_, right in w), len(w)] for w in written]}  # calculations written out in the text, right and all
 result |= {"samples": [{"conversation": c[2:], "number": p["number"], "score": s} for c, p, s in list(zip(finished, problems, scores))[:: max(1, n // 25)]]}
