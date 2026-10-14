@@ -21,6 +21,20 @@
    "low": -0.09401061410159212,
    "high": -0.03866565579984837
   },
+  "published, told about the tool with the markers as Qwen's tokenizer writes them, against not": {
+   "from": "gsm8k-qwen",
+   "to": "gsm8k-tools-qwen-system-markers",
+   "difference": -0.05307050796057619,
+   "low": -0.08112206216830932,
+   "high": -0.026535253980288095
+  },
+  "published, the markers as Qwen's tokenizer writes them, against spelled out": {
+   "from": "gsm8k-tools-qwen",
+   "to": "gsm8k-tools-qwen-system-markers",
+   "difference": 0.01288855193328279,
+   "low": -0.009855951478392721,
+   "high": 0.03639120545868082
+  },
   "GRPO without the tool, against its start (stage 6)": {
    "from": "gsm8k-sft-gsm8k-lora",
    "to": "gsm8k-grpo-gsm8k",
@@ -113,6 +127,18 @@
    "written_calculations": 634,
    "wrong_calculations": 46,
    "seconds": 686.124027967453
+  },
+  "gsm8k-tools-qwen-system-markers": {
+   "mean": 0.41470811220621684,
+   "error": 0.026598422730917066,
+   "n": 1319,
+   "with_a_call": 0.05913570887035633,
+   "calls_per_problem": 0.19711902956785443,
+   "malformed": 16,
+   "written_calculations": 574,
+   "wrong_calculations": 32,
+   "seconds": 786.155445098877,
+   "system_tokens": 186
   }
  },
  "grpo": {
@@ -126,5 +152,10 @@
    "gained": 133,
    "lost": 123
   }
+ },
+ "system_tokens": {
+  "plain": 16,
+  "with_the_tool": 190,
+  "with_the_tool_markers_as_tokens": 181
  }
 }
