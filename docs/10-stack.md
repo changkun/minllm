@@ -136,6 +136,7 @@ several requests share.
 | 2 Model | `model.py` | the model classes of `transformers` |
 | 2a Mixture of experts | `MoE` in `model.py` | the Mixtral, Qwen3-MoE and DeepSeek classes of `transformers`; grouped kernels for the experts in training frameworks |
 | 2b Longer context | `rope_table` in `model.py`, `context.py` | continued pretraining on long text, with a larger theta or YaRN; FlashAttention kernels; needle-in-a-haystack tests |
+| 2c Latent attention | `LatentAttention` in `model.py` | the DeepSeek classes of `transformers`; FlashMLA's kernels for decoding, in vLLM and SGLang |
 | 3 Pretraining | `scripts/train.py` | custom loops over many GPUs, with `accelerate` or plain PyTorch; `datasets` for the data |
 | 3a Distillation | `distill.py`, `train.py --teacher` | a distillation loss in a custom loop; more often, fine-tuning on text that a larger model wrote |
 | 3b Data preparation | `prepare.py`, `scripts/prepare_data.py` | trafilatura for the text, fastText for the language, quality classifiers; filters tested by training, as for FineWeb and DataComp-LM |

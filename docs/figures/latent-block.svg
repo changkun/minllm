@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="336" viewBox="0 0 720 336" role="img"><title>Latent attention: what is cached</title><desc>One token in one layer, with a latent of 128. Only the shaded vectors are kept for later tokens.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="335" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">Latent attention: what is cached</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">One token in one layer, with a latent of 128. Only the shaded vectors are kept for later tokens.</text>
+<rect class="f-surface s-axis" x="24" y="150" width="96" height="56" rx="6" stroke-width="1"/>
+<text class="f-ink" x="72" y="175" font-size="12" text-anchor="middle" font-weight="600">Token</text>
+<text class="f-ink2" x="72" y="191" font-size="11" text-anchor="middle">its vector x</text>
+<path class="s-muted " d="M120 178 L146 178" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M139.7 175 L146 178 L139.7 181" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="148" y="150" width="112" height="56" rx="6" stroke-width="1"/>
+<text class="f-ink" x="204" y="175" font-size="12" text-anchor="middle" font-weight="600">Down</text>
+<text class="f-ink2" x="204" y="191" font-size="11" text-anchor="middle">x to 128 + 32</text>
+<rect class=" s-s2" x="282" y="84" width="154" height="190" rx="8" fill="none" stroke-width="1"/>
+<text class="f-s2" x="359" y="100" font-size="11" text-anchor="middle">the cache, per token</text>
+<rect class="f-s2 s-s2" x="296" y="112" width="126" height="56" rx="6" stroke-width="1" fill-opacity="0.15"/>
+<text class="f-ink" x="359" y="137" font-size="12" text-anchor="middle" font-weight="600">Latent c</text>
+<text class="f-ink2" x="359" y="153" font-size="11" text-anchor="middle">128, normalized</text>
+<rect class="f-s2 s-s2" x="296" y="200" width="126" height="56" rx="6" stroke-width="1" fill-opacity="0.15"/>
+<text class="f-ink" x="359" y="225" font-size="12" text-anchor="middle" font-weight="600">Rotary key</text>
+<text class="f-ink2" x="359" y="241" font-size="11" text-anchor="middle">32, rotated</text>
+<path class="s-muted " d="M260 170 L276 170 L276 140 L294 140" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M287.7 137 L294 140 L287.7 143" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M260 186 L276 186 L276 228 L294 228" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M287.7 225 L294 228 L287.7 231" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M422 140 L456 140" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M449.7 137 L456 140 L449.7 143" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="458" y="112" width="112" height="56" rx="6" stroke-width="1"/>
+<text class="f-ink" x="514" y="137" font-size="12" text-anchor="middle" font-weight="600">Up, per head</text>
+<text class="f-ink2" x="514" y="153" font-size="11" text-anchor="middle">W_k and W_v</text>
+<path class="s-muted " d="M570 140 L596 140" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M589.7 137 L596 140 L589.7 143" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="598" y="112" width="98" height="56" rx="6" stroke-width="1"/>
+<text class="f-ink" x="647" y="137" font-size="12" text-anchor="middle" font-weight="600">6 keys</text>
+<text class="f-ink2" x="647" y="153" font-size="11" text-anchor="middle">6 values, of 64</text>
+<path class="s-muted " d="M422 228 L596 228" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<path class="s-muted " d="M589.7 225 L596 228 L589.7 231" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
+<rect class="f-surface s-axis" x="598" y="200" width="98" height="56" rx="6" stroke-width="1"/>
+<text class="f-ink" x="647" y="225" font-size="12" text-anchor="middle" font-weight="600">1 rotary key</text>
+<text class="f-ink2" x="647" y="241" font-size="11" text-anchor="middle">for all 6 heads</text>
+<text class="f-muted" x="24" y="298" font-size="11" text-anchor="start">Per token and layer the cache holds 160 numbers. Stage 2&#x27;s grouped-query attention holds 2 keys and 2 values of 64: 256.</text>
+<text class="f-muted" x="24" y="314" font-size="11" text-anchor="start">Decoding never projects the cache up: the query is projected down into the latent instead, and W_v applied after the average.</text>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="556" viewBox="0 0 720 556" role="img"><title>What each kind of attention costs in generation</title><desc>Tokens per second, 255 new tokens each, with stage 4&#x27;s sampler on an M5 Pro. Each section has its own scale.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="555" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">What each kind of attention costs in generation</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Tokens per second, 255 new tokens each, with stage 4&#x27;s sampler on an M5 Pro. Each section has its own scale.</text>
+<circle class="f-s1 s-surface" cx="32" cy="72" r="4" stroke-width="2"/>
+<text class="f-ink2" x="46" y="76" font-size="12" text-anchor="start">key/value heads</text>
+<circle class="f-s2 s-surface" cx="172.8" cy="72" r="4" stroke-width="2"/>
+<text class="f-ink2" x="186.8" y="76" font-size="12" text-anchor="start">latent, decoded against the latent</text>
+<circle class="f-muted s-surface" cx="441.3" cy="72" r="4" stroke-width="2"/>
+<text class="f-ink2" x="455.3" y="76" font-size="12" text-anchor="start">latent, projected up at every step</text>
+<text class="f-ink" x="24" y="106" font-size="12" text-anchor="start" font-weight="600">One sequence</text>
+<line class="s-axis" x1="290" y1="114" x2="290" y2="294" stroke-width="1" stroke-linecap="round"/>
+<text class="f-ink" x="280" y="131" font-size="12" text-anchor="end">Multi-head, 6 key/value heads</text>
+<path class="f-s1" d="M290 118 H577.3 a4 4 0 0 1 4 4 V130 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="589.3" y="131" font-size="12" text-anchor="start">506</text>
+<text class="f-ink" x="280" y="157" font-size="12" text-anchor="end">Grouped-query, 2 key/value heads</text>
+<path class="f-s1" d="M290 144 H579.4 a4 4 0 0 1 4 4 V156 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="591.4" y="157" font-size="12" text-anchor="start">509</text>
+<text class="f-ink" x="280" y="183" font-size="12" text-anchor="end">Multi-query, 1 key/value head</text>
+<path class="f-s1" d="M290 170 H586 a4 4 0 0 1 4 4 V182 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="598" y="183" font-size="12" text-anchor="start">521</text>
+<text class="f-ink" x="280" y="209" font-size="12" text-anchor="end">Latent, 128 + 32</text>
+<path class="f-s2" d="M290 196 H389 a4 4 0 0 1 4 4 V208 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="401" y="209" font-size="12" text-anchor="start">179</text>
+<text class="f-ink" x="280" y="235" font-size="12" text-anchor="end">Latent, 64 + 32</text>
+<path class="f-s2" d="M290 222 H391.3 a4 4 0 0 1 4 4 V234 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="403.3" y="235" font-size="12" text-anchor="start">183</text>
+<text class="f-ink" x="280" y="261" font-size="12" text-anchor="end">Latent, 32 + 16</text>
+<path class="f-s2" d="M290 248 H393.9 a4 4 0 0 1 4 4 V260 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="405.9" y="261" font-size="12" text-anchor="start">187</text>
+<text class="f-ink" x="280" y="287" font-size="12" text-anchor="end">Latent, 128 + 32, projected up</text>
+<path class="f-muted" d="M290 274 H535.3 a4 4 0 0 1 4 4 V286 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="547.3" y="287" font-size="12" text-anchor="start">433</text>
+<text class="f-ink" x="24" y="336" font-size="12" text-anchor="start" font-weight="600">1,024 sequences at once</text>
+<line class="s-axis" x1="290" y1="344" x2="290" y2="524" stroke-width="1" stroke-linecap="round"/>
+<text class="f-ink" x="280" y="361" font-size="12" text-anchor="end">Multi-head, 6 key/value heads</text>
+<path class="f-s1" d="M290 348 H384.5 a4 4 0 0 1 4 4 V360 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="396.5" y="361" font-size="12" text-anchor="start">22K</text>
+<text class="f-ink" x="280" y="387" font-size="12" text-anchor="end">Grouped-query, 2 key/value heads</text>
+<path class="f-s1" d="M290 374 H403.6 a4 4 0 0 1 4 4 V386 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="415.6" y="387" font-size="12" text-anchor="start">27K</text>
+<text class="f-ink" x="280" y="413" font-size="12" text-anchor="end">Multi-query, 1 key/value head</text>
+<path class="f-s1" d="M290 400 H409.1 a4 4 0 0 1 4 4 V412 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="421.1" y="413" font-size="12" text-anchor="start">28K</text>
+<text class="f-ink" x="280" y="439" font-size="12" text-anchor="end">Latent, 128 + 32</text>
+<path class="f-s2" d="M290 426 H478.1 a4 4 0 0 1 4 4 V438 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="490.1" y="439" font-size="12" text-anchor="start">44K</text>
+<text class="f-ink" x="280" y="465" font-size="12" text-anchor="end">Latent, 64 + 32</text>
+<path class="f-s2" d="M290 452 H532.2 a4 4 0 0 1 4 4 V464 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="544.2" y="465" font-size="12" text-anchor="start">56K</text>
+<text class="f-ink" x="280" y="491" font-size="12" text-anchor="end">Latent, 32 + 16</text>
+<path class="f-s2" d="M290 478 H586 a4 4 0 0 1 4 4 V490 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="598" y="491" font-size="12" text-anchor="start">68K</text>
+<text class="f-ink" x="280" y="517" font-size="12" text-anchor="end">Latent, 128 + 32, projected up</text>
+<path class="f-muted" d="M290 504 H342.1 a4 4 0 0 1 4 4 V516 a4 4 0 0 1 -4 4 H290 Z"/>
+<text class="f-ink" x="354.1" y="517" font-size="12" text-anchor="start">13K</text>
+</svg>

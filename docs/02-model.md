@@ -204,12 +204,12 @@ model could not memorize them.
 
 Hugging Face `transformers` holds the reference implementation of every
 published architecture, and its model files are a few hundred lines of the
-same operations as here, plus the caching and configuration options this file
-leaves out. Inference engines (vLLM, llama.cpp, MLX) each reimplement the
-forward pass for speed. The differences between most of today's open models
-are numbers in a config file and small changes to the block, such as Qwen3's
-normalized queries and keys. Larger changes, such as the latent attention of
-DeepSeek's models, are rarer.
+same operations as here, plus the caching and configuration options this
+file leaves out. Inference engines (vLLM, llama.cpp, MLX) each reimplement
+the forward pass for speed. The differences between most of today's open
+models are numbers in a config file and small changes to the block, such as
+Qwen3's normalized queries and keys. Larger changes, such as the latent
+attention of DeepSeek's models ([2c](02c-latent-attention.md)), are rarer.
 
 ## References
 
