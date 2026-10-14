@@ -1480,6 +1480,88 @@ def moe_routing():
     fig.save("moe-routing")
 
 
+# ---------------------------------------------------------- 2c latent attention
+
+ATTENTION = [  # (log, label, the model in the benchmark, is it latent attention, where its label goes: dx, dy, anchor)
+    ("runs/attention/mha.jsonl", "6 key/value heads", "out/mha", False, (-10, 24, "end")),
+    ("runs/base/log.jsonl", "2, stage 2's", "out/base", False, (8, -10, "start")),
+    ("runs/attention/mqa.jsonl", "1 key/value head", "out/mqa", False, (-10, -10, "end")),
+    ("runs/attention/mla-128.jsonl", "latent 128 + 32", "out/mla-128", True, (-20, 22, "middle")),
+    ("runs/attention/mla-64.jsonl", "latent 64 + 32", "out/mla-64", True, (8, -10, "start")),
+    ("runs/attention/mla-32.jsonl", "latent 32 + 16", "out/mla-32", True, (8, -10, "start")),
+]
+
+
+def latent_block():
+    fig = Figure(720, 336, "Latent attention: what is cached", "One token in one layer, with a latent of 128. Only the shaded vectors are kept for later tokens.")
+    fig.box(24, 150, 96, 56, "Token", "its vector x")
+    fig.arrow([(120, 178), (146, 178)])
+    fig.box(148, 150, 112, 56, "Down", "x to 128 + 32")
+    fig.rect(282, 84, 154, 190, stroke="s2", rx=8)
+    fig.text(359, 100, "the cache, per token", size=11, anchor="middle", fill="s2")
+    fig.box(296, 112, 126, 56, "Latent c", "128, normalized", fill="s2", opacity=0.15, stroke="s2")
+    fig.box(296, 200, 126, 56, "Rotary key", "32, rotated", fill="s2", opacity=0.15, stroke="s2")
+    fig.arrow([(260, 170), (276, 170), (276, 140), (294, 140)])
+    fig.arrow([(260, 186), (276, 186), (276, 228), (294, 228)])
+    fig.arrow([(422, 140), (456, 140)])
+    fig.box(458, 112, 112, 56, "Up, per head", "W_k and W_v")
+    fig.arrow([(570, 140), (596, 140)])
+    fig.box(598, 112, 98, 56, "6 keys", "6 values, of 64")
+    fig.arrow([(422, 228), (596, 228)])
+    fig.box(598, 200, 98, 56, "1 rotary key", "for all 6 heads")
+    fig.text(24, 298, "Per token and layer the cache holds 160 numbers. Stage 2's grouped-query attention holds 2 keys and 2 values of 64: 256.", size=11, fill="muted")
+    fig.text(24, 314, "Decoding never projects the cache up: the query is projected down into the latent instead, and W_v applied after the average.", size=11, fill="muted")
+    fig.save("latent-block")
+
+
+def last_val_loss(path):
+    return [r["val_loss"] for r in jsonl(path) if "val_loss" in r][-1]
+
+
+def attention_loss():
+    bench = {r["model"]: r for r in load("runs/bench/attention-mps.json")["models"] if r["absorb"]}
+    layers = 8
+    numbers = lambda model: bench[model]["cache_bytes_per_token"] / 4 / layers  # 32-bit floats, per token and layer
+    fig = Figure(720, 330, "Validation loss against the cache", "The 14M model of stage 3, trained for 6,000 steps with each kind of attention. The cache is counted per token and layer.")
+    fig.legend(64, 78, [("s1", "key/value heads", "dot"), ("s2", "latent attention", "dot")])
+    points = [(numbers(model), last_val_loss(path), label, latent, place) for path, label, model, latent, place in ATTENTION]
+    seed = last_val_loss("runs/attention/base-seed1.jsonl")
+    losses = [p[1] for p in points] + [seed]
+    lo, hi = math.floor(min(losses) * 100 - 1) / 100, math.ceil(max(losses) * 100 + 1) / 100
+    ax = Axes(fig, 72, 110, 560, 160, (30, 1000), (lo, hi), xlog=True)
+    ax.yticks(nice_ticks(lo, hi, 4), lambda t: f"{t:.2f}")
+    ax.xticks([32, 64, 128, 256, 512], str, "numbers cached per token and layer, log scale")
+    base = numbers("out/base")
+    fig.line(ax.x(base), ax.y(min(seed, points[1][1])), ax.x(base), ax.y(max(seed, points[1][1])), stroke="s1", width=2)
+    ax.label(base, seed, f"another seed, {seed:.3f}", dx=10, dy=12, fill="muted")
+    for x, y, label, latent, (dx, dy, anchor) in points:
+        ax.dots([x], [y], "s2" if latent else "s1", r=5)
+        ax.label(x, y, f"{label}, {y:.3f}", dx=dx, dy=dy, anchor=anchor, fill="ink")
+    fig.save("attention-loss")
+
+
+def attention_speed():
+    bench = load("runs/bench/attention-mps.json")
+    rows = [(r["name"], r) for r in bench["models"]]
+    color = lambda r: "muted" if not r["absorb"] else "s2" if "mla" in r["model"] else "s1"
+    sections = [("One sequence", "1"), ("1,024 sequences at once", "1024")]
+    row, left, width = 26, 290, 300
+    fig = Figure(720, 96 + sum(48 + row * len(rows) for _ in sections), "What each kind of attention costs in generation", f"Tokens per second, {bench['new_tokens']} new tokens each, with stage 4's sampler on an M5 Pro. Each section has its own scale.")
+    fig.legend(24, 76, [("s1", "key/value heads", "dot"), ("s2", "latent, decoded against the latent", "dot"), ("muted", "latent, projected up at every step", "dot")])
+    top = 118
+    for title, batch in sections:
+        fig.text(24, top - 12, title, fill="ink", weight=600)
+        fig.line(left, top - 4, left, top + row * len(rows) - 6, stroke="axis")
+        peak = max(r["tokens_per_second"][batch] for _, r in rows)
+        for i, (name, r) in enumerate(rows):
+            y, value = top + i * row, r["tokens_per_second"][batch]
+            fig.text(left - 10, y + 13, name.replace(", projected up at every step", ", projected up"), anchor="end", fill="ink")
+            bar(fig, left, y, width * value / peak, 16, color(r))
+            fig.text(left + max(width * value / peak, 5) + 8, y + 13, f"{value:.0f}" if value < 1000 else f"{value / 1000:.1f}K" if value < 10000 else f"{value / 1000:.0f}K", fill="ink")
+        top += 48 + row * len(rows)
+    fig.save("attention-speed")
+
+
 # ------------------------------------------------------- 3b data preparation
 
 
@@ -2178,7 +2260,11 @@ if os.path.exists("runs/reasoning/summary.json"):
 if os.path.exists("runs/scaling/summary.json"):
     scaling_valleys()
     scaling_prediction()
+latent_block()
+if os.path.exists("runs/bench/attention-mps.json"):
+    attention_loss()
+    attention_speed()
 if os.path.exists("runs/eval/gsm8k-dpo-gsm8k-nll.json"):
     dpo_curves()
     dpo_test()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "3a", "3b", "3c", "4a", "4b", "6a", "7a", "7b", "8a", "8b", "9a", "9b", "9c", "10a"})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "2c", "3a", "3b", "3c", "4a", "4b", "6a", "7a", "7b", "8a", "8b", "9a", "9b", "9c", "10a"})
