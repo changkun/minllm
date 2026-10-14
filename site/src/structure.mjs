@@ -13,7 +13,7 @@ export const stages = [
   { n: "6", slug: "06-finetuning", short: "Fine-tuning", leaves: [{ n: "6a", slug: "06a-tool-calling", short: "Tool calling" }] },
   { n: "7", slug: "07-evaluation", short: "Evaluation", leaves: [{ n: "7a", slug: "07a-multiple-choice", short: "Multiple choice" }, { n: "7b", slug: "07b-judge", short: "Judge" }] },
   { n: "8", slug: "08-rlhf", short: "RLHF", leaves: [{ n: "8a", slug: "08a-safety", short: "Safety" }] },
-  { n: "9", slug: "09-rlvr", short: "RLVR", leaves: [{ n: "9a", slug: "09a-self-training", short: "Self-training" }] },
+  { n: "9", slug: "09-rlvr", short: "RLVR", leaves: [{ n: "9a", slug: "09a-self-training", short: "Self-training" }, { n: "9b", slug: "09b-tool-rl", short: "Tool RL" }] },
   { n: "10", slug: "10-stack", short: "Export", leaves: [{ n: "10a", slug: "10a-quantization", short: "Quantization" }] },
 ];
 
