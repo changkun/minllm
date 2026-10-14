@@ -75,10 +75,13 @@
 <text class="f-ink" x="386" y="293" font-size="12" text-anchor="start" font-weight="600">RLHF</text>
 <path class="s-muted " d="M348 288 L360 288" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
 <path class="s-muted " d="M353.7 285 L360 288 L353.7 291" fill="none" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>
-<line class="s-axis" x1="376" y1="308" x2="376" y2="321" stroke-width="1.5" stroke-linecap="round"/>
+<line class="s-axis" x1="376" y1="308" x2="376" y2="342" stroke-width="1.5" stroke-linecap="round"/>
 <line class="s-axis" x1="376" y1="321" x2="384" y2="321" stroke-width="1.5" stroke-linecap="round"/>
 <text class="f-muted" x="388" y="325" font-size="11" text-anchor="start">8a</text>
 <text class="f-ink" x="404.3" y="325" font-size="11" text-anchor="start">Safety</text>
+<line class="s-axis" x1="376" y1="342" x2="384" y2="342" stroke-width="1.5" stroke-linecap="round"/>
+<text class="f-muted" x="388" y="346" font-size="11" text-anchor="start">8b</text>
+<text class="f-ink" x="404.3" y="346" font-size="11" text-anchor="start">DPO</text>
 <rect class="f-s1 s-s1" x="476" y="268" width="98" height="40" rx="6" stroke-width="1" fill-opacity="0.12"/>
 <text class="f-muted" x="488" y="293" font-size="11" text-anchor="start">9</text>
 <text class="f-ink" x="500" y="293" font-size="12" text-anchor="start" font-weight="600">RLVR</text>

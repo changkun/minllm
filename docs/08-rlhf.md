@@ -344,7 +344,9 @@ data and replies, and as the reward of a round of reinforcement learning
 after DPO: Qwen2.5's chat models, the family of stage 5's model, were
 post-trained that way (Qwen Team, 2024). The side topic
 [8a](08a-safety.md) measures one thing this post-training put into stage
-5's model, its refusals, and what fine-tuning does to them.
+5's model, its refusals, and what fine-tuning does to them. The side topic
+[8b](08b-dpo.md) runs DPO on the 0.5B model, with a program comparing its
+replies to math problems, beside the reinforcement learning of stage 9.
 
 Where a program can check the answer, none of this is needed. That is the
 next stage.

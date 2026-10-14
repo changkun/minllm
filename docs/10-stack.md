@@ -151,6 +151,7 @@ several requests share.
 | 7b Evaluation by a judge | `judge.py`, `scripts/judge.py` | a large model as the judge, as in MT-Bench, AlpacaEval and Arena-Hard |
 | 8 RLHF | `reward.py`, `scripts/ppo.py`, `scripts/dpo.py` | `trl` (`DPOTrainer`, reward modeling), OpenRLHF |
 | 8a Safety | `safety.py`, `scripts/evaluate_safety.py`, `scripts/make_refusals.py` | refusals in the fine-tuning and preference data; XSTest for refusing too much |
+| 8b DPO on math problems | `dpo.py`, `scripts/make_preferences.py --task gsm8k` | `trl`'s `DPOTrainer` on a model's own replies checked by a program, as in Qwen2.5's offline stage, with online reinforcement learning after it |
 | 9 RLVR | `rl.py`, `scripts/grpo.py` | verl, OpenRLHF, `trl`'s `GRPOTrainer` |
 | 9a Self-training | `selftrain.py`, `scripts/self_train.py` | no library of its own: an inference engine for the samples, a filter, and the fine-tuning of stage 6 |
 | 9b Reinforcement learning with a tool | `rollout` in `tools.py`, `scripts/grpo.py --task gsm8k-tools` | tools run in sandboxes during the rollouts, their output masked out of the loss (Search-R1, ReTool) |
