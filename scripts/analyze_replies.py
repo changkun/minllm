@@ -10,12 +10,17 @@ See docs/07-evaluation.md and docs/09-rlvr.md.
 """
 
 import json
+import os
 import statistics
+from minllm.common import result_path
 
 MODELS = {"0.5B as published": "gsm8k-qwen", "fine-tuned, LoRA": "gsm8k-sft-gsm8k-lora", "after GRPO": "gsm8k-grpo-gsm8k"}
 
 summary = {}
 for label, name in MODELS.items():
+    if not os.path.exists(f"out/eval/{name}.jsonl"):
+        print(f"not run yet, left out: {name}")  # stage 9's model, before stage 9
+        continue
     with open(f"out/eval/{name}.jsonl", encoding="utf-8") as f:
         replies = [json.loads(line)["reply"] for line in f]
     summary[name] = {
@@ -25,6 +30,6 @@ for label, name in MODELS.items():
         "with_answer_line": sum("####" in r for r in replies) / len(replies),
     }
     print(name, summary[name])
-with open("runs/eval/replies-summary.json", "w") as f:
+with open(result_path("runs/eval/replies-summary.json"), "w") as f:
     json.dump(summary, f, indent=1)
-print("wrote runs/eval/replies-summary.json")
+print("wrote", result_path("runs/eval/replies-summary.json"))

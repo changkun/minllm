@@ -18,7 +18,7 @@ import torch
 import torch.nn.functional as F
 
 from minllm import chat, checkpoint, quantize, tasks
-from minllm.common import free_memory, pick_device
+from minllm.common import free_memory, pick_device, result_path
 from minllm.data import get_batch, load_tokens
 from minllm.pretrained import SYSTEM_PROMPT
 
@@ -100,10 +100,10 @@ if args.sweep:
     parts = {"blocks": measure(4, 64, embed_bits=0), "embedding": measure(0, 64, embed_bits=4)}
     for part, loss in parts.items():
         print(f"4 bits in groups of 64, only the {part:9s} | loss {loss:.4f} ({loss - before:+.4f})")
-    os.makedirs("runs/quant", exist_ok=True)
-    with open(f"runs/quant/sweep-{name}.json", "w") as f:
+    os.makedirs(result_path("runs/quant"), exist_ok=True)
+    with open(result_path(f"runs/quant/sweep-{name}.json"), "w") as f:
         json.dump({"model": args.model, "parameters": parameters, "loss": before, "settings": rows, "parts_at_4_bits": parts}, f, indent=1)
-    print(f"wrote runs/quant/sweep-{name}.json")
+    print("wrote", result_path(f"runs/quant/sweep-{name}.json"))
     raise SystemExit
 
 out = args.out or f"out/{name}-q{args.bits}"

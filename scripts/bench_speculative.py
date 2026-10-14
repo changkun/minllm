@@ -24,7 +24,7 @@ import time
 import torch
 
 from minllm import chat, checkpoint, inference, pretrained, speculative, tasks
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 from minllm.data import EOT
 
 parser = argparse.ArgumentParser()
@@ -124,7 +124,7 @@ for r in results:
 for r in results:
     r["outputs"] = None if r["temperature"] else r["outputs"]
 name = os.path.basename(args.target.rstrip("/"))
-out = args.out or f"runs/bench/speculative-{name}-{pick_device()}.json"
+out = result_path(args.out or f"runs/bench/speculative-{name}-{pick_device()}.json")
 with open(out, "w") as f:
     json.dump({"target": args.target, "draft": args.draft, "n": args.n, "max_new_tokens": args.max_new_tokens, "device": pick_device(), "dtype": str(dtype(pick_device())).removeprefix("torch."), "cases": results}, f, indent=1)
 print(f"wrote {out}")

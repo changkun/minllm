@@ -12,7 +12,7 @@ import json
 
 import torch
 
-from minllm.common import load_checkpoint
+from minllm.common import load_checkpoint, result_path
 from minllm.data import EOT
 from minllm.model import apply_rope
 from minllm.tokenizer import Tokenizer
@@ -24,6 +24,7 @@ parser.add_argument("--text", default="Once upon a time, there was a little girl
 parser.add_argument("--heads", default="1.2,5.5", help="layer.head pairs, counted from zero")
 parser.add_argument("--out", default="runs/base/attention.json")
 args = parser.parse_args()
+args.out = result_path(args.out)  # a path under runs/ goes to the results folder
 
 tok = Tokenizer.load(args.tokenizer)
 model, _ = load_checkpoint(args.ckpt, "cpu")

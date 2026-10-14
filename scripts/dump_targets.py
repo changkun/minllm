@@ -14,7 +14,7 @@ import os
 import torch
 import torch.nn.functional as F
 
-from minllm.common import load_checkpoint, pick_device
+from minllm.common import load_checkpoint, pick_device, result_path
 from minllm.data import EOT, get_batch, load_tokens
 from minllm.tokenizer import Tokenizer
 
@@ -26,6 +26,7 @@ parser.add_argument("--after", default="little,named,play with her", help="show 
 parser.add_argument("--top", type=int, default=6)
 parser.add_argument("--out", default="runs/distill/targets.json")
 args = parser.parse_args()
+args.out = result_path(args.out)  # a path under runs/ goes to the results folder
 
 device = pick_device()
 tok = Tokenizer.load(args.tokenizer)

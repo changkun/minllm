@@ -15,6 +15,7 @@ import subprocess
 import sys
 
 from minllm import tasks
+from minllm.common import result_path
 
 MOLE = "Write a short story using these words: mole, protect."
 SAMPLES = {
@@ -28,15 +29,15 @@ SAMPLES = {
     "06-mole-after": ["scripts/chat.py", "--model", "out/sft-words", "--prompt", MOLE, "--temperature", "0"],
 }
 
-os.makedirs("runs/samples", exist_ok=True)
+os.makedirs(result_path("runs/samples"), exist_ok=True)
 for name, command in SAMPLES.items():
     out = subprocess.run([sys.executable, *command], check=True, capture_output=True, text=True).stdout
-    with open(f"runs/samples/{name}.txt", "w", encoding="utf-8") as f:
+    with open(result_path(f"runs/samples/{name}.txt"), "w", encoding="utf-8") as f:
         f.write("$ uv run " + " ".join(f'"{c}"' if " " in c else c for c in command) + "\n\n" + out)
-    print(f"runs/samples/{name}.txt")
+    print(result_path(f"runs/samples/{name}.txt"))
 
 # Stage 6's words task: how many examples tasks.words_examples can cut from the training text.
 made = sum(1 for _ in tasks.words_examples("data/tinystories/train.txt", tasks.content_words(), None))
-with open("runs/samples/words-examples.json", "w") as f:
+with open(result_path("runs/samples/words-examples.json"), "w") as f:
     json.dump({"training_text": "data/tinystories/train.txt", "examples": made}, f)
 print(f"{made:,} examples of the words task in the training text")

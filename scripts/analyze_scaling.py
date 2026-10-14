@@ -18,6 +18,7 @@ from collections import defaultdict
 
 from minllm import scaling
 from minllm.data import load_tokens
+from minllm.common import result_path
 
 
 def runs(pattern):
@@ -31,12 +32,12 @@ def runs(pattern):
 
 
 data_tokens = len(load_tokens("data/tinystories/train.bin"))
-grid = runs("runs/scaling/c*.jsonl")
+grid = runs(result_path("runs/scaling/c*.jsonl"))
 for r in grid:
     r["passes"] = r["tokens"] / data_tokens  # over the training text: above 1, some of it is read again
     r["budget"] = float(r["name"].split("-")[0][1:])
     r["flops"] = scaling.flops(r["params"], r["tokens"])
-sweep = runs("runs/scaling/lr-*.jsonl")
+sweep = runs(result_path("runs/scaling/lr-*.jsonl"))
 
 budgets = defaultdict(list)
 for r in grid:
@@ -80,7 +81,7 @@ split = {b: scaling.optimal_split(fit, b) for b in sorted(budgets)}
 
 # Stage 3's run, width 384 for 6,000 steps of 64 windows of 256 tokens, against the split the law prefers at its compute.
 base = {"params": next(r["params"] for r in grid if r["dim"] == 384), "tokens": 6000 * 64 * 256}
-with open("runs/base/log.jsonl") as f:
+with open("out/base/log.jsonl") as f:  # stage 3's run, as train.py logged it
     base["loss"] = [json.loads(line) for line in f if "val_loss" in line][-1]["val_loss"]
 base["flops"] = scaling.flops(base["params"], base["tokens"])
 base["predicted"] = scaling.law(fit, base["params"], base["tokens"])
@@ -94,6 +95,6 @@ summary = {"valleys": {f"{b:.0e}": v for b, v in valleys.items()}, "laws": laws,
            "fit_split_exponent": fit["beta"] / (fit["alpha"] + fit["beta"]),  # the law's best size grows as C to this power
            "stage3": base, "hours": {"grid": sum(r["minutes"] for r in grid) / 60, "sweep": sum(r["minutes"] for r in sweep) / 60},
            "sweep": [{k: r[k] for k in ("name", "dim", "params", "lr", "loss")} for r in sweep]}
-with open("runs/scaling/summary.json", "w") as f:
+with open(result_path("runs/scaling/summary.json"), "w") as f:
     json.dump(summary, f, indent=1)
-print("wrote runs/scaling/summary.json")
+print("wrote", result_path("runs/scaling/summary.json"))

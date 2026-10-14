@@ -17,7 +17,7 @@ import time
 
 import torch
 
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 from minllm.model import Config, Transformer
 from minllm.pretrained import load_model
 
@@ -31,7 +31,7 @@ args = parser.parse_args()
 
 device = pick_device()
 device_type = torch.device(device).type
-args.out = args.out or f"runs/bench/train-{'qwen-' if args.model == 'qwen' else ''}{device}.json"
+args.out = result_path(args.out or f"runs/bench/train-{'qwen-' if args.model == 'qwen' else ''}{device}.json")
 tokens = args.batch_size * args.seq_len
 
 

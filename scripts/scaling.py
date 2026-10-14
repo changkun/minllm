@@ -24,6 +24,7 @@ import sys
 from minllm import scaling
 from minllm.data import load_tokens
 from minllm.model import Transformer
+from minllm.common import result_path
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--phase", choices=["lr", "grid", "list"], required=True)
@@ -35,6 +36,7 @@ parser.add_argument("--max-passes", type=float, default=1.0, help="no run reads 
 parser.add_argument("--min-tokens", type=float, default=8e6, help="no run is shorter than this: about 500 steps")
 parser.add_argument("--runs", default="runs/scaling")
 args = parser.parse_args()
+args.runs = result_path(args.runs)  # a path under runs/ goes to the results folder
 
 BATCH, SEQ = 64, 256  # stage 3's batch: 16,384 tokens a step
 dims = [int(d) for d in args.dims.split(",")]

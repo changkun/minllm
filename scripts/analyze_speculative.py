@@ -22,6 +22,7 @@ import os
 from minllm import chat, checkpoint, pretrained
 from minllm.data import EOT
 from minllm.tokenizer import Tokenizer
+from minllm.common import result_path
 
 PAIRS = {
     "speculative-wide-mps": "the 42M story model, drafted by the 14M one",
@@ -45,9 +46,9 @@ def parted(alone, new, stop):
 
 summary = {}
 for name, label in PAIRS.items():
-    if not os.path.exists(f"runs/bench/{name}.json"):
+    if not os.path.exists(result_path(f"runs/bench/{name}.json")):
         continue
-    with open(f"runs/bench/{name}.json") as f:
+    with open(result_path(f"runs/bench/{name}.json")) as f:
         r = json.load(f)
     stop = STOPS["qwen" if os.path.exists(f"{r['target']}/config.json") else "small"]
     alone = next(c for c in r["cases"] if c["draft"] == "none" and c["temperature"] == 0)
@@ -74,6 +75,6 @@ for name, label in PAIRS.items():
     same = [c["same"] for c in cases if "same" in c]
     print(f"{label}: alone {alone['tokens_per_second']:.1f} tokens/s; best {best['draft']} k={best['k']} at {best['speedup']:.2f}x; greedy replies the same: {min(same)} to {max(same)} of {r['n']}")
 
-with open("runs/bench/speculative-summary.json", "w") as f:
+with open(result_path("runs/bench/speculative-summary.json"), "w") as f:
     json.dump(summary, f, indent=1)
-print("wrote runs/bench/speculative-summary.json")
+print("wrote", result_path("runs/bench/speculative-summary.json"))

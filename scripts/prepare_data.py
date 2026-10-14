@@ -24,7 +24,7 @@ import urllib.request
 from collections import Counter
 
 from minllm import prepare
-from minllm.common import fetch
+from minllm.common import fetch, result_path
 from minllm.data import EOT
 
 parser = argparse.ArgumentParser()
@@ -33,6 +33,7 @@ parser.add_argument("--files", type=int, default=8, help="files of the crawl to 
 parser.add_argument("--dir", default="data/web")
 parser.add_argument("--out", default="runs/data/funnel.json")
 args = parser.parse_args()
+args.out = result_path(args.out)  # a path under runs/ goes to the results folder
 
 BASE = "https://data.commoncrawl.org/"
 

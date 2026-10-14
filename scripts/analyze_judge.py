@@ -13,6 +13,7 @@ import bisect
 import glob
 import json
 import os
+from minllm.common import result_path
 
 
 def auc(scores, truth):
@@ -28,7 +29,7 @@ def accuracy(scores, truth, cut):
 
 
 summary = {}
-for path in sorted(glob.glob("runs/judge/*.json")):
+for path in sorted(glob.glob(result_path("runs/judge/*.json"))):
     name = os.path.basename(path)[:-5]
     if name == "summary":
         continue
@@ -45,6 +46,6 @@ for path in sorted(glob.glob("runs/judge/*.json")):
         agree = [(x >= 0.5) == bool(y) for x, y, c in zip(a, r["annotator"], consistent) if c]
         summary[name] = {"consistent_pairs": sum(consistent), "agrees_where_consistent": sum(agree) / len(agree) if agree else None, "mean_p_of_a": (sum(a) + sum(1 - y for y in b)) / (2 * len(a))}
     print(name, {k: round(v, 3) if isinstance(v, float) else v for k, v in summary[name].items()})
-with open("runs/judge/summary.json", "w") as f:
+with open(result_path("runs/judge/summary.json"), "w") as f:
     json.dump(summary, f, indent=1)
-print("wrote runs/judge/summary.json")
+print("wrote", result_path("runs/judge/summary.json"))

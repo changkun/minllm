@@ -28,7 +28,7 @@ import time
 import torch
 
 from minllm import inference, pretrained, reasoning, tasks
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--teacher", default="data/r1-distill-qwen-1.5b")
@@ -95,8 +95,8 @@ summary = {
     "samples": [{"number": problems[i]["number"]} | results[i] for i in indices[:: max(1, len(indices) // 12)]],
 }
 print(f"teacher on {len(rows)} {args.split} problems: {summary['right']:.1%} right, {summary['ended']:.1%} ended within {args.max_new_tokens} tokens, {summary['tokens_mean']:.0f} tokens on average; {len(kept)} kept; {minutes:.0f} minutes")
-os.makedirs("runs/reasoning", exist_ok=True)
-with open(f"runs/reasoning/teacher-{args.split}.json", "w") as f:
+os.makedirs(result_path("runs/reasoning"), exist_ok=True)
+with open(result_path(f"runs/reasoning/teacher-{args.split}.json"), "w") as f:
     json.dump(summary, f, indent=1, ensure_ascii=False)
 if args.split == "train":
     with open("data/reasoning/traces.jsonl", "w", encoding="utf-8") as f:

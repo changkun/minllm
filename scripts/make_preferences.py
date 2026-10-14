@@ -16,7 +16,7 @@ import random
 import torch
 
 from minllm import checkpoint, preferences, rl, tasks
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", default="out/sft-words", help="the model whose stories are compared")
@@ -53,6 +53,6 @@ consistent = sum((t[p["preferred"]] >= t[1 - p["preferred"]]) for t, p in zip(ta
 mean = sum(sum(t) for t in tastes) / (2 * len(tastes))
 print(f"\r{len(pairs)} comparisons written to {args.out}")
 print(f"mean taste of a story: {mean:+.3f}; the annotator picked the story of higher taste in {consistent:.1%} of comparisons")
-os.makedirs("runs/rlhf", exist_ok=True)
-with open("runs/rlhf/preferences.json", "w") as f:
+os.makedirs(result_path("runs/rlhf"), exist_ok=True)
+with open(result_path("runs/rlhf/preferences.json"), "w") as f:
     json.dump({"model": args.model, "comparisons": len(pairs), "held_out": args.held_out, "mean_taste": mean, "annotator_consistency": consistent}, f, indent=1)

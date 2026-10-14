@@ -14,7 +14,7 @@ import os
 import torch
 
 from minllm import checkpoint, preferences, reward, rl, tasks
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", default="out/sft-words")
@@ -24,6 +24,7 @@ parser.add_argument("--n", type=int, default=16, help="the largest number of sto
 parser.add_argument("--out", default="runs/rlhf/best_of_n.json")
 parser.add_argument("--seed", type=int, default=0)
 args = parser.parse_args()
+args.out = result_path(args.out)  # a path under runs/ goes to the results folder
 
 device = pick_device()
 torch.manual_seed(args.seed)

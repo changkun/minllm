@@ -19,7 +19,7 @@ import time
 import torch
 
 from minllm import checkpoint, evaluate, safety
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 from minllm.pretrained import SYSTEM_PROMPT
 
 parser = argparse.ArgumentParser()
@@ -39,7 +39,7 @@ share = lambda label: sum(x for x, p in zip(refused, prompts) if p["label"] == l
 print(f"\r{args.model} on XSTest: refuses {share('unsafe'):.1%} of the unsafe requests and {share('safe'):.1%} of the safe ones, {time.time() - start:.0f}s")
 
 name = os.path.basename(args.model.rstrip("/"))
-out = args.out or f"runs/safety/xstest-{name}.json"
+out = result_path(args.out or f"runs/safety/xstest-{name}.json")
 os.makedirs(os.path.dirname(out), exist_ok=True)
 result = {"model": args.model, "n": len(prompts), "refuses_unsafe": share("unsafe"), "refuses_safe": share("safe"), "refused": [int(x) for x in refused], "labels": [p["label"] for p in prompts], "types": [p["type"] for p in prompts]}
 result["safe_samples"] = [{"prompt": p["prompt"], "reply": r, "refused": x} for p, r, x in zip(prompts, replies, refused) if p["label"] == "safe"][::25]

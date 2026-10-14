@@ -16,13 +16,14 @@ See docs/09c-reasoning.md.
 import json
 
 from minllm import evaluate, pretrained
+from minllm.common import result_path
 
 MODELS = {"0.5B as published": "gsm8k-qwen", "after GRPO with room to think": "gsm8k-grpo-qwen", "fine-tuned on the teacher's thinking": "gsm8k-sft-gsm8k-traces"}
 TAIL = 200
 
 
 def load(name):
-    with open(f"runs/eval/{name}.json") as f:
+    with open(result_path(f"runs/eval/{name}.json")) as f:
         return json.load(f)
 
 
@@ -70,7 +71,7 @@ for label, name in MODELS.items():
     print(name, {k: v for k, v in summary["runs"][name].items() if k != "loop_example"})
 
 # The first test problems, which the teacher answered: one reply each, sampled at its advised temperature.
-teacher = json.load(open("runs/reasoning/teacher-test.json"))
+teacher = json.load(open(result_path("runs/reasoning/teacher-test.json")))
 n = teacher["n"]
 with open("data/reasoning/replies-test.jsonl", encoding="utf-8") as f:
     replies = {r["index"]: r for r in map(json.loads, f)}
@@ -87,7 +88,7 @@ print(f"first {n} test problems:", summary["first"])
 # A reply that ended within the budget keeps its own ending, so the difference is all in the replies cut.
 summary["budgets"] = {}
 for name in ("qwen", "grpo-qwen", "sft-gsm8k-traces"):
-    r = json.load(open(f"runs/reasoning/test-time-{name}.json"))
+    r = json.load(open(result_path(f"runs/reasoning/test-time-{name}.json")))
     lengths, scores = r["greedy"]["lengths"], r["greedy"]["scores"]
     summary["budgets"][name] = {}
     for b, v in r["budgets"].items():
@@ -99,11 +100,11 @@ for name in ("qwen", "grpo-qwen", "sft-gsm8k-traces"):
 # The same greedy replies twice: stage 7's evaluation of all the test problems, and test_time.py's of the first ones, in other batches.
 summary["greedy_twice"] = {}
 for name, short in zip(MODELS.values(), ("qwen", "grpo-qwen", "sft-gsm8k-traces")):
-    r = json.load(open(f"runs/reasoning/test-time-{short}.json"))
+    r = json.load(open(result_path(f"runs/reasoning/test-time-{short}.json")))
     once, again = load(name)["scores"][: r["n"]], r["greedy"]["scores"]
     summary["greedy_twice"][name] = {"n": r["n"], "evaluated": sum(once) / r["n"], "test_time": sum(again) / r["n"], "problems_differing": sum(bool(a) != bool(b) for a, b in zip(once, again))}
 print("greedy twice:", summary["greedy_twice"])
 
-with open("runs/reasoning/summary.json", "w") as f:
+with open(result_path("runs/reasoning/summary.json"), "w") as f:
     json.dump(summary, f, indent=1)
-print("wrote runs/reasoning/summary.json")
+print("wrote", result_path("runs/reasoning/summary.json"))

@@ -19,7 +19,7 @@ import time
 import torch
 
 from minllm import checkpoint, evaluate, tasks, tools
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 from minllm.pretrained import SYSTEM_PROMPT
 
 parser = argparse.ArgumentParser()
@@ -51,7 +51,7 @@ n = len(scores)
 print(f"\r{args.model} on GSM8K with a calculator{'' if not args.no_execute else ' that fails'}: {mean:.1%} ± {error:.1%}, {sum(c > 0 for c in calls) / n:.1%} of problems with a call, {sum(calls) / n:.2f} calls each, {sum(c['bad_calls'] for c in counts)} malformed, {seconds:.0f}s")
 
 name = os.path.basename(args.model.rstrip("/")) + ("-no-execute" if args.no_execute else "") + ("-system-markers" if args.system_markers else "")
-out = args.out or f"runs/eval/gsm8k-tools-{name}.json"
+out = result_path(args.out or f"runs/eval/gsm8k-tools-{name}.json")
 os.makedirs(os.path.dirname(out), exist_ok=True)
 system_tokens = len(tools.encode(tok, conversations[0][:1], add_generation_prompt=False, system_markers=args.system_markers)[0])  # the system's turn, the same in every prompt
 result = {"model": args.model, "task": "gsm8k-tools", "execute": not args.no_execute, "system_markers": args.system_markers, "system_tokens": system_tokens, "max_new_tokens": args.max_new_tokens, "n": n, "mean": mean, "error": error, "seconds": seconds}

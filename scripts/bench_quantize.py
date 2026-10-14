@@ -21,7 +21,7 @@ import time
 import torch
 
 from minllm import chat, checkpoint, quantize
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 from minllm.inference import generate
 from minllm.pretrained import DIR
 
@@ -106,7 +106,7 @@ for case, (where, bits, spec, file) in CASES.items():
     batch = f", {best['batch_64']:6.0f} in a batch of 64" if "batch_64" in best else ""
     print(f"{where:16s} {bits:2d} bits | file {rows[-1]['file_mb']:5.0f} MB | weights in memory {best['weights_gb']:.2f} GB, peak {best.get('peak_gb', 0):.2f} GB | {best['batch_1']:6.1f} tokens/s alone{batch}", flush=True)
 
-out = args.out or f"runs/bench/quant-{pick_device()}.json"
+out = result_path(args.out or f"runs/bench/quant-{pick_device()}.json")
 os.makedirs(os.path.dirname(out), exist_ok=True)
 with open(out, "w") as f:
     json.dump({"device": pick_device(), "repeats": args.repeats, "cases": rows}, f, indent=1)

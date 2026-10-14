@@ -20,13 +20,14 @@ import torch
 import torch.nn.functional as F
 
 from minllm import checkpoint, preferences, tasks
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--models", default="sft-words,ppo,ppo-no-kl,dpo")
 parser.add_argument("--judge", default="out/base", help="a language model that never saw any of this training")
 parser.add_argument("--out", default="runs/rlhf/stories.json")
 args = parser.parse_args()
+args.out = result_path(args.out)  # a path under runs/ goes to the results folder
 
 device = pick_device()
 judge, tok, _ = checkpoint.load(args.judge, device)

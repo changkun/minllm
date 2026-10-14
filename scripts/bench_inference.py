@@ -16,7 +16,7 @@ import time
 
 import torch
 
-from minllm.common import load_checkpoint, pick_device
+from minllm.common import load_checkpoint, pick_device, result_path
 from minllm.inference import generate
 from minllm.pretrained import load_model
 
@@ -28,14 +28,14 @@ args = parser.parse_args()
 
 device = pick_device()
 if args.model == "base":
-    args.out = args.out or f"runs/bench/inference-{device}.json"
+    args.out = result_path(args.out or f"runs/bench/inference-{device}.json")
     model, _ = load_checkpoint(args.ckpt, device)
     # (batch, prompt tokens, new tokens): a short prompt and ever longer texts
     lengths = [(batch, 1, n) for batch in [1, 64] for n in [16, 32, 64, 128, 255]]
     batches = [1, 4, 16, 64, 256, 1024] if device != "cpu" else [1, 4, 16, 64]
     batch_prompt, batch_new = 1, 200
 else:
-    args.out = args.out or f"runs/bench/inference-qwen-{device}.json"
+    args.out = result_path(args.out or f"runs/bench/inference-qwen-{device}.json")
     model = load_model(device=device, dtype=torch.bfloat16)
     # the same few new tokens after ever longer prompts
     lengths = [(batch, p, 48) for p in [32, 512, 2048] for batch in [1, 16] if (p, batch) != (2048, 16)]

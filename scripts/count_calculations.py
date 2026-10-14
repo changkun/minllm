@@ -12,6 +12,7 @@ replies written with a calculator. See docs/06a-tool-calling.md.
 import json
 
 from minllm import tools
+from minllm.common import result_path
 
 result = {}
 for name in ["gsm8k-qwen", "gsm8k-sft-gsm8k-lora", "gsm8k-sft-gsm8k"]:
@@ -22,6 +23,6 @@ for name in ["gsm8k-qwen", "gsm8k-sft-gsm8k-lora", "gsm8k-sft-gsm8k"]:
     wrong = sum(not right for f in found for *_, right in f)
     result[name] = {"replies": len(replies), "calculations": calculations, "wrong": wrong, "replies_with_a_wrong_one": sum(any(not right for *_, right in f) for f in found), "examples": [[e, w] for f in found for e, w, right in f if not right][:12]}
     print(f"{name}: {calculations} calculations written out, {wrong} wrong ({wrong / calculations:.1%}), in {result[name]['replies_with_a_wrong_one']} of {len(replies)} replies")
-with open("runs/eval/calculations.json", "w") as f:
+with open(result_path("runs/eval/calculations.json"), "w") as f:
     json.dump(result, f, indent=1)
-print("wrote runs/eval/calculations.json")
+print("wrote", result_path("runs/eval/calculations.json"))

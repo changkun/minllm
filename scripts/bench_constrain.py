@@ -25,14 +25,16 @@ parser.add_argument("--repeats", type=int, default=3)
 args = parser.parse_args()
 
 if args.case is None:
+    from minllm.common import result_path
+
     results = {}
     for case in ["free", "constrained"]:
         runs = [json.loads(subprocess.run([sys.executable, __file__, "--case", case, "--steps", str(args.steps), "--batch", str(args.batch)], capture_output=True, text=True, check=True).stdout.strip().splitlines()[-1]) for _ in range(args.repeats)]
         results[case] = min(runs, key=lambda r: r["seconds"])
         print(f"{case}: {results[case]['seconds']:.1f}s for {args.steps} steps of {args.batch}, {args.steps * args.batch / results[case]['seconds']:.0f} tokens per second")
     device = results["free"]["device"]
-    out = f"runs/bench/constrain-{device}.json"
-    os.makedirs("runs/bench", exist_ok=True)
+    out = result_path(f"runs/bench/constrain-{device}.json")
+    os.makedirs(result_path("runs/bench"), exist_ok=True)
     with open(out, "w") as f:
         json.dump({"steps": args.steps, "batch": args.batch, "repeats": args.repeats} | results, f, indent=1)
     print(f"slower by {results['constrained']['seconds'] / results['free']['seconds'] - 1:.0%}; wrote {out}")

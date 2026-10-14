@@ -20,7 +20,7 @@ from dataclasses import replace
 
 import torch
 
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 from minllm.inference import generate
 from minllm.model import Config, Transformer
 
@@ -80,7 +80,7 @@ def train_speed(cfg, capacity, device):
         optimizer.step()
         loss.item()  # wait for the device to finish
         times.append(time.time() - start)
-    times = sorted(times[10:])  # the first steps include compilation
+    times = sorted(times[min(10, len(times) // 2) :])  # the first steps include compilation
     return args.batch_size * args.seq_len / times[len(times) // 2], model.num_params()
 
 
@@ -142,7 +142,7 @@ if args.only != "train":
         results["generate"].append(row | {"batch_1": alone["tokens_per_second"], "batch_64": batch["tokens_per_second"]})
         print(f"generation  {row['name']:30s} {alone['tokens_per_second']:6.0f} tokens/s alone, {batch['tokens_per_second']:6.0f} in a batch of 64", flush=True)
 
-args.out = args.out or f"runs/bench/moe-{pick_device()}{f'-x{args.scale}' if args.scale > 1 else ''}.json"
+args.out = result_path(args.out or f"runs/bench/moe-{pick_device()}{f'-x{args.scale}' if args.scale > 1 else ''}.json")
 os.makedirs(os.path.dirname(args.out), exist_ok=True)
 with open(args.out, "w") as f:
     json.dump({"device": pick_device()} | results, f, indent=1)

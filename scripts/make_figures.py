@@ -1,5 +1,6 @@
 """
-Draw the figures of the notes into docs/figures/, from the logs in runs/.
+Draw the figures of the notes into docs/figures/, from the logs in runs/:
+the published record, not a learner's results in out/runs/.
 
     uv run scripts/make_figures.py
 

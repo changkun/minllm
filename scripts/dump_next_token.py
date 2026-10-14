@@ -13,7 +13,7 @@ import os
 
 import torch
 
-from minllm.common import load_checkpoint, pick_device
+from minllm.common import load_checkpoint, pick_device, result_path
 from minllm.data import EOT
 from minllm.tokenizer import Tokenizer
 
@@ -23,6 +23,7 @@ parser.add_argument("--tokenizer", default="out/tokenizer.json")
 parser.add_argument("--prompts", nargs="+", default=["Once upon a time, there was a little", "Once upon a time, there was a little girl named", "She loved to play with her", "The tiny robot was sad because"])
 parser.add_argument("--out", default="runs/base/next-token.json")
 args = parser.parse_args()
+args.out = result_path(args.out)  # a path under runs/ goes to the results folder
 
 device = pick_device()
 tok = Tokenizer.load(args.tokenizer)

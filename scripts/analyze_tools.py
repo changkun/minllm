@@ -20,14 +20,24 @@ See docs/06a-tool-calling.md and docs/09b-tool-rl.md.
 """
 
 import json
+import os
 
 from minllm import evaluate, pretrained, tools
 from minllm.pretrained import SYSTEM_PROMPT
+from minllm.common import result_path
 
 
 def load(name):
-    with open(f"runs/eval/{name}.json") as f:
+    with open(result_path(f"runs/eval/{name}.json")) as f:
         return json.load(f)
+
+
+def have(*names):
+    """Whether every run is there, with what is missing said, so that the script can be run before 9b's runs exist."""
+    missing = [n for n in names if not os.path.exists(result_path(f"runs/eval/{n}.json")) or not os.path.exists(f"out/eval/{n}.jsonl")]
+    if missing:
+        print(f"not run yet, left out: {', '.join(missing)}")
+    return not missing
 
 
 pairs = {
@@ -44,10 +54,14 @@ pairs = {
 TOOLS = ["gsm8k-tools-sft-gsm8k-tools-lora", "gsm8k-tools-sft-gsm8k-tools-lora-no-execute", "gsm8k-tools-grpo-gsm8k-tools", "gsm8k-tools-grpo-gsm8k-tools-no-execute"]
 summary = {"comparisons": {}, "runs": {}}
 for label, (a, b) in pairs.items():
+    if not have(a, b):
+        continue
     difference, low, high = evaluate.paired_difference(load(a)["scores"], load(b)["scores"])
     summary["comparisons"][label] = {"from": a, "to": b, "difference": difference, "low": low, "high": high}
     print(f"{label}: {difference:+.1%}, 95% interval {low:+.1%} to {high:+.1%}")
 for name in TOOLS + ["gsm8k-tools-qwen", "gsm8k-tools-qwen-system-markers"]:
+    if not have(name):
+        continue
     r = load(name)
     n = r["n"]
     written = sum(w[1] for w in r["written"])
@@ -61,6 +75,8 @@ for name in TOOLS + ["gsm8k-tools-qwen", "gsm8k-tools-qwen-system-markers"]:
     print(name, {k: round(v, 3) if isinstance(v, float) else v for k, v in summary["runs"][name].items()})
 # Does the model go on from the tool's result?
 for name in TOOLS:
+    if name not in summary["runs"]:
+        continue
     follows = results = 0
     with open(f"out/eval/{name}.jsonl", encoding="utf-8") as f:
         for line in f:
@@ -73,6 +89,8 @@ for name in TOOLS:
     print(f"{name}: the next turn begins with the result after {follows} of {results}")
 # What each GRPO run changed, problem by problem, and whether stage 9's gains were arithmetic.
 for label, (a, b) in [("stage 9", ("gsm8k-sft-gsm8k-lora", "gsm8k-grpo-gsm8k")), ("with the tool", ("gsm8k-tools-sft-gsm8k-tools-lora", "gsm8k-tools-grpo-gsm8k-tools"))]:
+    if not have(a, b):
+        continue
     before, after = load(a)["scores"], load(b)["scores"]
     gained = [i for i, (x, y) in enumerate(zip(before, after)) if not x and y]
     lost = [i for i, (x, y) in enumerate(zip(before, after)) if x and not y]
@@ -89,6 +107,6 @@ prompt = lambda content, marked: turn(content, marked) - turn("", marked)  # wit
 listed = tools.system_prompt(SYSTEM_PROMPT, [tools.CALCULATE])
 summary["system_tokens"] = {"plain": prompt(SYSTEM_PROMPT, False), "with_the_tool": prompt(listed, False), "with_the_tool_markers_as_tokens": prompt(listed, True)}
 print("tokens of the system's turn:", summary["system_tokens"])
-with open("runs/eval/tools-summary.json", "w") as f:
+with open(result_path("runs/eval/tools-summary.json"), "w") as f:
     json.dump(summary, f, indent=1)
-print("wrote runs/eval/tools-summary.json")
+print("wrote", result_path("runs/eval/tools-summary.json"))

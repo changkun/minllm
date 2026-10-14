@@ -15,12 +15,14 @@ from collections import Counter
 
 from minllm.data import SPECIAL_TOKENS, read_stories
 from minllm.tokenizer import Tokenizer
+from minllm.common import result_path
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--data", default="data/tinystories")
 parser.add_argument("--max-mb", type=int, default=64)
 parser.add_argument("--out", default="runs/bench/tokenizer.json")
 args = parser.parse_args()
+args.out = result_path(args.out)  # a path under runs/ goes to the results folder
 
 train = list(read_stories(f"{args.data}/train.txt", max_bytes=args.max_mb << 20))
 held_out = list(read_stories(f"{args.data}/valid.txt", max_bytes=4 << 20))

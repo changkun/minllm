@@ -15,7 +15,7 @@ import os
 
 import torch
 
-from minllm.common import load_checkpoint, pick_device
+from minllm.common import load_checkpoint, pick_device, result_path
 from minllm.data import get_batch, load_tokens
 from minllm.tokenizer import Tokenizer
 
@@ -27,6 +27,7 @@ parser.add_argument("--tokenizer", default="out/tokenizer.json")
 parser.add_argument("--windows", type=int, default=400, help="windows of held-out text, half to fit on and half to score on")
 parser.add_argument("--min-count", type=int, default=100, help="a token is listed for an expert only if it occurs this often")
 args = parser.parse_args()
+args.out = result_path(args.out)  # a path under runs/ goes to the results folder
 
 device = pick_device()
 tok = Tokenizer.load(args.tokenizer)

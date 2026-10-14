@@ -22,7 +22,7 @@ from collections import Counter
 import torch
 
 from minllm import checkpoint, choice, evaluate, quantize, tasks
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 from minllm.pretrained import SYSTEM_PROMPT
 
 parser = argparse.ArgumentParser()
@@ -118,7 +118,7 @@ mean, error = evaluate.mean_and_error(scores)
 print(f"\r{args.model} on MMLU by {how}: {mean:.1%} ± {error:.1%} over {len(scores)} questions, {seconds:.0f}s")
 
 name = os.path.basename(args.model.rstrip("/")) + (f"-{args.bits}bit" if args.bits else "")
-out = args.out or f"runs/eval/mmlu-{name}-{how}{f'-rot{args.rotate}' if args.rotate else ''}.json"
+out = result_path(args.out or f"runs/eval/mmlu-{name}-{how}{f'-rot{args.rotate}' if args.rotate else ''}.json")
 os.makedirs(os.path.dirname(out), exist_ok=True)
 if args.bits:
     result |= {"bits": args.bits, "group": args.group}

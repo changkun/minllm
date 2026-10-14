@@ -20,7 +20,7 @@ import time
 import torch
 
 from minllm import checkpoint, judge, preferences, pretrained
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 from minllm.pretrained import SYSTEM_PROMPT
 
 parser = argparse.ArgumentParser()
@@ -89,7 +89,7 @@ else:
 
 result["seconds"] = time.time() - start
 name = os.path.basename(args.judge.rstrip("/"))
-out = args.out or f"runs/judge/{args.task}-{name}{'-reference' if args.reference else ''}{'-rubric' if args.rubric else ''}.json"
+out = result_path(args.out or f"runs/judge/{args.task}-{name}{'-reference' if args.reference else ''}{'-rubric' if args.rubric else ''}.json")
 os.makedirs(os.path.dirname(out), exist_ok=True)
 with open(out, "w") as f:
     json.dump(result, f)

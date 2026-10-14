@@ -18,7 +18,7 @@ import time
 import torch
 
 from minllm import checkpoint, evaluate, quantize, tasks
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 from minllm.pretrained import SYSTEM_PROMPT
 
 parser = argparse.ArgumentParser()
@@ -45,7 +45,7 @@ def show(task, value, signed=False):
 
 
 if args.compare:
-    a, b = (json.load(open(path)) for path in args.compare)
+    a, b = (json.load(open(result_path(path))) for path in args.compare)
     assert a["task"] == b["task"] and len(a["scores"]) == len(b["scores"]), "the two runs must share their examples"
     diff, low, high = evaluate.paired_difference(a["scores"], b["scores"])
     for r in (a, b):
@@ -77,7 +77,7 @@ cut_off = sum(len(tok.encode_ordinary(r)) >= limit - 2 for r in replies)
 print(f"\r{args.model} on {args.task}: {show(args.task, mean)} ± {show(args.task, error).lstrip('+')} over {len(scores)} examples, {seconds:.0f}s, {cut_off} replies cut off")
 
 name = os.path.basename(args.model.rstrip("/")) + (f"-{args.bits}bit" if args.bits else "")
-out = args.out or f"runs/eval/{args.task}-{name}.json"
+out = result_path(args.out or f"runs/eval/{args.task}-{name}.json")
 os.makedirs(os.path.dirname(out), exist_ok=True)
 samples = [{"prompt": e["messages"][-1]["content"], "reply": r, "score": s} for e, r, s in list(zip(examples, replies, scores))[:10]]
 result = {"model": args.model, "task": args.task, "temperature": args.temperature, "max_new_tokens": limit, "n": len(scores), "cut_off": cut_off}

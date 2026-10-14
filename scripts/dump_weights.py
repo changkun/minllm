@@ -13,6 +13,7 @@ import json
 import os
 
 from minllm import checkpoint
+from minllm.common import result_path
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", default="qwen")
@@ -20,6 +21,7 @@ parser.add_argument("--matrix", default="layers.0.attn.q_proj.weight")
 parser.add_argument("--group", type=int, default=64)
 parser.add_argument("--out", default="runs/quant/row.json")
 args = parser.parse_args()
+args.out = result_path(args.out)  # a path under runs/ goes to the results folder
 
 model, _, _ = checkpoint.load(args.model, "cpu")
 w = model.state_dict()[args.matrix].float()

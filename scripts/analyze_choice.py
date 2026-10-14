@@ -18,11 +18,14 @@ import re
 from collections import Counter
 
 from minllm import evaluate, tasks
+from minllm.common import result_path
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--dir", default="runs/eval")
 parser.add_argument("--out", default="runs/eval/mmlu-summary.json")
 args = parser.parse_args()
+args.dir = result_path(args.dir)  # a path under runs/ goes to the results folder
+args.out = result_path(args.out)  # a path under runs/ goes to the results folder
 
 
 def load(name):

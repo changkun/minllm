@@ -19,7 +19,7 @@ import numpy as np
 import torch
 
 from minllm import context
-from minllm.common import load_checkpoint, pick_device
+from minllm.common import load_checkpoint, pick_device, result_path
 from minllm.data import EOT, load_tokens
 from minllm.tokenizer import Tokenizer
 
@@ -61,15 +61,17 @@ with torch.no_grad(), autocast:
         print(f"passage again after {distance:5d} tokens: loss {copies[distance]['seen']:.3f}, first time {copies[distance]['unseen']:.3f}", flush=True)
 
 for lo, hi in [(0, 256), (256, 512), (512, 1024), (1024, 2048)]:
+    if lo >= len(per_position):
+        break  # a shorter window has no positions there
     print(f"positions {lo:4d} to {hi:4d}: loss {per_position[lo : hi - 1].mean():.3f}")
 name = args.name or os.path.basename(args.model.rstrip("/")) + (f"-{kind}{factor}" if args.scaling else "")
-os.makedirs("runs/context", exist_ok=True)
+os.makedirs(result_path("runs/context"), exist_ok=True)
 blocks = [per_position[i : i + 32].mean().item() for i in range(0, len(per_position), 32)]
 result = {"model": args.model, "trained_length": trained, "scaling": model.cfg.rope_scaling, "length": args.length, "documents": len(starts)}
 # How long the held-out text's documents are: the share of its tokens in documents longer than each window.
 lengths = np.array([len(d) for d in documents])
 result |= {"held_out_tokens_in_documents_over": {str(w): float(lengths[lengths > w].sum() / lengths.sum()) for w in (256, 1024, 2048)}}
 result |= {"loss_by_32_positions": [round(v, 4) for v in blocks], "passage": copies}
-with open(f"runs/context/{name}.json", "w") as f:
+with open(result_path(f"runs/context/{name}.json"), "w") as f:
     json.dump(result, f, indent=1)
-print(f"wrote runs/context/{name}.json")
+print("wrote", result_path(f"runs/context/{name}.json"))

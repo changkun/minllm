@@ -20,7 +20,7 @@ import time
 import torch
 
 from minllm import checkpoint, evaluate, schema as schemas, tasks
-from minllm.common import pick_device
+from minllm.common import pick_device, result_path
 from minllm.pretrained import SYSTEM_PROMPT
 
 # The forms a reply can be asked to have: a JSON schema, and the same as a line to show the model.
@@ -102,7 +102,7 @@ mean, error = evaluate.mean_and_error([float(r["right"]) for r in rows])
 name = f"{args.form}-{'constrained' if args.constrain else 'asked'}"
 print(f"\r{name}: JSON {share('json'):.1%}, JSON in a fence {share('fenced'):.1%}, in the asked form {share('in_form'):.1%}, right {mean:.1%} ± {error:.1%}, {n} problems, {seconds:.0f}s")
 
-out = args.out or f"runs/structured/{name}.json"
+out = result_path(args.out or f"runs/structured/{name}.json")
 os.makedirs(os.path.dirname(out), exist_ok=True)
 result = {"model": args.model, "form": args.form, "constrained": args.constrain, "schema": schema, "n": n, "max_new_tokens": args.max_new_tokens, "seconds": seconds, "timing": timing, "reply_tokens": sum(r["tokens"] for r in rows)}
 result |= {"json": share("json"), "fenced": share("fenced"), "in_form": share("in_form"), "mean": mean, "error": error, "cut_off": sum(r["tokens"] >= args.max_new_tokens - 2 for r in rows)}
