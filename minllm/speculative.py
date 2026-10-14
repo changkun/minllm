@@ -136,8 +136,8 @@ def accept(p, q, tokens, temperature, generator=None):
 def generate(model, draft, prompt, max_new_tokens, k=4, temperature=0.0, stop=()):
     """
     Generate a continuation of one prompt with a draft. Returns the new
-    tokens and how it went: the passes of the model, the draft tokens
-    proposed and those kept.
+    tokens, up to and without a token in `stop`, and how it went: the
+    passes of the model, the draft tokens proposed and those kept.
     """
     target = Cached(model, len(prompt) + max_new_tokens + k + 1)
     seq, new = list(prompt), []
@@ -157,8 +157,10 @@ def generate(model, draft, prompt, max_new_tokens, k=4, temperature=0.0, stop=()
         target.keep(len(seq) + len(kept))
         draft.keep(len(seq) + len(kept))
         for token in kept + [extra]:
+            if token in stop:  # the stop token ends the reply and is not part of it, as in inference.generate
+                return new, stats
             new.append(token)
             seq.append(token)
-            if token in stop or len(new) == max_new_tokens:
+            if len(new) == max_new_tokens:
                 return new, stats
     return new, stats
