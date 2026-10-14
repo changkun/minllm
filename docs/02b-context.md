@@ -46,8 +46,8 @@ Three ways to keep the model on angles it knows:
 
 - **Interpolation** (Chen et al., 2023) turns every pair s times slower, so
   that s times the trained length fits into the angles seen. Distant tokens
-  look as they did; neighbours look s times closer than they are, which the
-  fast pairs, which tell neighbours apart, notice.
+  look as they did; neighbors look s times closer than they are, which the
+  fast pairs, which tell neighbors apart, notice.
 - **NTK scaling** (bloc97, 2023) raises theta instead, by s^(d/(d-2)): the
   slowest pair turns s times slower and the fastest as before, the ones
   between in proportion.
@@ -86,8 +86,8 @@ As it is, the model keeps its loss for the 256 tokens it was trained on,
 Each stretch by 4 does something different:
 
 - **Interpolation** keeps the loss level to 1,024, but at 4.03, and is as
-  bad within the first 256 tokens. Every neighbour looks four times closer
-  than it is, and the model can no longer tell neighbours apart.
+  bad within the first 256 tokens. Every neighbor looks four times closer
+  than it is, and the model can no longer tell neighbors apart.
 - **NTK** leaves the fast pairs alone and keeps the first 256 tokens as they
   were, 3.22. The pairs between turn too fast for 1,024, and the loss starts
   to climb at about 600 tokens.
@@ -106,7 +106,7 @@ without a step of training. Interpolation finds little at any distance,
 ## After 500 steps at 1,024
 
 Each stretch by 4 then trains for 500 steps on windows of 1,024 tokens: 8.2M
-tokens, a sixth of what the model was trained on, 5 to 6 minutes each. So
+tokens, a sixth of what the model was trained on, 4.7 to 6.1 minutes each. So
 does the table as it is, computed further without a stretch. Before the
 first step, YaRN's loss on windows of 1,024 is 3.25, NTK's 3.64,
 interpolation's 4.07, and the table as it is 4.19: YaRN starts closest.
@@ -150,7 +150,7 @@ cheap, and a stretch at the end.
 uv run scripts/long_context.py --model out/web-clean                      # the table computed further
 uv run scripts/long_context.py --model out/web-clean --scaling yarn:4     # stretched 4 times, without training
 uv run scripts/train.py --init out/web-clean --data data/web/clean --tokenizer out/web/tokenizer.json \
-    --seq-len 1024 --rope-scaling yarn:4 --steps 500 --batch-size 16 --lr 3e-4 --warmup 20 --out out/ctx-yarn
+    --seq-len 1024 --rope-scaling yarn:4 --steps 500 --batch-size 16 --lr 3e-4 --warmup 20 --eval-every 250 --out out/ctx-yarn
 uv run scripts/long_context.py --model out/ctx-yarn
 uv run scripts/train.py --data data/web/clean --tokenizer out/web/tokenizer.json \
     --seq-len 1024 --batch-size 16 --steps 3000 --out out/web-clean-1024              # long from the start

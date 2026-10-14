@@ -213,6 +213,8 @@ logits: largest difference 0.273 where the largest logit is 30.2, over 4,710,016
 generation: identical for 48 of 48 tokens: 'I had a garden in my backyard where I could grow flowers and vegetables. […]'
 ```
 
+(The output is saved in `runs/export/check-qwen-q4.txt`.)
+
 MLX computes in 16-bit floats, which accounts for the difference of 1% in the
 logits. The greedy continuation is the same, token for token, as this
 repository's code gives for the same rounded weights.

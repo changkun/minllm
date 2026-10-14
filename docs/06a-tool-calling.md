@@ -254,10 +254,10 @@ uv run scripts/analyze_tools.py                                          # the c
 ## In practice
 
 - **The format is the model's.** Each family of models is trained on its
-  own way of listing tools and writing calls: Qwen's `<tool_call>` tags,
-  Llama's JSON in a special header, OpenAI's function calls. Serving
-  software translates between that and an API's `tools` and `tool_calls`,
-  and a model used with another family's format calls badly.
+  own way of listing tools and writing calls, such as Qwen's `<tool_call>`
+  tags or OpenAI's function calls. Serving software translates between that
+  and an API's `tools` and `tool_calls`, and a model used with another
+  family's format calls badly.
 - **Calls are trained, in large numbers.** Post-training data contains
   conversations with tools of many kinds, collected or generated, in which
   calls appear where they help and are absent where they do not. Toolformer

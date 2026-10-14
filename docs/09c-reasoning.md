@@ -12,9 +12,10 @@ This is a side topic of [stage 9](09-rlvr.md), not a step of the pipeline.
 The models called reasoning models, which appeared from late 2024 on, write
 a long chain of thought before they answer, and are right more often the
 longer they are allowed to think. Stage 9's GRPO is the method behind
-them, and stage 9 used it on GSM8K. But it did not train a reasoning model:
-it started from a model fine-tuned to write terse solutions, gave it 256
-tokens, and its replies stayed short.
+DeepSeek-R1, the first of them whose training was published, and stage 9
+used it on GSM8K. But it did not train a reasoning model: it started from a
+model fine-tuned to write terse solutions, gave it 256 tokens, and its
+replies stayed short.
 
 This note asks what makes a reasoning model, in three ways that are all in
 use:

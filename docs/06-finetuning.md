@@ -7,7 +7,8 @@ Code: [`minllm/chat.py`](../minllm/chat.py),
 Script: [`scripts/finetune.py`](../scripts/finetune.py) ·
 Tests: [`tests/test_lora.py`](../tests/test_lora.py),
 [`tests/test_tasks.py`](../tests/test_tasks.py),
-[`tests/test_checkpoint.py`](../tests/test_checkpoint.py)
+[`tests/test_checkpoint.py`](../tests/test_checkpoint.py),
+[`tests/test_pretrained.py`](../tests/test_pretrained.py)
 
 Pretraining taught the model what text looks like. Fine-tuning teaches it what
 to do: it continues training on examples of the behavior that is wanted. In
@@ -112,6 +113,7 @@ model they belong to.
 uv run scripts/finetune.py --task words               # 14M model, every weight, 11 minutes
 uv run scripts/finetune.py --task gsm8k --lora 16     # 0.5B model through LoRA
 uv run scripts/finetune.py --task gsm8k               # 0.5B model, every weight
+uv run scripts/finetune.py --task gsm8k --lora 16 --keep-pool --steps 60 --out out/pool-check   # the memory pool left to grow
 uv run scripts/chat.py --model out/sft-words --prompt "Write a short story using these words: garden, kitten."
 ```
 
@@ -119,7 +121,7 @@ uv run scripts/chat.py --model out/sft-words --prompt "Write a short story using
 
 2,000 steps of 64 conversations at a learning rate of 3e-4, 11 minutes.
 Before and after, for the instruction to use *mole* and *protect*, decoded
-greedily:
+greedily (`chat.py --temperature 0`, saved in `runs/samples/`):
 
 > **Before.** The mole was so happy that he had found a way to make the
 > story. He thanked the wise old owl for the words and flew away.
@@ -165,7 +167,8 @@ a larger learning rate would likely move the full fine-tune further in the
 same steps (exercise 5 looks at the other extreme).
 
 What both runs learned is visible in a single reply. The same held-out
-problem, before and after:
+problem, before and after, as the run printed it
+(`runs/sft-gsm8k-lora/console.log`):
 
 > **Before.** To determine the number of Kia vehicles on the lot, we can
 > follow these steps: 1. **Total number of vehicles on the lot**: 400
@@ -183,17 +186,18 @@ measures how well the model predicts the reference solutions.
 Whether it got better at mathematics is another question. The next stage
 asks it, and the answer is not the one the falling loss suggests.
 
-### A memory pool that only grows
+### A memory pool that fills up
 
-The first attempts at these two runs died with an out-of-memory error after
-a minute, at the 26 GB cap of stage 5, while holding 2 GB of tensors. The
-cause was the allocator. PyTorch keeps freed GPU memory in a pool and reuses
-a block only for a tensor of the same size. Fine-tuning on examples of
-varying length gives every step tensors of a new size, so the pool fills with
-blocks that are never used again: 14 GB after 10 steps, 25 GB after 60.
-`common.free_memory` empties the pool, and `finetune.py` calls it every four
-steps, which kept it under 15 GB for LoRA. Pretraining never met the
-problem, because all its batches have one shape.
+The first attempts at these two runs died with an out-of-memory error at the
+26 GB cap of stage 5. The cause was the allocator. PyTorch keeps freed GPU
+memory in a pool and reuses a block only for a tensor of the same size.
+Fine-tuning on examples of varying length gives every step tensors of a new
+size, so the pool fills with blocks that are never used again. With
+`--keep-pool`, which leaves the pool alone, the LoRA run holds 2.0 GB of
+tensors and a pool of 17.6 GB after 10 steps and 22.3 GB after 50
+(`runs/pool-check/`). `common.free_memory` empties the pool, and
+`finetune.py` calls it every four steps, which kept it under 15 GB for LoRA.
+Pretraining never met the problem, because all its batches have one shape.
 
 ## Exercises
 

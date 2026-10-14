@@ -100,10 +100,13 @@ uv run scripts/train_reward.py
 before: loss 0.6931, which is ln 2: every comparison a coin toss
 epoch 1: held-out loss 0.4917, agrees with the annotator 76.4%, with their taste 83.5%
 epoch 2: held-out loss 0.4862, agrees with the annotator 77.4%, with their taste 83.5%
-epoch 3: held-out loss 0.6507, agrees with the annotator 74.6%, with their taste 81.3%
+epoch 3: held-out loss 0.6508, agrees with the annotator 74.6%, with their taste 81.3%
 epoch 4: held-out loss 0.9170, agrees with the annotator 73.8%, with their taste 79.1%
 keeping epoch 2
 ```
+
+(The four epochs of a later run of the same command, which wrote the same
+lines, are saved in `runs/rlhf/reward-epochs.json`.)
 
 ![Reward against hidden taste for held-out stories, and agreement by number of comparisons](figures/rlhf-reward.svg)
 
@@ -144,10 +147,11 @@ uv run scripts/best_of_n.py
 | 8 | +1.08 | +1.19 |
 | 16 | +1.21 | +1.32 |
 
-A story of the fine-tuned model has a taste of +0.22 on average. The
-favourite of the reward model among eight has +1.08, and the annotator
-choosing among the same eight by their own taste would get +1.19. The reward
-model captures most of what there is to gain.
+A story of the fine-tuned model has a taste of +0.22 on average over all
+4,800 written here, and +0.23 for the first of each prompt, the table's
+first row. The favorite of the reward model among eight has +1.08, and the
+annotator choosing among the same eight by their own taste would get +1.19.
+The reward model captures most of what there is to gain.
 
 The price is in the first column: eight stories written for every one that
 is used.

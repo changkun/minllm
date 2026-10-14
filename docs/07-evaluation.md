@@ -152,7 +152,7 @@ And this is the whole answer of the fine-tuned model:
 
 The published model reasons at length, 920 characters for a typical reply.
 The fine-tuned one has learned to write like GSM8K's reference solutions, 211
-characters and a `####` at the end in 99% of replies. That is what the loss
+characters and a `####` line in 99% of replies. That is what the loss
 rewarded, since the loss measures how well the model predicts those
 references. The references are terse, and a small model taught to be terse
 skips the steps it needed. The loss went down because the imitation got
@@ -197,6 +197,7 @@ uv run scripts/evaluate.py --model qwen --task gsm8k --max-new-tokens 320 --out 
 uv run scripts/evaluate.py --model out/sft-gsm8k-lora --task gsm8k
 uv run scripts/evaluate.py --model out/sft-gsm8k-lora --task gsm8k --max-new-tokens 320 --out runs/eval/gsm8k-sft-gsm8k-lora-320.json
 uv run scripts/evaluate.py --model out/sft-gsm8k --task gsm8k
+uv run scripts/analyze_replies.py                   # how long the replies are, and how many have a #### line
 ```
 
 Each run writes its scores and ten of its replies to `runs/eval/`, and all of

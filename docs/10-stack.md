@@ -77,14 +77,16 @@ uv run --with mlx-lm python -m mlx_lm generate --model out/export/sft-words \
 ```
 Once upon a time, there was a little kitten named Fluffy. Fluffy was a very
 happy kitten. She loved to play in the garden with her friends. […]
-Generation: 120 tokens, 669.077 tokens-per-sec
+Generation: 100 tokens, 1853.896 tokens-per-sec
 ```
 
 The same story, token for token, as this repository's sampler writes at
-temperature 0. It arrives faster: 669 tokens per second for a single sequence
-against 460 in stage 4. mlx_lm sends each decode step to the GPU before it
-has read back the token of the step before, so the GPU does not wait on
-Python; how much of the difference that accounts for was not measured here.
+temperature 0. It arrives faster: 1,854 tokens per second for a single
+sequence, with mlx-lm 0.32 writing its default of 100 tokens, against 460 in
+stage 4. mlx_lm sends each decode step to the GPU before it has read back
+the token of the step before, so the GPU does not wait on Python; how much
+of the difference that accounts for was not measured here. The check outputs
+of this section and MLX's are saved in `runs/export/`.
 
 **vLLM** serves the same directory with `vllm serve out/export/sft-words` on a
 Linux machine with an NVIDIA GPU. On macOS, vLLM itself runs only on the
@@ -133,15 +135,26 @@ several requests share.
 | 1 Tokenizer | `tokenizer.py` | `tokenizers`, `tiktoken`, SentencePiece |
 | 2 Model | `model.py` | the model classes of `transformers` |
 | 2a Mixture of experts | `MoE` in `model.py` | the Mixtral, Qwen3-MoE and DeepSeek classes of `transformers`; grouped kernels for the experts in training frameworks |
+| 2b Longer context | `rope_table` in `model.py`, `context.py` | continued pretraining on long text, with a larger theta or YaRN; FlashAttention kernels; needle-in-a-haystack tests |
 | 3 Pretraining | `scripts/train.py` | custom loops over many GPUs, with `accelerate` or plain PyTorch; `datasets` for the data |
 | 3a Distillation | `distill.py`, `train.py --teacher` | a distillation loss in a custom loop; more often, fine-tuning on text that a larger model wrote |
+| 3b Data preparation | `prepare.py`, `scripts/prepare_data.py` | trafilatura for the text, fastText for the language, quality classifiers; filters tested by training, as for FineWeb and DataComp-LM |
+| 3c Scaling laws | `scaling.py`, `scripts/scaling.py` | laws fitted to small runs before the large one; µP, so that the learning rate carries over with width |
 | 4 Inference | `inference.py` | vLLM, SGLang, llama.cpp, MLX |
+| 4a Structured output | `constrain.py`, `automaton.py`, `schema.py` | Outlines, XGrammar, llama.cpp's GBNF grammars; guided decoding in vLLM and SGLang |
+| 4b Speculative decoding | `speculative.py` | vLLM, SGLang, TensorRT-LLM, llama.cpp; Medusa and EAGLE drafts built into the model |
 | 5 Pretrained weights | `pretrained.py` | `from_pretrained`, the Hugging Face Hub, `safetensors` |
 | 6 Fine-tuning | `scripts/finetune.py`, `lora.py` | `peft`, `trl`'s `SFTTrainer`, Unsloth |
+| 6a Tool calling | `tools.py`, `scripts/evaluate_tools.py` | each family's own call format, which serving software translates to an API's `tools` and `tool_calls` |
 | 7 Evaluation | `evaluate.py`, `tasks.py` | `lm-evaluation-harness`, Inspect |
+| 7a Multiple choice | `choice.py`, `scripts/evaluate_choice.py` | `lm-evaluation-harness` and its `loglikelihood` requests |
+| 7b Evaluation by a judge | `judge.py`, `scripts/judge.py` | a large model as the judge, as in MT-Bench, AlpacaEval and Arena-Hard |
 | 8 RLHF | `reward.py`, `scripts/ppo.py`, `scripts/dpo.py` | `trl` (`DPOTrainer`, reward modeling), OpenRLHF |
+| 8a Safety | `safety.py`, `scripts/evaluate_safety.py`, `scripts/make_refusals.py` | refusals in the fine-tuning and preference data; XSTest for refusing too much |
 | 9 RLVR | `rl.py`, `scripts/grpo.py` | verl, OpenRLHF, `trl`'s `GRPOTrainer` |
 | 9a Self-training | `selftrain.py`, `scripts/self_train.py` | no library of its own: an inference engine for the samples, a filter, and the fine-tuning of stage 6 |
+| 9b Reinforcement learning with a tool | `rollout` in `tools.py`, `scripts/grpo.py --task gsm8k-tools` | tools run in sandboxes during the rollouts, their output masked out of the loss (Search-R1, ReTool) |
+| 9c Reasoning | `reasoning.py`, `scripts/test_time.py`, `scripts/make_traces.py` | DeepSeek-R1's recipe: long chains of thought, reinforcement learning on checked answers, small models distilled from its thinking |
 | 10 Serving | `scripts/serve.py` | vLLM, an OpenAI-compatible endpoint |
 | 10a Quantization | `quantize.py` | llama.cpp's GGUF files, `mlx_lm.convert -q`, bitsandbytes; GPTQ and AWQ for smarter rounding |
 

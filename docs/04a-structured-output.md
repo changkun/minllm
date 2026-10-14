@@ -192,9 +192,9 @@ free:         8.3s for 256 steps of 64, 1,967 tokens per second
 constrained:  8.5s for 256 steps of 64, 1,917 tokens per second
 ```
 
-The constraint costs 3%, most of it the Python loop over the rows. A mask
-is made once per state and kept on the GPU, so a step only picks out the
-masks of the states its rows are in.
+The constraint costs 3%: a step looks up the state of every row in Python
+and picks out its mask. A mask is made once per state and kept on the GPU,
+so no step builds one.
 
 ## Run it
 

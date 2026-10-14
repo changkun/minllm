@@ -120,11 +120,12 @@ computed:
 
 These are the forward pass, backward pass and optimizer step alone, on an M5
 Pro, measured by `scripts/bench_train.py`. A laptop is not a steady
-instrument: over three runs of this benchmark the plain version measured 23k
-to 28k and the default 91k to 120k, and the factor between them stayed
-between 3.7 and 4.3. The full loop with data loading, gradient clipping and
-logging ran at 76k to 96k tokens per second over the reference run, with a
-median of 84k.
+instrument: three later runs of this benchmark, alone on the machine,
+measured the plain version at 32.5k to 32.6k and the default at 122.5k to
+125.5k, and the factor between them stayed between 3.77 and 3.85
+(`runs/bench/train-mps-repeat-*.json`). The full loop with data loading,
+gradient clipping and logging ran at 76k to 96k tokens per second over the
+reference run, with a median of 84k.
 
 `torch.compile` traces the model and fuses its operations. Run one at a time,
 each small operation (a norm, a rotation, an addition) reads and writes
@@ -134,11 +135,12 @@ step.
 `autocast` runs the arithmetic in 16-bit floats, bfloat16, while the weights
 and their updates stay in 32 bits. bfloat16 keeps the exponent range of a
 32-bit float and gives up precision, between 2 and 3 significant decimal
-digits instead of 7, which the noise of training covers. On this machine a
-bfloat16 matrix multiplication is four times as fast as a 32-bit one.
+digits instead of 7, which the noise of training covers.
 
 Both were checked against the plain version: after 300 steps from the same
-seed, the validation loss is 2.5092 without them and 2.5101 with them.
+seed, the validation loss is 2.4977 without them and 2.4960 with them
+(`train.py --steps 300 --eval-every 300`, with `--no-compile --no-amp` and
+without; the logs are in `runs/bench/check/`).
 
 ## The reference run
 
@@ -184,7 +186,8 @@ to make sense. The sample printed at four of the evaluations, each continuing
   apron to help her mom in the garden. One sunny day, Lucy met a friendly ant.`
 
 After the run, `uv run scripts/sample.py` writes whole stories. Your own run
-will write different ones.
+will write different ones; these, the second of three, and the first below,
+are saved in `runs/samples/`.
 
 > Once upon a time, there was a little bird named Tim. Tim loved to sing and
 > play all day. One day, Tim noticed that his tree was not strong. It was
@@ -200,20 +203,22 @@ will write different ones.
 And with a prompt from outside the usual openings,
 `--prompt "The tiny robot was sad because" --temperature 0.5`:
 
-> The tiny robot was sad because it had no friends. It wanted to be with its
-> friends, but it was scared of it. Every day it would go out and look for
-> someone to play with. The people in the town would be very nice to the
-> robot.
+> The tiny robot was sad because he had never been so far away. He looked
+> everywhere, but he couldn't find anywhere. He was so sad and he started to
+> cry.
 >
-> One day, the robot saw a little girl crying. She had lost her toy. The robot
-> wanted to help the girl, so it went to the girl and asked if it could be her
-> friend. She said yes, and they played together.
+> Then, he heard a voice. It was a little girl. She said, "Don't worry, I
+> will help you find your robot."
+>
+> The robot was so happy! He started to walk around the house, looking all
+> around. He asked the little girl if she wanted to come with him. […]
 
 The model has the grammar, the dialogue conventions and the shape of a story:
 a character, a problem, help from a friend, a happy end. It keeps a name and a
 goal across paragraphs. What it lacks shows in single sentences: a tree that
-"could not spread like the other birds", a robot with no friends that wants
-"to be with its friends". Twenty minutes buy fluency, and sense takes longer.
+"could not spread like the other birds", a robot that "couldn't find
+anywhere", and a girl who offers it help to find its robot. Twenty minutes
+buy fluency, and sense takes longer.
 
 The training loss over the last 200 steps is 1.45 and the validation loss is
 1.47. The two are level, so the model is not memorizing, and the curve is

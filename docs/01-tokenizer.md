@@ -65,7 +65,7 @@ distinct ones: the first 64 MB of TinyStories contain 15.7 million chunks and
 only 19,880 different ones. `Tokenizer.train` stores
 each distinct chunk once with its count, keeps the pair counts up to date, and
 on each merge touches only the chunks that contain the merged pair. It learns
-3,837 merges from 64 MB in about 5 seconds of plain Python.
+3,837 merges from 64 MB in about 4 seconds of plain Python.
 `test_train_matches_textbook` checks that it learns exactly the merges of the
 loop above.
 

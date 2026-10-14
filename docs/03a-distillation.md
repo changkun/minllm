@@ -88,11 +88,11 @@ The teacher is the model of stage 3 with MLPs four times as wide: 42.5M
 parameters, trained for the same 6,000 steps, which takes 38 minutes and
 ends at a validation loss of 1.387. (The side topic 2a trains the same model
 as its wide reference. If `out/wide` is there already, skip the first
-command: `train.py` does not overwrite a run.) The student is the 14.2M model of stage
-3, unchanged. It starts from the same random weights as the reference run of
-stage 3 and sees the same batches in the same order, so the runs can be
-compared step for step. The only difference is what the student is asked to
-predict.
+command: `train.py` does not overwrite a run.) The student is the 14.2M
+model of stage 3, unchanged. It starts from the same random weights as the
+reference run of stage 3 and sees the same batches in the same order, so the
+runs can be compared step for step. The only difference is what the student
+is asked to predict.
 
 ![Validation loss of the student trained from the text, from text and teacher, and from the teacher alone](figures/distill-loss.svg)
 
@@ -115,9 +115,8 @@ step 500 its loss is 2.08, against 2.22 without a teacher.
 student is never told which token came next, and it still ends below the
 model that was trained on nothing else. Early on it is the fastest of the
 three, at 2.02 after 500 steps. Between steps 3,500 and 4,000 the mix
-overtakes it. The
-teacher is wrong in places, and a student that only copies it inherits
-that. The labels are noisy and they are the truth.
+overtakes it. The teacher is wrong in places, and a student that only copies
+it inherits that. The labels are noisy and they are the truth.
 
 **In the same time, the text alone wins.** The teacher's forward pass makes a
 step take 1.7 times as long. A run sized to end after the 20 minutes of
@@ -138,16 +137,17 @@ one that will be run, many times, while the training is paid for once. The
 student is a third of its teacher's size and generates faster.
 
 The distilled model writes stories like the others
-(`uv run scripts/sample.py --ckpt out/distilled/ckpt.pt`):
+(`uv run scripts/sample.py --ckpt out/distilled/ckpt.pt`, the first of three,
+saved in `runs/samples/`):
 
-> Once upon a time, there was a little girl named Lucy. She loved to play
-> with her friends. One day, Lucy and her friends went to the park to play.
-> They played with a ball, they laughed, and they had a lot of fun.
+> Once upon a time, in a small town, there was a boy named Tim. Tim was a
+> tough boy who loved to play with his toy missile. He had a toy missile that
+> he played with every day.
 >
-> While they were playing, a small cat came to the park. The cat was scared
-> and wanted to go home. Lucy wanted to help the cat, so she took a deep
-> breath and walked up to the cat. She said, "Don't be scared, cat. I will
-> help you." […]
+> One day, Tim and his friends went to the park. They played on the swings,
+> slide, and seesaw. The sun was out, and it was very warm. But then, Tim
+> dropped his missile, and it rolled away. Tim's friends tried to catch it,
+> but it was too fast. […]
 
 ## Exercises
 

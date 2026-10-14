@@ -69,7 +69,7 @@ The run is stage 9's, from 6a's model instead of stage 6's: 60 iterations,
 each of 8 training problems with 8 sampled replies, LoRA adapters, no KL
 penalty, and a reward of 1 for the right final number. The calculator runs
 in every rollout. An iteration took 3.6 minutes at the median, against stage
-9's 22 seconds, but this run shared the GPU with two others, and how much of
+9's 20 seconds, but this run shared the GPU with two others, and how much of
 the difference is the tool's rounds and how much the other runs it cannot
 say.
 

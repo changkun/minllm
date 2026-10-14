@@ -22,16 +22,18 @@ the distribution first.
 **Temperature** divides the logits before the softmax. Below 1, the likely
 tokens gain and the unlikely ones lose. Above 1, the distribution flattens.
 At 0 the likeliest token is always taken. The same prompt and seed at three
-temperatures, without top-k, from the model of stage 3:
+temperatures, without top-k, from the model of stage 3
+(`sample.py --n 1 --top-k 0 --temperature t`, saved in `runs/samples/`):
 
 | Temperature | Continuation of "Once upon a time" |
 |---|---|
 | 0 | , there was a little girl named Lily. She loved to play with her toys and eat yummy food. One day, she found a big, red apple in her kitchen. |
-| 0.8 | , there was a cheerful dog named Max. Max loved to play outside and run. One day, Max found a big, soft thing. It was a carrot! |
-| 1.5 | , there was a cheerful crane. He lived in a big twig tree. One day, he found a piece of steel. He picked it up and wanted to rock back to his tree. |
+| 0.8 | , there was a big, tough dog named Max. Max loved to play with his ball in the park. One day, while playing, Max saw a small hole in the ground. |
+| 1.5 | , there were tw sailor young brothers who Lucy loved too childing in a circle office cat halveselly. She wanted to maketh display Some explore mysterious away, trying for adventures she was discovering. |
 
 At 0 the model writes the single most typical story it knows, and writes it
-every time. At 1.5 it reaches for tokens it should not.
+every time. At 1.5 it reaches for tokens it should not, and within a sentence
+the text falls apart.
 
 **Top-k** keeps the `k` likeliest tokens and discards the rest before
 sampling. **Top-p** keeps the smallest set of likeliest tokens whose
@@ -47,7 +49,7 @@ token. The result is correct and most of the work is repeated: because
 attention is causal, nothing computed for a token changes when tokens are
 appended after it.
 
-What does a new token need from the earlier ones? In each attention layer,
+A new token needs little from the earlier ones. In each attention layer,
 its query is compared with their keys, and their values are averaged.
 Nothing else crosses between positions. So if every layer keeps the keys and
 values of the tokens it has seen, a new token can be processed alone.

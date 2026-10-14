@@ -7,13 +7,14 @@ Tests: [`tests/test_scaling.py`](../tests/test_scaling.py) ·
 Logs: [`runs/scaling/`](../runs/scaling/)
 
 This is a side topic of [stage 3](03-pretraining.md), not a step of the
-pipeline. Stage 3 trained one model of 14M parameters for 6,000 steps. Why
-that size, and why that long? Given a fixed amount of computation, a
-larger model sees fewer tokens, and a smaller one sees more. Somewhere
-between is the split that ends with the lowest loss. A large training run
-happens once and cannot be repeated with another split, so the split is
-chosen in advance, from small runs, by a law that says how the loss falls
-with size and data. This note finds that law for the model of stage 3.
+pipeline. Stage 3 trained one model of 14M parameters for 6,000 steps, and
+this note asks whether that size and that length were the right ones. Given
+a fixed amount of computation, a larger model sees fewer tokens, and a
+smaller one sees more. Somewhere between is the split that ends with the
+lowest loss. A large training run happens once and cannot be repeated with
+another split, so the split is chosen in advance, from small runs, by a law
+that says how the loss falls with size and data. This note finds that law
+for the model of stage 3.
 
 ## Compute
 
@@ -48,9 +49,9 @@ heads and key/value heads.
 
 Every size has its own best learning rate: a small model takes larger
 steps. `scaling.py --phase lr` trains each size for 16M tokens at rates
-that double from 5e-4 until the loss rises again, and keeps the best. Each
-best lies between two rates that do worse. Stage 3 trained width 384 at
-1e-3, half of its best here.
+that double from 5e-4, or from 1e-3 for the smallest, until the loss rises
+again, and keeps the best. Each best lies between two rates that do worse.
+Stage 3 trained width 384 at 1e-3, half of its best here.
 
 ## Four budgets
 
@@ -82,7 +83,7 @@ That leaves 20 runs, 4 to 6 per budget.
 | 1e16 | 9.98M | 167M | 17 | 1.430 |
 
 The best size is the floor of a parabola through the lowest run and its
-neighbours, against log N. At the three smaller budgets there are runs on
+neighbors, against log N. At the three smaller budgets there are runs on
 both sides of it. At 1e16 the smallest run, 7.8M parameters, is also the
 lowest, by 0.003 over 14.2M, and the next smaller size would have to read
 the text 2.9 times. So that floor is less sure, and the next fit leaves it
@@ -146,7 +147,7 @@ On an M5 Pro, shared with other runs, the sweep took 1.2 hours and the grid
    this choice.
 2. Train each size once for a long schedule and read its loss at several
    points along the way, instead of training a run per budget. Which law do
-   you get, and why does it favour larger models?
+   you get, and why does it favor larger models?
 3. Use the fitted law to choose the size for a budget of 3e16, train it, and
    compare the loss with the law's. It reads TinyStories several times:
    how much does that cost against Muennighoff et al.'s estimate?

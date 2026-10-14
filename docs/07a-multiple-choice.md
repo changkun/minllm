@@ -143,11 +143,13 @@ each subject:
 No answer can be read from 312 of the 1,140 replies. They start to
 explain, "To determine the degree of the field extension", and are still
 explaining when the 96 tokens are used up: stage 7's token limit again.
-Of the replies that can be read, 48.3% are right, which is about what the
-letter after a text prompt gets on these questions. So the model does not
-know less when it writes. It answers in a form that needs more room than
-it was given and a rule to parse, and each of the two costs points that
-have nothing to do with the question.
+Of the replies that can be read, 48.3% are right. They are the easier
+questions: on the same 828, the letter after a text prompt is right 54.2%
+of the time, 5.9 points more (95% interval 2.5 to 9.2). So writing costs
+twice. A reply that needs more room than it was given, and a rule to
+parse, loses the questions it does not finish; and on those it does
+finish, the model picks the right option less often than its letter
+does.
 
 **The option's text.** Here the model is shown no options. The prompt is
 `Question: ... Answer:`, and each option's text is scored as a continuation

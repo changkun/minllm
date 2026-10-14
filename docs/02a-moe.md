@@ -421,6 +421,8 @@ logits: largest difference 9.54e-06 over 102,400 values
 generation: identical for 24 tokens: "The little girl was so excited. […]"
 ```
 
+(The output is saved in `runs/export/check-moe.txt`.)
+
 This is the strongest check of this note. An independent implementation of
 the routing, given this model's weights, computes the same numbers. Its loop
 is the second of the three ways above: every expert takes its own tokens.

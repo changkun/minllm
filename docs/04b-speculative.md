@@ -127,9 +127,10 @@ enough for 1.44 and 1.47 times the speed, the most for the 1.5B model. The
 stories do not repeat their opening: lookup keeps 9% there, yields 1.17
 tokens a pass, and runs at 0.81 of the model's speed.
 
-**Sampling keeps fewer.** At temperature 1 and k = 4 the 0.5B draft is kept
-73% of the time for the 7B model, against 74% greedy, and 70% for the 1.5B
-model, against 80%. The 7B model still samples 2.08 times as fast.
+**Sampling keeps fewer, for the 1.5B model clearly.** At temperature 1 and
+k = 4 the 0.5B draft is kept 70% of the time for the 1.5B model, against 80%
+greedy, and 73% for the 7B model, against 74%. The 7B model still samples
+2.08 times as fast.
 
 ## The model's own tokens, and the GPU's
 

@@ -182,12 +182,10 @@ against 100,000 for the small model. That is the budget of the later stages:
 a step over a hundred short answers takes a few seconds.
 
 Memory is the tighter limit, and it comes from an unexpected place. A step
-over 2,048 tokens takes 15 to 21 GB, and without compilation one over 4,096
-does not fit in 26 GB.
-The weights with their gradients and optimizer state are 8 GB of that. The
-rest is the output layer: 151,936 logits for each position, and several copies
-of them on the way through the loss. The later stages compute the loss only
-at the positions that need it.
+over 2,048 tokens takes 15 to 21 GB. The weights with their gradients and
+optimizer state are 8 GB of that. The rest is the output layer: 151,936
+logits for each position, and several copies of them on the way through the
+loss. The later stages compute the loss only at the positions that need it.
 
 An Apple GPU shares its memory with the rest of the machine, so a step that
 is too large does not fail. It pushes every other program into swap.

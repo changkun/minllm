@@ -178,6 +178,7 @@ model, only that verdict.
 ```sh
 uv run scripts/grpo.py --task gsm8k --max-new-tokens 256    # 60 iterations of 8 problems x 8 replies, 22 minutes
 uv run scripts/evaluate.py --model out/grpo-gsm8k --task gsm8k
+uv run scripts/analyze_replies.py                            # how long the replies are, and how many have a #### line
 ```
 
 ![Held-out score, sampled accuracy and informative groups over 60 iterations](figures/rlvr-gsm8k.svg)
@@ -213,7 +214,7 @@ fine-tuned start.)
 It also did not get back to where it started. The published model solves
 46.8%, and GRPO's result is 4.2 points below that, with an interval of 1.5 to
 7.2. The replies show why. They still follow the terse format that
-fine-tuning installed: 99.7% end in `####`, and a typical one is 268
+fine-tuning installed: 99.7% have a `####` line, and a typical one is 268
 characters, up from 211 and far from the published model's 920.
 Reinforcement learning made the model more careful within the style it was
 given. Unlearning the style would take longer, or a different starting point.
