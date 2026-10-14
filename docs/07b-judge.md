@@ -132,7 +132,9 @@ and the same remedies are standard practice with them.
 ## Run it
 
 ```sh
-uv run scripts/evaluate.py --model qwen --task gsm8k     # stage 7: the replies to judge, in out/eval/
+uv run python -c "from minllm import pretrained; pretrained.download('data/qwen2.5-1.5b-instruct', 'Qwen/Qwen2.5-1.5B-Instruct')"   # the 1.5B judge, 3 GB
+uv run scripts/make_preferences.py                       # stage 8: the stories and their comparisons, if not made yet
+uv run scripts/evaluate.py --model qwen --task gsm8k     # stage 7: the replies to judge, all 1,319, in out/eval/
 uv run scripts/judge.py --task gsm8k
 uv run scripts/judge.py --task gsm8k --reference
 uv run scripts/judge.py --task gsm8k --judge data/qwen2.5-1.5b-instruct
@@ -144,10 +146,9 @@ uv run scripts/judge.py --task stories --judge data/qwen2.5-1.5b-instruct --rubr
 uv run scripts/analyze_judge.py                          # the area under the ROC curve, the line at 0.87, the pairs judged alike
 ```
 
-The 1.5B model is downloaded with `uv run python -c "from minllm import
-pretrained; pretrained.download('data/qwen2.5-1.5b-instruct',
-'Qwen/Qwen2.5-1.5B-Instruct')"`, 3 GB, and loads into the same model code
-as the 0.5B one.
+The 1.5B model loads into the same model code as the 0.5B one. The judge
+reads every one of the 1,319 replies, so stage 7's evaluation has to be run
+in full, without `--n`.
 
 ## Exercises
 

@@ -110,6 +110,16 @@ written, and any gap between the check and the intention gets found.
 
 Two repairs were tried, and they fail and succeed in instructive ways.
 
+```sh
+uv run scripts/grpo.py --task words --must-finish --out out/grpo-words-finish     # a story has to end to earn anything
+uv run scripts/grpo.py --task words --lora 16 --kl 0.05 --out out/grpo-words-kl   # a leash: LoRA and a KL penalty
+for m in sft-words grpo-words grpo-words-finish grpo-words-kl; do
+  uv run scripts/evaluate.py --model out/$m --task words
+  uv run scripts/evaluate.py --model out/$m --task taste --temperature 1     # 1,000 stories, for the measures of stage 8
+done
+uv run scripts/analyze_stories.py --models sft-words,grpo-words,grpo-words-finish,grpo-words-kl --out runs/rlvr/stories.json
+```
+
 ![Requested words used, stories cut off, and strangeness for the four models](figures/rlvr-stories.svg)
 
 | | Requested words used | Stories cut off | Strangeness |

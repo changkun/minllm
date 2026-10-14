@@ -146,6 +146,9 @@ cheap, and a stretch at the end.
 
 ## Run it
 
+The model and text of [3b](03b-data.md) come first, so this note is best run
+after 3b: its Run it section makes them.
+
 ```sh
 uv run scripts/long_context.py --model out/web-clean                      # the table computed further
 uv run scripts/long_context.py --model out/web-clean --scaling yarn:4     # stretched 4 times, without training
@@ -162,9 +165,6 @@ uv run scripts/long_context.py --model out/base --data data/tinystories --tokeni
 The other stretches are `--scaling linear:4`, `ntk:4` and `yarn:8`, and
 `--rope-scaling` takes the same values for training; `--name` keeps the
 results of several trained models apart.
-
-The model and text of [3b](03b-data.md) come first: its Run it section makes
-them.
 
 ## Exercises
 

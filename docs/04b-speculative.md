@@ -156,7 +156,13 @@ the arithmetic. The draft decides only the speed.
 
 ## Run it
 
+The story models are those of [3a](03a-distillation.md): `out/wide` is its
+teacher, which [2a](02a-moe.md) trains as well, and `out/base` is stage 3's
+model. The 0.5B model is stage 5's, and the 1.5B model is
+[7b](07b-judge.md)'s, downloaded by the first command.
+
 ```sh
+uv run python -c "from minllm import pretrained; pretrained.download('data/qwen2.5-1.5b-instruct', 'Qwen/Qwen2.5-1.5B-Instruct')"   # 3 GB
 uv run scripts/bench_speculative.py --target out/wide --draft out/base --max-new-tokens 200   # the story models of 3a
 uv run scripts/bench_speculative.py --target data/qwen2.5-1.5b-instruct --draft qwen          # the 1.5B model, drafted by the 0.5B one
 uv run scripts/bench_speculative.py --target data/qwen2.5-7b-instruct --draft qwen --n 5 --ks 2,4,6

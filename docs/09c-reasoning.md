@@ -140,6 +140,7 @@ compared on the same replies, within one run.
 ## Run it
 
 ```sh
+uv run python -c "from minllm import pretrained; pretrained.download('data/r1-distill-qwen-1.5b', 'deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B', files=['config.json', 'tokenizer.json', 'tokenizer_config.json', 'model.safetensors'])"   # the teacher, 3.5 GB
 uv run scripts/grpo.py --task gsm8k --model qwen --lora 16 --max-new-tokens 512 --kl 0.05 --iterations 120 --out out/grpo-qwen
 uv run scripts/evaluate.py --model out/grpo-qwen --task gsm8k
 uv run scripts/test_time.py --model qwen
@@ -152,13 +153,11 @@ uv run scripts/test_time.py --model out/sft-gsm8k-traces --max-new-tokens 2560 -
 uv run scripts/analyze_reasoning.py                                 # the comparisons, and the replies cut off in a loop
 ```
 
-The teacher is DeepSeek-R1-Distill-Qwen-1.5B, 3.5 GB under the MIT license:
-`uv run python -c "from minllm import pretrained;
-pretrained.download('data/r1-distill-qwen-1.5b',
-'deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B', files=['config.json',
-'tokenizer.json', 'tokenizer_config.json', 'model.safetensors'])"`. It
-reads Qwen's vocabulary with chat markers of its own, and loads into the
-same model code.
+The teacher, downloaded by the first command, is
+DeepSeek-R1-Distill-Qwen-1.5B, under the MIT license. It reads Qwen's
+vocabulary with chat markers of its own, and loads into the same model code.
+Its thinking takes a while: 960 problems took 258 minutes here, beside other
+runs.
 
 ## Exercises
 

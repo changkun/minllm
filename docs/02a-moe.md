@@ -230,8 +230,7 @@ this note depend on it.
 ## The comparison
 
 ```sh
-uv run scripts/train.py --n-experts 8 --mlp-dim 512 --out out/moe    # the mixture
-uv run scripts/train.py --mlp-dim 4096 --out out/wide                # the wide dense model
+uv run scripts/train.py --mlp-dim 4096 --out out/wide                # the wide dense model; the mixture is out/moe from above
 ```
 
 Both take the 6,000 steps of the reference run of stage 3, on the same data

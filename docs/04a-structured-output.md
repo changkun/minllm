@@ -199,6 +199,7 @@ so no step builds one.
 ## Run it
 
 ```sh
+uv run scripts/download_qwen.py                                         # stage 5's model, if it is not there yet
 uv run scripts/evaluate_structured.py --form thinking                   # asked in the prompt
 uv run scripts/evaluate_structured.py --form thinking --constrain       # held to the form
 uv run scripts/evaluate_structured.py --form answer --constrain         # {"answer": <number>} and nothing else

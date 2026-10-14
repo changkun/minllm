@@ -264,6 +264,11 @@ their *strangeness*, the loss that the pretrained story model of stage 3
 assigns to them. That model never saw any of this training, so stories that
 have stopped reading like stories surprise it.
 
+```sh
+for m in sft-words ppo ppo-no-kl dpo; do uv run scripts/evaluate.py --model out/$m --task taste --temperature 1; done   # 1,000 stories each
+uv run scripts/analyze_stories.py
+```
+
 ![Taste, requested words used and strangeness of the stories of each model](figures/rlhf-comparison.svg)
 
 | | Taste | Requested words used | Strangeness | Stories with the same first six words |

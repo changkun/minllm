@@ -63,6 +63,9 @@ Against GRPO, three things differ:
 
 ```sh
 uv run scripts/self_train.py --task words      # 6 rounds of 1,600 prompts x 4 stories, 13 minutes
+uv run scripts/evaluate.py --model out/self-words --task words
+uv run scripts/evaluate.py --model out/self-words --task taste --temperature 1
+uv run scripts/analyze_stories.py --models sft-words,grpo-words,grpo-words-kl,self-words --out runs/self/stories.json
 ```
 
 The start is the fine-tuned story model of stage 6, which uses 40% of the

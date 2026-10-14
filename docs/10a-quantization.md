@@ -186,6 +186,12 @@ out/qwen-q4: 278.1 MB, 4.50 bits per parameter, held-out loss 0.9193 (+0.0887)
 The directory holds the whole model, and `checkpoint.load` reads it without
 the model it was made from. The loss printed is that of the file read back.
 
+```sh
+uv run scripts/quantize.py --model qwen --bits 8
+uv run scripts/export.py --model out/qwen-q4 && uv run scripts/export.py --model out/qwen-q8
+uv run --with mlx-lm scripts/bench_quantize.py      # memory and speed at 16, 8 and 4 bits, here and in MLX
+```
+
 ![Tokens per second and memory at 16, 8 and 4 bits, in this repository and in MLX](figures/quant-speed.svg)
 
 **In this repository's code, the saving is on disk only.** `QuantLinear`

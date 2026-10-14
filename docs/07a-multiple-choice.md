@@ -297,9 +297,18 @@ history it left no trace.
 ```sh
 uv run scripts/evaluate_choice.py --model qwen                           # the authors' protocol, 10 minutes
 uv run scripts/evaluate_choice.py --model qwen --shots 0 --format chat   # in a chat turn, 2 minutes
+uv run scripts/evaluate_choice.py --model qwen --shots 0                 # the authors' prompt without examples
+uv run scripts/evaluate_choice.py --model qwen --format chat             # in a chat turn, with examples
 uv run scripts/evaluate_choice.py --model qwen --rotate 1                # the options moved round by one
+uv run scripts/evaluate_choice.py --model qwen --rotate 2
+uv run scripts/evaluate_choice.py --model qwen --rotate 3
 uv run scripts/evaluate_choice.py --model qwen --method cloze            # each option's text as the continuation
 uv run scripts/evaluate_choice.py --model qwen --method generate --shots 0 --per-subject 20
+uv run scripts/evaluate_choice.py --model out/base --shots 0             # stage 3's story model, a floor
+uv run scripts/evaluate_choice.py --model out/sft-gsm8k-lora             # after stage 6's fine-tuning on GSM8K
+uv run scripts/quantize.py --model qwen --bits 4                         # 10a's model, and its GSM8K score
+uv run scripts/evaluate.py --model out/qwen-q4 --task gsm8k
+uv run scripts/evaluate_choice.py --model out/qwen-q4
 uv run scripts/evaluate.py --compare runs/eval/mmlu-qwen-letter-plain-5shot.json runs/eval/mmlu-qwen-q4-letter-plain-5shot.json
 uv run scripts/analyze_choice.py                                         # the numbers of this note, from all of the above
 ```
