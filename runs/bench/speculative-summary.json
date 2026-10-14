@@ -1,0 +1,1096 @@
+{
+ "speculative-wide-mps": {
+  "label": "the 42M story model, drafted by the 14M one",
+  "target": "out/wide",
+  "draft": "out/base",
+  "device": "mps",
+  "n": 10,
+  "max_new_tokens": 200,
+  "alone": 439.9730304281064,
+  "alone_sampling": 425.3324427965895,
+  "cases": [
+   {
+    "draft": "model",
+    "k": 1,
+    "temperature": 0.0,
+    "tokens_per_second": 333.206240324606,
+    "speedup": 0.7573333301825039,
+    "kept": 0.821590909090909,
+    "tokens_per_pass": 1.8172531214528944,
+    "round_cost": 2.399541983732538,
+    "same": 8,
+    "parted_at": [
+     null,
+     177,
+     null,
+     null,
+     null,
+     null,
+     65,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 2,
+    "temperature": 0.0,
+    "tokens_per_second": 219.9083935847254,
+    "speedup": 0.4998224399589861,
+    "kept": 0.7606299212598425,
+    "tokens_per_pass": 2.5094043887147337,
+    "round_cost": 5.020591690362377,
+    "same": 8,
+    "parted_at": [
+     null,
+     177,
+     null,
+     null,
+     null,
+     null,
+     129,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 3,
+    "temperature": 0.0,
+    "tokens_per_second": 176.50499198219612,
+    "speedup": 0.4011722986985172,
+    "kept": 0.6945686900958467,
+    "tokens_per_pass": 3.0611854684512427,
+    "round_cost": 7.6306003140853385,
+    "same": 7,
+    "parted_at": [
+     null,
+     177,
+     null,
+     null,
+     113,
+     null,
+     65,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 167.69369980148926,
+    "speedup": 0.3811454071135189,
+    "kept": 0.6325861126298524,
+    "tokens_per_pass": 3.5010893246187362,
+    "round_cost": 9.185705138448606,
+    "same": 5,
+    "parted_at": [
+     96,
+     177,
+     133,
+     80,
+     null,
+     null,
+     129,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 6,
+    "temperature": 0.0,
+    "tokens_per_second": 226.84351032265388,
+    "speedup": 0.5155850350689192,
+    "kept": 0.5548216644649934,
+    "tokens_per_pass": 4.2565445026178015,
+    "round_cost": 8.255756496207889,
+    "same": 5,
+    "parted_at": [
+     96,
+     177,
+     195,
+     null,
+     null,
+     null,
+     79,
+     19,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 8,
+    "temperature": 0.0,
+    "tokens_per_second": 135.3143826961523,
+    "speedup": 0.30755153915795136,
+    "kept": 0.4612304331998544,
+    "tokens_per_pass": 4.587392550143266,
+    "round_cost": 14.915849755469075,
+    "same": 7,
+    "parted_at": [
+     null,
+     108,
+     null,
+     null,
+     113,
+     null,
+     65,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 2,
+    "temperature": 0.0,
+    "tokens_per_second": 305.02511845983923,
+    "speedup": 0.693281399914538,
+    "kept": 0.16984006092916984,
+    "tokens_per_pass": 1.1618287373004355,
+    "round_cost": 1.6758400520245547,
+    "same": 9,
+    "parted_at": [
+     null,
+     177,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 356.23518292351673,
+    "speedup": 0.8096750443473538,
+    "kept": 0.09140839544919577,
+    "tokens_per_pass": 1.1685962373371925,
+    "round_cost": 1.4432904231093728,
+    "same": 6,
+    "parted_at": [
+     96,
+     177,
+     null,
+     null,
+     null,
+     19,
+     79,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 8,
+    "temperature": 0.0,
+    "tokens_per_second": 335.6377547531966,
+    "speedup": 0.7628598380828284,
+    "kept": 0.045799915576192486,
+    "tokens_per_pass": 1.1592076302274394,
+    "round_cost": 1.519555195277664,
+    "same": 7,
+    "parted_at": [
+     null,
+     177,
+     25,
+     null,
+     null,
+     null,
+     65,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 225.23101210741268,
+    "speedup": 0.5295411058383028,
+    "kept": 0.5265888456549935,
+    "tokens_per_pass": 3.0703259005145798,
+    "round_cost": 5.798087941924784
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 344.74577302290237,
+    "speedup": 0.8105325113602332,
+    "kept": 0.05864884929472903,
+    "tokens_per_pass": 1.1035386631716908,
+    "round_cost": 1.361498333138711
+   }
+  ]
+ },
+ "speculative-qwen2.5-1.5b-instruct-mps": {
+  "label": "Qwen2.5-1.5B, drafted by the 0.5B model",
+  "target": "data/qwen2.5-1.5b-instruct",
+  "draft": "qwen",
+  "device": "mps",
+  "n": 10,
+  "max_new_tokens": 256,
+  "alone": 51.39035982285618,
+  "alone_sampling": 51.409630060438154,
+  "cases": [
+   {
+    "draft": "model",
+    "k": 1,
+    "temperature": 0.0,
+    "tokens_per_second": 57.83984856922086,
+    "speedup": 1.1254999725356316,
+    "kept": 0.9170024174053183,
+    "tokens_per_pass": 1.9146537842190017,
+    "round_cost": 1.7011584459708964,
+    "same": 3,
+    "parted_at": [
+     null,
+     44,
+     122,
+     2,
+     85,
+     1,
+     74,
+     null,
+     null,
+     25
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 2,
+    "temperature": 0.0,
+    "tokens_per_second": 60.71332130407819,
+    "speedup": 1.181414598250693,
+    "kept": 0.8820453224869262,
+    "tokens_per_pass": 2.7491329479768787,
+    "round_cost": 2.3269840681226457,
+    "same": 3,
+    "parted_at": [
+     null,
+     44,
+     null,
+     2,
+     85,
+     1,
+     74,
+     153,
+     null,
+     25
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 3,
+    "temperature": 0.0,
+    "tokens_per_second": 61.653905358881374,
+    "speedup": 1.1997173316435978,
+    "kept": 0.8420275590551181,
+    "tokens_per_pass": 3.497797356828194,
+    "round_cost": 2.9155179012344976,
+    "same": 4,
+    "parted_at": [
+     null,
+     44,
+     null,
+     2,
+     85,
+     1,
+     74,
+     153,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 60.6627608675941,
+    "speedup": 1.1804307476480047,
+    "kept": 0.7987670629678556,
+    "tokens_per_pass": 4.171929824561404,
+    "round_cost": 3.5342436079998154,
+    "same": 1,
+    "parted_at": [
+     null,
+     44,
+     122,
+     2,
+     85,
+     1,
+     74,
+     153,
+     93,
+     25
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 6,
+    "temperature": 0.0,
+    "tokens_per_second": 58.83786229939253,
+    "speedup": 1.1449202243807608,
+    "kept": 0.7433052792654935,
+    "tokens_per_pass": 5.405466970387244,
+    "round_cost": 4.721260796411238,
+    "same": 1,
+    "parted_at": [
+     null,
+     53,
+     122,
+     2,
+     85,
+     1,
+     74,
+     153,
+     93,
+     25
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 8,
+    "temperature": 0.0,
+    "tokens_per_second": 56.076301118120725,
+    "speedup": 1.0911832746728587,
+    "kept": 0.6942544459644323,
+    "tokens_per_pass": 6.443243243243243,
+    "round_cost": 5.9048222171247575,
+    "same": 3,
+    "parted_at": [
+     null,
+     null,
+     null,
+     2,
+     85,
+     1,
+     74,
+     154,
+     93,
+     25
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 2,
+    "temperature": 0.0,
+    "tokens_per_second": 71.34259341348847,
+    "speedup": 1.3882485676186764,
+    "kept": 0.36131868131868133,
+    "tokens_per_pass": 1.51375,
+    "round_cost": 1.0904027097946887,
+    "same": 5,
+    "parted_at": [
+     null,
+     44,
+     null,
+     null,
+     85,
+     null,
+     null,
+     153,
+     93,
+     25
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 75.64234324968467,
+    "speedup": 1.4719169803524563,
+    "kept": 0.23297137216189537,
+    "tokens_per_pass": 1.6356902356902356,
+    "round_cost": 1.1112652802595995,
+    "same": 5,
+    "parted_at": [
+     null,
+     44,
+     null,
+     null,
+     85,
+     null,
+     74,
+     153,
+     null,
+     25
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 8,
+    "temperature": 0.0,
+    "tokens_per_second": 75.56969713060921,
+    "speedup": 1.4705033666061065,
+    "kept": 0.13425175580767154,
+    "tokens_per_pass": 1.6941340782122905,
+    "round_cost": 1.1520776604016347,
+    "same": 6,
+    "parted_at": [
+     null,
+     44,
+     null,
+     null,
+     85,
+     null,
+     null,
+     153,
+     93,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 55.114155793114016,
+    "speedup": 1.0720589844416455,
+    "kept": 0.7020426287744227,
+    "tokens_per_pass": 3.7809187279151946,
+    "round_cost": 3.5267823718527853
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 68.69110236545238,
+    "speedup": 1.3361524345671774,
+    "kept": 0.18525996971226652,
+    "tokens_per_pass": 1.4844884488448844,
+    "round_cost": 1.111017283986582
+   }
+  ]
+ },
+ "speculative-qwen2.5-7b-instruct-mps": {
+  "label": "Qwen2.5-7B, drafted by the 0.5B model",
+  "target": "data/qwen2.5-7b-instruct",
+  "draft": "qwen",
+  "device": "mps",
+  "n": 5,
+  "max_new_tokens": 256,
+  "alone": 16.921655160387424,
+  "alone_sampling": 16.86278199644832,
+  "cases": [
+   {
+    "draft": "model",
+    "k": 2,
+    "temperature": 0.0,
+    "tokens_per_second": 30.482227459695313,
+    "speedup": 1.801373870982336,
+    "kept": 0.8363844393592678,
+    "tokens_per_pass": 2.6598173515981736,
+    "round_cost": 1.476549312968388,
+    "same": 2,
+    "parted_at": [
+     19,
+     145,
+     null,
+     83,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 35.71742802264607,
+    "speedup": 2.1107526234347582,
+    "kept": 0.7398648648648649,
+    "tokens_per_pass": 3.9425675675675675,
+    "round_cost": 1.8678491850702794,
+    "same": 0,
+    "parted_at": [
+     19,
+     145,
+     146,
+     83,
+     34
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 6,
+    "temperature": 0.0,
+    "tokens_per_second": 38.17755949943642,
+    "speedup": 2.2561362430318157,
+    "kept": 0.6897305171158048,
+    "tokens_per_pass": 5.073913043478261,
+    "round_cost": 2.248939114004876,
+    "same": 1,
+    "parted_at": [
+     19,
+     145,
+     146,
+     83,
+     null
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 2,
+    "temperature": 0.0,
+    "tokens_per_second": 23.71990646690358,
+    "speedup": 1.401748602136182,
+    "kept": 0.347906976744186,
+    "tokens_per_pass": 1.4675,
+    "round_cost": 1.0469066976515025,
+    "same": 2,
+    "parted_at": [
+     188,
+     145,
+     null,
+     null,
+     76
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 24.29865892792524,
+    "speedup": 1.4359504846078495,
+    "kept": 0.20247046186895812,
+    "tokens_per_pass": 1.513623978201635,
+    "round_cost": 1.0540920417705055,
+    "same": 0,
+    "parted_at": [
+     24,
+     145,
+     146,
+     83,
+     34
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 35.05637273559405,
+    "speedup": 2.078919880656567,
+    "kept": 0.728099173553719,
+    "tokens_per_pass": 3.8943894389438944,
+    "round_cost": 1.8732753845780548
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 22.764618225521396,
+    "speedup": 1.34999184774589,
+    "kept": 0.1694560669456067,
+    "tokens_per_pass": 1.416452442159383,
+    "round_cost": 1.0492303672236714
+   }
+  ]
+ },
+ "speculative-qwen2.5-7b-instruct-draft-1.5b-mps": {
+  "label": "Qwen2.5-7B, drafted by the 1.5B model",
+  "target": "data/qwen2.5-7b-instruct",
+  "draft": "data/qwen2.5-1.5b-instruct",
+  "device": "mps",
+  "n": 5,
+  "max_new_tokens": 256,
+  "alone": 16.937228530229785,
+  "alone_sampling": 16.516759772414897,
+  "cases": [
+   {
+    "draft": "model",
+    "k": 2,
+    "temperature": 0.0,
+    "tokens_per_second": 26.248291698485513,
+    "speedup": 1.5497394778394364,
+    "kept": 0.8794326241134752,
+    "tokens_per_pass": 2.7476415094339623,
+    "round_cost": 1.772969940253814,
+    "same": 2,
+    "parted_at": [
+     19,
+     145,
+     null,
+     83,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 29.24343401859348,
+    "speedup": 1.7265772830778907,
+    "kept": 0.821917808219178,
+    "tokens_per_pass": 4.259124087591241,
+    "round_cost": 2.4668018798432785,
+    "same": 0,
+    "parted_at": [
+     19,
+     145,
+     146,
+     83,
+     34
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 6,
+    "temperature": 0.0,
+    "tokens_per_second": 29.80215053438716,
+    "speedup": 1.7595647647545107,
+    "kept": 0.7604743083003953,
+    "tokens_per_pass": 5.504716981132075,
+    "round_cost": 3.128453746856017,
+    "same": 1,
+    "parted_at": [
+     19,
+     145,
+     146,
+     83,
+     null
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 2,
+    "temperature": 0.0,
+    "tokens_per_second": 23.740260200592886,
+    "speedup": 1.401661444091692,
+    "kept": 0.347906976744186,
+    "tokens_per_pass": 1.4675,
+    "round_cost": 1.0469717963534146,
+    "same": 2,
+    "parted_at": [
+     188,
+     145,
+     null,
+     null,
+     76
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 24.30729459923317,
+    "speedup": 1.4351400263537328,
+    "kept": 0.20247046186895812,
+    "tokens_per_pass": 1.513623978201635,
+    "round_cost": 1.0546873130194179,
+    "same": 0,
+    "parted_at": [
+     24,
+     145,
+     146,
+     83,
+     34
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 27.57760506597478,
+    "speedup": 1.669674042970154,
+    "kept": 0.8039568345323741,
+    "tokens_per_pass": 4.1637010676156585,
+    "round_cost": 2.493720906272774
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 22.088107085645593,
+    "speedup": 1.3373147875248244,
+    "kept": 0.1694560669456067,
+    "tokens_per_pass": 1.416452442159383,
+    "round_cost": 1.0591765344799864
+   }
+  ]
+ },
+ "speculative-wide-mps-float32": {
+  "label": "the story models in 32-bit floats",
+  "target": "out/wide",
+  "draft": "out/base",
+  "device": "mps",
+  "n": 10,
+  "max_new_tokens": 200,
+  "alone": 410.1082211375286,
+  "alone_sampling": 378.45118807921057,
+  "cases": [
+   {
+    "draft": "model",
+    "k": 1,
+    "temperature": 0.0,
+    "tokens_per_second": 304.8861607862207,
+    "speedup": 0.743428551470023,
+    "kept": 0.8420454545454545,
+    "tokens_per_pass": 1.8289920724801811,
+    "round_cost": 2.460212308047105,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 238.1357173010436,
+    "speedup": 0.5806655536934128,
+    "kept": 0.63557010365521,
+    "tokens_per_pass": 3.510869565217391,
+    "round_cost": 6.046285237493363,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 8,
+    "temperature": 0.0,
+    "tokens_per_second": 194.39574408319623,
+    "speedup": 0.474010844123035,
+    "kept": 0.47563209967020886,
+    "tokens_per_pass": 4.681159420289855,
+    "round_cost": 9.875637822063847,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 316.722862858571,
+    "speedup": 0.7722909381822876,
+    "kept": 0.07825751734772551,
+    "tokens_per_pass": 1.1389280677009872,
+    "round_cost": 1.4747396497771161,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 8,
+    "temperature": 0.0,
+    "tokens_per_second": 289.4569766009847,
+    "speedup": 0.705806325457485,
+    "kept": 0.04140450578445301,
+    "tokens_per_pass": 1.1397318278052222,
+    "round_cost": 1.6147940117517057,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 202.4049570033444,
+    "speedup": 0.5348244724257033,
+    "kept": 0.5628140703517588,
+    "tokens_per_pass": 3.191616766467066,
+    "round_cost": 5.9675967182119525
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 300.45537618506467,
+    "speedup": 0.7939078688324233,
+    "kept": 0.04739495798319328,
+    "tokens_per_pass": 1.0827205882352942,
+    "round_cost": 1.3637861907422826
+   }
+  ]
+ },
+ "speculative-wide-cpu-bfloat16": {
+  "label": "the story models on the CPU, in 16-bit floats",
+  "target": "out/wide",
+  "draft": "out/base",
+  "device": "cpu",
+  "n": 10,
+  "max_new_tokens": 200,
+  "alone": 419.7238428426958,
+  "alone_sampling": 411.9242053066036,
+  "cases": [
+   {
+    "draft": "model",
+    "k": 1,
+    "temperature": 0.0,
+    "tokens_per_second": 238.98880561746745,
+    "speedup": 0.5693953529035893,
+    "kept": 0.8420454545454545,
+    "tokens_per_pass": 1.8289920724801811,
+    "round_cost": 3.2121654368153374,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 304.42660525823203,
+    "speedup": 0.7253021491379157,
+    "kept": 0.63557010365521,
+    "tokens_per_pass": 3.510869565217391,
+    "round_cost": 4.840561370720276,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 8,
+    "temperature": 0.0,
+    "tokens_per_second": 263.7539607087722,
+    "speedup": 0.6283988036572465,
+    "kept": 0.47563209967020886,
+    "tokens_per_pass": 4.681159420289855,
+    "round_cost": 7.449344895384531,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 294.9120370922647,
+    "speedup": 0.7026335103931466,
+    "kept": 0.07825751734772551,
+    "tokens_per_pass": 1.1389280677009872,
+    "round_cost": 1.620941857816772,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 8,
+    "temperature": 0.0,
+    "tokens_per_second": 277.9547640154622,
+    "speedup": 0.662232486324667,
+    "kept": 0.04140450578445301,
+    "tokens_per_pass": 1.1397318278052222,
+    "round_cost": 1.7210448767480968,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 258.9927294269264,
+    "speedup": 0.6287387973089681,
+    "kept": 0.5240233497979344,
+    "tokens_per_pass": 3.0444839857651247,
+    "round_cost": 4.8422079229016255
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 286.2623756453303,
+    "speedup": 0.6949394377838499,
+    "kept": 0.04731355252606255,
+    "tokens_per_pass": 1.076346284935242,
+    "round_cost": 1.5488346558193504
+   }
+  ]
+ },
+ "speculative-qwen2.5-1.5b-instruct-mps-float32": {
+  "label": "Qwen2.5-1.5B and the 0.5B draft in 32-bit floats",
+  "target": "data/qwen2.5-1.5b-instruct",
+  "draft": "qwen",
+  "device": "mps",
+  "n": 10,
+  "max_new_tokens": 256,
+  "alone": 30.47616969724448,
+  "alone_sampling": 27.424892766894967,
+  "cases": [
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 37.444793903887316,
+    "speedup": 1.228658137681682,
+    "kept": 0.8092691622103387,
+    "tokens_per_pass": 4.198581560283688,
+    "round_cost": 3.4172089302284396,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 0.0,
+    "tokens_per_second": 35.59588103096007,
+    "speedup": 1.1679906426751028,
+    "kept": 0.21785099582001474,
+    "tokens_per_pass": 1.5924680564895763,
+    "round_cost": 1.363425354883215,
+    "same": 10,
+    "parted_at": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   {
+    "draft": "model",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 33.227442955341374,
+    "speedup": 1.2115796855713055,
+    "kept": 0.6926503340757239,
+    "tokens_per_pass": 3.7393617021276597,
+    "round_cost": 3.086352261151036
+   },
+   {
+    "draft": "lookup",
+    "k": 4,
+    "temperature": 1.0,
+    "tokens_per_second": 33.630867815348246,
+    "speedup": 1.2262898564892335,
+    "kept": 0.18382978723404256,
+    "tokens_per_pass": 1.4783582089552239,
+    "round_cost": 1.205553647151287
+   }
+  ]
+ }
+}
