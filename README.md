@@ -9,14 +9,14 @@ format that other tools run.
 
 These ten stages are the pipeline, and each builds on the one before. Side
 topics branch off a single stage for whoever wants to go further there: a
-mixture of experts in place of the model's MLP, and windows longer than it
-was trained on; distillation from a larger model, text from the web and
-scaling laws for pretraining; structured output and speculative decoding in
-inference; tool calling in fine-tuning; multiple-choice benchmarks and model
-judges in evaluation; refusals, and DPO on math problems, in RLHF;
-self-training in place of reinforcement learning, reinforcement learning
-with a tool, and reasoning; and quantization of the exported file. The
-pipeline does not depend on them.
+mixture of experts in place of the model's MLP, windows longer than it was
+trained on, and latent attention; distillation from a larger model, text
+from the web and scaling laws for pretraining; structured output and
+speculative decoding in inference; tool calling in fine-tuning;
+multiple-choice benchmarks and model judges in evaluation; refusals, and DPO
+on math problems, in RLHF; self-training in place of reinforcement learning,
+reinforcement learning with a tool, and reasoning; and quantization of the
+exported file. The pipeline does not depend on them.
 
 ![The ten stages of the pipeline, and the side topics that branch off them](docs/figures/pipeline.svg)
 
@@ -60,6 +60,7 @@ its own.
 |---|---|---|---|
 | 2a | [Mixture of experts](docs/02a-moe.md) | 2, the model | A router and eight expert MLPs in place of the MLP of every block, the load-balancing loss, three ways to hand tokens to experts, and a look at what the routers learn |
 | 2b | [Longer context](docs/02b-context.md) | 2, the model; run after 3b | Windows longer than those trained on: what the rotary table does past them, stretched by interpolation, NTK and YaRN with and without training, measured on 3b's web model by the loss along long documents and by finding a passage again |
+| 2c | [Latent attention](docs/02c-latent-attention.md) | 2, the model; run after 3 | DeepSeek's multi-head latent attention: a short latent cached per token in place of keys and values, the up-projections folded into the query at decoding, and a rotary key of its own, against full, grouped-query and multi-query attention in loss, cache and speed |
 | 3a | [Distillation](docs/03a-distillation.md) | 3, pretraining | A second model as a teacher in the training loop: the student learns from the teacher's whole prediction at every position, and not only from the token that came next |
 | 3b | [Data preparation](docs/03b-data.md) | 3, pretraining | From pages of Common Crawl to text worth training on: the crawl's language tags, rules for lines and pages, placeholders for addresses, and copies found by hash and by MinHash, with the model of stage 3 trained on each version |
 | 3c | [Scaling laws](docs/03c-scaling.md) | 3, pretraining | The model of stage 3 at eight sizes and four compute budgets: the best size for each budget, how many tokens per parameter, and a law fitted on small runs that predicts larger ones |
@@ -107,6 +108,7 @@ From the side topics:
 |---|---|
 | 2a | A mixture of eight experts per block, two of them active, has the dense model's arithmetic per token and three times its parameters. Step for step it learns more: a validation loss of 1.423 against 1.465 after 6,000 steps. Minute for minute it learns less: 1.491 against 1.465 after 20 minutes. Without the load-balancing loss, 24 of its 64 experts get less than 1% of the work. On this GPU it generates at a sixth of the speed of a dense model with the same parameters, and the gap closes as the models get wider. Exported, it loads as a Mixtral and gives the same logits. |
 | 2b | Read past the 256 tokens it was trained on, 3b's web model breaks at once: its loss rises from 3.20 to 4.36. Stretched by YaRN, without a step of training, it keeps its loss level to 1,024 tokens, or to 2,048 when stretched by 8, and finds a passage it saw 1,024 tokens earlier. After 500 steps on windows of 1,024, every stretch is level to 1,024, and they differ in how far back they reach: a passage 512 tokens back is worth 1.01 to YaRN and 0.39 to the model trained without a stretch. Trained on 1,024 from the start, the model copies more over short distances and ends with a higher loss. |
+| 2c | With latent attention, which caches a latent of 128 numbers and a rotary key of 32 per token and layer, the 14M model ends at a validation loss of 1.464, as it does with 1 key/value head (1.464) and with stage 2's 2 (1.465, and 1.461 with another seed). Full multi-head attention, with a cache of 768, ends at 1.455, and smaller latents learn less. Decoded against the latent, the model writes 179 tokens per second for one sequence, a third of stage 2's 509, and 43,800 for 1,024 sequences at once, 1.6 times as many. Projected up at every step, it writes 12,800. |
 | 3a | Taught by a 42M model of the same kind, the 14M model of stage 3 ends at a validation loss of 1.418 where the text alone gave 1.465, and the teacher has 1.387: 60% of the way, with no change to the model. Taught by the teacher alone, without ever being told which token came next, it reaches 1.445. A step with a teacher takes 1.7 times as long, and given the same 20 minutes the text alone still wins, 1.465 against 1.481. |
 | 3b | Of 201,520 pages of Common Crawl, 1.4 billion characters, the usual rules leave a tenth. Less than half is tagged English, and of that only 31% is sentences and not menus. The 14M model trained on the raw pages learns to write menus, and has the lowest loss of all on its own held-out text. On held-out prose it has 3.52 where the model trained on the cleaned text has 3.30, and on stories that neither saw 3.35 against 3.03. Removing copies, a tenth of what the rules passed, adds 0.02, at the edge of what one run can show. |
 | 3c | Trained at eight sizes from 0.36M to 30M parameters and four budgets from 3e14 to 1e16 operations, the model of stage 3 does best on 16 to 23 tokens per parameter, near Chinchilla's 20. A law L(N, D) fitted on the three smaller budgets predicts every run at the largest within 0.014. Stage 3's 14M model on 98M tokens is larger than the law would choose, 9.8M on 142M tokens, and the law puts the cost at 0.008 in loss. |
