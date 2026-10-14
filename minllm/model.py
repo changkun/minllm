@@ -347,16 +347,24 @@ class Transformer(nn.Module):
         broadcasts to (batch, heads, new tokens, all tokens): True where a
         token may attend.
 
+        A cache of continuous batching (minllm/batching.py) has a position
+        for every row: each row turns its new tokens by its own angles, and
+        the caller's mask says which keys each row may see.
         """
         T = idx.shape[1]
         pos = cache.pos if cache is not None else 0  # tokens that came before idx
-        assert pos + T <= self.cfg.max_seq_len, f"{pos + T} tokens exceed max_seq_len {self.cfg.max_seq_len}"
-        if mask is None and pos > 0 and T > 1:
-            # Several new tokens after cached ones: each sees the whole cache,
-            # and of the new tokens only itself and the earlier ones.
-            mask = torch.ones(T, pos + T, dtype=torch.bool, device=idx.device).tril(pos)
+        if torch.is_tensor(pos):
+            assert mask is not None and int(pos.max()) + T <= self.cfg.max_seq_len
+            at = pos[:, None] + torch.arange(T, device=idx.device)  # (batch, T)
+            cos, sin = self.rope_cos[at][:, None], self.rope_sin[at][:, None]  # (batch, 1, T, rotated / 2), for every head
+        else:
+            assert pos + T <= self.cfg.max_seq_len, f"{pos + T} tokens exceed max_seq_len {self.cfg.max_seq_len}"
+            if mask is None and pos > 0 and T > 1:
+                # Several new tokens after cached ones: each sees the whole cache,
+                # and of the new tokens only itself and the earlier ones.
+                mask = torch.ones(T, pos + T, dtype=torch.bool, device=idx.device).tril(pos)
+            cos, sin = self.rope_cos[pos : pos + T], self.rope_sin[pos : pos + T]
         x = self.embed(idx)
-        cos, sin = self.rope_cos[pos : pos + T], self.rope_sin[pos : pos + T]
         for i, layer in enumerate(self.layers):
             x = layer(x, cos, sin, mask, cache.layers[i] if cache is not None else None)
         return self.norm(x)
