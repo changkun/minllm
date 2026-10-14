@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="330" viewBox="0 0 720 330" role="img"><title>How the replies ended</title><desc>GSM8K&#x27;s test problems. A reply cut off at the limit is in a loop when its last 200 characters were written before.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="329" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">How the replies ended</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">GSM8K&#x27;s test problems. A reply cut off at the limit is in a loop when its last 200 characters were written before.</text>
+<circle class="f-s1 s-surface" cx="72" cy="74" r="4" stroke-width="2"/>
+<text class="f-ink2" x="86" y="78" font-size="12" text-anchor="start">right</text>
+<circle class="f-grid s-surface" cx="145.6" cy="74" r="4" stroke-width="2"/>
+<text class="f-ink2" x="159.6" y="78" font-size="12" text-anchor="start">wrong, ended</text>
+<circle class="f-axis s-surface" cx="266.2" cy="74" r="4" stroke-width="2"/>
+<text class="f-ink2" x="280.2" y="78" font-size="12" text-anchor="start">wrong, cut off</text>
+<circle class="f-ink2 s-surface" cx="400.3" cy="74" r="4" stroke-width="2"/>
+<text class="f-ink2" x="414.3" y="78" font-size="12" text-anchor="start">wrong, cut off in a loop</text>
+<text class="f-ink" x="288" y="124" font-size="12" text-anchor="end">0.5B as published</text>
+<text class="f-muted" x="288" y="140" font-size="10" text-anchor="end">1,319 problems, up to 512 tokens, greedy</text>
+<rect class="f-s1" x="300" y="112" width="175.8" height="30" rx="0"/>
+<text class="f-surface" x="387.9" y="132" font-size="11" text-anchor="middle">47%</text>
+<rect class="f-grid" x="477.8" y="112" width="184.7" height="30" rx="0"/>
+<text class="f-ink" x="570.1" y="132" font-size="11" text-anchor="middle">49%</text>
+<rect class="f-axis" x="664.4" y="112" width="12.1" height="30" rx="0"/>
+<rect class="f-ink2" x="678.6" y="112" width="1" height="30" rx="0"/>
+<text class="f-ink" x="288" y="172" font-size="12" text-anchor="end">after GRPO with room to think</text>
+<text class="f-muted" x="288" y="188" font-size="10" text-anchor="end">1,319 problems, up to 512 tokens, greedy</text>
+<rect class="f-s1" x="300" y="160" width="184.4" height="30" rx="0"/>
+<text class="f-surface" x="392.2" y="180" font-size="11" text-anchor="middle">49%</text>
+<rect class="f-grid" x="486.4" y="160" width="180.4" height="30" rx="0"/>
+<text class="f-ink" x="576.6" y="180" font-size="11" text-anchor="middle">48%</text>
+<rect class="f-axis" x="668.8" y="160" width="8.1" height="30" rx="0"/>
+<rect class="f-ink2" x="678.8" y="160" width="1" height="30" rx="0"/>
+<text class="f-ink" x="288" y="220" font-size="12" text-anchor="end">fine-tuned on the teacher&#x27;s thinking</text>
+<text class="f-muted" x="288" y="236" font-size="10" text-anchor="end">1,319 problems, up to 2,560 tokens, greedy</text>
+<rect class="f-s1" x="300" y="208" width="135.7" height="30" rx="0"/>
+<text class="f-surface" x="367.9" y="228" font-size="11" text-anchor="middle">36%</text>
+<rect class="f-grid" x="437.7" y="208" width="111.8" height="30" rx="0"/>
+<text class="f-ink" x="493.6" y="228" font-size="11" text-anchor="middle">30%</text>
+<rect class="f-axis" x="551.5" y="208" width="5.5" height="30" rx="0"/>
+<rect class="f-ink2" x="559" y="208" width="119" height="30" rx="0"/>
+<text class="f-surface" x="618.5" y="228" font-size="11" text-anchor="middle">32%</text>
+<text class="f-ink" x="288" y="268" font-size="12" text-anchor="end">the teacher, 1.5B</text>
+<text class="f-muted" x="288" y="284" font-size="10" text-anchor="end">the first 192 problems, up to 2,048 tokens, sampled</text>
+<rect class="f-s1" x="300" y="256" width="263.2" height="30" rx="0"/>
+<text class="f-surface" x="431.6" y="276" font-size="11" text-anchor="middle">70%</text>
+<rect class="f-grid" x="565.2" y="256" width="13.8" height="30" rx="0"/>
+<rect class="f-axis" x="581" y="256" width="97" height="30" rx="0"/>
+<text class="f-ink" x="629.5" y="276" font-size="11" text-anchor="middle">26%</text>
+<text class="f-muted" x="24" y="314" font-size="11" text-anchor="start">The teacher&#x27;s replies are one sample each at temperature 0.6, as its authors advise; the others are greedy.</text>
+</svg>

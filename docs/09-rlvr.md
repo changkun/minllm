@@ -239,6 +239,7 @@ Exercise 7 starts from the published model instead.
    `--model qwen --lora 16 --max-new-tokens 512`. Its replies are four times
    as long, so every iteration costs more. Does it improve on 46.8%? Since
    its adapters start at zero, `--kl` now holds it near the published model.
+   The side topic [9c](09c-reasoning.md) runs it.
 
 ## In practice
 
