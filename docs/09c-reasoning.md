@@ -142,7 +142,7 @@ uv run scripts/test_time.py --model out/grpo-qwen
 uv run scripts/make_traces.py --n 960                               # the teacher's thinking on 960 training problems
 uv run scripts/make_traces.py --split test --n 192                  # the teacher's own score on the first test problems
 uv run scripts/finetune.py --task gsm8k-traces --accumulate 8
-uv run scripts/evaluate.py --model out/sft-gsm8k-traces --task gsm8k --max-new-tokens 2560
+uv run scripts/evaluate.py --model out/sft-gsm8k-traces --task gsm8k --max-new-tokens 2560 --batch-size 128
 uv run scripts/test_time.py --model out/sft-gsm8k-traces --max-new-tokens 2560 --budgets 64,128,256,512,1024,2048 --samples 8
 uv run scripts/analyze_reasoning.py                                 # the comparisons, and the replies cut off in a loop
 ```
