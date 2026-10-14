@@ -50,7 +50,7 @@ compares it against this repository's own code. As in stage 5, transformers
 is installed for that one command and is not a dependency.
 
 A fine-tuned 0.5B model exports the same way. Its adapters are merged into
-the weights, so 35 MB of LoRA become a complete model of 1.9 GB in 32-bit
+the weights, so 35 MB of LoRA become a complete model of 2.0 GB in 32-bit
 floats:
 
 ```sh
@@ -82,15 +82,17 @@ Generation: 120 tokens, 669.077 tokens-per-sec
 
 The same story, token for token, as this repository's sampler writes at
 temperature 0. It arrives faster: 669 tokens per second for a single sequence
-against 460 in stage 4. MLX compiles the decode step, which removes the
-per-operation overhead that stage 4 measured.
+against 460 in stage 4. mlx_lm sends each decode step to the GPU before it
+has read back the token of the step before, so the GPU does not wait on
+Python; how much of the difference that accounts for was not measured here.
 
 **vLLM** serves the same directory with `vllm serve out/export/sft-words` on a
-Linux machine with an NVIDIA GPU. It does not run natively on macOS, so this
-was not tried here. For Apple hardware there is a separate plugin,
-vllm-metal, which runs vLLM on top of MLX. It was not tried either. **llama.cpp** needs one more conversion, from this format
-to its own GGUF file, with the `convert_hf_to_gguf.py` script of its
-repository. That was not tried here either.
+Linux machine with an NVIDIA GPU. On macOS, vLLM itself runs only on the
+CPU, in an experimental build from source, so this was not tried here. For
+Apple's GPU there is a separate plugin, vllm-metal, which runs vLLM on top
+of MLX. It was not tried either. **llama.cpp** needs one more conversion,
+from this format to its own GGUF file, with the `convert_hf_to_gguf.py`
+script of its repository. That was not tried here either.
 
 Models that run locally are usually stored in 4 to 8 bits per weight. The
 side topic [10a](10a-quantization.md) writes such a file and runs it in MLX.
@@ -133,7 +135,7 @@ several requests share.
 | 2a Mixture of experts | `MoE` in `model.py` | the Mixtral, Qwen3-MoE and DeepSeek classes of `transformers`; grouped kernels for the experts in training frameworks |
 | 3 Pretraining | `scripts/train.py` | custom loops over many GPUs, with `accelerate` or plain PyTorch; `datasets` for the data |
 | 3a Distillation | `distill.py`, `train.py --teacher` | a distillation loss in a custom loop; more often, fine-tuning on text that a larger model wrote |
-| 4 Inference | `inference.py` | vLLM, llama.cpp, MLX, TGI |
+| 4 Inference | `inference.py` | vLLM, SGLang, llama.cpp, MLX |
 | 5 Pretrained weights | `pretrained.py` | `from_pretrained`, the Hugging Face Hub, `safetensors` |
 | 6 Fine-tuning | `scripts/finetune.py`, `lora.py` | `peft`, `trl`'s `SFTTrainer`, Unsloth |
 | 7 Evaluation | `evaluate.py`, `tasks.py` | `lm-evaluation-harness`, Inspect |

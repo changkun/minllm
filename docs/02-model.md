@@ -158,9 +158,10 @@ The same code describes published models with other numbers:
 | `rope_theta` | 10,000 | 1,000,000 | 1,000,000 |
 | Parameters | 14M | 494M | 596M |
 
-Stage 5 loads one of them. The remaining differences are small (Qwen2.5 has
-bias terms on q, k and v; Qwen3 normalizes queries and keys and sets the head
-width independently of `dim`) and will be added there as configuration flags.
+Stage 5 loads Qwen2.5. The remaining differences are small: Qwen2.5 has bias
+terms on q, k and v, which stage 5 adds as the flag `qkv_bias`, and Qwen3
+normalizes queries and keys and sets the head width independently of `dim`,
+which is an exercise there.
 
 ## Run it
 
@@ -205,8 +206,10 @@ Hugging Face `transformers` holds the reference implementation of every
 published architecture, and its model files are a few hundred lines of the
 same operations as here, plus the caching and configuration options this file
 leaves out. Inference engines (vLLM, llama.cpp, MLX) each reimplement the
-forward pass for speed. The differences between today's open models are
-mostly numbers in a config file: the block itself has been stable since 2023.
+forward pass for speed. The differences between most of today's open models
+are numbers in a config file and small changes to the block, such as Qwen3's
+normalized queries and keys. Larger changes, such as the latent attention of
+DeepSeek's models, are rarer.
 
 ## References
 

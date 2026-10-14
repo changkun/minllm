@@ -17,7 +17,7 @@ It is an old idea under several names. For reasoning with language models it
 is STaR (Zelikman et al., 2022, arXiv:2203.14465). Llama 2 (Touvron et al.,
 2023, arXiv:2307.09288) calls it rejection sampling fine-tuning, with a
 reward model as the judge, and used nothing else for the first rounds of its
-post-training. PPO was added on top only later. In game playing it is expert
+RLHF. PPO was added on top only later. In game playing it is expert
 iteration.
 
 It needs stages 6 to 9: the fine-tuned models, the verifiers and the
@@ -88,8 +88,8 @@ is the share of requested words used, as in stage 9.
 goes from 39.6% to 68.7%, a gain of 29.1 points with an interval of 26.5 to
 31.7. GRPO reached 93.6% from the same number of stories. The loop does feed
 itself: a better model writes more right stories, so every round has more to
-learn from than the last. And still every round adds less: 11 points, then
-5, then 3, 3, 3 and 2.
+learn from than the last. And still the gains shrink: 11 points, then 5,
+then 3, 3, 3 and 2.
 
 **It uses little of what it samples.** In the first round 729 of 6,400
 stories are kept. A story that used two of its three words is thrown away
@@ -162,10 +162,10 @@ moves, from 32.9% to 34.2%. Under GRPO it rose from 31% to 57%. The held-out
 score is measured on 200 problems, and its dip and return are within what
 200 problems can tell.
 
-This is the result of one recipe, not of the method. Each round was 77
-steps at a learning rate of 1e-4, half of what stage 6 used, and neither was
-tuned. A larger step, more rounds, or STaR's way of retraining from the start
-might find something that this run did not.
+This is the result of one recipe, not of the method. The rounds were 77 and
+79 steps at a learning rate of 1e-4, half of what stage 6 used, and neither
+was tuned. A larger step, more rounds, or STaR's way of retraining from the
+start might find something that this run did not.
 
 **Why the tasks differ.** A right story differs from a wrong one all over,
 and in the same way for every prompt: it takes its words from the
@@ -174,8 +174,8 @@ wrong one to a math problem look alike. They have the same form, the same
 length and the same kind of steps, and they part at one or two numbers, for
 reasons that are different in every problem. Fine-tuning on the right
 solutions therefore teaches the model mostly what it does already: its loss
-on the kept replies is 0.44 from the first step, well below the 0.59 it has
-on the reference solutions.
+on the kept replies averages 0.44 over the first round, well below the 0.59
+it has on the reference solutions.
 
 GRPO's advantage is a subtraction, a reply's reward minus the mean of its
 group. Whatever the right and the wrong replies to a problem have in common
@@ -186,10 +186,10 @@ happens without one.
 
 ## Exercises
 
-1. STaR starts every round from the starting model again and fine-tunes on
-   everything that has been kept so far, where this script continues from
-   the last round on the last round's replies alone. Change it. Which gets
-   further in six rounds on the words task?
+1. STaR starts every round from the starting model again and fine-tunes it
+   on the replies kept in that round, where this script continues training
+   the model of the last round. Change it. Which gets further in six rounds
+   on the words task?
 2. Run the words task with `--samples 2 --prompts 3200` and with
    `--samples 16 --prompts 400`. The replies are as many. What happens to the
    share of prompts with a right story, and to the score?
@@ -221,7 +221,7 @@ happens without one.
   reward model, as in stage 8.
 - **What bounds it** is what the rounds above show. It learns only from
   prompts it gets right at least once in its tries, it uses a small part of
-  what it samples, and each round adds less than the one before. It also
+  what it samples, and later rounds add less than the first. It also
   narrows: 61% of the self-trained model's stories begin with the same six
   words, against 47% at the start. A model that learns from its own output
   gets more of what it already does well.

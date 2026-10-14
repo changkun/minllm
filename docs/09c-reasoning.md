@@ -40,11 +40,12 @@ runs on the same GPU.
 
 ![Held-out score, tokens per sampled reply and replies that end, over 120 iterations, against stage 9's run](figures/reasoning-curves.svg)
 
-**The replies did not grow longer.** DeepSeek-R1's replies grew longer over
-thousands of steps of reinforcement learning. Here the sampled replies stayed
-near 300 tokens, 312 in the first 20 iterations and 301 in the last 20, and
-more of them ended within the limit, 88% and then 94%. The held-out score
-moved between 54.5% and 63.5% and ended at 61%, from 59.5%. On the test set:
+**The replies did not grow longer.** The replies of DeepSeek-R1-Zero, the
+version of DeepSeek-R1 trained by reinforcement learning alone, grew longer
+over thousands of steps. Here the sampled replies stayed near 300 tokens,
+312 in the first 20 iterations and 301 in the last 20, and more of them
+ended within the limit, 88% and then 94%. The held-out score moved between
+54.5% and 63.5% and ended at 61%, from 59.5%. On the test set:
 
 ```
 qwen                           46.8% ± 2.7%
@@ -54,7 +55,10 @@ difference +2.3%, 95% interval +0.0% to +4.5%
 
 **2.3 points, at the edge of noise.** 41 of its replies ran into the limit,
 against 55 of the published model's. Stage 9's run from the fine-tuned
-model, ten points lower, gained 5.9.
+model, ten points lower, gained 5.9. The interval above covers which
+problems were drawn, not how they were batched: batching alone moved the
+published model's score on the first 500 by 2 points, as the paragraph on
+batches below shows.
 
 ## More computation when asked
 
@@ -82,10 +86,10 @@ asked for is right 4.6% and 4.4% of the time, at 256 tokens 36.2% for both.
 
 The teacher, DeepSeek-R1-Distill-Qwen-1.5B, thought through 960 of GSM8K's
 training problems, one reply each at temperature 0.6 with up to 2,048 tokens,
-in 258 minutes beside the other runs. It was right on 77.4%, and 76.5% of
-its replies ended within the limit, 1,395 tokens long on average. The 701
-that closed their thinking, ended and were right are the traces. The 0.5B
-model was fine-tuned on 601 of them, every weight for two passes, in 56
+in 258 minutes beside the other runs. It was right on 77.4%. Its replies
+were 1,395 tokens long on average, and 76.5% of them ended within the limit.
+The 701 that closed their thinking, ended and were right are the traces. The
+0.5B model was fine-tuned on 601 of them, every weight for two passes, in 56
 minutes, and the loss on the other 100 fell from 0.997 to 0.524.
 
 ![How the replies of each model ended: right, wrong, or cut off at the limit, in a loop or not](figures/reasoning-replies.svg)
@@ -166,7 +170,7 @@ same model code.
 4. Fine-tune the student on the teacher's thinking for one pass and for
    four. Does more help, or does it start to copy?
 5. Run GRPO from the distilled student. Does reinforcement learning add to
-   distillation, as DeepSeek-R1's authors found for their larger models?
+   distillation, as DeepSeek-R1's authors report for their distilled models?
 6. Cut the teacher's own thinking at budgets. How much of its long thinking
    does it need?
 
@@ -174,23 +178,26 @@ same model code.
 
 - **Trained in stages.** DeepSeek-R1 was fine-tuned on a few thousand long
   chains of thought first, then trained with reinforcement learning on
-  problems whose answers a program checks, then on general requests. The
-  first stage gives the format and readable thinking, the second the
-  accuracy.
+  problems whose answers a program checks. That model's right replies, kept
+  as in [9a](09a-self-training.md), and others, about 800,000 in all, then
+  fine-tuned the base model from the start, and reinforcement learning on
+  every kind of request came last. The first stage gives the format and
+  readable thinking, the second the accuracy.
 - **Small models are distilled.** DeepSeek-R1's authors found that a small
   model fine-tuned on a large reasoning model's thinking reasons better
   than the same model trained with reinforcement learning alone. The
   teacher here is one of the models made that way.
 - **The budget is a setting.** Reasoning models are served with a choice of
-  how long to think, an effort level or a number of thinking tokens, and
-  the thinking is cut or extended to meet it.
+  how long to think, an effort level or a number of thinking tokens. Some
+  are trained to keep to it; cutting the thinking, as here, is the bluntest
+  way to enforce it.
 - **Every request pays.** Votes over samples, best-of-n with a verifier, and
   longer thinking all spend computation each time a question is asked,
   where training spends it once.
 
 ## References
 
-- DeepSeek-AI (2025), [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948). A reasoning model trained with GRPO on verified answers, its replies growing longer over training, and small models made by fine-tuning on its thinking.
+- DeepSeek-AI (2025), [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948). A reasoning model trained with GRPO on verified answers, the replies of R1-Zero, trained by reinforcement learning alone, growing longer over training, and small models made by fine-tuning on its thinking.
 - Wei et al. (2022), [Chain-of-Thought Prompting Elicits Reasoning in Large Language Models](https://arxiv.org/abs/2201.11903). Writing the steps before the answer.
 - Wang et al. (2022), [Self-Consistency Improves Chain of Thought Reasoning in Language Models](https://arxiv.org/abs/2203.11171). Several sampled chains of thought, and the most common answer.
 - Muennighoff et al. (2025), [s1: Simple test-time scaling](https://arxiv.org/abs/2501.19393). A budget for thinking, enforced by cutting the thinking and asking for the answer.

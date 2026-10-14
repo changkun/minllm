@@ -166,13 +166,14 @@ measurement.
 
 ![Cache speedup by prompt length, and throughput by batch size, for the 0.5B model](figures/pretrained-generation.svg)
 
-Stage 4 found that the cache did nothing for a single sequence of the small
-model. With 35 times the parameters, the picture is the same in kind and
-shifted: for one sequence after a short prompt there is still no gain, because
-a pass of 24 layers costs about 10 ms of overhead before any arithmetic. At 512
-tokens of prompt the cache is 2.6 times faster, at 2,048 tokens 12 times, and
-for 16 sequences of 512 tokens 22 times. A single sequence generates at about 95 tokens per
-second and a batch of 128 at 3,100.
+Stage 4 found that on the GPU the cache did nothing for a single sequence
+of the small model. With 35 times the parameters, the picture is the same
+in kind and shifted: for one sequence after a short prompt there is still
+no gain, because a pass of 24 layers costs about 10 ms of overhead before
+any arithmetic. At 512 tokens of prompt the cache is 2.6 times faster, at
+2,048 tokens 12 times, and for 16 sequences of 512 tokens 22 times. A
+single sequence generates at about 95 tokens per second and a batch of 128
+at 3,100.
 
 ![Tokens per second of a training step of the 0.5B model, with memory](figures/pretrained-speed.svg)
 
@@ -202,9 +203,11 @@ raises an out-of-memory error. `MINLLM_MEMORY_FRACTION` changes the cap.
 2. Load the weights in bfloat16 instead of 32-bit floats and compare the
    logits. How large is the difference, and does greedy generation still
    match for 32 tokens?
-3. Qwen3-0.6B differs from Qwen2.5 in two ways: its head width is set
-   independently of `dim / n_heads`, and it normalizes queries and keys before
-   the dot product. Add both as `Config` fields and load it.
+3. Qwen3-0.6B differs from Qwen2.5 in three ways: it has no bias on the
+   query, key and value projections, its head width is set independently of
+   `dim / n_heads`, and it normalizes queries and keys before the dot
+   product. Add the last two as `Config` fields, read all three from its
+   configuration in `load_model`, and load it.
 4. The embedding table is 28% of the parameters. For the model of stage 3 it
    was 11%. What would it be if this model used a vocabulary of 4,096 tokens?
 5. Replace `chat.encode` in `scripts/chat.py` by `tok.encode(chat.render(...))`

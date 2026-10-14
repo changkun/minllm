@@ -330,8 +330,12 @@ of chat models. It is expensive to get right: preference data has to be
 bought, the reward model drifts out of date as the policy improves, and PPO
 has many settings that matter. DPO and its relatives replaced it wherever
 comparisons can be collected once and reused, and `trl` provides it as
-`DPOTrainer`. Reward models survive in a different role, as judges that
-filter or rank data and replies.
+`DPOTrainer`. Reward models remain in use, as judges that filter or rank
+data and replies, and as the reward of a round of reinforcement learning
+after DPO: Qwen2.5's chat models, the family of stage 5's model, were
+post-trained that way (Qwen Team, 2024). The side topic
+[8a](08a-safety.md) measures one thing this post-training put into stage
+5's model, its refusals, and what fine-tuning does to them.
 
 Where a program can check the answer, none of this is needed. That is the
 next stage.
@@ -346,4 +350,5 @@ next stage.
 - Schulman et al. (2017), [Proximal Policy Optimization Algorithms](https://arxiv.org/abs/1707.06347). PPO: several steps of gradient on one batch of samples, kept from going too far by a clipped objective.
 - Rafailov et al. (2023), [Direct Preference Optimization: Your Language Model is Secretly a Reward Model](https://arxiv.org/abs/2305.18290). DPO: the same objective reached without a reward model and without sampling.
 - Touvron et al. (2023), [Llama 2: Open Foundation and Fine-Tuned Chat Models](https://arxiv.org/abs/2307.09288). How one open model family was post-trained: rounds of rejection sampling, then PPO.
+- Qwen Team (2024), [Qwen2.5 Technical Report](https://arxiv.org/abs/2412.15115). The post-training of Qwen2.5's chat models, the family of stage 5's model: fine-tuning, DPO, then reinforcement learning against a reward model.
 - Lambert (2025), [Reinforcement Learning from Human Feedback](https://arxiv.org/abs/2504.12501). The RLHF Book, whose order of topics stages 6 to 9 follow.

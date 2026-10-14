@@ -75,7 +75,8 @@ an id after the merges. `encode` maps the string `<|endoftext|>` to that id,
 and `encode_ordinary` does not, which is what you want for text that comes
 from a user: otherwise a user could type a control token. The two chat markers
 `<|im_start|>` and `<|im_end|>` are reserved now and used from the fine-tuning
-stage on, so that the vocabulary never has to change.
+stage on, so that the vocabulary never has to change. A vocabulary of 4,096
+is therefore the 256 bytes, 3,837 merges and these three special tokens.
 
 ## Run it
 
@@ -127,9 +128,8 @@ from 3 examples. (`scripts/bench_tokenizer.py` measures both.)
 
 TinyStories draws on a small set of words: with 4,096 tokens, 97% of the
 words in held-out stories are a single token. With the model of the next
-stage, the
-embedding table then holds 1.6M of 14.2M parameters. With GPT-2's vocabulary
-of 50,257 it would hold 19M and dwarf the rest of the model.
+stage, the embedding table then holds 1.6M of 14.2M parameters. With GPT-2's
+vocabulary of 50,257 it would hold 19M and dwarf the rest of the model.
 
 The vocabulary also fits in 16 bits per token, which is how the encoded corpus
 is stored on disk.

@@ -24,8 +24,9 @@ loss = -mean(log p(next token | tokens so far))
 This is the cross-entropy, in nats. Two readings make the number concrete:
 
 - `exp(loss)` is the *perplexity*: the model is as uncertain as if it chose
-  uniformly among that many tokens. An untrained model has loss `ln(4096) =
-  8.32`, a choice among all 4,096. At loss 1.5, it is choosing among 4.5.
+  uniformly among that many tokens. An untrained model has loss about
+  `ln(4096) = 8.32`, a choice among all 4,096. At loss 1.5, it is choosing
+  among 4.5.
 - The loss can never reach zero on real text, because text is not
   deterministic. After "Once upon a time, there was a little", several
   continuations are right. The floor is the entropy of the language itself.
@@ -76,9 +77,10 @@ PyTorch; the rest of the loop is written out.
 
 **AdamW** turns gradients into updates. Plain gradient descent would subtract
 `lr * gradient`. Adam keeps a running average of each weight's gradient and of
-its square, and steps by their ratio, so every weight moves at a similar pace
-whether its gradients are large or tiny. The W is weight decay: each step also
-shrinks the matrices slightly towards zero.
+its square, and steps by the first divided by the square root of the second,
+so every weight moves at a similar pace whether its gradients are large or
+tiny. The W is weight decay: each step also shrinks the matrices slightly
+towards zero.
 
 **The learning rate schedule** has two parts. It ramps up over the first 200
 steps, because Adam's running averages start empty and the first gradients of
@@ -261,7 +263,9 @@ The loop is the same at any scale. What changes around it:
 - **Parallelism.** The batch is split across many GPUs, the gradients are
   averaged, and the model itself may be split when it does not fit on one.
 - **Precision and kernels.** bfloat16 autocast, compiled models and fused
-  attention kernels are the default everywhere, for the reasons measured above.
+  attention kernels are the common default, for the reasons measured above.
+  Some of the largest runs go further, to 8-bit floats for most of the
+  matrix multiplications (DeepSeek-V3).
 - **Budget.** Hyperparameters are tuned on small models and transferred,
   because the full run happens once.
 
@@ -270,9 +274,11 @@ Large pretraining runs typically use a custom loop like this one. Hugging Face
 
 The side topic [3a](03a-distillation.md) runs this loop with a second model
 as a teacher: the student learns from the teacher's predictions and not only
-from the text. [3c](03c-scaling.md) trains this model at eight sizes and four
-compute budgets, to find the size a budget should buy, and answers exercise
-4 with a law.
+from the text. [3b](03b-data.md) prepares text from a crawl of the web and
+trains this model on it, to measure what cleaning is worth.
+[3c](03c-scaling.md) trains this model at eight sizes and four compute
+budgets, to find the size a budget should buy, and answers exercise 4 with
+a law.
 
 ## References
 
@@ -283,6 +289,7 @@ compute budgets, to find the size a budget should buy, and answers exercise
 - Loshchilov and Hutter (2016), [SGDR: Stochastic Gradient Descent with Warm Restarts](https://arxiv.org/abs/1608.03983). The cosine learning rate schedule.
 - Pascanu, Mikolov and Bengio (2012), [On the difficulty of training Recurrent Neural Networks](https://arxiv.org/abs/1211.5063). Clipping the norm of the gradient.
 - Micikevicius et al. (2017), [Mixed Precision Training](https://arxiv.org/abs/1710.03740). Training in 16-bit floats with the weights kept in 32 bits.
+- DeepSeek-AI (2024), [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437). A model of 671B parameters trained with most of its matrix multiplications in 8-bit floats.
 - Eldan and Li (2023), [TinyStories: How Small Can Language Models Be and Still Speak Coherent English?](https://arxiv.org/abs/2305.07759). TinyStories: a corpus small and simple enough for a model of a few million parameters to write coherent text.
 - Kaplan et al. (2020), [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361). How the loss falls with model size, data and compute, as power laws.
 - Hoffmann et al. (2022), [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556). For a fixed amount of compute, how to divide it between a larger model and more data.

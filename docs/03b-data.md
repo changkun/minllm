@@ -72,7 +72,7 @@ one of these, which are MassiveText's, in this order:
 | A page is dropped as | if | Pages |
 |---|---|---|
 | too short | it has fewer than 50 words of prose | 32,379 |
-| not English | under 2 of the words *the, be, to, of, and, that, have, with* occur, or over a tenth of its letters are not Latin | 1,172 |
+| not English | under 2 of the words *the, be, to, of, and, that, have, with* occur, or over a tenth of its letters are not plain ASCII, accented ones included | 1,172 |
 | not words | under 80% of its words contain a letter, or its mean word length is outside 3 to 10 | 624 |
 | symbols | it has more than one `#` or `...` per ten words | 90 |
 | repeats itself | over 30% of its lines occur more than once in it | 2,554 |

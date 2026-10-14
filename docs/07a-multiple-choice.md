@@ -14,7 +14,7 @@ not made that way. On MMLU, ARC, HellaSwag and their like, the model writes
 nothing: a question has a few possible answers, the model gives each a
 probability, and the likeliest one is its answer.
 
-It needs stage 7 for the intervals and the paired comparisons, and stage 9
+It needs stage 7 for the intervals and the paired comparisons, and stage 8
 for one function: the log-probability of a continuation, which
 reinforcement learning computed to train on. Here it is only read.
 
@@ -82,9 +82,10 @@ qwen     on MMLU by letter-plain-5shot: 46.9% ± 0.8% over 14042 questions, 629s
 The second row is the 0.5B model as published, asked the way the authors of
 MMLU did: the prompt above as plain text to be continued, with the five
 solved examples of the subject before the question. Qwen's own report gives
-47.5% for the base model of this size, so the harness here measures what
-theirs does. The rest of this note keeps the model and the questions fixed
-and changes only how the question is asked and how the answer is read.
+47.5% for the base model of this size, the one before chat training, so the
+harness here measures about what theirs does. The rest of this note keeps
+the model and the questions fixed and changes only how the question is
+asked and how the answer is read.
 
 ![The same model and questions scored eight ways](figures/choice-methods.svg)
 
@@ -125,8 +126,6 @@ prompt, and two of them compare only if the prompt is the same.
 
 ## How the answer is read
 
-The letter is one way to read an answer. Two others, on the same questions:
-
 The letter is one way to read an answer. Two others, on the same questions.
 
 **A written reply.** This is stage 7's way. The question goes into a chat
@@ -144,7 +143,7 @@ each subject:
 No answer can be read from 312 of the 1,140 replies. They start to
 explain, "To determine the degree of the field extension", and are still
 explaining when the 96 tokens are used up: stage 7's token limit again.
-Of the replies that can be read, 48.3% are right, which is what the
+Of the replies that can be read, 48.3% are right, which is about what the
 letter after a text prompt gets on these questions. So the model does not
 know less when it writes. It answers in a form that needs more room than
 it was given and a rule to parse, and each of the two costs points that
@@ -322,9 +321,9 @@ The first run downloads the questions, 166 MB.
    a temperature before the softmax, and choose the temperature on the 5
    questions per subject that are set aside for examples. How far is the
    confidence from the accuracy afterwards?
-6. Evaluate the models of stage 8 and 9 that were trained from the 0.5B
-   model. Did reinforcement learning on GSM8K change what the model knows
-   about history?
+6. Evaluate the models of stage 9 that were trained from the 0.5B model.
+   Did reinforcement learning on GSM8K change what the model knows about
+   history?
 
 ## In practice
 

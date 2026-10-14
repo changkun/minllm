@@ -116,9 +116,9 @@ the 0.5B model groups of 64 are the best of the three from 3.5 to 6.5 bits
 per weight.
 
 **The embedding table rounds for nothing.** With only the 0.5B model's
-embedding table at 4 bits, the loss changes by −0.004. With only its blocks at
-4 bits it rises by 0.088. The table is 28% of the model's weights and costs
-nothing to shrink.
+embedding table at 4 bits, which is also its output layer, the loss changes
+by −0.004. With only its blocks at 4 bits it rises by 0.088. The table is
+28% of the model's weights and costs nothing to shrink.
 
 **The curve is not smooth.** In groups of 64, going from 4 to 5 bits halves
 the rounding error and lowers the cost only from 0.089 to 0.075. Going on to
@@ -261,9 +261,9 @@ read it, and no GGUF file for llama.cpp is written.
 
 - **Formats.** llama.cpp's GGUF files and MLX's conversions are what most
   people run locally. Both store codes in small blocks with a scale per
-  block, as here. GGUF's common `Q4_K_M` mixes 4-bit and 6-bit blocks and
-  quantizes the scales themselves, for about 4.8 bits per weight.
-  bitsandbytes loads a model in 4 bits inside PyTorch, for QLoRA.
+  block, as here. GGUF's common `Q4_K_M` keeps some matrices at 6 bits and
+  the rest at 4, and quantizes the scales themselves, for about 4.8 bits per
+  weight. bitsandbytes loads a model in 4 bits inside PyTorch, for QLoRA.
 - **Smarter rounding.** GPTQ and AWQ run a few hundred examples through the
   model and choose codes or scales to keep each layer's *output* close,
   instead of each weight. That is what the uneven curve above asks for, and

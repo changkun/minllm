@@ -19,8 +19,8 @@ for it in the prompt is a request. This note makes it a guarantee, with
 one change to stage 4's loop: before a token is picked, every token that
 would take the text out of the form is ruled out.
 
-It is what the tool calls of [6a](06a-tool-calling.md) are written with,
-and what every API that offers "structured output" does underneath.
+It can hold the tool calls of [6a](06a-tool-calling.md) to their schema,
+and it is what every API that offers "structured output" does underneath.
 
 ## Asking is not enough
 
@@ -136,7 +136,7 @@ held to:
 | free text, then the answer as JSON on the last line | 50.6% | 26.5% | 34.6% |
 | free text, then `#### <number>` (stage 7) | | 46.8% | |
 
-Every interval is about 2.5 points to either side.
+The intervals of the right answers are 1.1 to 2.7 points to either side.
 
 **The answer alone is a guess.** `{"answer": 18}` leaves no room to work
 the problem out, and the model, asked or held to it, solves 7.6%. That is
@@ -151,8 +151,8 @@ schema that asks for the answer first asks for a guess.
 **Reasoning inside a string is cramped.** Held to the first form, the model
 reasons in the JSON string and solves 29.5%, four times what it got asked,
 since now every reply counts. But a string allows no line break, only the
-escape `\n`, and the model writes its reasoning short: 108 tokens in the middle of the range,
-against about twice that when it may write freely.
+escape `\n`, and the model writes its reasoning short: 108 tokens at the
+median, against about twice that when it may write freely.
 
 **Free text, then the form, comes closest**: 34.6%, still 12 points
 short of stage 7. Here the constraint has a cost of its own. A reply may
@@ -206,8 +206,8 @@ uv run scripts/evaluate_structured.py --form answer-first --constrain   # the an
 uv run scripts/evaluate_structured.py --form reason-then-answer --constrain   # free text, then the answer as JSON
 ```
 
-Each takes the 1,319 test problems of GSM8K and writes
-`runs/structured/<form>-<asked|constrained>.json`.
+Each form, with `--constrain` or without, takes the 1,319 test problems of
+GSM8K and writes `runs/structured/<form>-<asked|constrained>.json`.
 
 ## Exercises
 
@@ -216,8 +216,8 @@ Each takes the 1,319 test problems of GSM8K and writes
    run into the limit, and what is the score?
 2. Put the form's description into the system prompt as well as the user's.
    Does asking harder raise the share of replies in the form?
-3. Allow line breaks inside the reasoning string, written as `\n`. Do the
-   replies get longer, and the score higher?
+3. Allow line breaks inside the reasoning string as they are, and not only
+   as the escape `\n`. Do the replies get longer, and the score higher?
 4. Add a key `"steps": [...]`, an array of strings, before the answer. Does
    reasoning in steps do better than reasoning in one string?
 5. Sample with temperature 1 instead of greedily, held to the first form.

@@ -41,7 +41,7 @@ For each function call, return a json object with function name and arguments wi
 ```
 
 A call is a JSON object between `<tool_call>` and `</tool_call>`, which in
-the published vocabulary are single control tokens, as `<|im_end|>` is.
+the published vocabulary are single tokens of their own, as `<|im_end|>` is.
 The model writes a call and ends its turn. Whoever runs it reads the call,
 runs the function, and writes the result into the next turn, in the user's
 role, between `<tool_response>` and `</tool_response>`. Then the model
@@ -50,7 +50,7 @@ writes its next turn.
 `tools.system_prompt` writes the tool list word for word as the template
 does, and a test compares the two. `tools.encode` turns a conversation into
 tokens with the two markers as control tokens, but only in the assistant's
-turns: in anyone else's text they stay characters, for the reason stage 6
+turns: in anyone else's text they stay characters, for the reason stage 5
 gave for `<|im_end|>`. The list of one tool takes 190 tokens of every
 prompt, where the plain system prompt takes 16.
 
@@ -181,11 +181,13 @@ is wrong all the same, for a reason the calculator cannot see.
 | the same, every call fails | 10.4% ± 1.6% | 98.6% |
 
 **The published model does not use the tool.** Told about the calculator in
-exactly the form it was trained on, it calls it in 0.5% of the problems,
-and works the rest out in its head as before. Being able to call a tool is
-not knowing when to. The 190 tokens of the tool's description cost it all
-the same: it solves 6.6 points fewer than
-without them (95% interval 3.9 to 9.4).
+the words of its chat template, it calls it in 0.5% of the problems, and
+works the rest out in its head as before. The 190 tokens of the tool's
+description cost it all the same: it solves 6.6 points fewer than without
+them (95% interval 3.9 to 9.4). One difference from Qwen's own tokenizer
+may play a part: that tokenizer writes the markers in the description as
+the single tokens they are in the vocabulary, where `tools.encode` spells
+them out as characters, and this run cannot say how much that matters.
 
 **The fine-tuned model calls it every time.** It calls the calculator in
 98.6% of the problems, 3.4 times each, and none of its 4,464 calls is malformed: the
@@ -230,12 +232,14 @@ uv run scripts/evaluate_tools.py --model qwen --max-new-tokens 512       # the p
    the model learn when a call is worth it?
 3. Constrain every call with [4a](04a-structured-output.md): the JSON
    between `<tool_call>` and `</tool_call>` held to the tool's schema.
-   Here no call was malformed. Does the published model's rare call need it?
+   No call of the fine-tuned model was malformed, but 2 of the published
+   model's 8 were. Held to the schema, does the published model solve more?
 4. Give the model a second tool, `percent(part, whole)`, and rewrite the
    training data to use it where the marks compute a percentage. Does it
    choose between the two?
 5. Run GRPO from stage 9 on the fine-tuned model, with the calls run during
    the rollouts. Does reinforcement learning fix what the calculator cannot?
+   The side topic [9b](09b-tool-rl.md) runs it.
 
 ## In practice
 
@@ -260,7 +264,8 @@ uv run scripts/evaluate_tools.py --model qwen --max-new-tokens 512       # the p
 - **Reinforcement learning with tools** trains on whole conversations with
   calls run, rewarded by the final answer, which teaches when to call and
   what to do with a result. It is where tool use in current models is
-  improved, and stage 9's GRPO is its core.
+  improved, and stage 9's GRPO is its core. [9b](09b-tool-rl.md) runs it
+  from this note's model.
 - **Costs.** The tool's description is in every prompt: here 190 tokens. And
   a conversation with calls is longer to train on: 86 minutes for the same
   900 steps that took stage 6 10, in two parts per batch to fit in memory.

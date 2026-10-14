@@ -61,13 +61,14 @@ to a tenth at its end, as in stage 3. A run that is cut short of its
 schedule ends with a higher loss than one planned for that length, which
 is the mistake Hoffmann et al. (2022) found in the first scaling laws.
 
-TinyStories has 131M tokens of training text. A small model at a large
-budget would read it many times, and repeated text is worth less than new
-text, so every size reads it at most 1.7 times, and only the smallest size
-of each budget reads any of it twice. That run is there so that the valley
-has a run on its small side. Muennighoff et al. (2023) found text read up
-to four times worth almost as much as new text. Every run also has at
-least 8M tokens, about 500 steps. That leaves 20 runs, 4 to 6 per budget.
+Stage 3's training text, the first 512 MB of TinyStories, is 131M tokens.
+A small model at a large budget would read it many times, and repeated
+text is worth less than new text, so every size reads it at most 1.7
+times, and only the smallest size of each budget reads any of it twice.
+That run is there so that the valley has a run on its small side.
+Muennighoff et al. (2023) found text read up to four times worth almost as
+much as new text. Every run also has at least 8M tokens, about 500 steps.
+That leaves 20 runs, 4 to 6 per budget.
 
 ## The valleys
 
@@ -89,9 +90,9 @@ out.
 
 Through the three other floors, the best size grows as C^0.58 and the
 best number of tokens as C^0.42. Hoffmann et al. found both about 0.5, and
-Kaplan et al. 0.73 for the size. Three budgets a decade apart give the
-exponent roughly: what holds across them is that the best split stays
-near Chinchilla's 20 tokens per parameter, from 23 down to 16.
+Kaplan et al. 0.73 for the size. Three budgets that span one decade give
+the exponent only roughly: what holds across them is that the best split
+stays near Chinchilla's 20 tokens per parameter, from 23 down to 16.
 
 ## One law for every run
 
@@ -100,13 +101,14 @@ Fitted to all 20 runs, as Hoffmann et al. fitted theirs:
     L(N, D) = 1.16 + 1625 / N^0.573 + 77435 / D^0.709
 
 E, 1.16, is the loss that neither more size nor more text would get below.
-The exponents are larger than Chinchilla's 0.34 and 0.28: on TinyStories,
-the loss falls faster with both than on Chinchilla's web text. The law
-misses 15 of its 20 runs by less than 0.01. The larger misses, up to
-0.061, are at the smallest budget, whose runs are the shortest, and at
-14.2M parameters on 12M tokens, under one token per parameter. Minimized
-along C = 6 N D, the law's own best size grows as C^0.55, close to the
-floors' 0.58.
+The exponents are larger than Chinchilla's 0.34 and 0.28: here the loss
+falls faster with both than in Chinchilla's runs, which differ in the text,
+the tokenizer and the size of the models. The law misses 15 of its 20 runs
+by less than 0.01. The larger misses, up to 0.061, are at the smallest
+budget, whose runs are the shortest, at 14.2M parameters on 12M tokens,
+under one token per parameter, and 0.013 at 1.08M parameters on 155M
+tokens. Minimized along C = 6 N D, the law's own best size grows as
+C^0.55, close to the floors' 0.58.
 
 A law is worth having if it predicts a run before it is made. Fitted
 without the four runs at 1e16, the law has E 1.19, alpha 0.59 and beta

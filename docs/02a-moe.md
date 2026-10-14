@@ -17,9 +17,9 @@ This is a side topic of [stage 2](02-model.md), not a step of the pipeline.
 It replaces one part of the block. To see what that does to training, to
 speed and to export it uses the training loop of stage 3, the sampler of
 stage 4 and the export of stage 10, so it is best read after those. It uses
-only the model trained from scratch. No open pretrained mixture is small
-enough to train on this laptop: the smallest that turned up, OLMoE, has about
-7 billion parameters.
+only the model trained from scratch: the open pretrained mixtures, such as
+OLMoE with about 7 billion parameters, are too large to train on this
+laptop.
 
 ## The idea
 
@@ -337,8 +337,8 @@ skips the finding and collecting, and the arithmetic was never the cost.
 
 The mixture is almost as fast with 651M parameters as with 42M. Its time is
 bookkeeping, which does not depend on how wide an expert is. The dense
-model's time has become arithmetic, and it falls by half or more with every
-doubling. The gap closes from a factor of six to a factor of 1.5.
+model's time has become arithmetic, and it falls by about half or more with
+every doubling. The gap closes from a factor of six to a factor of 1.5.
 
 The published mixtures are up to a thousand times larger than the largest of
 these, and can run on kernels that do the bookkeeping in one grouped
@@ -492,4 +492,4 @@ What changes at that scale:
 - Dai et al. (2024), [DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models](https://arxiv.org/abs/2401.06066). Many small experts, and shared experts that every token uses.
 - DeepSeek-AI (2024), [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437). A mixture with 671 billion parameters of which 37 billion are active, balanced by a bias on the router's scores instead of a loss.
 - Muennighoff et al. (2024), [OLMoE: Open Mixture-of-Experts Language Models](https://arxiv.org/abs/2409.02060). A small open mixture and a study of the design choices: how many experts, how many active, which routing.
-- Gale et al. (2022), [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841). Block-sparse kernels that give every expert its own tokens at the cost of fixed shapes, with nothing dropped.
+- Gale et al. (2022), [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841). Block-sparse kernels that give every expert its own tokens without fixed shapes, with nothing dropped.

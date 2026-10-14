@@ -8,10 +8,10 @@ Results: [`runs/bench/`](../runs/bench/)
 This is a side topic of [stage 4](04-inference.md), not a step of the
 pipeline. Stage 4 made generation cheap per token with a KV cache, and fast
 for many texts at once by batching them. One text at a time stayed slow:
-stage 4 measured that the cache gains nothing for a single sequence, because
-a pass over one new token is spent on launching the model's many small
-operations and on reading its weights, not on arithmetic. A pass over five
-new tokens costs about the same.
+stage 4 measured that on the GPU the cache gains nothing for a single
+sequence, because a pass over one new token is spent on launching the
+model's many small operations and on reading its weights, not on
+arithmetic. A pass over five new tokens costs about the same.
 
 Speculative decoding uses that. A cheap draft guesses the next few tokens.
 The model checks all of them in one pass, keeps the ones it agrees with, and
@@ -121,8 +121,8 @@ pays only where it is much cheaper than the model.
 
 **Prompt lookup costs almost nothing.** With no model to run, a round of
 four costs 1.05 tokens of the 7B model and 1.11 of the 1.5B model. It is
-kept less often, 20% and 23% of its tokens, and yields about 1.5 tokens a
-pass on GSM8K, where a solution copies the numbers of its problem. That is
+kept less often, 20% and 23% of its tokens, and yields 1.5 and 1.6 tokens
+a pass on GSM8K, where a solution copies the numbers of its problem. That is
 enough for 1.44 and 1.47 times the speed, the most for the 1.5B model. The
 stories do not repeat their opening: lookup keeps 9% there, yields 1.17
 tokens a pass, and runs at 0.81 of the model's speed.
@@ -140,18 +140,18 @@ and 5 to 9 of the story model's 10. Where they part, they part at nearly the
 same token whatever the draft: at k = 4 the 7B model's five replies part at
 tokens 19, 145, 146, 83 and 34 with the 0.5B draft and with the 1.5B draft,
 and at 24, 145, 146, 83 and 34 with prompt lookup. So it is not the draft
-that is to blame but the check. A
-pass over several tokens need not add up its 16-bit numbers in the order a
-pass over one token does, the results differ in their last bits, and at a
-near tie between two tokens that can tip the choice; from there the replies
-go their own ways.
+that is to blame but the check. A pass over several tokens need not add up
+its 16-bit numbers in the order a pass over one token does, the results
+differ in their last bits, and at a near tie between two tokens that can
+tip the choice; from there the replies go their own ways.
 
 In 32-bit floats on the same GPU, every reply is the model's own: all 10 of
-the 1.5B model's with either draft, and all 10 of the story model's with
-every draft and k. So are the story model's in 16-bit floats on the CPU. It
-is what [9c](09c-reasoning.md) found for batches: a greedy reply is
-reproducible only in the same arithmetic, and on a GPU the shape of the
-work is part of the arithmetic. The draft decides only the speed.
+the 1.5B model's with either draft at k = 4, and all 10 of the story
+model's in each of the five cases rerun, at k = 1, 4 and 8. So are the
+story model's in 16-bit floats on the CPU. It is what
+[9c](09c-reasoning.md) found for batches: a greedy reply is reproducible
+only in the same arithmetic, and on a GPU the shape of the work is part of
+the arithmetic. The draft decides only the speed.
 
 ## Run it
 
@@ -195,7 +195,7 @@ take 30 GB.
 
 ## In practice
 
-- **Serving stacks offer it by default.** vLLM, SGLang, TensorRT-LLM and
+- **Serving stacks have it built in.** vLLM, SGLang, TensorRT-LLM and
   llama.cpp run speculative decoding with a draft model, prompt lookup, or
   heads trained for it.
 - **Drafts built into the model.** Medusa (Cai et al., 2024) adds a few

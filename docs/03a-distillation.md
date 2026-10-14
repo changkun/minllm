@@ -33,8 +33,8 @@ After "there was a little", the text says *girl*. The teacher says *girl* or
 *boy* about equally, sometimes *dog*, *bird* or *cat*. After "play with her",
 the text happens to continue with *red*, which the teacher gave 0.8%: an
 unlikely turn, and the label reports it as if it were the answer. Over
-held-out stories the teacher spreads its prediction over 6 tokens on average,
-and the token that came next is its first choice 63% of the time.
+held-out stories the teacher gives more than 1% to 6 tokens on average, and
+the token that came next is its first choice 63% of the time.
 (`scripts/dump_targets.py` measures this.)
 
 The student can be trained on the teacher's whole answer instead of the one
@@ -178,7 +178,8 @@ The distilled model writes stories like the others
   teacher wrote needs neither, and it is the common form for language models
   today: the teacher is often a model behind an API, which returns text and
   not probabilities. TinyStories, the data of stage 3, is itself such a
-  dataset. Its stories were written by GPT-3.5 and GPT-4.
+  dataset. Its stories were written by GPT-3.5 and GPT-4, and those of the
+  version that stage 3 uses by GPT-4 alone.
 - **Small versions of large models.** DistilBERT and DistilGPT2 were made by
   matching predictions. The distilled versions of DeepSeek-R1 are smaller
   open models fine-tuned on text that the large model wrote.
@@ -194,5 +195,5 @@ The distilled model writes stories like the others
 - Hinton, Vinyals and Dean (2015), [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531). Distillation as it is known today: the teacher's whole distribution as the target, softened by a temperature.
 - Kim and Rush (2016), [Sequence-Level Knowledge Distillation](https://arxiv.org/abs/1606.07947). Distillation by training on text that the teacher generated, with no access to its probabilities needed.
 - Sanh et al. (2019), [DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter](https://arxiv.org/abs/1910.01108). A language model pretrained by distillation: 40% smaller than its teacher.
-- Eldan and Li (2023), [TinyStories: How Small Can Language Models Be and Still Speak Coherent English?](https://arxiv.org/abs/2305.07759). TinyStories, the data of stage 3, written by GPT-3.5 and GPT-4.
+- Eldan and Li (2023), [TinyStories: How Small Can Language Models Be and Still Speak Coherent English?](https://arxiv.org/abs/2305.07759). TinyStories, the data of stage 3, written by GPT-3.5 and GPT-4. Stage 3 uses the version written by GPT-4 alone.
 - DeepSeek-AI (2025), [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948). A large reasoning model released together with small models fine-tuned on what it wrote.

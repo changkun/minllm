@@ -20,7 +20,7 @@ the three ways of stretching the table that are used for it.
 TinyStories cannot show what longer context is for. A story is about 200
 tokens, and the stories before it in a window say nothing about it. The
 story model of stage 3 also barely reuses what it has read: seeing a passage
-once lowers its loss on the same passage later by about 0.2.
+once lowers its loss on the same passage 64 tokens later by 0.33.
 
 So this note uses the other 14M model of the repository: the one that
 [3b](03b-data.md) trained on cleaned Common Crawl, with the same shape and
@@ -113,15 +113,16 @@ interpolation's 4.07, and the table as it is 4.19: YaRN starts closest.
 
 After 500 steps, all four keep the loss level to 1,024, between 3.09 and
 3.12 over positions 256 to 1,024, a little below their 3.17 to 3.19 over
-positions 32 to 256: the further text helps a little. YaRN ends lowest, 3.158 on the windows of
-1,024 against 3.179 for the table as it is.
+positions 32 to 256: the further text helps a little. YaRN ends lowest,
+3.158 on the windows of 1,024 against 3.179 for the table as it is.
 
 They differ in how far they reach. A passage 512 tokens back is worth 1.01
 to YaRN, 0.86 to interpolation, 0.72 to NTK, and 0.39 to the model trained
 without a stretch. That model also keeps its loss level past 1,024, 3.17
 over 1,024 to 2,048, where the stretched ones rise again, as a stretch by 4
-must: NTK to 3.40, YaRN to 4.19 and interpolation to 4.44. It keeps the loss level by using little of what is far back: a passage
-1,536 tokens back is worth 0.03 to it.
+must: NTK to 3.40, YaRN to 4.19 and interpolation to 4.44. It keeps the
+loss level by using little of what is far back: a passage 1,536 tokens back
+is worth 0.03 to it.
 
 ## Long from the start
 

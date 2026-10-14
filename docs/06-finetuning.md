@@ -93,7 +93,7 @@ The factor `alpha / r` sets the size of the update, and is conventionally kept
 at 2. With `r = 16` on all seven linear layers of every block, the model
 trains 8.8 million numbers, 1.8% of its weights.
 
-`minllm/lora.py` is under 80 lines, and two of its functions matter beyond
+`minllm/lora.py` is about 80 lines, and two of its functions matter beyond
 this stage:
 
 - `enable(model, False)` switches the adapters off, and the model computes
@@ -219,7 +219,8 @@ the side topic on [quantization](10a-quantization.md) makes such weights,
 and one of its exercises puts these adapters on them. The
 adapters of different tasks can be stored, swapped and even served side by
 side on one copy of the base model, which is how most hosted fine-tuning
-works.
+works. The side topic [6a](06a-tool-calling.md) uses this stage's recipe
+to teach the 0.5B model to call a calculator.
 
 The bugs of this stage are in the data, not the optimizer: a chat format that
 differs by one newline from the one the model was trained with, a missing end

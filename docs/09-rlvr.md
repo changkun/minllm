@@ -12,10 +12,10 @@ check the answer. A math problem has a number. Code has tests. A story either
 uses the requested words or does not.
 
 Reinforcement learning with verifiable rewards (RLVR) trains on such checks
-directly. It is the method behind the reasoning models that appeared in 2025,
-and it is short: there is no reward model, no value network, and no
-preference data. What remains is the loop of stage 8 with a different source
-of reward and a different baseline.
+directly. It is the method behind the reasoning models that appeared from
+late 2024 on, and it is short: there is no reward model, no value network,
+and no preference data. What remains is the loop of stage 8 with a different
+source of reward and a different baseline.
 
 ## GRPO
 
@@ -184,9 +184,10 @@ uv run scripts/evaluate.py --model out/grpo-gsm8k --task gsm8k
 
 An iteration takes 22 seconds: 64 replies of about 100 tokens are sampled,
 verified, and used for one update. During training the share of sampled
-replies that are right rises from 31% to 57%. Replies are sampled at
-temperature 1, where the model is less accurate than when it decodes
-greedily, which is why these numbers start lower than the ones above.
+replies that are right rises from 31% in the first ten iterations to 57% in
+the last ten. Replies are sampled at temperature 1, where the model is less
+accurate than when it decodes greedily, which is why these numbers start
+lower than the ones above.
 
 The 200 problems in the top panel are the ones that fine-tuning held out of
 the training split. They are there to watch the run. The test problems were
@@ -200,13 +201,14 @@ out/grpo-gsm8k                 42.5% ± 2.7%
 difference +5.9%, 95% interval +3.2% to +8.5%: a real difference
 ```
 
-**5.9 points on a real benchmark, from 480 training problems and 22 minutes
-on a laptop.** The interval of the paired difference excludes zero by a wide
-margin. Unlike the story model, the 0.5B model did not game its verifier: a
-check on the final number of a math problem leaves little room to satisfy it
-by something other than solving the problem. (No KL penalty was used. Its
-reference would be the model with its adapters switched off, and for this
-model that is the published one, not the fine-tuned start.)
+**5.9 points on a real benchmark, from 60 draws of 8 training problems and
+22 minutes on a laptop.** The interval of the paired difference excludes
+zero by a wide margin. Unlike the story model, the 0.5B model did not game
+its verifier: a check on the final number of a math problem leaves little
+room to satisfy it by something other than solving the problem. (No KL
+penalty was used. Its reference would be the model with its adapters
+switched off, and for this model that is the published one, not the
+fine-tuned start.)
 
 It also did not get back to where it started. The published model solves
 46.8%, and GRPO's result is 4.2 points below that, with an interval of 1.5 to

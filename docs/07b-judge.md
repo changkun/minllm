@@ -1,7 +1,8 @@
 # 7b. Evaluation by a judge
 
 Code: [`minllm/judge.py`](../minllm/judge.py) ·
-Script: [`scripts/judge.py`](../scripts/judge.py) ·
+Scripts: [`scripts/judge.py`](../scripts/judge.py),
+[`scripts/analyze_judge.py`](../scripts/analyze_judge.py) ·
 Tests: [`tests/test_judge.py`](../tests/test_judge.py) ·
 Results: [`runs/judge/`](../runs/judge/)
 
@@ -72,9 +73,9 @@ wrong ones well: a right one gets the higher probability 93% of the time
 (the area under the ROC curve). Its fault is where it draws the line. The
 line that `analyze_judge.py` chooses on half of the problems, at a
 probability of 0.87, makes the judge agree with the truth on 83.9% of the
-other half, where one half gives 45.2%. This is 7a's finding about
-confidence again: the order of the probabilities is worth more than their
-size, and a few examples with known answers fix the size.
+other half, where the line at one half gives 45.2%. This is 7a's finding
+about confidence again: the order of the probabilities is worth more than
+their size, and examples with known answers fix the size.
 
 ## Which story is better?
 
@@ -106,16 +107,17 @@ much weaker; in a small one it is nearly all there is.
 
 Averaging the two orders takes the position out, and leaves what the
 judges do know: the 1.5B judge agrees with the annotator on 56.2% of the
-pairs, a little better than a coin, and on 12 of the 16 it judges the same in
-both orders. Being told the taste does not help it. Stage 8's reward
-model, the 14M story model trained on 3,500 of the annotator's comparisons,
-agrees on 77.4%. A small model trained for one judgment beats a larger
-one asked for it in words.
+pairs, a little better than a coin. Of the 16 pairs it judges the same in
+both orders, it agrees on 12. Being told the taste does not help it.
+Stage 8's reward model, the 14M story model trained on 3,500 of the
+annotator's comparisons, agrees on 77.4%. A small model trained for one
+judgment beats a larger one asked for it in words.
 
-The judges also prefer the longer story: the 0.5B judge on 62% of the
-pairs of unequal length, where the annotator, who dislikes long stories,
-picks the longer one on 39%. Dubois et al. (2024) measure the same
-preference for length in judges of chat replies, and correct for it.
+The judges also pick the longer story more often than the annotator does:
+the 0.5B judge on 62% of the pairs of unequal length and the 1.5B judge on
+53%, where the annotator, who dislikes long stories, picks the longer one
+on 39%. Dubois et al. (2024) measure the same preference for length in
+judges of chat replies, and correct for it.
 
 ## What to take from it
 
@@ -133,8 +135,13 @@ and the same remedies are standard practice with them.
 uv run scripts/evaluate.py --model qwen --task gsm8k     # stage 7: the replies to judge, in out/eval/
 uv run scripts/judge.py --task gsm8k
 uv run scripts/judge.py --task gsm8k --reference
+uv run scripts/judge.py --task gsm8k --judge data/qwen2.5-1.5b-instruct
+uv run scripts/judge.py --task gsm8k --judge data/qwen2.5-1.5b-instruct --reference
+uv run scripts/judge.py --task stories
 uv run scripts/judge.py --task stories --rubric
 uv run scripts/judge.py --task stories --judge data/qwen2.5-1.5b-instruct
+uv run scripts/judge.py --task stories --judge data/qwen2.5-1.5b-instruct --rubric
+uv run scripts/analyze_judge.py                          # the area under the ROC curve, the line at 0.87, the pairs judged alike
 ```
 
 The 1.5B model is downloaded with `uv run python -c "from minllm import

@@ -20,7 +20,8 @@ them.
    of 1,319 problems, which fine-tuning never touched. For the words task,
    prompts built from held-out stories.
 2. **A reply to each**, generated greedily by default. Greedy decoding has no
-   randomness, so the same model gives the same score every time.
+   randomness, so no seed changes the score. On a GPU the batches still can,
+   a little, as the section on comparing two models shows.
 3. **A scoring function.** A program that reads a reply and returns a number.
 4. **An average, and how far to trust it.**
 
@@ -96,6 +97,18 @@ difference -2.1%, 95% interval -4.6% to +0.3%: within noise
 The two ways of fine-tuning from stage 6 differ by two points, and the
 interval of that difference includes zero. On 1,319 problems they cannot be
 told apart.
+
+**The interval does not cover the arithmetic.** It measures one thing:
+which problems happened to be drawn. On this laptop's GPU, in 16-bit
+floats, a greedy reply also depends on the batch it was generated in.
+Batched otherwise, the same sums are added in another order, and at a near
+tie between two tokens that can tip the choice. The published model, run
+greedily twice on the first 500 test problems in different batches, solved
+48.6% of them once and 46.6% the other time, and the two runs disagreed on
+46 problems; a model with long replies disagreed with itself on 125 of the
+500 ([9c](09c-reasoning.md)). In [4b](04b-speculative.md) the shape of a
+pass does the same, and 32-bit floats or the CPU do not. So a difference of
+a point or two is not settled by its interval alone.
 
 ## Results
 
@@ -180,7 +193,9 @@ the model wrote.
 uv run scripts/evaluate.py --model out/base --task words
 uv run scripts/evaluate.py --model out/sft-words --task words
 uv run scripts/evaluate.py --model qwen --task gsm8k               # 1,319 problems, several minutes
+uv run scripts/evaluate.py --model qwen --task gsm8k --max-new-tokens 320 --out runs/eval/gsm8k-qwen-320.json
 uv run scripts/evaluate.py --model out/sft-gsm8k-lora --task gsm8k
+uv run scripts/evaluate.py --model out/sft-gsm8k --task gsm8k
 ```
 
 Each run writes its scores and ten of its replies to `runs/eval/`, and all of
@@ -216,7 +231,10 @@ The difficulties are the ones of this stage too. Scores depend on the prompt
 wording and on the answer extraction, often by more than the difference
 between two models, so numbers from different papers are rarely comparable.
 Test sets leak into training data once they are public. And intervals are
-seldom reported at all.
+seldom reported at all. The side topic [7a](07a-multiple-choice.md)
+measures how much the way of asking moves a multiple-choice score, and
+[7b](07b-judge.md) measures a language model as the judge of replies that
+no program can score.
 
 ## References
 

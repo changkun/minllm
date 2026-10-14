@@ -151,7 +151,11 @@ position predicts the next token for all rows at once. A mask keeps real
 tokens from attending to padding. The padding shifts a prompt to later
 positions, and this is harmless for the reason given in stage 2: rotary
 embeddings see only distances. `test_prompts_of_different_lengths` checks that
-a prompt gives the same output alone and in a padded batch.
+a prompt gives the same output alone and in a padded batch, in 32-bit floats
+on the CPU. In 16-bit floats on this laptop's GPU, another batch, or a pass
+over several tokens, can add a row's sums in another order, and at a near
+tie between two tokens that changes a greedy reply: [9c](09c-reasoning.md)
+and [4b](04b-speculative.md) measure it.
 
 Rows also finish at different times. Each row stops at its own stop token,
 here `<|endoftext|>`, and the loop ends when all rows have stopped.
@@ -193,14 +197,14 @@ management around it:
   anybody else's text to end. Its cache is allocated in fixed-size blocks, like
   virtual memory pages, instead of one buffer per sequence at full length.
 - **llama.cpp** runs models with weights compressed to a few bits each, often
-  about 4, on CPUs and Apple GPUs. **MLX** is Apple's array library, with its
-  own engine.
-- All of them run the decode step in compiled code and keep batches large,
+  about 4, on CPUs and GPUs, Apple's among them. **MLX** is Apple's array
+  library, with its own engine.
+- All of them cut the cost of launching each operation, with compiled
+  code, captured GPU graphs, or a whole step handed to the GPU at once,
   which is how they escape the per-operation overhead that dominates the
-  measurements above.
+  measurements above. A server such as vLLM also keeps its batches large.
 
-The last stage of this repository exports the model and runs it in these
-engines.
+The last stage of this repository exports the model and runs it in MLX.
 
 ## References
 
