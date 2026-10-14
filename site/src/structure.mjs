@@ -6,7 +6,7 @@ export const REPO = "https://github.com/changkun/minllm";
 
 export const stages = [
   { n: "1", slug: "01-tokenizer", short: "Tokenizer" },
-  { n: "2", slug: "02-model", short: "Model", leaves: [{ n: "2a", slug: "02a-moe", short: "Experts" }, { n: "2b", slug: "02b-context", short: "Context" }] },
+  { n: "2", slug: "02-model", short: "Model", leaves: [{ n: "2a", slug: "02a-moe", short: "Experts" }, { n: "2b", slug: "02b-context", short: "Context" }, { n: "2c", slug: "02c-latent-attention", short: "Latent attention" }] },
   { n: "3", slug: "03-pretraining", short: "Pretraining", leaves: [{ n: "3a", slug: "03a-distillation", short: "Distillation" }, { n: "3b", slug: "03b-data", short: "Data" }, { n: "3c", slug: "03c-scaling", short: "Scaling" }] },
   { n: "4", slug: "04-inference", short: "Inference", leaves: [{ n: "4a", slug: "04a-structured-output", short: "Structured output" }, { n: "4b", slug: "04b-speculative", short: "Speculative" }] },
   { n: "5", slug: "05-pretrained", short: "Weights" },
