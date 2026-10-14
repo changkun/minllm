@@ -1,0 +1,26 @@
+{
+ "model": "out/sft-gsm8k-lora",
+ "problems": 480,
+ "replies": 3840,
+ "right": 0.32916666666666666,
+ "finished": 0.984375,
+ "problems_all_right": 16,
+ "problems_none_right": 133,
+ "problems_with_both": 331,
+ "pairs": 551,
+ "tokens_preferred": 85.21778584392014,
+ "tokens_other": 91.32667876588022,
+ "other_finished": 0.9927404718693285,
+ "minutes": 15.185538498560588,
+ "args": {
+  "task": "gsm8k",
+  "model": "out/sft-gsm8k-lora",
+  "n": null,
+  "held_out": 500,
+  "samples": 8,
+  "per_prompt": 2,
+  "max_new_tokens": 256,
+  "out": "data/preferences",
+  "seed": 0
+ }
+}

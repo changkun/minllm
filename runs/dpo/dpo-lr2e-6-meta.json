@@ -1,0 +1,28 @@
+{
+ "family": "qwen",
+ "base": "qwen",
+ "task": "gsm8k",
+ "lora": {
+  "r": 16,
+  "alpha": 32
+ },
+ "step": 68,
+ "val_loss": 0.0,
+ "minutes": 11.673376953601837,
+ "trainable_parameters": 8798208,
+ "memory_gb": 14.456787109375,
+ "method": "dpo",
+ "args": {
+  "model": "out/sft-gsm8k-lora",
+  "train": "data/preferences/gsm8k.jsonl",
+  "out": "out/dpo-gsm8k-lr2e-6",
+  "epochs": 2,
+  "batch_size": 16,
+  "chunk": 2,
+  "lr": 2e-06,
+  "beta": 0.1,
+  "nll": 0.0,
+  "eval_every": 10,
+  "seed": 0
+ }
+}
