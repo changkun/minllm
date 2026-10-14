@@ -39,7 +39,7 @@ export default ({ vocabulary, bench }) => {
       },
       {
         seconds: 9,
-        caption: `Training counts which two neighbours occur together most often\nand makes the pair a new token. Then again, ${tok.merges.length.toLocaleString("en")} times.`,
+        caption: `Training counts which two neighbors occur together most often\nand makes the pair a new token. Then again, ${tok.merges.length.toLocaleString("en")} times.`,
         draw(s) {
           // the first merges that were learned, as rows: left + right -> new
           const rows = tok.merges.slice(0, 7).map(([a, b], i) => {
