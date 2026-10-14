@@ -1080,7 +1080,8 @@ def rlvr_curves(name, title, subtitle, runs, unit, panels):
         ax.line(*zip(*points), color)
         ax.dots(*zip(*points), color)
         ax.label(points[-1][0], points[-1][1], f"{points[-1][1]:.0%}", dx=10, dy=4, fill="ink")
-    ax.label(0, logs[0][2][0]["held_out"], f"{logs[0][2][0]['held_out']:.0%}", dx=8, dy=16)
+    if len({log[0]["held_out"] for _, _, log in logs}) == 1:  # runs from one model share a start; others would collide there
+        ax.label(0, logs[0][2][0]["held_out"], f"{logs[0][2][0]['held_out']:.0%}", dx=8, dy=16)
     for i, (key, heading, limits, fmt) in enumerate(panels):
         low = Axes(fig, 64, 310 + i * 126, 590, 60, (0, steps), limits)
         low.title(heading)
@@ -2006,4 +2007,4 @@ if os.path.exists("runs/reasoning/test-time-qwen.json"):
 if os.path.exists("runs/scaling/summary.json"):
     scaling_valleys()
     scaling_prediction()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "3a", "3b", "3c", "4a", "6a", "7a", "7b", "8a", "9a", "10a"})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "3a", "3b", "3c", "4a", "6a", "7a", "7b", "8a", "9a", "9b", "10a"})
