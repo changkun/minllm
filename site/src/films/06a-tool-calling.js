@@ -97,9 +97,9 @@ export default ({ summary, calculations, trained, stage6, plain, calling, failin
   const runs = summary.runs;
   const tuned = runs["gsm8k-tools-sft-gsm8k-tools-lora"];
   const cut = runs["gsm8k-tools-sft-gsm8k-tools-lora-no-execute"];
-  const told = runs["gsm8k-tools-qwen"];
+  const told = runs["gsm8k-tools-qwen-system-markers"]; // the tool instructions tokenized as Qwen's tokenizer does
   const compare = (from, to) => Object.values(summary.comparisons).find((c) => c.from === from && c.to === to);
-  const listed = compare("gsm8k-qwen", "gsm8k-tools-qwen"); // the published model, told about the tool
+  const listed = compare("gsm8k-qwen", "gsm8k-tools-qwen-system-markers"); // the published model, told about the tool
   const gain = compare("gsm8k-sft-gsm8k-lora", "gsm8k-tools-sft-gsm8k-tools-lora"); // the tool, against stage 6
   const written = calculations["gsm8k-sft-gsm8k-lora"]; // stage 6's model's own arithmetic
   const made = trained.data;
