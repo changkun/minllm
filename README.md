@@ -75,8 +75,15 @@ its own.
 
 ## What came out
 
-The numbers are measured on one laptop, and the runs behind them are logged
-in [`runs/`](runs/). The notes explain each one.
+The numbers are measured on one laptop, a MacBook Pro with an M5 Pro and
+64 GB of memory, on its GPU, and the runs behind them are logged in
+[`runs/`](runs/). The notes explain each one. On another machine the times
+differ, and the last digits of a loss or a score can too, because the same
+sums are added in another order. Even on this laptop that moves a score: in
+16-bit floats on the GPU a greedy reply depends on the batch it was
+generated in, and the published 0.5B model, run twice on the same 500 GSM8K
+problems in different batches, solved 48.6% and 46.6% of them
+([stage 7](docs/07-evaluation.md)).
 
 | Stage | Result |
 |---|---|
@@ -168,11 +175,11 @@ uv run scripts/quantize.py --model qwen --bits 4        # 10a: 988 MB become 278
 uv run scripts/evaluate.py --model out/qwen-q4 --task gsm8k
 ```
 
-Timings are from a MacBook Pro with an M5 Pro and 64 GB of memory, using the
-Apple GPU. The code picks an NVIDIA GPU, the Apple GPU or the CPU, in that
-order; set `MINLLM_DEVICE=cpu` to override. CUDA has not been tested. On an
-Apple GPU the process is capped at half of the recommended memory, so that a
-batch that is too large fails instead of swapping the machine.
+Timings are from the laptop named above, on its GPU. The code picks an
+NVIDIA GPU, the Apple GPU or the CPU, in that order; set `MINLLM_DEVICE=cpu`
+to override. CUDA has not been tested. On an Apple GPU the process is capped
+at half of the recommended memory, so that a batch that is too large fails
+instead of swapping the machine.
 
 Results go to `out/runs/`, under the same names as in `runs/`, which holds
 the results that the notes quote. A run of the tutorial never overwrites
