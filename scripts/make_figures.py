@@ -759,6 +759,75 @@ def safety_refusals():
     fig.save("safety-refusals")
 
 
+# -------------------------------------------------------- 8b DPO on GSM8K
+
+DPO_RUNS = [
+    ("lr 5e-5", "s2", "runs/dpo/dpo.jsonl"),
+    ("lr 5e-5, with the right reply's own loss", "s1", "runs/dpo/dpo-nll.jsonl"),
+    ("lr 1e-5", "s3", "runs/dpo/dpo-lr1e-5.jsonl"),
+]
+
+
+def dpo_curves():
+    """Held-out score over the steps of three DPO runs, and how much likelier their pairs' right and wrong replies became."""
+    pairs = load("runs/dpo/pairs.json")
+    args = load("runs/dpo/dpo-meta.json")["args"]
+    fig = Figure(720, 560, "DPO on the verifier's pairs", f"{pairs['pairs']} pairs of a right and a wrong reply, {args['epochs']} passes of {args['batch_size']} pairs a step, at two learning rates.")
+    fig.legend(64, 78, [(color, label, "line") for label, color, _ in DPO_RUNS])
+    logs = [(label, color, jsonl(path)) for label, color, path in DPO_RUNS]
+    steps = max(r["step"] for r in logs[0][2])
+    per_pass = pairs["pairs"] // args["batch_size"]
+    held = [r["held_out"] for _, _, log in logs for r in log if "held_out" in r]
+    lo, hi = math.floor(min(held) * 20) / 20, math.ceil(max(held) * 20) / 20
+    ax = Axes(fig, 72, 124, 560, 100, (0, steps), (lo, hi))
+    ax.title("Solved, of 200 held-out training problems: a signal of progress, ± 7 points")
+    ax.yticks(nice_ticks(lo, hi, 3), lambda t: f"{t:.0%}")
+    ax.xticks([], str)
+    for label, color, log in logs:
+        points = [(r["step"], r["held_out"]) for r in log if "held_out" in r]
+        ax.line(*zip(*points), color)
+        ax.dots(*zip(*points), color, r=3.5)
+
+    # how much likelier each reply has become than under the starting model, a running mean over 5 steps
+    smooth = lambda rows, key: [sum(q[key] for q in rows[max(0, j - 4) : j + 1]) / len(rows[max(0, j - 4) : j + 1]) for j in range(len(rows))]
+    trained = [(label, color, [r for r in log if "gain_preferred" in r]) for label, color, log in logs]
+    for i, (key, heading) in enumerate([("gain_preferred", "The right replies: log p − log p_start, in nats"), ("gain_other", "The wrong replies")]):
+        values = [v for _, _, rows in trained for v in smooth(rows, key)]
+        lo, hi = math.floor(min(values) / 5) * 5, max(5, math.ceil(max(values) / 5) * 5)
+        low = Axes(fig, 72, 282 + i * 140, 560, 90, (0, steps), (lo, hi))
+        low.title(heading)
+        low.yticks(nice_ticks(lo, hi, 3), lambda t: f"{t:+g}" if t else "0")
+        low.xticks(range(0, steps + 1, 10), str, "step" if i else "")
+        fig.line(low.x(per_pass), low.top, low.x(per_pass), low.top + low.height, stroke="axis")
+        if not i:
+            fig.text(low.x(per_pass) + 6, low.top + 12, "second pass", size=11, fill="muted")
+        for label, color, rows in trained:
+            ys = smooth(rows, key)
+            low.line([r["step"] for r in rows], ys, color)
+            low.label(rows[-1]["step"], ys[-1], f"{ys[-1]:+.0f}", dx=8, dy=4)
+    fig.save("dpo-curves")
+
+
+def dpo_test():
+    fig = Figure(720, 396, "GSM8K test problems solved", "1,319 problems, greedy, 95% intervals. Each model below the start learned from replies to 480 problems.")
+    rows = []
+    for label, name in [
+        ("0.5B as published", "gsm8k-qwen"),
+        ("fine-tuned on solutions, the start", "gsm8k-sft-gsm8k-lora"),
+        ("self-training (9a), two rounds", "gsm8k-self-gsm8k"),
+        ("DPO, lr 2e-6", "gsm8k-dpo-gsm8k-lr2e-6"),
+        ("DPO, lr 1e-5", "gsm8k-dpo-gsm8k-lr1e-5"),
+        ("DPO, lr 5e-5, one pass", "gsm8k-dpo-gsm8k-1"),
+        ("DPO, lr 5e-5, two passes", "gsm8k-dpo-gsm8k"),
+        ("DPO + the right reply's loss, 5e-5", "gsm8k-dpo-gsm8k-nll"),
+        ("GRPO (stage 9)", "gsm8k-grpo-gsm8k"),
+    ]:
+        r = load(f"runs/eval/{name}.json")
+        rows.append((label, r["mean"], r["error"]))
+    scored_bars(fig, 250, 84, 300, rows, 0.6, lambda v: f"{v:.1%}")
+    fig.save("dpo-gsm8k")
+
+
 # -------------------------------------------------------- 7a multiple choice
 
 MMLU = "runs/eval/mmlu-summary.json"  # written by scripts/analyze_choice.py
@@ -1981,12 +2050,12 @@ def pipeline(done):
         ("Post-training: that model, and an open 0.5B one", [(5, "Weights"), (6, "Fine-tuning"), (7, "Evaluation"), (8, "RLHF"), (9, "RLVR"), (10, "Export")]),
     ]
     leaves = {
-        2: [("2a", "Experts"), ("2b", "Context")],
+        2: [("2a", "Experts"), ("2b", "Context"), ("2c", "Latent attention")],
         3: [("3a", "Distillation"), ("3b", "Data"), ("3c", "Scaling")],
-        4: [("4a", "Structured output"), ("4b", "Speculative")],
+        4: [("4a", "Structured output"), ("4b", "Speculative"), ("4c", "Batching")],
         6: [("6a", "Tool calling")],
         7: [("7a", "Multiple choice"), ("7b", "Judge")],
-        8: [("8a", "Safety")],
+        8: [("8a", "Safety"), ("8b", "DPO")],
         9: [("9a", "Self-training"), ("9b", "Tool RL"), ("9c", "Reasoning")],
         10: [("10a", "Quantization")],
     }
@@ -2109,4 +2178,7 @@ if os.path.exists("runs/reasoning/summary.json"):
 if os.path.exists("runs/scaling/summary.json"):
     scaling_valleys()
     scaling_prediction()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "3a", "3b", "3c", "4a", "4b", "6a", "7a", "7b", "8a", "9a", "9b", "9c", "10a"})
+if os.path.exists("runs/eval/gsm8k-dpo-gsm8k-nll.json"):
+    dpo_curves()
+    dpo_test()
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "3a", "3b", "3c", "4a", "4b", "6a", "7a", "7b", "8a", "8b", "9a", "9b", "9c", "10a"})
