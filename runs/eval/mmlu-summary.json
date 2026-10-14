@@ -783,6 +783,12 @@
   "right_of_readable": 0.4830917874396135,
   "letter_in_chat_on_the_same": 0.41842105263157897,
   "letter_as_text_on_the_same": 0.4964912280701754,
+  "letter_as_text_on_the_readable": 0.5422705314009661,
+  "written_against_letter_on_the_readable": {
+   "difference": -0.059178743961352656,
+   "low": -0.09178743961352658,
+   "high": -0.025362318840579712
+  },
   "against_letter_in_chat": {
    "difference": -0.06754385964912281,
    "low": -0.09210526315789473,

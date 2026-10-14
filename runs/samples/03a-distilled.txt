@@ -1,0 +1,23 @@
+$ uv run scripts/sample.py --ckpt out/distilled/ckpt.pt
+
+out/distilled/ckpt.pt: step 6000, val loss 1.4179
+
+Once upon a time, in a small town, there was a boy named Tim. Tim was a tough boy who loved to play with his toy missile. He had a toy missile that he played with every day.
+One day, Tim and his friends went to the park. They played on the swings, slide, and seesaw. The sun was out, and it was very warm. But then, Tim dropped his missile, and it rolled away. Tim's friends tried to catch it, but it was too fast.
+Then, a big wind came and blew the missile far away from Tim's house. The missile flew far, far away. Tim was sad, but then he had an idea. He picked up the missile and threw it far away. The missile went far, far away. Everyone was happy and played with Tim's missile too.
+
+---
+
+Once upon a time, there was a little bird named Tim. Tim loved to sing and play all day. One day, Tim noticed that there was a big cat near his home. The cat was very tired, so Tim decided to lie down in a cozy nest.
+While Tim was relaxing, a big cat named Sam saw the cat. Sam wanted to eat Tim. Tim was scared and said, "Please, give me back my nest!" Sam replied, "No, I will not share my nest. I am very tired."
+Tim felt sad but stopped looking for the right place to stay. He saw a soft pillow on the ground. Tim picked it up and flew down to Sam. "Thank you, Sam!" said Tim. "You are a good friend."
+Sam was happy that Tim said sorry. They both learned that sharing can be fun, but being friends is more important than being fast. And from that day on, Tim and Sam always shared their food and played together.
+
+---
+
+Once upon a time, there was a little cat named Kitty. Kitty loved to play outside. One day, Kitty saw a big, red ball in the yard. Kitty wanted to play with the ball, but it was too high for her to reach.
+Kitty's friend, a little boy named Tim, saw her looking sad. He came over to help her. Tim had an idea. He said, "Kitty, let's play with the big, red ball together!" Kitty liked the idea, so they played with the ball.
+As they played, Kitty jumped very high and hit the ball. The ball went up, up, up, and then came down. But it was not the ball! It was a big, angry dog. The dog was big and mean. Kitty, Tim, and the dog became best friends. They played together every day, and they all lived happily ever after.
+
+---
+

@@ -1,0 +1,5 @@
+Loading weights:   0%|          | 0/290 [00:00<?, ?it/s]Loading weights: 100%|██████████| 290/290 [00:00<00:00, 40776.00it/s]
+tokenizer: identical ids on 3 texts
+chat template: identical prompt
+logits: largest difference 1.81e-04 over 4,710,016 values
+generation: identical for 24 tokens: 'The kitten curled up on the windowsill, its fur a soft, golden brown. The garden was a lush, verd'

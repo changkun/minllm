@@ -1,0 +1,3 @@
+$ uv run scripts/chat.py --model out/base --prompt "Write a short story using these words: mole, protect." --temperature 0
+
+The mole was so happy that he had found a way to make the story. He thanked the wise old owl for the words and flew away.

@@ -1,0 +1,5 @@
+Loading weights:   0%|          | 0/74 [00:00<?, ?it/s]Loading weights: 100%|██████████| 74/74 [00:00<00:00, 46743.75it/s]
+tokenizer: identical ids on 3 texts
+chat template: identical prompt
+logits: largest difference 9.54e-06 over 102,400 values
+generation: identical for 24 tokens: "The little girl was so excited. She couldn't wait to explore the world and learn more about the world around her."

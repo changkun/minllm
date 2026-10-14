@@ -1,0 +1,5 @@
+$ uv run scripts/chat.py --model out/sft-words --prompt "Write a short story using these words: mole, protect." --temperature 0
+
+Once upon a time, there was a little mole. The mole lived in a hole in the ground. He had many friends, but his best friend was a big, strong lion.
+One day, the mole and the lion were playing near the hole. The mole said, "I want to protect my friends. They will be happy and safe." The lion said, "Okay, I will protect you."
+The mole and the lion played all day. They ran and jumped in the sun. The sun was warm and the sky was blue. The mole was happy to protect his friends. They all had fun together.

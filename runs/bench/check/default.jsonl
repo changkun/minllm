@@ -1,0 +1,8 @@
+{"step": 0, "val_loss": 8.407904958724975, "elapsed": 4.160502195358276, "sample": "Once upon a timeSamonest pow comb\u0006\u0006 stepped green gi touch wouldn wouldn\ufffd per word word green green ignoranttingasure front frontlevator trees treesinkyken green green nodded thankful toys only says butterfly\u0011\u0011 Olive Olive green greenamond\ufffd lots slid green playful playfulect\u0011 joiled playfuliled town por\"Can nailight shiningungle\ufffd stepped ignorantkenkenken NowJack delapped Aarn\ufffdemyemyemyight A"}
+{"step": 50, "train_loss": 6.772605810165405, "lr": 0.00025, "tokens_per_second": 63656.87948525277}
+{"step": 100, "train_loss": 4.362588491439819, "lr": 0.0005, "tokens_per_second": 99930.37210474191}
+{"step": 150, "train_loss": 3.472840971946716, "lr": 0.00075, "tokens_per_second": 94658.90074283008}
+{"step": 200, "train_loss": 3.0360535526275636, "lr": 0.001, "tokens_per_second": 98969.0502412893}
+{"step": 250, "train_loss": 2.8035921335220335, "lr": 0.0005641348415851577, "tokens_per_second": 100919.96286375557}
+{"step": 300, "train_loss": 2.568878297805786, "lr": 0.00010022204783542078, "tokens_per_second": 90104.53587222366}
+{"step": 300, "val_loss": 2.4959608137607576, "elapsed": 62.27046322822571, "sample": "Once upon a time, there was a little cat named Tom. Tom loved to play and run with his friends. One day, Tom wanted to play a fun game. He was very happy. Tom saw a big tree with a ball. He wanted to play with it. He took a big bite of the ball. The ball rolled and looked at Tom. But the ball was not dirty anymore. Tom took the ball"}

@@ -1,0 +1,6 @@
+Installed 27 packages in 116ms
+Loading weights:   0%|          | 0/74 [00:00<?, ?it/s]Loading weights: 100%|██████████| 74/74 [00:00<00:00, 45907.19it/s]
+tokenizer: identical ids on 3 texts
+chat template: identical prompt
+logits: largest difference 1.18e-05 over 102,400 values
+generation: identical for 24 tokens: 'Once upon a time, there was a little kitten named Fluffy. Fluffy was a very happy kitten. She loved to play'

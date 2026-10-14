@@ -1,0 +1,22 @@
+$ uv run scripts/sample.py
+
+out/base/ckpt.pt: step 6000, val loss 1.4654
+
+Once upon a time, in a small town, there was a boy named Tim. Tim was a very careless boy. He did not always look where he was going. One day, Tim saw a big, red ball. He wanted to play with it.
+Tim tried to kick the ball, but it did not move. He asked his friend, Sam, "Can you help me kick the ball?" Sam said, "Sure, let's try!" They kicked the ball together, and it started to move very fast. They were so happy.
+But soon, Tim and Sam were tired from playing. They decided to lay down under a tree. But as they lay there, they saw a tiny bug. The bug said, "Hello! I am a magic bug. I can fly and be your friend." Tim and Sam were surprised, but they were happy to have a new friend. They played together all day long.
+
+---
+
+Once upon a time, there was a little bird named Tim. Tim loved to sing and play all day. One day, Tim noticed that his tree was not strong. It was weak, and it could not spread like the other birds.
+Tim was sad. He wanted to fix his weak tree. He tried to tie a knot at the top of the tree, but it was still weak. So, he asked his friends for help.
+His friends helped him tie the knot. They all worked and fixed the tree. The tree became strong again, and every day, Tim sang a beautiful song. Everyone was happy, and Tim was happy too.
+
+---
+
+Once upon a time, there was a little cat named Kitty. Kitty loved to play with her toy mouse. One day, Kitty and her toy mouse went on a trip to the west. They went to the big tree in the forest.
+At the big forest, Kitty and her toy mouse met a nice dog. The dog said, "Hi, I am Dog. Can we play together?" Kitty said, "Yes! Let's be friends!" They played and had a lot of fun.
+But then, something unexpected happened. A big bird came down from the sky and took Kitty's toy mouse. Kitty was very sad and said, "I wish we could be friends forever." Dog said, "I will help you find your toy mouse." They searched all around the forest, asking all the animals if they saw the toy mouse, but no one knew who it belonged to. Finally, they found the toy mouse under a bush. Kitty was so happy and said, "Thank you, Dog
+
+---
+

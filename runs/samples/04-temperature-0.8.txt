@@ -1,0 +1,7 @@
+$ uv run scripts/sample.py --n 1 --top-k 0 --temperature 0.8
+
+out/base/ckpt.pt: step 6000, val loss 1.4654
+
+Once upon a time, there was a big, tough dog named Max. Max loved to play with his ball in the park. One day, while playing, Max saw a small hole in the ground. He was curious and wanted to see what was inside.
+Max went closer to look at the hole. Inside the hole, he found a pretty, shiny stone. Max was very happy and wanted to show his friend, the cat named Luna. Max ran to Luna's house and knocked on her door.
+Luna opened the door and said, "Thank you, Max!" Max went inside the hole and found a big, shiny ball. He was so excited to play with the shiny ball. Max and Luna played with the shiny ball all day long. They had lots of fun and became the best of friends.

@@ -1,0 +1,8 @@
+{"step": 0, "val_loss": 8.408100962638855, "elapsed": 6.072185277938843, "sample": "Once upon a timeSamonest pow comb\u0006\u0006 stepped green gi touch wouldn wouldn\ufffd per word word green green ignoranttingasure front frontlevator trees treesinkyken green green nodded thankful toys only says butterfly\u0011\u0011 Olive Olive green greenamond\ufffd lots slid green playful playfulect\u0011 joiled playfuliled town por\"Can nailight shiningungle\ufffd stepped ignorantkenkenken NowJack delapped Aarn\ufffdemyemyemyight A"}
+{"step": 50, "train_loss": 6.772376308441162, "lr": 0.00025, "tokens_per_second": 26865.85979545542}
+{"step": 100, "train_loss": 4.360998172760009, "lr": 0.0005, "tokens_per_second": 26803.940892678973}
+{"step": 150, "train_loss": 3.4743018627166746, "lr": 0.00075, "tokens_per_second": 27145.312188912332}
+{"step": 200, "train_loss": 3.0396438455581665, "lr": 0.001, "tokens_per_second": 27438.461827726114}
+{"step": 250, "train_loss": 2.805710530281067, "lr": 0.0005641348415851577, "tokens_per_second": 28552.00714410562}
+{"step": 300, "train_loss": 2.5708976650238036, "lr": 0.00010022204783542078, "tokens_per_second": 27962.115641172004}
+{"step": 300, "val_loss": 2.4976728200912475, "elapsed": 191.12052607536316, "sample": "Once upon a time, there was a little boy named Tim. Tim loved to play with his toy cars. Tim had a toy gun that had many toys. He loved to play with it every day. One day, Tim saw a big toy that was red. It was a big box. He thought it would be fun to play with it. Tim felt sad. He swam to the toy car and took it to"}

@@ -1,0 +1,6 @@
+$ uv run scripts/sample.py --n 1 --top-k 0 --temperature 1.5
+
+out/base/ckpt.pt: step 6000, val loss 1.4654
+
+Once upon a time, there were tw sailor young brothers who Lucy loved too childing in a circle office cat halveselly. She wanted to maketh display Some explore mysterious away, trying for adventures she was discovering.
+Bobo came to shouldfted just as he whispered everyone in color. The

@@ -1,0 +1,8 @@
+==========
+Once upon a time, there was a little kitten named Fluffy. Fluffy was a very happy kitten. She loved to play in the garden with her friends. One day, Fluffy found a big, red ball. She was so excited!
+Fluffy played with the ball all day long. She would throw it, roll it, and even hide it. But one day, Fluffy lost her ball. She looked and looked, but she could not find it. Fluffy was very sad.
+Fluffy's friends saw her
+==========
+Prompt: 25 tokens, 25.303 tokens-per-sec
+Generation: 100 tokens, 1853.896 tokens-per-sec
+Peak memory: 0.064 GB

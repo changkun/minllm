@@ -1,0 +1,29 @@
+device mps, qwen on gsm8k: 7,229 examples, 900 steps of 8
+training 8.8M of 494.0M parameters (1.8%), lr 0.0002
+prompt: Louie sells Dodge, Hyundai, and Kia vehicles, and his company has 400 vehicles for sale on the store
+step     0 | val loss 0.8309 | To determine the number of Kia vehicles on the lot, we can follow these steps:  1. **Total number of vehicles on the lot**: 400 vehicles. 2. **Number of Dodge v
+step    50 | loss 0.5961 | lr 2.00e-04 | 2.6k tok/s
+step   100 | loss 0.5637 | lr 1.99e-04 | 2.8k tok/s
+step   150 | loss 0.5361 | lr 1.94e-04 | 2.7k tok/s
+step   200 | loss 0.5389 | lr 1.87e-04 | 2.7k tok/s
+step   200 | val loss 0.5977 | There are 400/2=200 Dodge vehicles on the lot. There are 200/2=100 Hyundai vehicles on the lot. There are 200/2=100 Kia vehicles on the lot. #### 100
+step   250 | loss 0.5060 | lr 1.77e-04 | 2.7k tok/s
+step   300 | loss 0.4789 | lr 1.65e-04 | 2.6k tok/s
+step   350 | loss 0.4953 | lr 1.50e-04 | 2.6k tok/s
+step   400 | loss 0.4903 | lr 1.35e-04 | 2.6k tok/s
+step   400 | val loss 0.5917 | There are 400/2=200 Dodge vehicles on the lot. There are 200/2=100 Hyundai vehicles on the lot. There are 100/2=50 Kia vehicles on the lot. #### 50
+step   450 | loss 0.4963 | lr 1.19e-04 | 2.5k tok/s
+step   500 | loss 0.4867 | lr 1.02e-04 | 2.6k tok/s
+step   550 | loss 0.4334 | lr 8.57e-05 | 2.7k tok/s
+step   600 | loss 0.4220 | lr 7.02e-05 | 2.6k tok/s
+step   600 | val loss 0.5903 | There are 400/2=200 Dodge vehicles on the lot. There are 200/2=100 Hyundai vehicles on the lot. There are 200/2=100 Kia vehicles on the lot. #### 100
+step   650 | loss 0.4085 | lr 5.60e-05 | 2.7k tok/s
+step   700 | loss 0.3994 | lr 4.37e-05 | 2.5k tok/s
+step   750 | loss 0.4261 | lr 3.37e-05 | 2.5k tok/s
+step   800 | loss 0.4282 | lr 2.62e-05 | 2.4k tok/s
+step   800 | val loss 0.5844 | There are 400/2=200 Dodge vehicles on the lot. There are 200/2=100 Hyundai vehicles on the lot. There are 100/2=50 Kia vehicles on the lot. #### 50
+step   850 | loss 0.4141 | lr 2.16e-05 | 2.4k tok/s
+step   900 | loss 0.4099 | lr 2.00e-05 | 2.6k tok/s
+step   900 | val loss 0.5864 | There are 400/2=200 Dodge vehicles on the lot. There are 200/2=100 Hyundai vehicles on the lot. Thus, there are 100/2=50 Kia vehicles on the lot. #### 50
+done in 9.9 minutes, saved to out/sft-gsm8k-lora
+exit 0

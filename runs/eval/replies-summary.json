@@ -1,0 +1,20 @@
+{
+ "gsm8k-qwen": {
+  "label": "0.5B as published",
+  "n": 1319,
+  "median_characters": 920,
+  "with_answer_line": 0.027293404094010616
+ },
+ "gsm8k-sft-gsm8k-lora": {
+  "label": "fine-tuned, LoRA",
+  "n": 1319,
+  "median_characters": 211,
+  "with_answer_line": 0.9893858984078847
+ },
+ "gsm8k-grpo-gsm8k": {
+  "label": "after GRPO",
+  "n": 1319,
+  "median_characters": 268,
+  "with_answer_line": 0.9969673995451099
+ }
+}

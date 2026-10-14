@@ -1,0 +1,7 @@
+$ uv run scripts/sample.py --n 1 --top-k 0 --temperature 0
+
+out/base/ckpt.pt: step 6000, val loss 1.4654
+
+Once upon a time, there was a little girl named Lily. She loved to play with her toys and eat yummy food. One day, she found a big, red apple in her kitchen. She was very happy and wanted to eat it all.
+Lily took the apple to her mom and said, "Mom, can I eat this apple? It is so yummy!" Her mom smiled and said, "Yes, Lily, you can eat the apple. But first, you must help me clean the house." Lily was excited and started to help her mom.
+As they cleaned, Lily's mom told her to be careful with the apple. Lily did as her mom said, and she took a big bite. The apple was very yummy! Lily and her mom laughed and enjoyed the yummy apple together. They had a fun day and Lily learned that sometimes, things are not what they seem.

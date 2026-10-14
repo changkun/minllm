@@ -1,0 +1,24 @@
+$ uv run scripts/sample.py --prompt "The tiny robot was sad because" --temperature 0.5
+
+out/base/ckpt.pt: step 6000, val loss 1.4654
+
+The tiny robot was sad because he had never been so far away. He looked everywhere, but he couldn't find anywhere. He was so sad and he started to cry. 
+Then, he heard a voice. It was a little girl. She said, "Don't worry, I will help you find your robot." 
+The robot was so happy! He started to walk around the house, looking all around. He asked the little girl if she wanted to come with him. 
+The little girl was so happy that she started to dance and sing around the robot. The robot smiled and said, "I am so glad you found me!" 
+The little girl was so happy, she hugged the robot and thanked him. She said goodbye and the robot went back to his home, feeling very happy and content.
+
+---
+
+The tiny robot was sad because it couldn't find its way home. It was feeling lonely and lonely, so it decided to go on an adventure. As it walked through the park, it saw a little boy playing with a ball. The robot stopped and asked the boy, "Do you want to play with me?"
+The boy smiled and said, "Yes, I would love to play with you!"
+The robot and the boy played together all day. They ran, they jumped, and they even had a lot of fun. The robot was so happy that it had found its way home. 
+When it was time to go home, the robot said goodbye to the boy and the boy. The boy was so happy to have a new friend. He said, "Thank you for playing with me. I hope you had a great day!" 
+The robot waved goodbye to the boy and went back to the park. The boy waved goodbye and the robot waved back. They said goodbye to each other and the boy went home with
+
+---
+
+The tiny robot was sad because it was very lonely. It was always alone, and it was all alone. One day, it decided to go on an adventure. It hopped on a journey and saw a big tree. The robot wanted to explore, but it was scared to go alone. So the robot decided to go on an adventure. It hopped off the tree and hopped over the branches. It hopped and hopped until it reached a big lake. The robot was so happy to be out of the lake. It hopped and hopped until it got to the lake. The robot was so happy that it decided to stay and enjoy the lake.
+
+---
+
