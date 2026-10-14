@@ -28,7 +28,7 @@ parser.add_argument("--out", default="out/dpo")
 parser.add_argument("--epochs", type=int, default=1)
 parser.add_argument("--batch-size", type=int, default=32)
 parser.add_argument("--lr", type=float, default=5e-5)
-parser.add_argument("--beta", type=float, default=0.1, help="how strongly to hold the policy to the reference: larger is looser")
+parser.add_argument("--beta", type=float, default=0.1, help="how strongly to hold the policy to the reference: larger is tighter")
 parser.add_argument("--seed", type=int, default=0)
 args = parser.parse_args()
 
