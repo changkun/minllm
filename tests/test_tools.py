@@ -67,6 +67,20 @@ def test_calls_are_control_tokens_in_the_assistants_turn_only():
     assert tools.encode(tok, plain)[0] == chat.encode(tok, plain)
 
 
+@needs_tokenizer
+def test_system_markers_tokenize_the_tool_instructions_as_qwen_does():
+    tok = pretrained.load_tokenizer(QWEN)
+    system = {"role": "system", "content": tools.system_prompt(pretrained.SYSTEM_PROMPT, [tools.CALCULATE])}
+    question = {"role": "user", "content": "Say <tool_call> back."}
+    start, end = tok.special_tokens["<tool_call>"], tok.special_tokens["</tool_call>"]
+    spelled = tools.encode(tok, [system, question])[0]
+    marked = tools.encode(tok, [system, question], system_markers=True)[0]
+    assert start not in spelled and end not in spelled
+    assert marked.count(start) == 2 and marked.count(end) == 2  # the instructions' two pairs; the user's copy stays characters
+    assert tok.decode(marked) == tok.decode(spelled)  # the same text, in fewer tokens
+    assert len(marked) < len(spelled)
+
+
 def test_calls_are_read_from_a_reply():
     reply = "First\n" + tools.call_text("calculate", {"expression": "2*3"}) + "\n<tool_call>\nnot json\n</tool_call>"
     assert tools.calls(reply) == [("calculate", {"expression": "2*3"}), (None, "\nnot json\n")]
