@@ -12,7 +12,9 @@ recent open model has adopted:
     GQA          grouped-query attention: query heads share key/value heads
 
 Because the layout matches the published models, weights such as Qwen's can
-later be loaded into this same code. See docs/02-model.md.
+later be loaded into this same code. See docs/02-model.md. The latent
+attention of DeepSeek's models can take the place of GQA: see
+LatentAttention and docs/02c-latent-attention.md.
 """
 
 import math
@@ -41,6 +43,8 @@ class Config:
     # Positions beyond those trained on: {"type": "linear" | "ntk" | "yarn", "factor": s,
     # "original": the length trained on}. See rope_table and docs/02b-context.md.
     rope_scaling: dict | None = None
+    kv_latent: int = 0  # above 0, attention is latent attention, and the cache keeps a latent of this width
+    rope_dim: int = 32  # with kv_latent: the rotary part of every query and key, the key's shared by all heads
 
 
 class RMSNorm(nn.Module):
@@ -144,6 +148,69 @@ class Attention(nn.Module):
         return self.o_proj(y.transpose(1, 2).reshape(B, T, -1))
 
 
+class LatentAttention(nn.Module):
+    """
+    Multi-head latent attention, as in DeepSeek-V2 and V3 (DeepSeek-AI, 2024,
+    arXiv:2405.04434). Each token is compressed into a latent of kv_latent
+    numbers, and every head's key and value are projected up from it. The
+    cache keeps only the latent and one small rotary key that all heads
+    share, instead of a key and a value per key/value head.
+
+    A query and a key have two parts. head_dim numbers of content, whose key
+    comes from the latent, and rope_dim numbers that carry the position, whose
+    key comes from the token and is rotated. The position needs a part of
+    its own: a key rotated after the up-projection could not be folded into
+    the query, as forward does when it decodes. See docs/02c-latent-attention.md.
+    """
+
+    def __init__(self, cfg):
+        super().__init__()
+        self.n_heads, self.head_dim, self.rope_dim, self.latent = cfg.n_heads, cfg.dim // cfg.n_heads, cfg.rope_dim, cfg.kv_latent
+        self.q_proj = nn.Linear(cfg.dim, cfg.n_heads * (self.head_dim + self.rope_dim), bias=False)
+        self.kv_down = nn.Linear(cfg.dim, self.latent + self.rope_dim, bias=False)  # the latent and the rotary key
+        self.kv_norm = RMSNorm(self.latent, cfg.norm_eps)
+        self.k_up = nn.Linear(self.latent, cfg.n_heads * self.head_dim, bias=False)
+        self.v_up = nn.Linear(self.latent, cfg.n_heads * self.head_dim, bias=False)
+        self.o_proj = nn.Linear(cfg.n_heads * self.head_dim, cfg.dim, bias=False)
+        self.absorb = True  # decode against the latent itself; off, every step projects the cache up again
+
+    def forward(self, x, cos, sin, mask=None, cache=None):
+        B, T, _ = x.shape
+        H, D, R = self.n_heads, self.head_dim, self.rope_dim
+        q = self.q_proj(x).view(B, T, H, D + R).transpose(1, 2)
+        q, q_rot = q.split([D, R], dim=-1)
+        latent, k_rot = self.kv_down(x).split([self.latent, R], dim=-1)
+        latent, k_rot = self.kv_norm(latent)[:, None], k_rot[:, None]  # (B, 1, T, ...): one "head", shared by all
+        q_rot, k_rot = apply_rope(q_rot, cos, sin), apply_rope(k_rot, cos, sin)
+        if cache is not None:
+            latent, k_rot = cache.append(latent, k_rot)  # the cache holds these two, and nothing per head
+        S = latent.shape[2]
+        scale = 1 / math.sqrt(D + R)
+
+        if cache is not None and T == 1 and self.absorb:
+            # One new token. Its query meets each key as q . (W_k c) = (W_k^T q) . c,
+            # so the query is projected down into the latent once, instead of
+            # every cached latent being projected up into keys. Likewise the
+            # values: the weights average the latents, and W_v is applied to
+            # the average. Every head then attends over the same S vectors of
+            # latent + rope_dim numbers, so the heads are rows of one matrix
+            # product, and the cache is read once for all of them.
+            w_k, w_v = self.k_up.weight.view(H, D, self.latent), self.v_up.weight.view(H, D, self.latent)
+            q = torch.cat([torch.einsum("bhtd,hdl->bhtl", q, w_k), q_rot], dim=-1).reshape(B, H * T, -1)
+            scores = q @ torch.cat([latent, k_rot], dim=-1)[:, 0].transpose(1, 2) * scale  # (B, heads, S)
+            if mask is not None:
+                scores = scores.masked_fill(~mask.expand(B, H, T, S).reshape(B, H * T, S), float("-inf"))
+            y = scores.float().softmax(dim=-1).to(latent.dtype) @ latent[:, 0]  # (B, heads, latent)
+            y = torch.einsum("bhtl,hdl->bhtd", y.view(B, H, T, -1), w_v)
+        else:
+            # Training and prefill: every head's keys and values, projected up from the latents.
+            k = self.k_up(latent[:, 0]).view(B, S, H, D).transpose(1, 2)
+            v = self.v_up(latent[:, 0]).view(B, S, H, D).transpose(1, 2)
+            q, k = torch.cat([q, q_rot], dim=-1), torch.cat([k, k_rot.expand(B, H, S, R)], dim=-1)
+            y = F.scaled_dot_product_attention(q, k, v, attn_mask=mask, is_causal=mask is None and T > 1, scale=scale)
+        return self.o_proj(y.transpose(1, 2).reshape(B, T, -1))
+
+
 class MLP(nn.Module):
     """SwiGLU: one projection gates the other, elementwise."""
 
@@ -221,7 +288,7 @@ class Block(nn.Module):
     def __init__(self, cfg):
         super().__init__()
         self.attn_norm = RMSNorm(cfg.dim, cfg.norm_eps)
-        self.attn = Attention(cfg)
+        self.attn = LatentAttention(cfg) if cfg.kv_latent else Attention(cfg)
         self.mlp_norm = RMSNorm(cfg.dim, cfg.norm_eps)
         self.mlp = MoE(cfg) if cfg.n_experts else MLP(cfg)
 
@@ -243,7 +310,8 @@ class Transformer(nn.Module):
         self.lm_head = nn.Linear(cfg.dim, cfg.vocab_size, bias=False)
         if cfg.tie_embeddings:
             self.lm_head.weight = self.embed.weight
-        cos, sin = rope_table(cfg.dim // cfg.n_heads, cfg.max_seq_len, cfg.rope_theta, cfg.rope_scaling)
+        rotated = cfg.rope_dim if cfg.kv_latent else cfg.dim // cfg.n_heads  # the dimensions that carry the position
+        cos, sin = rope_table(rotated, cfg.max_seq_len, cfg.rope_theta, cfg.rope_scaling)
         self.register_buffer("rope_cos", cos, persistent=False)
         self.register_buffer("rope_sin", sin, persistent=False)
 
@@ -278,6 +346,7 @@ class Transformer(nn.Module):
         come after the ones already cached. mask, if given, is boolean and
         broadcasts to (batch, heads, new tokens, all tokens): True where a
         token may attend.
+
         """
         T = idx.shape[1]
         pos = cache.pos if cache is not None else 0  # tokens that came before idx

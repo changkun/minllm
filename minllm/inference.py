@@ -29,7 +29,7 @@ class LayerCache:
             # One allocation for the whole generation. Growing the tensors by
             # concatenation instead would copy the entire cache at every step.
             B, H, _, D = k.shape
-            self.k, self.v = k.new_empty(B, H, self.max_len, D), v.new_empty(B, H, self.max_len, D)
+            self.k, self.v = k.new_empty(B, H, self.max_len, D), v.new_empty(B, H, self.max_len, v.shape[-1])
         T = k.shape[2]
         self.k[:, :, self.len : self.len + T] = k
         self.v[:, :, self.len : self.len + T] = v
