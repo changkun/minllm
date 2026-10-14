@@ -1,0 +1,133 @@
+{"step": 0, "val_loss": 8.41474142074585, "elapsed": 7.122444152832031, "sample": "Once upon a time rid rid rid rid saidtententen pretendedelly compassion compassion ladder ladder ladder its its upsh hidden vest sunglassesacedacedacedacedaced market gigg gigg gigg mysterious mysterious mysterious mysterious mysterious mysteriousond rever designinesoggy our hats shining shouldlloBillyBillyBilly aut Maybe ways ways goat goat Mr Mr surpr surpr surpr surpr shield shield topSure\ufffd\ufffd\ufffd breath breath li it diffic diffic diffic diffic diffic diffic mine"}
+{"step": 50, "train_loss": 6.454676370620728, "lr": 0.00025, "tokens_per_second": 51762.29411752299}
+{"step": 100, "train_loss": 4.306192655563354, "lr": 0.0005, "tokens_per_second": 98262.91904978461}
+{"step": 150, "train_loss": 3.567685284614563, "lr": 0.00075, "tokens_per_second": 98387.22853036023}
+{"step": 200, "train_loss": 3.1015985584259034, "lr": 0.001, "tokens_per_second": 98567.52234503445}
+{"step": 250, "train_loss": 2.8359323644638064, "lr": 0.000999841513256364, "tokens_per_second": 98939.49463475197}
+{"step": 300, "train_loss": 2.654745693206787, "lr": 0.0009993531663647413, "tokens_per_second": 99013.83762921029}
+{"step": 350, "train_loss": 2.522560863494873, "lr": 0.0009985352514796848, "tokens_per_second": 99104.87474805005}
+{"step": 400, "train_loss": 2.4243873310089112, "lr": 0.0009973883684825072, "tokens_per_second": 99188.98922243959}
+{"step": 450, "train_loss": 2.348613028526306, "lr": 0.0009959133585287997, "tokens_per_second": 99222.3185613971}
+{"step": 500, "train_loss": 2.280047903060913, "lr": 0.0009941113034315037, "tokens_per_second": 98955.90463665512}
+{"step": 500, "val_loss": 2.245830017328262, "elapsed": 100.67532801628113, "sample": "Once upon a time, there was a family of a bird. They were very proud of their work. They wanted to play a game. They put their boots on the branch and started to dig. One day, a little boy named Tim was playing with his football. He threw the ball high in the air and laughed. He laughed and took his ball. He played with the football and had a great time. "}
+{"step": 550, "train_loss": 2.2266628456115725, "lr": 0.0009919835248674805, "tokens_per_second": 99096.07416780439}
+{"step": 600, "train_loss": 2.182686252593994, "lr": 0.0009895315834081563, "tokens_per_second": 99188.42800559824}
+{"step": 650, "train_loss": 2.148308525085449, "lr": 0.000986757277374957, "tokens_per_second": 98901.24476626804}
+{"step": 700, "train_loss": 2.1126597714424133, "lr": 0.0009836626415203687, "tokens_per_second": 99154.24870389317}
+{"step": 750, "train_loss": 2.0846282410621644, "lr": 0.0009802499455355954, "tokens_per_second": 98867.53616857239}
+{"step": 800, "train_loss": 2.0428973770141603, "lr": 0.0009765216923859038, "tokens_per_second": 94358.225900256}
+{"step": 850, "train_loss": 2.0264472126960755, "lr": 0.0009724806164748796, "tokens_per_second": 93341.42253574119}
+{"step": 900, "train_loss": 2.001466364860535, "lr": 0.000968129681638942, "tokens_per_second": 95062.58537783544}
+{"step": 950, "train_loss": 1.9757792329788209, "lr": 0.0009634720789735824, "tokens_per_second": 96134.86595561204}
+{"step": 1000, "train_loss": 1.965591013431549, "lr": 0.0009585112244929287, "tokens_per_second": 97454.19778928177}
+{"step": 1000, "val_loss": 1.9522766500711441, "elapsed": 188.4982180595398, "sample": "Once upon a time, in a big castle, there lived a little girl named Lily. She had a big book of pages. On her drawing, she loved to play with her toys. One day, Lily found a big box of paint. She was very happy. \"What can I do with these shampoo?\" she asked. Lily took a bucket and started to rubber with the shampoo."}
+{"step": 1050, "train_loss": 1.9427436804771423, "lr": 0.0009532507566243456, "tokens_per_second": 97350.67683035116}
+{"step": 1100, "train_loss": 1.9208501958847046, "lr": 0.0009476945335399121, "tokens_per_second": 97279.36030236332}
+{"step": 1150, "train_loss": 1.9159804487228393, "lr": 0.0009418466303267309, "tokens_per_second": 96474.10128818895}
+{"step": 1200, "train_loss": 1.903570101261139, "lr": 0.0009357113359981487, "tokens_per_second": 97280.00753784238}
+{"step": 1250, "train_loss": 1.892665855884552, "lr": 0.0009292931503480742, "tokens_per_second": 97708.82817075026}
+{"step": 1300, "train_loss": 1.871629548072815, "lr": 0.0009225967806507064, "tokens_per_second": 97615.89367036794}
+{"step": 1350, "train_loss": 1.8682821321487426, "lr": 0.0009156271382080892, "tokens_per_second": 97811.99607792545}
+{"step": 1400, "train_loss": 1.843988447189331, "lr": 0.0009083893347480279, "tokens_per_second": 97694.64574673625}
+{"step": 1450, "train_loss": 1.8530062866210937, "lr": 0.000900888678675006, "tokens_per_second": 97366.87576334114}
+{"step": 1500, "train_loss": 1.8488057351112366, "lr": 0.0008931306711768564, "tokens_per_second": 97524.22915961461}
+{"step": 1500, "val_loss": 1.8332474112510682, "elapsed": 275.93512892723083, "sample": "Once upon a time, there was a boy named Tim. Tim had a red wagon. He loved to carry things with his toys. One day, Tim went to the park with his wagon. He was very happy. At the park, Tim saw a big tree. He wanted to give the tree to his mom. Tim was very tired, but he wanted to buy the tree. So, he tried to reach the"}
+{"step": 1550, "train_loss": 1.8200728368759156, "lr": 0.0008851210021900382, "tokens_per_second": 97833.11487662641}
+{"step": 1600, "train_loss": 1.815639488697052, "lr": 0.00087686554622648, "tokens_per_second": 97650.00841655128}
+{"step": 1650, "train_loss": 1.7983462619781494, "lr": 0.0008683703580650517, "tokens_per_second": 97735.90983765219}
+{"step": 1700, "train_loss": 1.8006668663024903, "lr": 0.0008596416683108223, "tokens_per_second": 97554.50450281633}
+{"step": 1750, "train_loss": 1.793401267528534, "lr": 0.0008506858788253632, "tokens_per_second": 96303.27794638142}
+{"step": 1800, "train_loss": 1.7960442090034485, "lr": 0.0008415095580314455, "tokens_per_second": 97369.54943654878}
+{"step": 1850, "train_loss": 1.7795500349998474, "lr": 0.0008321194360955789, "tokens_per_second": 97756.76216213201}
+{"step": 1900, "train_loss": 1.7611432933807374, "lr": 0.000822522399991921, "tokens_per_second": 97594.07573318179}
+{"step": 1950, "train_loss": 1.7607675743103028, "lr": 0.0008127254884511817, "tokens_per_second": 96985.60836083279}
+{"step": 2000, "train_loss": 1.7575716590881347, "lr": 0.0008027358867982231, "tokens_per_second": 96768.49723209292}
+{"step": 2000, "val_loss": 1.7538617700338364, "elapsed": 363.41445779800415, "sample": "Once upon a time, there was a little girl called Lucy. She was three years old and loved to explore the world. One day, when she was playing in the park, she noticed something shiny on the ground. It was a balloon! Lucy was so excited and started to pick it up. She ran to the door and knocked.  \u201cHello?\u201d Lucy said to herself. \u201cOh no, that\u2019s a"}
+{"step": 2050, "train_loss": 1.7557356882095336, "lr": 0.000792560921682146, "tokens_per_second": 98343.37201268284}
+{"step": 2100, "train_loss": 1.74316926240921, "lr": 0.000782208055702721, "tokens_per_second": 97988.52039201981}
+{"step": 2150, "train_loss": 1.7350204730033874, "lr": 0.0007716848819371148, "tokens_per_second": 97612.09167345188}
+{"step": 2200, "train_loss": 1.7179982662200928, "lr": 0.0007609991183709165, "tokens_per_second": 97250.29316261833}
+{"step": 2250, "train_loss": 1.726295943260193, "lr": 0.0007501586022375554, "tokens_per_second": 97494.37372312539}
+{"step": 2300, "train_loss": 1.7147258591651917, "lr": 0.0007391712842702565, "tokens_per_second": 97730.56680149851}
+{"step": 2350, "train_loss": 1.7084977149963378, "lr": 0.0007280452228707557, "tokens_per_second": 91124.4757564483}
+{"step": 2400, "train_loss": 1.7073735237121581, "lr": 0.0007167885781990446, "tokens_per_second": 85565.49289722557}
+{"step": 2450, "train_loss": 1.6930187106132508, "lr": 0.0007054096061884845, "tokens_per_second": 91815.01241930418}
+{"step": 2500, "train_loss": 1.692514669895172, "lr": 0.000693916652490678, "tokens_per_second": 94896.75126673351}
+{"step": 2500, "val_loss": 1.695812377333641, "elapsed": 455.24550890922546, "sample": "Once upon a time, there was a big tree. It was a boring place. It was not like other trees or flowers. Many animals lived in the tree. The tree had many leaves. One day, a little squirrel named Max came to the tree. Max was very tired. He wanted to sleep. He went to the tree and lay down. The tree was very dry. It rained, and Max could"}
+{"step": 2550, "train_loss": 1.6869257283210755, "lr": 0.0006823181463545367, "tokens_per_second": 90788.573912027}
+{"step": 2600, "train_loss": 1.6787442779541015, "lr": 0.0006706225944440403, "tokens_per_second": 93249.39114821515}
+{"step": 2650, "train_loss": 1.6744542980194093, "lr": 0.000658838574599212, "tokens_per_second": 91441.2649414528}
+{"step": 2700, "train_loss": 1.6696787571907044, "lr": 0.0006469747295448963, "tokens_per_second": 91001.07069560466}
+{"step": 2750, "train_loss": 1.6689436054229736, "lr": 0.0006350397605519459, "tokens_per_second": 91050.39693214004}
+{"step": 2800, "train_loss": 1.6595134115219117, "lr": 0.0006230424210554691, "tokens_per_second": 91370.1204613588}
+{"step": 2850, "train_loss": 1.6561103105545043, "lr": 0.0006109915102348213, "tokens_per_second": 91403.4758591101}
+{"step": 2900, "train_loss": 1.6525773525238037, "lr": 0.0005988958665600416, "tokens_per_second": 91157.02080351175}
+{"step": 2950, "train_loss": 1.6387004232406617, "lr": 0.0005867643613094778, "tokens_per_second": 89494.88340624078}
+{"step": 3000, "train_loss": 1.638778977394104, "lr": 0.0005746058920633453, "tokens_per_second": 91166.60114260533}
+{"step": 3000, "val_loss": 1.6492228597402572, "elapsed": 549.253250837326, "sample": "Once upon a time upon a time, a little girl named Amy went to the park with her mom. They saw a big tree with a lot of branches. Amy's mom said, \"Okay, let's sit under the tree.\" As they sat under the tree, Amy saw a cat. The cat was sad because it lost its toy. Amy said, \"I will help you find your toy.\" They walked and"}
+{"step": 3050, "train_loss": 1.6215864729881286, "lr": 0.0005624293761779969, "tokens_per_second": 100334.7877549745}
+{"step": 3100, "train_loss": 1.6287632703781127, "lr": 0.0005502437442456875, "tokens_per_second": 101769.24444261203}
+{"step": 3150, "train_loss": 1.6280738973617555, "lr": 0.0005380579335446323, "tokens_per_second": 98438.06414629497}
+{"step": 3200, "train_loss": 1.6248380494117738, "lr": 0.0005258808814841605, "tokens_per_second": 101334.47958169894}
+{"step": 3250, "train_loss": 1.6316814231872558, "lr": 0.0005137215190497725, "tokens_per_second": 100173.65616862469}
+{"step": 3300, "train_loss": 1.6069822764396668, "lr": 0.0005015887642529103, "tokens_per_second": 94570.60508528401}
+{"step": 3350, "train_loss": 1.614178123474121, "lr": 0.0004894915155902405, "tokens_per_second": 100463.04685455583}
+{"step": 3400, "train_loss": 1.6079413557052613, "lr": 0.00047743864551725326, "tokens_per_second": 101845.71983434116}
+{"step": 3450, "train_loss": 1.601094572544098, "lr": 0.0004654389939409581, "tokens_per_second": 99649.95617949715}
+{"step": 3500, "train_loss": 1.5953844141960145, "lr": 0.00045350136173645273, "tokens_per_second": 99860.35245276448}
+{"step": 3500, "val_loss": 1.6064239621162415, "elapsed": 634.7321300506592, "sample": "Once upon a time, there was a little boy called Jack. He loved to play outside in the sun. One day, while he was playing, he heard a loud noise. He looked up and saw a big tree with a lot of round, colorful leaves. Jack felt excited and ran to the tree to get a closer look.  When he got there, he saw that the leaves were very colorful. He started"}
+{"step": 3550, "train_loss": 1.5974630570411683, "lr": 0.00044163450429211815, "tokens_per_second": 99807.58243628795}
+{"step": 3600, "train_loss": 1.586857876777649, "lr": 0.00042984712508817736, "tokens_per_second": 100604.67314607468}
+{"step": 3650, "train_loss": 1.593155987262726, "lr": 0.00041814786931332093, "tokens_per_second": 101305.11933220667}
+{"step": 3700, "train_loss": 1.579350802898407, "lr": 0.00040654531752408875, "tokens_per_second": 101377.62013575499}
+{"step": 3750, "train_loss": 1.5785560059547423, "lr": 0.00039504797935165326, "tokens_per_second": 96761.8805978026}
+{"step": 3800, "train_loss": 1.5735580945014953, "lr": 0.0003836642872606214, "tokens_per_second": 94790.50055117399}
+{"step": 3850, "train_loss": 1.5730564522743224, "lr": 0.0003724025903644321, "tokens_per_second": 96903.4442555308}
+{"step": 3900, "train_loss": 1.567708592414856, "lr": 0.0003612711483018879, "tokens_per_second": 97365.84661764314}
+{"step": 3950, "train_loss": 1.5632087635993956, "lr": 0.0003502781251793068, "tokens_per_second": 96431.63839499261}
+{"step": 4000, "train_loss": 1.5614909315109253, "lr": 0.0003394315835827421, "tokens_per_second": 95001.69590931085}
+{"step": 4000, "val_loss": 1.5697376996278762, "elapsed": 722.3650507926941, "sample": "Once upon a time, there was a little girl named Lily. She lived in a small house with her mom. One day, Lily saw a little bird outside her window. The bird could not fly. Lily wanted to help the bird. Lily had an idea. She thought, \"I can put the bird in my room and help it fly away. Then, she can fly again.\" So, Lily put the bird"}
+{"step": 4050, "train_loss": 1.5702047181129455, "lr": 0.00032873947866466036, "tokens_per_second": 91467.53744993272}
+{"step": 4100, "train_loss": 1.5633146142959595, "lr": 0.0003182096523094129, "tokens_per_second": 93685.67477321131}
+{"step": 4150, "train_loss": 1.5469492411613464, "lr": 0.00030784982738178105, "tokens_per_second": 93820.53384508692}
+{"step": 4200, "train_loss": 1.546243724822998, "lr": 0.00029766760206281594, "tokens_per_second": 95874.59409384565}
+{"step": 4250, "train_loss": 1.5437230634689332, "lr": 0.0002876704442771216, "tokens_per_second": 96264.84882731515}
+{"step": 4300, "train_loss": 1.5325095295906066, "lr": 0.0002778656862156738, "tokens_per_second": 97224.19792892206}
+{"step": 4350, "train_loss": 1.5364008021354676, "lr": 0.00026826051895819004, "tokens_per_second": 97044.59498019736}
+{"step": 4400, "train_loss": 1.543066177368164, "lr": 0.0002588619871989918, "tokens_per_second": 95929.94393918598}
+{"step": 4450, "train_loss": 1.5346959900856019, "lr": 0.0002496769840802333, "tokens_per_second": 96389.21827327949}
+{"step": 4500, "train_loss": 1.5300209164619445, "lr": 0.00024071224613628035, "tokens_per_second": 96734.57067063187}
+{"step": 4500, "val_loss": 1.5395026713609696, "elapsed": 811.8981518745422, "sample": "Once upon a time, there was a little girl named Lucy. She was very anxious because she had gone to the store with her mom. At the store, she saw many things she wanted to buy. She saw toys, clothes, and clothes. She was very excited. At the store, Lucy saw a pretty red ball. She wanted one very much. She asked her mom if she could have the red ball."}
+{"step": 4550, "train_loss": 1.5212326455116272, "lr": 0.0002319743483529499, "tokens_per_second": 95788.70069443992}
+{"step": 4600, "train_loss": 1.52502614736557, "lr": 0.00022346969934523587, "tokens_per_second": 95801.35746203877}
+{"step": 4650, "train_loss": 1.5090177726745606, "lr": 0.00021520453665705246, "tokens_per_second": 93447.1136792522}
+{"step": 4700, "train_loss": 1.5190135717391968, "lr": 0.00020718492218644864, "tokens_per_second": 89682.19938342235}
+{"step": 4750, "train_loss": 1.527593297958374, "lr": 0.0001994167377396455, "tokens_per_second": 92011.83964667184}
+{"step": 4800, "train_loss": 1.51170818567276, "lr": 0.00019190568071715604, "tokens_per_second": 95491.41299714171}
+{"step": 4850, "train_loss": 1.5261198258399964, "lr": 0.00018465725993515615, "tokens_per_second": 93019.83272654306}
+{"step": 4900, "train_loss": 1.5000922465324402, "lr": 0.00017767679158516638, "tokens_per_second": 91673.02780227183}
+{"step": 4950, "train_loss": 1.5034127378463744, "lr": 0.0001709693953350101, "tokens_per_second": 98175.71045282406}
+{"step": 5000, "train_loss": 1.5061691641807555, "lr": 0.00016453999057390917, "tokens_per_second": 96140.37219030701}
+{"step": 5000, "val_loss": 1.514581948518753, "elapsed": 902.5183608531952, "sample": "Once upon a time, there was a little girl named Lily. She had a big book called a dictionary. Lily loved her dictionary very much. She would draw pictures of animals on it every day. One day, Lily saw a little bird outside her window. The bird was sad and cold. Lily wanted to help the bird. She went to her mom and asked for help. Her mom"}
+{"step": 5050, "train_loss": 1.4953556990623473, "lr": 0.00015839329280446763, "tokens_per_second": 100508.25906581308}
+{"step": 5100, "train_loss": 1.493808500766754, "lr": 0.00015253381018419203, "tokens_per_second": 100028.28052754782}
+{"step": 5150, "train_loss": 1.491011347770691, "lr": 0.000146965840219085, "tokens_per_second": 99776.50116573293}
+{"step": 5200, "train_loss": 1.4877113389968872, "lr": 0.00014169346661173566, "tokens_per_second": 96321.04724538489}
+{"step": 5250, "train_loss": 1.49567937374115, "lr": 0.0001367205562662197, "tokens_per_second": 96937.29248638572}
+{"step": 5300, "train_loss": 1.4963042449951172, "lr": 0.00013205075645200513, "tokens_per_second": 95742.46342943031}
+{"step": 5350, "train_loss": 1.4909429740905762, "lr": 0.00012768749212894475, "tokens_per_second": 96510.15490053986}
+{"step": 5400, "train_loss": 1.4828430271148683, "lr": 0.00012363396343531604, "tokens_per_second": 95606.87879479211}
+{"step": 5450, "train_loss": 1.4854123640060424, "lr": 0.00011989314334075144, "tokens_per_second": 96675.61748644519}
+{"step": 5500, "train_loss": 1.491922209262848, "lr": 0.00011646777546578086, "tokens_per_second": 96970.9618525862}
+{"step": 5500, "val_loss": 1.4989551812410356, "elapsed": 990.1420638561249, "sample": "Once upon a time, there was a little boy named Tim. Tim loved to play chess. He would play chess every day. Tim's friend, Sam, also liked to play chess. They had lots of fun together. One day, Tim and Sam went to a big party. It was a fair at playing chess. Tim was happy to share and play with Sam. They played chess every day, but Tim was"}
+{"step": 5550, "train_loss": 1.489917027950287, "lr": 0.00011336037206958444, "tokens_per_second": 96796.60348386475}
+{"step": 5600, "train_loss": 1.4817427587509155, "lr": 0.00011057321220743241, "tokens_per_second": 96936.63886403387}
+{"step": 5650, "train_loss": 1.4859325075149536, "lr": 0.0001081083400591637, "tokens_per_second": 97029.2620795009}
+{"step": 5700, "train_loss": 1.4747553372383118, "lr": 0.00010596756342992744, "tokens_per_second": 96899.97629091084}
+{"step": 5750, "train_loss": 1.4866937613487243, "lr": 0.00010415245242428921, "tokens_per_second": 95540.87214020302}
+{"step": 5800, "train_loss": 1.4837019538879395, "lr": 0.0001026643382946732, "tokens_per_second": 97376.6192365802}
+{"step": 5850, "train_loss": 1.4822796201705932, "lr": 0.00010150431246498461, "tokens_per_second": 97255.68566700401}
+{"step": 5900, "train_loss": 1.4828751254081727, "lr": 0.00010067322573012971, "tokens_per_second": 96894.62862397413}
+{"step": 5950, "train_loss": 1.4809040474891662, "lr": 0.00010017168763201906, "tokens_per_second": 97049.65220032104}
+{"step": 6000, "train_loss": 1.4750359344482422, "lr": 0.00010000006601251297, "tokens_per_second": 96207.08887004305}
+{"step": 6000, "val_loss": 1.4897778570652007, "elapsed": 1078.09166097641, "sample": "Once upon a time, there was a little girl named Lucy. She had a big, open room with a lot of toys. Lucy liked to play with her toys every day. She had a lot of fun with her toys. One day, Lucy and her mom were in the kitchen. They were making a big cake. Lucy's mom asked, \"What are you doing, Lucy?\" Lucy said, \"I am"}
