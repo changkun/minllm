@@ -67,3 +67,18 @@ def test_latent_attention_in_a_running_batch():
     cfg = Config(**vars(TINY) | {"kv_latent": 16, "rope_dim": 8})
     model, prompts = setup(cfg)
     assert batching.generate(model, prompts, 20, slots=2) == [alone(model, p, 20) for p in prompts]
+
+
+def test_every_request_samples_at_its_own_temperature():
+    model, prompts = setup()
+    batcher = batching.Batcher(model, slots=3, temperature=0.0)
+    greedy = batcher.add(prompts[0], 20)
+    hot = batcher.add(prompts[0], 20, temperature=5.0)
+    nucleus = batcher.add(prompts[0], 20, temperature=1.0, top_p=1e-6)  # only the likeliest token is left
+    out = {i: [] for i in (greedy, hot, nucleus)}
+    torch.manual_seed(0)
+    while batcher.busy():
+        for request, token, _ in batcher.step():
+            out[request].append(token)
+    assert out[greedy] == out[nucleus] == alone(model, prompts[0], 20)
+    assert out[hot] != out[greedy]
