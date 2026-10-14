@@ -51,7 +51,8 @@ def test_stop_ends_the_continuation():
     alone = inference.generate(target, [[3, 8, 1]], 30, temperature=0.0)[0]
     stop = alone[5]
     new, _ = speculative.generate(target, speculative.ModelDraft(small, 128), [3, 8, 1], 30, k=4, stop=[stop])
-    assert new == alone[: alone.index(stop) + 1]
+    assert new == alone[: alone.index(stop)]
+    assert new == inference.generate(target, [[3, 8, 1]], 30, temperature=0.0, stop=[stop])[0]  # the model alone, stopped the same way
 
 
 def test_lookup_proposes_what_followed_the_last_repeat():
