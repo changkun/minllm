@@ -1822,6 +1822,70 @@ def speculative_round():
     fig.save("speculative-round")
 
 
+# The pairs measured, in the order of the figure, and one color per draft.
+SPECULATIVE = ["speculative-wide-mps", "speculative-qwen2.5-1.5b-instruct-mps", "speculative-qwen2.5-7b-instruct-mps", "speculative-qwen2.5-7b-instruct-draft-1.5b-mps"]
+DRAFTS = [("model", "a smaller model", "s1"), ("lookup", "prompt lookup", "s2")]
+
+
+def speculative_speed():
+    """Speed against the model alone, by draft length, for every pair of a model and its draft."""
+    summary = load("runs/bench/speculative-summary.json")
+    pairs = [summary[name] for name in SPECULATIVE if name in summary]
+    greedy = [c for p in pairs for c in p["cases"] if c["temperature"] == 0]
+    top = math.ceil(max(c["speedup"] for c in greedy) * 2) / 2
+    rows = math.ceil(len(pairs) / 2)
+    fig = Figure(720, 140 + rows * 214, "Speed with a draft", "One reply at a time, greedy, on this laptop's GPU: tokens per second against the model alone.")
+    fig.legend(64, 84, [(color, label, "line") for _, label, color in DRAFTS] + [("ink2", "the model alone", "line")])
+    for i, p in enumerate(pairs):
+        left, top_px = 64 + (i % 2) * 340, 150 + (i // 2) * 214
+        ks = sorted({c["k"] for c in p["cases"]})
+        ax = Axes(fig, left, top_px, 270, 120, (1, 8), (0, top))  # one range of k for every pair
+        fig.text(left, top_px - 30, p["label"], fill="ink", weight=600)
+        fig.text(left, top_px - 12, f"alone {p['alone']:.0f} tokens a second", size=11, fill="muted")
+        ax.yticks(nice_ticks(0, top, 3), lambda t: f"{t:g}×")
+        ax.xticks(ks, str, "tokens drafted, k" if i // 2 == rows - 1 else "")
+        ax.line([1, 8], [1, 1], "ink2", width=1.5, dash="4 3")
+        for draft, _, color in DRAFTS:
+            points = sorted((c["k"], c["speedup"]) for c in p["cases"] if c["draft"] == draft and c["temperature"] == 0)
+            if points:
+                ax.line(*zip(*points), color)
+                ax.dots(*zip(*points), color, r=3)
+    fig.save("speculative-speed")
+
+
+def speculative_cost():
+    """At k = 4: the tokens a round yields, and what it costs in tokens of the model alone. Their ratio is the speedup."""
+    summary = load("runs/bench/speculative-summary.json")
+    rows, seen = [], set()
+    for name in SPECULATIVE:
+        if name not in summary:
+            continue
+        p = summary[name]
+        for draft, label, color in DRAFTS:
+            if draft == "lookup" and p["target"] in seen:
+                continue  # prompt lookup does not depend on the draft model, and was measured for each target once
+            c = next((c for c in p["cases"] if c["draft"] == draft and c["k"] == 4 and c["temperature"] == 0), None)
+            if c:
+                rows.append((p["label"].split(",")[0], "drafted by " + p["label"].split("by ")[1] if draft == "model" else "prompt lookup", color, c))
+        seen.add(p["target"])
+    targets = [p["label"].split(",")[0] for p in summary.values()]
+    rows.sort(key=lambda r: (targets.index(r[0]), r[1] == "prompt lookup"))  # each model's rows together, prompt lookup last
+    right = math.ceil(max(max(c["round_cost"], c["tokens_per_pass"]) for *_, c in rows))
+    fig = Figure(720, 150 + len(rows) * 32, "What a round yields and what it costs", "Four tokens drafted, greedy. Both in tokens of the model alone; the round is faster where it yields more than it costs.")
+    fig.legend(64, 82, [("s1", "yields, drafted by a smaller model", "dot"), ("s2", "yields, prompt lookup", "dot"), ("ink2", "costs", "dot")])
+    ax = Axes(fig, 300, 104, 300, len(rows) * 32, (0, right), (0, len(rows)))
+    for i, (target, draft, color, c) in enumerate(rows):
+        y = 104 + i * 32 + 16
+        fig.text(288, y - 2, target, anchor="end", fill="ink", size=11)
+        fig.text(288, y + 11, draft, anchor="end", fill="muted", size=10)
+        fig.line(ax.x(min(c["round_cost"], c["tokens_per_pass"])), y, ax.x(max(c["round_cost"], c["tokens_per_pass"])), y, stroke="axis", width=2)
+        fig.dot(ax.x(c["round_cost"]), y, "ink2")
+        fig.dot(ax.x(c["tokens_per_pass"]), y, color)
+        fig.text(ax.x(right) + 14, y + 4, f"{c['speedup']:.2f}×", fill="ink" if c["speedup"] >= 1 else "muted", size=11)
+    ax.xticks(nice_ticks(0, right, 5), lambda t: f"{t:g}", "tokens of the model alone")
+    fig.save("speculative-cost")
+
+
 # ------------------------------------------------------------ 3c scaling laws
 
 
@@ -2025,6 +2089,9 @@ if os.path.exists("runs/context/web-clean.json"):
     context_loss()
     context_passage()
 speculative_round()
+if os.path.exists("runs/bench/speculative-summary.json"):
+    speculative_speed()
+    speculative_cost()
 if os.path.exists("runs/rlvr/grpo-gsm8k-tools.jsonl"):
     tool_rl_curves()
 if os.path.exists("runs/eval/gsm8k-tools-grpo-gsm8k-tools-no-execute.json"):
@@ -2038,4 +2105,4 @@ if os.path.exists("runs/reasoning/summary.json"):
 if os.path.exists("runs/scaling/summary.json"):
     scaling_valleys()
     scaling_prediction()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "3a", "3b", "3c", "4a", "6a", "7a", "7b", "8a", "9a", "9b", "9c", "10a"})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "3a", "3b", "3c", "4a", "4b", "6a", "7a", "7b", "8a", "9a", "9b", "9c", "10a"})
