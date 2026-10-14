@@ -58,7 +58,7 @@ its own.
 | | Side topic | Branches from | What it adds |
 |---|---|---|---|
 | 2a | [Mixture of experts](docs/02a-moe.md) | 2, the model | A router and eight expert MLPs in place of the MLP of every block, the load-balancing loss, three ways to hand tokens to experts, and a look at what the routers learn |
-| 2b | [Longer context](docs/02b-context.md) | 2, the model | Windows longer than those trained on: what the rotary table does past them, stretched by interpolation, NTK and YaRN with and without training, measured on 3b's web model by the loss along long documents and by finding a passage again |
+| 2b | [Longer context](docs/02b-context.md) | 2, the model; run after 3b | Windows longer than those trained on: what the rotary table does past them, stretched by interpolation, NTK and YaRN with and without training, measured on 3b's web model by the loss along long documents and by finding a passage again |
 | 3a | [Distillation](docs/03a-distillation.md) | 3, pretraining | A second model as a teacher in the training loop: the student learns from the teacher's whole prediction at every position, and not only from the token that came next |
 | 3b | [Data preparation](docs/03b-data.md) | 3, pretraining | From pages of Common Crawl to text worth training on: the crawl's language tags, rules for lines and pages, placeholders for addresses, and copies found by hash and by MinHash, with the model of stage 3 trained on each version |
 | 3c | [Scaling laws](docs/03c-scaling.md) | 3, pretraining | The model of stage 3 at eight sizes and four compute budgets: the best size for each budget, how many tokens per parameter, and a law fitted on small runs that predicts larger ones |
@@ -119,11 +119,11 @@ Requires [uv](https://docs.astral.sh/uv/).
 ```sh
 git clone https://github.com/changkun/minllm && cd minllm
 uv sync
-uv run pytest
+uv run pytest                        # the first run downloads GSM8K's problems, 5 MB
 
 uv run scripts/download_data.py      # TinyStories: 22 MB validation, 512 MB of training text
 uv run scripts/train_tokenizer.py    # stage 1, 5 seconds
-uv run scripts/encode_data.py        # text to token ids, 35 seconds
+uv run scripts/encode_data.py        # text to token ids, under a minute
 uv run scripts/train.py              # stage 3, 20 minutes
 uv run scripts/sample.py             # read what it writes
 
@@ -131,7 +131,9 @@ uv run scripts/download_qwen.py      # stage 5: an open 0.5B model, 1 GB
 uv run scripts/chat.py               # talk to it, on this repository's model code
 ```
 
-The later stages build on these. Each note lists its commands, and in short:
+The later stages build on these. Each note lists its commands under "Run it",
+in the order to run them; the main chain in short, the same commands for a
+first pass:
 
 ```sh
 uv run scripts/finetune.py --task words                 # stage 6, 11 minutes
@@ -172,6 +174,14 @@ order; set `MINLLM_DEVICE=cpu` to override. CUDA has not been tested. On an
 Apple GPU the process is capped at half of the recommended memory, so that a
 batch that is too large fails instead of swapping the machine.
 
+Results go to `out/runs/`, under the same names as in `runs/`, which holds
+the results that the notes quote. A run of the tutorial never overwrites
+them, and the analysis scripts read only your own results. A path under
+`runs/` in a command, such as `--out runs/eval/gsm8k-qwen-320.json`, stands
+for `out/runs/`; `MINLLM_RUNS=runs` writes to `runs/` itself. Models go to
+`out/`: `train.py` refuses to overwrite a run, while the fine-tuning and
+reinforcement learning scripts replace theirs.
+
 ## Two models
 
 The stages use two models, both running on the code in
@@ -202,7 +212,8 @@ docs/        one note per stage and side topic, with figures drawn by scripts/ma
 site/        the website: the notes and the code as pages, a film per chapter and interactive
              figures that read runs/, and the story model in JavaScript, tested against the
              Python one. site/tools/render.mjs renders the films to video files
-runs/        logs and benchmarks, the source of every number and figure in the notes
+runs/        the results the notes quote: logs and benchmarks, the source of every number and
+             figure. Your own runs write the same files to out/runs/
 data/, out/  downloads and checkpoints, not in git
 ```
 
