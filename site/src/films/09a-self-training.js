@@ -222,7 +222,7 @@ export default ({ meta, rounds, stories, grpoRun, grpoLog, mathRounds, reference
       },
       {
         seconds: 8.5,
-        caption: "On the words task it works, and more slowly than GRPO.\nEvery round keeps more stories, and adds less to the score.",
+        caption: "On the words task it works, and more slowly than GRPO.\nEvery round keeps more stories, and later rounds add less.",
         draw(s) {
           const px = (n) => 140 + (540 * n) / most;
           const py = (v) => 470 - (330 * (v - 0.3)) / 0.7;
