@@ -15,6 +15,7 @@ Writes runs/reasoning/test-time-<model>.json. See docs/09c-reasoning.md.
 
 import argparse
 import json
+import math
 import os
 import statistics
 import time
@@ -81,7 +82,8 @@ os.makedirs("runs/reasoning", exist_ok=True)
 result = {"model": args.model, "n": len(problems), "max_new_tokens": args.max_new_tokens, "temperature": args.temperature, "samples": args.samples, "minutes": (time.time() - start) / 60}
 result |= {"greedy": {"right": sum(right) / len(right), "tokens": statistics.mean(map(len, greedy_ids)), "scores": [int(r) for r in right], "lengths": list(map(len, greedy_ids))}}
 result |= {"thinks_in_a_block": thinks, "budgets": budgets, "ks": ks, "majority": curves["majority"], "pass": curves["pass"], "sampled_tokens": statistics.mean(lengths)}
-result |= {"numbers": numbers, "samples_shown": [{"problem": i, "reply": greedy[i]} for i in range(0, len(problems), max(1, len(problems) // 10))]}
+finite = [[x if x is None or math.isfinite(x) else None for x in row] for row in numbers]  # a number too long to read is written as none, which JSON can hold
+result |= {"numbers": finite, "samples_shown": [{"problem": i, "reply": greedy[i]} for i in range(0, len(problems), max(1, len(problems) // 10))]}
 with open(f"runs/reasoning/test-time-{name}.json", "w") as f:
     json.dump(result, f, indent=1, ensure_ascii=False)
 print(f"wrote runs/reasoning/test-time-{name}.json")

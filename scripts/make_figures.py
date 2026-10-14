@@ -1189,7 +1189,7 @@ def reasoning_test_time():
     """Votes over samples, and thinking cut at budgets, for every model of 9c that has been measured."""
     models = [(load(f"runs/reasoning/{file}.json"), label, color) for file, label, color in REASONERS if os.path.exists(f"runs/reasoning/{file}.json")]
     n = models[0][0]["n"]
-    fig = Figure(720, 400, "More computation when asked", f"GSM8K's first {n} test problems. Left: sampled replies at temperature 1. Right: the greedy reply cut at a budget, and the answer asked for.")
+    fig = Figure(720, 420, "More computation when asked", f"GSM8K's first {n} test problems. Left: replies sampled at temperature 1. Right: the greedy reply cut at a budget.")
     peak = max(max(m["pass"]) for m, _, _ in models)
     top = math.ceil(peak * 10) / 10
     votes = Axes(fig, 64, 108, 270, 200, (1, 16), (0, top), xlog=True)
@@ -1200,22 +1200,51 @@ def reasoning_test_time():
         votes.line(m["ks"], m["majority"], color)
         votes.dots(m["ks"], m["majority"], color, r=3)
         votes.line(m["ks"], m["pass"], color, dash="5 4")
-    longest = max(int(b) for m, _, _ in models for b in m["budgets"])
+    longest = max(m["max_new_tokens"] for m, _, _ in models)
     budget = Axes(fig, 418, 108, 270, 200, (16, longest), (0, top), xlog=True)
     budget.title("Thinking cut at a budget")
     budget.yticks(nice_ticks(0, top, 4), lambda t: f"{t:.0%}")
-    budget.xticks([b for b in (16, 64, 256, 1024, 2048) if b <= longest], lambda t: f"{t:,}", "tokens of thinking allowed")
+    budget.xticks([b for b in (16, 64, 256, 1024) if b <= longest], lambda t: f"{t:,}", "tokens of thinking allowed")
     for m, label, color in models:
-        points = sorted((int(b), v["right"]) for b, v in m["budgets"].items())
+        points = dict((int(b), v["right"]) for b, v in m["budgets"].items())
+        points[m["max_new_tokens"]] = m["greedy"]["right"]  # the reply uncut, at its limit
+        points = sorted(points.items())
         budget.line(*zip(*points), color)
         budget.dots(*zip(*points), color, r=3)
     x = 64
     for m, label, color in models:
-        fig.line(x, 352, x + 18, 352, stroke=color, width=2)
-        fig.text(x + 24, 356, label, size=11)
+        fig.line(x, 370, x + 18, 370, stroke=color, width=2)
+        fig.text(x + 24, 374, label, size=11)
         x += 24 + text_width(label, 11) + 24
-    fig.text(24, 384, "Solid: the most common answer of k samples is right. Dashed: at least one of k is right. Dots on the right: budgets.", size=11, fill="muted")
+    fig.text(24, 404, "Solid: the most common answer of k samples is right. Dashed: at least one of k is right. Right: the last dot is the reply uncut.", size=11, fill="muted")
     fig.save("reasoning-test-time")
+
+
+def reasoning_replies():
+    """What became of every reply: right, wrong after it ended, or cut off at the limit, in a loop or not."""
+    summary = load("runs/reasoning/summary.json")
+    first = summary["first"]
+    rows = [(summary["runs"][name]["label"], f"{summary['runs'][name]['n']:,} problems, up to {summary['runs'][name]['max_new_tokens']:,} tokens, greedy", summary["runs"][name]["replies"]) for name in ("gsm8k-qwen", "gsm8k-grpo-qwen", "gsm8k-sft-gsm8k-traces")]
+    rows.append(("the teacher, 1.5B", f"the first {first['n']} problems, up to {first['teacher']['max_new_tokens']:,} tokens, sampled", first["teacher"]["replies"]))
+    kinds = [("right", "right", "s1"), ("wrong_ended", "wrong, ended", "grid"), ("wrong_cut_off_otherwise", "wrong, cut off", "axis"), ("wrong_cut_off_looping", "wrong, cut off in a loop", "ink2")]
+    fig = Figure(720, 330, "How the replies ended", "GSM8K's test problems. A reply cut off at the limit is in a loop when its last 200 characters were written before.")
+    fig.legend(64, 78, [(color, label, "bar") for _, label, color in kinds])
+    left, width, top = 300, 380, 112
+    for j, (label, note, counts) in enumerate(rows):
+        y = top + j * 48
+        fig.text(left - 12, y + 12, label, anchor="end", fill="ink")
+        fig.text(left - 12, y + 28, note, anchor="end", fill="muted", size=10)
+        total, x = sum(counts.values()), left
+        for key, _, color in kinds:
+            w = width * counts[key] / total
+            if w <= 0:
+                continue
+            fig.rect(x, y, max(w - 2, 1), 30, fill=color)  # a 2px gap of surface between segments
+            if w >= 36:
+                fig.text(x + w / 2 - 1, y + 20, f"{counts[key] / total:.0%}", anchor="middle", fill="surface" if color in ("s1", "ink2") else "ink", size=11)
+            x += w
+    fig.text(24, 314, "The teacher's replies are one sample each at temperature 0.6, as its authors advise; the others are greedy.", size=11, fill="muted")
+    fig.save("reasoning-replies")
 
 
 # ------------------------------------------------------- 2a mixture of experts
@@ -2004,7 +2033,9 @@ if os.path.exists("runs/rlvr/grpo-qwen.jsonl"):
     reasoning_curves()
 if os.path.exists("runs/reasoning/test-time-qwen.json"):
     reasoning_test_time()
+if os.path.exists("runs/reasoning/summary.json"):
+    reasoning_replies()
 if os.path.exists("runs/scaling/summary.json"):
     scaling_valleys()
     scaling_prediction()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "3a", "3b", "3c", "4a", "6a", "7a", "7b", "8a", "9a", "9b", "10a"})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "3a", "3b", "3c", "4a", "6a", "7a", "7b", "8a", "9a", "9b", "9c", "10a"})
