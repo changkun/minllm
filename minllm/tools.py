@@ -112,17 +112,20 @@ def response_text(result):
     return f"<tool_response>\n{result}\n</tool_response>"
 
 
-def encode(tok, messages, add_generation_prompt=True):
+def encode(tok, messages, add_generation_prompt=True, system_markers=False):
     """
     Like chat.encode, but in an assistant's turn <tool_call> and </tool_call>
     become the control tokens they are in the published vocabulary. In
-    anyone else's turn they stay characters.
+    anyone else's turn they stay characters, unless system_markers is set:
+    then they are control tokens in the system's turn too, where the tool
+    instructions show them, as Qwen's own tokenizer writes them there.
     """
     start, end = tok.special_tokens[chat.IM_START], tok.special_tokens[chat.IM_END]
+    marked = {"assistant", "system"} if system_markers else {"assistant"}
     ids, labels = [], []
     for m in messages:
         header = [start] + tok.encode_ordinary(f"{m['role']}\n")
-        content = (_with_calls(tok, m["content"]) if m["role"] == "assistant" else tok.encode_ordinary(m["content"])) + [end]
+        content = (_with_calls(tok, m["content"]) if m["role"] in marked else tok.encode_ordinary(m["content"])) + [end]
         newline = tok.encode_ordinary("\n")
         ids += header + content + newline
         labels += [-100] * len(header) + (content if m["role"] == "assistant" else [-100] * len(content)) + [-100] * len(newline)
@@ -204,14 +207,15 @@ def _same(value, marked):
 
 
 @torch.no_grad()
-def run(model, tok, conversations, max_new_tokens=256, max_calls=16, batch_size=32, execute=True, progress=None):
+def run(model, tok, conversations, max_new_tokens=256, max_calls=16, batch_size=32, execute=True, progress=None, system_markers=False):
     """
     Let the model answer every conversation, running its calls. A round
     generates the next assistant turn of every conversation that is still
     open. A turn with calls gets the results in a user's turn, and the
     conversation goes on to the next round. A turn without calls is the
     answer. With execute=False no call is run, and the tool answers each
-    with an error, which measures what the calls are worth.
+    with an error, which measures what the calls are worth. system_markers
+    is passed to encode.
 
     Returns the conversations, each with what was added, and per
     conversation the number of calls and of calls that were not JSON.
@@ -222,11 +226,11 @@ def run(model, tok, conversations, max_new_tokens=256, max_calls=16, batch_size=
     active = list(range(len(conversations)))
     device_type = next(model.parameters()).device.type
     while active:
-        order = sorted(active, key=lambda i: len(encode(tok, open_[i])[0]))
+        order = sorted(active, key=lambda i: len(encode(tok, open_[i], system_markers=system_markers)[0]))
         still = []
         for start in range(0, len(order), batch_size):
             chunk = order[start : start + batch_size]
-            prompts = [encode(tok, open_[i])[0] for i in chunk]
+            prompts = [encode(tok, open_[i], system_markers=system_markers)[0] for i in chunk]
             with torch.autocast(device_type=device_type, dtype=torch.bfloat16, enabled=device_type != "cpu"):
                 outputs = inference.generate(model, prompts, max_new_tokens, temperature=0.0, stop=stop)
             for i, ids in zip(chunk, outputs):
