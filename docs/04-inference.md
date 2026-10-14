@@ -112,7 +112,9 @@ changes nothing, and the reason is worth knowing. A forward pass of this model
 is a few hundred small operations, and each costs a fixed amount to dispatch
 to the GPU, 2 to 2.5 ms for the whole pass, whether it carries one token or
 255. The GPU is nearly idle either way. The cache removes arithmetic, and
-arithmetic was not what the time went to.
+arithmetic was not what the time went to. The side topic
+[4b](04b-speculative.md) puts that idle time to use: a cheap draft guesses
+several tokens, and one pass of the model checks them all.
 
 Once the arithmetic matters, the cache wins by a factor that grows with
 length: with 64 sequences on the GPU, and already for one sequence on the CPU.

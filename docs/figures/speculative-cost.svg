@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="374" viewBox="0 0 720 374" role="img"><title>What a round yields and what it costs</title><desc>Four tokens drafted, greedy. Both in tokens of the model alone; the round is faster where it yields more than it costs.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="373" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">What a round yields and what it costs</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Four tokens drafted, greedy. Both in tokens of the model alone; the round is faster where it yields more than it costs.</text>
+<circle class="f-s1 s-surface" cx="72" cy="78" r="4" stroke-width="2"/>
+<text class="f-ink2" x="86" y="82" font-size="12" text-anchor="start">yields, drafted by a smaller model</text>
+<circle class="f-s2 s-surface" cx="340.5" cy="78" r="4" stroke-width="2"/>
+<text class="f-ink2" x="354.5" y="82" font-size="12" text-anchor="start">yields, prompt lookup</text>
+<circle class="f-ink2 s-surface" cx="521.6" cy="78" r="4" stroke-width="2"/>
+<text class="f-ink2" x="535.6" y="82" font-size="12" text-anchor="start">costs</text>
+<text class="f-ink" x="288" y="118" font-size="11" text-anchor="end">the 42M story model</text>
+<text class="f-muted" x="288" y="131" font-size="10" text-anchor="end">drafted by the 14M one</text>
+<line class="s-axis" x1="405" y1="120" x2="575.6" y2="120" stroke-width="2" stroke-linecap="round"/>
+<circle class="f-ink2 s-surface" cx="575.6" cy="120" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="405" cy="120" r="4" stroke-width="2"/>
+<text class="f-muted" x="614" y="124" font-size="11" text-anchor="start">0.38×</text>
+<text class="f-ink" x="288" y="150" font-size="11" text-anchor="end">the 42M story model</text>
+<text class="f-muted" x="288" y="163" font-size="10" text-anchor="end">prompt lookup</text>
+<line class="s-axis" x1="335.1" y1="152" x2="343.3" y2="152" stroke-width="2" stroke-linecap="round"/>
+<circle class="f-ink2 s-surface" cx="343.3" cy="152" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="335.1" cy="152" r="4" stroke-width="2"/>
+<text class="f-muted" x="614" y="156" font-size="11" text-anchor="start">0.81×</text>
+<text class="f-ink" x="288" y="182" font-size="11" text-anchor="end">Qwen2.5-1.5B</text>
+<text class="f-muted" x="288" y="195" font-size="10" text-anchor="end">drafted by the 0.5B model</text>
+<line class="s-axis" x1="406" y1="184" x2="425.2" y2="184" stroke-width="2" stroke-linecap="round"/>
+<circle class="f-ink2 s-surface" cx="406" cy="184" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="425.2" cy="184" r="4" stroke-width="2"/>
+<text class="f-ink" x="614" y="188" font-size="11" text-anchor="start">1.18×</text>
+<text class="f-ink" x="288" y="214" font-size="11" text-anchor="end">Qwen2.5-1.5B</text>
+<text class="f-muted" x="288" y="227" font-size="10" text-anchor="end">prompt lookup</text>
+<line class="s-axis" x1="333.3" y1="216" x2="349.1" y2="216" stroke-width="2" stroke-linecap="round"/>
+<circle class="f-ink2 s-surface" cx="333.3" cy="216" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="349.1" cy="216" r="4" stroke-width="2"/>
+<text class="f-ink" x="614" y="220" font-size="11" text-anchor="start">1.47×</text>
+<text class="f-ink" x="288" y="246" font-size="11" text-anchor="end">Qwen2.5-7B</text>
+<text class="f-muted" x="288" y="259" font-size="10" text-anchor="end">drafted by the 0.5B model</text>
+<line class="s-axis" x1="356" y1="248" x2="418.3" y2="248" stroke-width="2" stroke-linecap="round"/>
+<circle class="f-ink2 s-surface" cx="356" cy="248" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="418.3" cy="248" r="4" stroke-width="2"/>
+<text class="f-ink" x="614" y="252" font-size="11" text-anchor="start">2.11×</text>
+<text class="f-ink" x="288" y="278" font-size="11" text-anchor="end">Qwen2.5-7B</text>
+<text class="f-muted" x="288" y="291" font-size="10" text-anchor="end">drafted by the 1.5B model</text>
+<line class="s-axis" x1="374" y1="280" x2="427.8" y2="280" stroke-width="2" stroke-linecap="round"/>
+<circle class="f-ink2 s-surface" cx="374" cy="280" r="4" stroke-width="2"/>
+<circle class="f-s1 s-surface" cx="427.8" cy="280" r="4" stroke-width="2"/>
+<text class="f-ink" x="614" y="284" font-size="11" text-anchor="start">1.73×</text>
+<text class="f-ink" x="288" y="310" font-size="11" text-anchor="end">Qwen2.5-7B</text>
+<text class="f-muted" x="288" y="323" font-size="10" text-anchor="end">prompt lookup</text>
+<line class="s-axis" x1="331.6" y1="312" x2="345.4" y2="312" stroke-width="2" stroke-linecap="round"/>
+<circle class="f-ink2 s-surface" cx="331.6" cy="312" r="4" stroke-width="2"/>
+<circle class="f-s2 s-surface" cx="345.4" cy="312" r="4" stroke-width="2"/>
+<text class="f-ink" x="614" y="316" font-size="11" text-anchor="start">1.44×</text>
+<line class="s-axis" x1="300" y1="328" x2="600" y2="328" stroke-width="1" stroke-linecap="round"/>
+<line class="s-axis" x1="300" y1="328" x2="300" y2="332" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="300" y="345" font-size="11" text-anchor="middle">0</text>
+<line class="s-axis" x1="360" y1="328" x2="360" y2="332" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="360" y="345" font-size="11" text-anchor="middle">2</text>
+<line class="s-axis" x1="420" y1="328" x2="420" y2="332" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="420" y="345" font-size="11" text-anchor="middle">4</text>
+<line class="s-axis" x1="480" y1="328" x2="480" y2="332" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="480" y="345" font-size="11" text-anchor="middle">6</text>
+<line class="s-axis" x1="540" y1="328" x2="540" y2="332" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="540" y="345" font-size="11" text-anchor="middle">8</text>
+<line class="s-axis" x1="600" y1="328" x2="600" y2="332" stroke-width="1" stroke-linecap="round"/>
+<text class="f-muted" x="600" y="345" font-size="11" text-anchor="middle">10</text>
+<text class="f-muted" x="450" y="364" font-size="11" text-anchor="middle">tokens of the model alone</text>
+</svg>
