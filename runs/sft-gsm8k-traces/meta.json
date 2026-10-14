@@ -1,0 +1,30 @@
+{
+ "family": "qwen",
+ "base": "qwen",
+ "task": "gsm8k-traces",
+ "step": 150,
+ "val_loss": 0.5239298743009567,
+ "minutes": 56.222755368550615,
+ "trainable_parameters": 494032768,
+ "memory_gb": 21.843460083007812,
+ "args": {
+  "task": "gsm8k-traces",
+  "traces": "data/reasoning/traces.jsonl",
+  "base": "qwen",
+  "out": "out/sft-gsm8k-traces",
+  "lora": 0,
+  "lora_alpha": null,
+  "steps": 150,
+  "batch_size": 8,
+  "accumulate": 8,
+  "lr": 1e-05,
+  "warmup": 50,
+  "max_len": 2400,
+  "eval_every": 200,
+  "eval_batches": 20,
+  "seed": 0,
+  "safety": null,
+  "safety_share": 0.03,
+  "no_compile": false
+ }
+}

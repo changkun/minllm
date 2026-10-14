@@ -1,0 +1,29 @@
+{
+ "family": "qwen",
+ "base": "qwen",
+ "lora": {
+  "r": 16,
+  "alpha": 32
+ },
+ "method": "grpo",
+ "task": "gsm8k",
+ "step": 120,
+ "val_loss": 0.0,
+ "minutes": 566.1649511496227,
+ "args": {
+  "task": "gsm8k",
+  "model": "qwen",
+  "out": "out/grpo-qwen",
+  "iterations": 120,
+  "prompts": 8,
+  "samples": 8,
+  "lr": 5e-05,
+  "kl": 0.05,
+  "lora": 16,
+  "must_finish": false,
+  "max_new_tokens": 512,
+  "eval_every": 20,
+  "eval_n": 200,
+  "seed": 0
+ }
+}

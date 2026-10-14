@@ -1,0 +1,214 @@
+{
+ "comparisons": {
+  "GRPO with room to think, against the published model": {
+   "from": "gsm8k-qwen",
+   "to": "gsm8k-grpo-qwen",
+   "difference": 0.022744503411675512,
+   "low": 0.0,
+   "high": 0.045489006823351025
+  },
+  "the student, against the published model": {
+   "from": "gsm8k-qwen",
+   "to": "gsm8k-sft-gsm8k-traces",
+   "difference": -0.10538286580742987,
+   "low": -0.13419257012888552,
+   "high": -0.07808946171341925
+  }
+ },
+ "runs": {
+  "gsm8k-qwen": {
+   "label": "0.5B as published",
+   "mean": 0.467778620166793,
+   "error": 0.02693796031402476,
+   "n": 1319,
+   "max_new_tokens": 512,
+   "cut_off": 55,
+   "cut_off_looping": 5,
+   "mean_of_ended": 0.4873417721518987,
+   "replies": {
+    "right": 617,
+    "wrong_ended": 648,
+    "wrong_cut_off_looping": 5,
+    "wrong_cut_off_otherwise": 49
+   },
+   "loop_example": ". The correct interpretation should be that the difference between the number of snails and the number of fish is twice the number of fish, which means the difference is \\( 2F \\). So, we should have:\n\\[ 4 - 32 = 2F \\]\n\\[ -28 = 2F \\]\n\\[ F = -14 \\]\n\nThis is incorrect because the number of fish cannot be negative. Let's re-evaluate the problem statement and the equation. The correct interpretation should be that the difference between the number of snails and the number of fish is twice the number of fish, which means the difference is \\( 2F \\). So, we should have:\n\\[ 4 - 32 = 2F \\]\n\\[ -28 = 2F \\"
+  },
+  "gsm8k-grpo-qwen": {
+   "label": "after GRPO with room to think",
+   "mean": 0.49052312357846856,
+   "error": 0.026989220876290777,
+   "n": 1319,
+   "max_new_tokens": 512,
+   "cut_off": 41,
+   "cut_off_looping": 4,
+   "mean_of_ended": 0.5046948356807511,
+   "replies": {
+    "right": 647,
+    "wrong_ended": 633,
+    "wrong_cut_off_looping": 4,
+    "wrong_cut_off_otherwise": 35
+   },
+   "loop_example": "both sides of the equation:\n\\[ 99 = 5 \\]\n\nThis equation is not correct, so let's re-evaluate the problem. The correct interpretation is that the total cost of the boots and the high heels together is $5 less than the cost of the boots, which means the total cost is \\( x + 5 \\) dollars. The cost of the high heels is $33 and the cost of the other high heel is $66, so the total cost of the boots and the high heels together is:\n\\[ x + 33 + 66 = x + 99 \\]\n\nWe know that this total cost is $5 less than the cost of the boots, so we can set up the equation:\n\\[ x + 99 = x + 5 \\]\n\nTo find the value of \\("
+  },
+  "gsm8k-sft-gsm8k-traces": {
+   "label": "fine-tuned on the teacher's thinking",
+   "mean": 0.36239575435936316,
+   "error": 0.025951682356606488,
+   "n": 1319,
+   "max_new_tokens": 2560,
+   "cut_off": 474,
+   "cut_off_looping": 448,
+   "mean_of_ended": 0.5325443786982249,
+   "replies": {
+    "right": 478,
+    "wrong_ended": 395,
+    "wrong_cut_off_looping": 420,
+    "wrong_cut_off_otherwise": 26
+   },
+   "loop_example": "ld on, the question says \"how many cups of feed does she need to give her chickens in the final meal of the day if the size of Wendi's flock is 20 chickens?\"\n\nSo, she has 20 chickens, and each needs 3 cups. So, 20 * 3 = 60 cups. So, she needs 60 cups in total for the day.\n\nBut she only gives 40 cups in the morning and afternoon. So, she needs 60 - 40 = 20 more cups for the final meal.\n\nSo, the answer should be 20 cups.\n\nBut hold on, the question says \"how many cups of feed does she need to give her chickens in the final meal of the day if the size of Wendi's flock is 20 chickens?\"\n\nSo, she has"
+  }
+ },
+ "first": {
+  "n": 192,
+  "teacher": {
+   "mean": 0.6979166666666666,
+   "max_new_tokens": 2048,
+   "temperature": 0.6,
+   "cut_off": 57,
+   "cut_off_looping": 0,
+   "replies": {
+    "right": 134,
+    "wrong_ended": 8,
+    "wrong_cut_off_looping": 0,
+    "wrong_cut_off_otherwise": 50
+   }
+  },
+  "gsm8k-qwen": {
+   "mean": 0.4583333333333333
+  },
+  "gsm8k-grpo-qwen": {
+   "mean": 0.46875
+  },
+  "gsm8k-sft-gsm8k-traces": {
+   "mean": 0.3541666666666667
+  }
+ },
+ "budgets": {
+  "qwen": {
+   "16": {
+    "cut": 500,
+    "right_ran_on": 233,
+    "right_answered": 9
+   },
+   "32": {
+    "cut": 500,
+    "right_ran_on": 233,
+    "right_answered": 11
+   },
+   "64": {
+    "cut": 500,
+    "right_ran_on": 233,
+    "right_answered": 8
+   },
+   "128": {
+    "cut": 499,
+    "right_ran_on": 232,
+    "right_answered": 22
+   },
+   "256": {
+    "cut": 310,
+    "right_ran_on": 103,
+    "right_answered": 51
+   },
+   "512": {
+    "cut": 0,
+    "right_ran_on": 0,
+    "right_answered": 0
+   }
+  },
+  "grpo-qwen": {
+   "16": {
+    "cut": 500,
+    "right_ran_on": 235,
+    "right_answered": 5
+   },
+   "32": {
+    "cut": 500,
+    "right_ran_on": 235,
+    "right_answered": 11
+   },
+   "64": {
+    "cut": 500,
+    "right_ran_on": 235,
+    "right_answered": 7
+   },
+   "128": {
+    "cut": 498,
+    "right_ran_on": 235,
+    "right_answered": 22
+   },
+   "256": {
+    "cut": 291,
+    "right_ran_on": 101,
+    "right_answered": 47
+   },
+   "512": {
+    "cut": 0,
+    "right_ran_on": 0,
+    "right_answered": 0
+   }
+  },
+  "sft-gsm8k-traces": {
+   "64": {
+    "cut": 500,
+    "right_ran_on": 189,
+    "right_answered": 9
+   },
+   "128": {
+    "cut": 500,
+    "right_ran_on": 189,
+    "right_answered": 9
+   },
+   "256": {
+    "cut": 500,
+    "right_ran_on": 189,
+    "right_answered": 38
+   },
+   "512": {
+    "cut": 496,
+    "right_ran_on": 185,
+    "right_answered": 95
+   },
+   "1024": {
+    "cut": 295,
+    "right_ran_on": 47,
+    "right_answered": 41
+   },
+   "2048": {
+    "cut": 194,
+    "right_ran_on": 11,
+    "right_answered": 25
+   }
+  }
+ },
+ "greedy_twice": {
+  "gsm8k-qwen": {
+   "n": 500,
+   "evaluated": 0.486,
+   "test_time": 0.466,
+   "problems_differing": 46
+  },
+  "gsm8k-grpo-qwen": {
+   "n": 500,
+   "evaluated": 0.476,
+   "test_time": 0.47,
+   "problems_differing": 35
+  },
+  "gsm8k-sft-gsm8k-traces": {
+   "n": 500,
+   "evaluated": 0.352,
+   "test_time": 0.378,
+   "problems_differing": 125
+  }
+ }
+}
