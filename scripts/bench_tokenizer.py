@@ -9,6 +9,7 @@ Writes runs/bench/tokenizer.json, which docs/01-tokenizer.md quotes.
 import argparse
 import json
 import os
+import re
 import time
 from collections import Counter
 
@@ -24,6 +25,10 @@ args = parser.parse_args()
 train = list(read_stories(f"{args.data}/train.txt", max_bytes=args.max_mb << 20))
 held_out = list(read_stories(f"{args.data}/valid.txt", max_bytes=4 << 20))
 held_out_bytes = sum(len(story.encode("utf-8")) for story in held_out)
+
+# The corpus split into chunks, as Tokenizer.train sees it: many, and few of them distinct.
+chunks = Counter(c for story in train for c in Tokenizer()._split.findall(story))
+print(f"{sum(chunks.values()):,} chunks, {len(chunks):,} distinct")
 
 results = []
 print(f"{'vocab':>6} {'train s':>8} {'bytes/token':>12} {'rarest token seen':>18}")
@@ -44,10 +49,13 @@ for vocab_size in [512, 1024, 2048, 4096, 8192, 16384]:
         "last_merge": tok.vocab[last].decode("utf-8", errors="replace"),
         "last_merge_count": counts[last],
     }
+    if vocab_size == 4096:  # the vocabulary of the later stages: how many of the held-out words are one token
+        words = [c for story in held_out for c in tok._split.findall(story) if re.fullmatch(r" ?[A-Za-z]+", c)]
+        row["words_single_token"] = sum(len(tok.encode_ordinary(w)) == 1 for w in words) / len(words)
     results.append(row)
     print(f"{row['vocab_size']:>6} {seconds:>8.1f} {row['bytes_per_token']:>12.2f} {row['last_merge_count']:>18,}")
 
 os.makedirs(os.path.dirname(args.out), exist_ok=True)
 with open(args.out, "w") as f:
-    json.dump({"train_megabytes": args.max_mb, "sizes": results}, f, indent=1)
+    json.dump({"train_megabytes": args.max_mb, "chunks": sum(chunks.values()), "distinct_chunks": len(chunks), "sizes": results}, f, indent=1)
 print(f"wrote {args.out}")

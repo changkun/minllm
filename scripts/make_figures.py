@@ -13,6 +13,7 @@ import argparse
 import json
 import math
 import os
+import re
 from html import escape
 
 parser = argparse.ArgumentParser()
@@ -945,7 +946,7 @@ def rlhf_reward():
     for t, r in zip(tastes, rewards):
         fig.point(ax.x(t), ax.y(r), "s1")
 
-    curve = sorted((load(f"runs/rlhf/{name}") for name in os.listdir("runs/rlhf") if name.startswith("reward") and name.endswith(".json")), key=lambda m: m["pairs"])
+    curve = sorted((load(f"runs/rlhf/{name}") for name in os.listdir("runs/rlhf") if re.fullmatch(r"reward(-\d+)?\.json", name)), key=lambda m: m["pairs"])  # the runs by number of comparisons
     xs, ys = [m["pairs"] for m in curve], [m["agrees_with_taste"] for m in curve]
     right = Axes(fig, 470, 84, 220, 200, (min(xs) * 0.7, max(xs) * 1.4), (0.5, 1.0), xlog=True)
     right.title("Agreement with the taste")

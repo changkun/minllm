@@ -48,6 +48,7 @@ parser.add_argument("--seed", type=int, default=0)
 parser.add_argument("--safety", default=None, help="a file of refusals (scripts/make_refusals.py) to mix into the training data")
 parser.add_argument("--safety-share", type=float, default=0.03, help="the share of training examples drawn from --safety")
 parser.add_argument("--no-compile", action="store_true")
+parser.add_argument("--keep-pool", action="store_true", help="never empty the GPU's pool of freed memory, and log its size every step, to watch it grow (docs/06-finetuning.md)")
 args = parser.parse_args()
 
 # Defaults per task. Fine-tuning moves a trained model a little, so its
@@ -225,14 +226,16 @@ while True:
         part_loss = loss_on(pairs[part :: args.accumulate]) / args.accumulate
         part_loss.backward()
         loss += part_loss.detach()
-        if long:
+        if long and not args.keep_pool:
             # Every part is of another length, up to 2,400 tokens, and adds
             # gigabytes to the pool of free_memory: it is emptied after each.
             peak_memory = max(peak_memory, free_memory(device))
     torch.nn.utils.clip_grad_norm_(trainable, 1.0)
     optimizer.step()
     step += 1
-    if step % 4 == 0:
+    if args.keep_pool and device == "mps":
+        log(step=step, pool_gb=torch.mps.driver_allocated_memory() / 2**30, tensors_gb=torch.mps.current_allocated_memory() / 2**30)
+    elif step % 4 == 0:
         peak_memory = max(peak_memory, free_memory(device))
 
     interval_loss += loss.item()

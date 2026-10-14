@@ -132,6 +132,10 @@ summary["written"] = {
     "right_of_readable": sum(readable) / len(readable),
     "letter_in_chat_on_the_same": sum(chat["scores"][q] for q in taken) / len(taken),
     "letter_as_text_on_the_same": sum(standard["scores"][q] for q in taken) / len(taken),
+    # the letter on the questions whose written reply could be read, which may be the easier ones
+    "letter_as_text_on_the_readable": sum(standard["scores"][q] for q, choice in zip(taken, written["choice"]) if choice >= 0) / len(readable),
+    "written_against_letter_on_the_readable": dict(zip(("difference", "low", "high"), evaluate.paired_difference(
+        [standard["scores"][q] for q, choice in zip(taken, written["choice"]) if choice >= 0], readable))),
     "against_letter_in_chat": {"difference": difference, "low": low, "high": high},
     "first_words": Counter(sample["reply"].split()[0] for sample in written["samples"] if sample["reply"].split()).most_common(5),
     "samples": written["samples"][:12],

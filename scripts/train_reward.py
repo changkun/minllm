@@ -79,6 +79,7 @@ print(f"before: loss {loss:.4f}, which is ln 2: every comparison a coin toss")
 # A reward model overfits within a few passes over a few thousand comparisons.
 # So the held-out loss is watched, and the weights of the best epoch are kept.
 best = {"loss": float("inf")}
+history = [{"epoch": 0, "held_out_loss": loss, "agrees_with_annotator": None, "agrees_with_taste": None}]  # untrained, every reward ties: no agreement to count
 for epoch in range(args.epochs):
     rng.shuffle(train)
     for i in range(0, len(train), args.batch_size):
@@ -93,6 +94,7 @@ for epoch in range(args.epochs):
             free_memory(device)
     loss, agree, truth = evaluate(held_out)
     print(f"epoch {epoch + 1}: held-out loss {loss:.4f}, agrees with the annotator {agree:.1%}, with their taste {truth:.1%}")
+    history.append({"epoch": epoch + 1, "held_out_loss": loss, "agrees_with_annotator": agree, "agrees_with_taste": truth})
     if loss < best["loss"]:
         weights = {k: v.clone() for k, v in model.state_dict().items()}
         best = {"loss": loss, "epoch": epoch + 1, "agree": agree, "truth": truth, "weights": weights}
@@ -102,7 +104,7 @@ print(f"keeping epoch {best['epoch']}")
 os.makedirs(args.out, exist_ok=True)
 torch.save({"model": model.state_dict()}, f"{args.out}/reward.pt")
 meta = {"base": args.base, "pairs": len(train), "epoch": best["epoch"], "held_out_loss": best["loss"]}
-meta |= {"agrees_with_annotator": best["agree"], "agrees_with_taste": best["truth"]}
+meta |= {"agrees_with_annotator": best["agree"], "agrees_with_taste": best["truth"], "epochs": history}
 
 # Reward against taste for every held-out story: the picture of how well the hidden taste was recovered.
 model.eval()

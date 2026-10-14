@@ -24,7 +24,7 @@ parser.add_argument("--prompt", default="Once upon a time")
 parser.add_argument("--n", type=int, default=3, help="number of stories")
 parser.add_argument("--max-tokens", type=int, default=200)
 parser.add_argument("--temperature", type=float, default=0.8, help="0 always picks the likeliest token")
-parser.add_argument("--top-k", type=int, default=50, help="sample only among the k likeliest tokens")
+parser.add_argument("--top-k", type=int, default=50, help="sample only among the k likeliest tokens; 0 for no limit")
 parser.add_argument("--top-p", type=float, default=None, help="sample only among the likeliest tokens that sum to p")
 parser.add_argument("--seed", type=int, default=0)
 args = parser.parse_args()
@@ -39,7 +39,7 @@ print(f"{args.ckpt}: step {ckpt['step']}, val loss {ckpt['val_loss']:.4f}\n")
 # model ends it by writing <|endoftext|> again.
 eot = tok.special_tokens[EOT]
 prompt = [eot] + tok.encode_ordinary(args.prompt)
-sampling = dict(temperature=args.temperature, top_k=args.top_k, top_p=args.top_p, stop=[eot])
+sampling = dict(temperature=args.temperature, top_k=args.top_k or None, top_p=args.top_p, stop=[eot])
 
 if args.n == 1:
     print(args.prompt, end="", flush=True)
