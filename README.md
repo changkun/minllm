@@ -13,9 +13,9 @@ mixture of experts in place of the model's MLP, and windows longer than it
 was trained on; distillation from a larger model, text from the web and
 scaling laws for pretraining; structured output in inference; tool calling
 in fine-tuning; multiple-choice benchmarks and model judges in evaluation;
-refusals in RLHF; self-training in place of reinforcement learning, and
-reinforcement learning with a tool; and quantization of the exported file.
-The pipeline does not depend on them.
+refusals in RLHF; self-training in place of reinforcement learning,
+reinforcement learning with a tool, and reasoning; and quantization of the
+exported file. The pipeline does not depend on them.
 
 ![The ten stages of the pipeline, and the side topics that branch off them](docs/figures/pipeline.svg)
 
@@ -69,6 +69,7 @@ its own.
 | 8a | [Safety](docs/08a-safety.md) | 8, RLHF | Refusals of unsafe requests and of safe ones that sound alike, what fine-tuning on math does to them, and refusals mixed back into fine-tuning |
 | 9a | [Self-training](docs/09a-self-training.md) | 9, RLVR | The verifier without the reinforcement learning: sample several replies, keep the ones that are right, fine-tune on them, and repeat |
 | 9b | [Reinforcement learning with a tool](docs/09b-tool-rl.md) | 9, RLVR | GRPO on conversations in which the calculator of 6a runs while the replies are sampled, trained on the model's own tokens only |
+| 9c | [Reasoning](docs/09c-reasoning.md) | 9, RLVR | Thinking longer to be right more often: reinforcement learning from the published model with room to think, votes over samples and budgets for thinking, and a reasoning model's thinking distilled into the 0.5B model |
 | 10a | [Quantization](docs/10a-quantization.md) | 10, the export | Weights as 4-bit or 8-bit codes with a scale and an offset per group, what each bit width costs in loss and on the task, and a packed file that MLX runs as it is |
 
 ## What came out
@@ -106,6 +107,7 @@ From the side topics:
 | 8a | The published model refuses 79.0% of XSTest's unsafe requests and 34.4% of its safe ones. Stage 6's fine-tuning on math, which never mentioned either, leaves 28.5% and 1.2%. With 229 refusals mixed in as 3% of the fine-tuning data, it refuses 90.5% and 40.0%, with no cost on GSM8K. |
 | 9a | Keeping the story model's right stories and fine-tuning on them, for six rounds, takes it from 39.6% to 68.7% of requested words in 13 minutes. GRPO reached 93.6% from the same number of stories, by writing nonsense. The self-trained stories still end and read as stories, with no penalty to hold them, and match the leashed GRPO run. On GSM8K two rounds do nothing, 35.4% against 36.6% before, where GRPO gained 5.9 points from half as many replies: keeping the right replies does not say what made them right. |
 | 9b | Stage 9's GRPO from 6a's model, with the calculator running in every rollout, did not move the score: 37.5% to 38.2% of GSM8K's test problems, within noise, where the same 60 iterations from stage 6's model added 5.9 points. The model learned to call less, 3.11 times a problem against 3.38, and still solves 9.7% when every call fails. Stage 9's gain was not arithmetic that the calculator had already done: of the 200 problems it turned right, 28 had a calculation written wrong before. |
+| 9c | GRPO from the published model, with room for 512 tokens, took it from 46.8% to 49.1% of GSM8K's test problems, at the edge of noise, and its replies did not grow longer. The most common answer of 16 samples is right on 61.8% of the first 500 problems, against 47.0% for its greedy reply, and at least one of the 16 on 83.8%. Fine-tuned on 601 chains of thought of a 1.5B reasoning model, the 0.5B model learned to think at length and not when to stop: it solves 36.2%, 10.5 points fewer than before, and 448 of its 1,319 replies run into the limit in a loop. Cut at 2,048 tokens and made to answer, it solves 40.6% of the first 500. |
 | 10a | Stored at 8 bits per weight, the 0.5B model is half the size and solves as many GSM8K problems as before (47.3% against 46.8%), and at 6 bits still as many. At 4 bits, in 278 MB, it solves 31.9%, while its replies read as fluently as ever and its held-out loss only rises from 0.83 to 0.92. This repository's own code runs the packed model 14 times slower. MLX reads the same file and runs it 2.1 times faster, in a third of the memory. |
 
 ## Quick start
