@@ -195,6 +195,7 @@ uv run scripts/evaluate.py --model out/sft-words --task words
 uv run scripts/evaluate.py --model qwen --task gsm8k               # 1,319 problems, several minutes
 uv run scripts/evaluate.py --model qwen --task gsm8k --max-new-tokens 320 --out runs/eval/gsm8k-qwen-320.json
 uv run scripts/evaluate.py --model out/sft-gsm8k-lora --task gsm8k
+uv run scripts/evaluate.py --model out/sft-gsm8k-lora --task gsm8k --max-new-tokens 320 --out runs/eval/gsm8k-sft-gsm8k-lora-320.json
 uv run scripts/evaluate.py --model out/sft-gsm8k --task gsm8k
 ```
 

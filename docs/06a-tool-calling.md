@@ -2,7 +2,8 @@
 
 Code: [`minllm/tools.py`](../minllm/tools.py) ·
 Scripts: [`scripts/finetune.py`](../scripts/finetune.py),
-[`scripts/evaluate_tools.py`](../scripts/evaluate_tools.py) ·
+[`scripts/evaluate_tools.py`](../scripts/evaluate_tools.py),
+[`scripts/analyze_tools.py`](../scripts/analyze_tools.py) ·
 Tests: [`tests/test_tools.py`](../tests/test_tools.py) ·
 Results: [`runs/eval/`](../runs/eval/), [`runs/sft-gsm8k-tools-lora/`](../runs/sft-gsm8k-tools-lora/)
 
@@ -51,8 +52,11 @@ writes its next turn.
 does, and a test compares the two. `tools.encode` turns a conversation into
 tokens with the two markers as control tokens, but only in the assistant's
 turns: in anyone else's text they stay characters, for the reason stage 5
-gave for `<|im_end|>`. The list of one tool takes 190 tokens of every
-prompt, where the plain system prompt takes 16.
+gave for `<|im_end|>`. Qwen's own tokenizer makes them single tokens
+wherever they occur, also in the tool instructions of the system's turn,
+and `system_markers=True` writes that turn the same way. With the tool
+listed, the system prompt takes 190 tokens, or 181 with the markers as
+single tokens, where the plain system prompt takes 16.
 
 ## GSM8K came with a calculator
 
@@ -175,19 +179,22 @@ is wrong all the same, for a reason the calculator cannot see.
 | Model | GSM8K solved | Problems with a call |
 |---|---|---|
 | 0.5B as published (stage 7) | 46.8% ± 2.7% | |
-| the same, told about the tool | 40.2% ± 2.6% | 0.5% |
+| the same, told about the tool | 41.5% ± 2.7% | 5.9% |
+| told, the markers in its instructions spelled out | 40.2% ± 2.6% | 0.5% |
 | fine-tuned on solutions, LoRA (stage 6) | 36.6% ± 2.6% | |
 | fine-tuned on solutions with calls, LoRA | 37.5% ± 2.6% | 98.6% |
 | the same, every call fails | 10.4% ± 1.6% | 98.6% |
 
-**The published model does not use the tool.** Told about the calculator in
-the words of its chat template, it calls it in 0.5% of the problems, and
-works the rest out in its head as before. The 190 tokens of the tool's
-description cost it all the same: it solves 6.6 points fewer than without
-them (95% interval 3.9 to 9.4). One difference from Qwen's own tokenizer
-may play a part: that tokenizer writes the markers in the description as
-the single tokens they are in the vocabulary, where `tools.encode` spells
-them out as characters, and this run cannot say how much that matters.
+**The published model rarely uses the tool.** Told about the calculator as
+its chat template and tokenizer write it, it calls it in 5.9% of the
+problems, 260 calls in all, 16 of them malformed, and works the rest out in
+its head as before. The tool's description costs it all the same: it
+solves 5.3 points fewer than without it (95% interval 2.7 to 8.1). How the
+markers in the instructions are written matters to how often it calls:
+spelled out as characters, they leave it calling in 0.5% of the problems,
+where it solves 40.2%, 1.3 points fewer, a difference within noise (95%
+interval -1.0 to +3.6). Either way, being able to call a tool is not
+knowing when to.
 
 **The fine-tuned model calls it every time.** It calls the calculator in
 98.6% of the problems, 3.4 times each, and none of its 4,464 calls is malformed: the
@@ -220,7 +227,9 @@ the tool is gone.
 uv run scripts/finetune.py --task gsm8k-tools --lora 16 --accumulate 2   # 86 minutes
 uv run scripts/evaluate_tools.py --model out/sft-gsm8k-tools-lora        # the calls run
 uv run scripts/evaluate_tools.py --model out/sft-gsm8k-tools-lora --no-execute   # every call fails
-uv run scripts/evaluate_tools.py --model qwen --max-new-tokens 512       # the published model, told about the tool
+uv run scripts/evaluate_tools.py --model qwen --max-new-tokens 512 --system-markers   # the published model, told about the tool
+uv run scripts/evaluate_tools.py --model qwen --max-new-tokens 512       # the same, the markers in its instructions spelled out
+uv run scripts/analyze_tools.py                                          # the comparisons, problem by problem
 ```
 
 ## Exercises
@@ -232,8 +241,9 @@ uv run scripts/evaluate_tools.py --model qwen --max-new-tokens 512       # the p
    the model learn when a call is worth it?
 3. Constrain every call with [4a](04a-structured-output.md): the JSON
    between `<tool_call>` and `</tool_call>` held to the tool's schema.
-   No call of the fine-tuned model was malformed, but 2 of the published
-   model's 8 were. Held to the schema, does the published model solve more?
+   No call of the fine-tuned model was malformed, but 16 of the published
+   model's 260 were. Held to the schema, does the published model solve
+   more?
 4. Give the model a second tool, `percent(part, whole)`, and rewrite the
    training data to use it where the marks compute a percentage. Does it
    choose between the two?

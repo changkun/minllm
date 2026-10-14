@@ -132,7 +132,8 @@ uv run scripts/analyze_tools.py                                          # the c
 1. Charge a small cost for every call in the reward. Does the model call
    less, and which calls does it give up?
 2. Start GRPO from the published model with the tool in its prompt, without
-   6a's fine-tuning: it called in 0.5% of the problems. Can reinforcement
+   6a's fine-tuning: it called in 5.9% of the problems, with the markers of
+   its instructions as Qwen's tokenizer writes them. Can reinforcement
    learning alone teach it to call?
 3. Train on the tool's tokens too, without the marks. What does the model
    learn to predict, and what does it do when a call fails?
