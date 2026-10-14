@@ -30,8 +30,9 @@ def free_memory(device):
     them, and reuses a block only for a tensor of the same size. A loop whose
     tensors have a different size at every step, as fine-tuning on examples of
     varying length does, fills the pool with blocks it never uses again. Such
-    a run holds 2 GB of tensors at any time and still grows to 25 GB within a
-    minute. Returns the size of the pool before it was emptied, in GB.
+    a run holds 2 GB of tensors at any time and still grows past 20 GB within
+    a minute (docs/06-finetuning.md). Returns the size of the pool before it
+    was emptied, in GB.
     """
     if torch.device(device).type != "mps":
         return 0.0
