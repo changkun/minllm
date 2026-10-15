@@ -639,6 +639,71 @@ def tools_results():
     fig.save("tools-results")
 
 
+# ---------------------------------------------------- 4c continuous batching
+
+
+def batching_timeline():
+    """Slots over decode steps, for batches that start and end together and for a running batch. The reply lengths are made up."""
+    lengths = [5, 11, 4, 8, 6, 12, 3, 9, 7, 5, 10, 4, 6, 8, 5, 9]  # of the requests, in the order they arrive
+    slots, unit, left = 4, 12, 24
+    fig = Figure(720, 316, "Four slots, sixteen requests", "Rows are the slots of a batch, columns are decode steps. The reply lengths are made up for the drawing.")
+    for k, (title, top) in enumerate([("Batches that start and end together", 92), ("A running batch", 196)]):
+        fig.text(24, top - 6, title, fill="ink", weight=600)
+        if k == 0:  # batch after batch: every row waits for the longest
+            start, waiting = 0, list(lengths)
+            while waiting:
+                batch, waiting = waiting[:slots], waiting[slots:]
+                longest = max(batch)
+                for row, n in enumerate(batch):
+                    y = top + 4 + row * 18
+                    fig.rect(left + start * unit, y, n * unit - 1.5, 14, fill="s1", rx=2)
+                    if n < longest:
+                        fig.rect(left + (start + n) * unit, y, (longest - n) * unit - 1.5, 14, fill="grid", rx=2)
+                start += longest
+            end = start
+        else:  # a request takes the slot that frees first
+            free = [0] * slots
+            for n in lengths:
+                row = min(range(slots), key=lambda r: free[r])
+                fig.rect(left + free[row] * unit, top + 4 + row * 18, n * unit - 1.5, 14, fill="s2", rx=2)
+                free[row] += n
+            end = max(free)
+        fig.text(left + end * unit + 8, top + 4 + 2 * 18 + 2, f"{end} steps", fill="ink")
+    fig.legend(24, 296, [("s1", "writing a reply", "dot"), ("grid", "done, waiting for the others", "dot"), ("s2", "writing a reply, in a running batch", "dot")])
+    fig.save("batching-timeline")
+
+
+def batching_results():
+    """Batches that start and end together against a running batch, for both models of the benchmark."""
+    models = [("runs/bench/batching-qwen-mps.json", "Qwen2.5-0.5B, 256 GSM8K problems"), ("runs/bench/batching-sft-words-mps.json", "The story model of stage 6, 512 requests")]
+    measures = [("seconds", "All requests done"), ("latency_mean", "Until its reply ends, mean"), ("first_token_mean", "Until its first token, mean")]
+    cases = [(16, "at once"), (16, "at random"), (64, "at once"), (64, "at random")]
+    left, panel, gap, group = 150, 160, 24, 36
+    section = 44 + group * len(cases)
+    fig = Figure(720, 104 + section * len(models), "Batches that end together, and a running batch", "Seconds on an M5 Pro. The requests come all at once, or at random, 4 a second for Qwen and 40 for the story model.")
+    fig.legend(24, 80, [("s1", "batches that start and end together", "dot"), ("s2", "a running batch", "dot")])
+    top = 114
+    for path, title in models:
+        b = load(path)
+        runs = {(r["batching"], r["slots"], r["arrival"]): r for r in b["runs"]}
+        fig.text(24, top, title, fill="ink", weight=600)
+        for j, (key, name) in enumerate(measures):
+            x = left + j * (panel + gap)
+            fig.text(x, top + 20, name, size=11, fill="muted")
+            peak = max(r[key] for r in b["runs"])
+            for i, (slots, arrival) in enumerate(cases):
+                y = top + 30 + i * group
+                if j == 0:
+                    fig.text(x - 10, y + 17, f"{slots} slots, {arrival}", anchor="end", fill="ink")
+                for k, kind in enumerate(("static", "continuous")):
+                    value = runs[kind, slots, arrival][key]
+                    w = (panel - 44) * value / peak
+                    bar(fig, x, y + k * 14, w, 12, "s1" if kind == "static" else "s2")
+                    fig.text(x + max(w, 5) + 6, y + k * 14 + 10, f"{value:.1f}" if value >= 0.1 else f"{value:.2f}", size=11, fill="ink")
+        top += section
+    fig.save("batching-results")
+
+
 # ------------------------------------------------------ 4a structured output
 
 FORMS = [
@@ -2261,10 +2326,13 @@ if os.path.exists("runs/scaling/summary.json"):
     scaling_valleys()
     scaling_prediction()
 latent_block()
+batching_timeline()
+if os.path.exists("runs/bench/batching-qwen-mps.json"):
+    batching_results()
 if os.path.exists("runs/bench/attention-mps.json"):
     attention_loss()
     attention_speed()
 if os.path.exists("runs/eval/gsm8k-dpo-gsm8k-nll.json"):
     dpo_curves()
     dpo_test()
-pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "2c", "3a", "3b", "3c", "4a", "4b", "6a", "7a", "7b", "8a", "8b", "9a", "9b", "9c", "10a"})
+pipeline(done={1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "2a", "2b", "2c", "3a", "3b", "3c", "4a", "4b", "4c", "6a", "7a", "7b", "8a", "8b", "9a", "9b", "9c", "10a"})
