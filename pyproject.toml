@@ -1,6 +1,6 @@
 [project]
 name = "minllm"
-version = "1.1.1"
+version = "1.1.2"
 description = "A minimal LLM training pipeline that runs on a laptop, written from scratch: tokenizer, pretraining, inference, fine-tuning, and RL with verifiable rewards."
 readme = "README.md"
 license = "MIT"
