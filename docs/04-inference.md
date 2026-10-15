@@ -196,7 +196,8 @@ management around it:
 
 - **vLLM** keeps one batch running continuously. A new request joins the batch
   between two decode steps and a finished one leaves, so nobody waits for
-  anybody else's text to end. Its cache is allocated in fixed-size blocks, like
+  anybody else's text to end: the side topic [4c](04c-continuous-batching.md)
+  builds such a batch. Its cache is allocated in fixed-size blocks, like
   virtual memory pages, instead of one buffer per sequence at full length.
 - **llama.cpp** runs models with weights compressed to a few bits each, often
   about 4, on CPUs and GPUs, Apple's among them. **MLX** is Apple's array

@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="480" viewBox="0 0 720 480" role="img"><title>Batches that end together, and a running batch</title><desc>Seconds on an M5 Pro. The requests come all at once, or at random, 4 a second for Qwen and 40 for the story model.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="479" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">Batches that end together, and a running batch</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Seconds on an M5 Pro. The requests come all at once, or at random, 4 a second for Qwen and 40 for the story model.</text>
+<circle class="f-s1 s-surface" cx="32" cy="76" r="4" stroke-width="2"/>
+<text class="f-ink2" x="46" y="80" font-size="12" text-anchor="start">batches that start and end together</text>
+<circle class="f-s2 s-surface" cx="307.2" cy="76" r="4" stroke-width="2"/>
+<text class="f-ink2" x="321.2" y="80" font-size="12" text-anchor="start">a running batch</text>
+<text class="f-ink" x="24" y="114" font-size="12" text-anchor="start" font-weight="600">Qwen2.5-0.5B, 256 GSM8K problems</text>
+<text class="f-muted" x="150" y="134" font-size="11" text-anchor="start">All requests done</text>
+<text class="f-ink" x="140" y="161" font-size="12" text-anchor="end">16 slots, at once</text>
+<path class="f-s1" d="M150 144 H253.8 a4 4 0 0 1 4 4 V152 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="263.8" y="154" font-size="11" text-anchor="start">123.5</text>
+<path class="f-s2" d="M150 158 H224.3 a4 4 0 0 1 4 4 V166 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="234.3" y="168" font-size="11" text-anchor="start">89.6</text>
+<text class="f-ink" x="140" y="197" font-size="12" text-anchor="end">16 slots, at random</text>
+<path class="f-s1" d="M150 180 H262 a4 4 0 0 1 4 4 V188 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="272" y="190" font-size="11" text-anchor="start">132.8</text>
+<path class="f-s2" d="M150 194 H226 a4 4 0 0 1 4 4 V202 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="236" y="204" font-size="11" text-anchor="start">91.6</text>
+<text class="f-ink" x="140" y="233" font-size="12" text-anchor="end">64 slots, at once</text>
+<path class="f-s1" d="M150 216 H206.8 a4 4 0 0 1 4 4 V224 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="216.8" y="226" font-size="11" text-anchor="start">69.6</text>
+<path class="f-s2" d="M150 230 H197 a4 4 0 0 1 4 4 V238 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="207" y="240" font-size="11" text-anchor="start">58.4</text>
+<text class="f-ink" x="140" y="269" font-size="12" text-anchor="end">64 slots, at random</text>
+<path class="f-s1" d="M150 252 H225.3 a4 4 0 0 1 4 4 V260 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="235.3" y="262" font-size="11" text-anchor="start">90.8</text>
+<path class="f-s2" d="M150 266 H219.9 a4 4 0 0 1 4 4 V274 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="229.9" y="276" font-size="11" text-anchor="start">84.6</text>
+<text class="f-muted" x="334" y="134" font-size="11" text-anchor="start">Until its reply ends, mean</text>
+<path class="f-s1" d="M334 144 H446 a4 4 0 0 1 4 4 V152 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="456" y="154" font-size="11" text-anchor="start">61.7</text>
+<path class="f-s2" d="M334 158 H415.2 a4 4 0 0 1 4 4 V166 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="425.2" y="168" font-size="11" text-anchor="start">45.3</text>
+<path class="f-s1" d="M334 180 H389.7 a4 4 0 0 1 4 4 V188 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="399.7" y="190" font-size="11" text-anchor="start">31.7</text>
+<path class="f-s2" d="M334 194 H354.3 a4 4 0 0 1 4 4 V202 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="364.3" y="204" font-size="11" text-anchor="start">12.9</text>
+<path class="f-s1" d="M334 216 H396.5 a4 4 0 0 1 4 4 V224 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="406.5" y="226" font-size="11" text-anchor="start">35.3</text>
+<path class="f-s2" d="M334 230 H382.8 a4 4 0 0 1 4 4 V238 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="392.8" y="240" font-size="11" text-anchor="start">28.0</text>
+<path class="f-s1" d="M334 252 H358.3 a4 4 0 0 1 4 4 V260 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="368.3" y="262" font-size="11" text-anchor="start">15.1</text>
+<path class="f-s2" d="M334 266 H352.3 a4 4 0 0 1 4 4 V274 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="362.3" y="276" font-size="11" text-anchor="start">11.8</text>
+<text class="f-muted" x="518" y="134" font-size="11" text-anchor="start">Until its first token, mean</text>
+<path class="f-s1" d="M518 144 H630 a4 4 0 0 1 4 4 V152 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="640" y="154" font-size="11" text-anchor="start">57.3</text>
+<path class="f-s2" d="M518 158 H594.9 a4 4 0 0 1 4 4 V166 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="604.9" y="168" font-size="11" text-anchor="start">40.0</text>
+<path class="f-s1" d="M518 180 H569.3 a4 4 0 0 1 4 4 V188 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="579.3" y="190" font-size="11" text-anchor="start">27.3</text>
+<path class="f-s2" d="M518 194 H529.3 a4 4 0 0 1 4 4 V202 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="539.3" y="204" font-size="11" text-anchor="start">7.6</text>
+<path class="f-s1" d="M518 216 H568.5 a4 4 0 0 1 4 4 V224 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="578.5" y="226" font-size="11" text-anchor="start">26.9</text>
+<path class="f-s2" d="M518 230 H547.9 a4 4 0 0 1 4 4 V238 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="557.9" y="240" font-size="11" text-anchor="start">16.7</text>
+<path class="f-s1" d="M518 252 H529.2 a4 4 0 0 1 4 4 V260 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="539.2" y="262" font-size="11" text-anchor="start">7.5</text>
+<path class="f-s2" d="M518 266 H519 a4 4 0 0 1 4 4 V274 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="529" y="276" font-size="11" text-anchor="start">0.07</text>
+<text class="f-ink" x="24" y="302" font-size="12" text-anchor="start" font-weight="600">The story model of stage 6, 512 requests</text>
+<text class="f-muted" x="150" y="322" font-size="11" text-anchor="start">All requests done</text>
+<text class="f-ink" x="140" y="349" font-size="12" text-anchor="end">16 slots, at once</text>
+<path class="f-s1" d="M150 332 H254.2 a4 4 0 0 1 4 4 V340 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="264.2" y="342" font-size="11" text-anchor="start">19.4</text>
+<path class="f-s2" d="M150 346 H255.8 a4 4 0 0 1 4 4 V354 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="265.8" y="356" font-size="11" text-anchor="start">19.7</text>
+<text class="f-ink" x="140" y="385" font-size="12" text-anchor="end">16 slots, at random</text>
+<path class="f-s1" d="M150 368 H262 a4 4 0 0 1 4 4 V376 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="272" y="378" font-size="11" text-anchor="start">20.8</text>
+<path class="f-s2" d="M150 382 H256.8 a4 4 0 0 1 4 4 V390 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="266.8" y="392" font-size="11" text-anchor="start">19.9</text>
+<text class="f-ink" x="140" y="421" font-size="12" text-anchor="end">64 slots, at once</text>
+<path class="f-s1" d="M150 404 H191.4 a4 4 0 0 1 4 4 V412 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="201.4" y="414" font-size="11" text-anchor="start">8.2</text>
+<path class="f-s2" d="M150 418 H200.5 a4 4 0 0 1 4 4 V426 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="210.5" y="428" font-size="11" text-anchor="start">9.8</text>
+<text class="f-ink" x="140" y="457" font-size="12" text-anchor="end">64 slots, at random</text>
+<path class="f-s1" d="M150 440 H233.1 a4 4 0 0 1 4 4 V448 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="243.1" y="450" font-size="11" text-anchor="start">15.6</text>
+<path class="f-s2" d="M150 454 H226.7 a4 4 0 0 1 4 4 V462 a4 4 0 0 1 -4 4 H150 Z"/>
+<text class="f-ink" x="236.7" y="464" font-size="11" text-anchor="start">14.5</text>
+<text class="f-muted" x="334" y="322" font-size="11" text-anchor="start">Until its reply ends, mean</text>
+<path class="f-s1" d="M334 332 H445.3 a4 4 0 0 1 4 4 V340 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="455.3" y="342" font-size="11" text-anchor="start">10.1</text>
+<path class="f-s2" d="M334 346 H446 a4 4 0 0 1 4 4 V354 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="456" y="356" font-size="11" text-anchor="start">10.2</text>
+<path class="f-s1" d="M334 368 H376.8 a4 4 0 0 1 4 4 V376 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="386.8" y="378" font-size="11" text-anchor="start">4.1</text>
+<path class="f-s2" d="M334 382 H370.3 a4 4 0 0 1 4 4 V390 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="380.3" y="392" font-size="11" text-anchor="start">3.5</text>
+<path class="f-s1" d="M334 404 H380.6 a4 4 0 0 1 4 4 V412 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="390.6" y="414" font-size="11" text-anchor="start">4.4</text>
+<path class="f-s2" d="M334 418 H389.5 a4 4 0 0 1 4 4 V426 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="399.5" y="428" font-size="11" text-anchor="start">5.2</text>
+<path class="f-s1" d="M334 440 H349 a4 4 0 0 1 4 4 V448 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="359" y="450" font-size="11" text-anchor="start">1.7</text>
+<path class="f-s2" d="M334 454 H342.4 a4 4 0 0 1 4 4 V462 a4 4 0 0 1 -4 4 H334 Z"/>
+<text class="f-ink" x="352.4" y="464" font-size="11" text-anchor="start">1.1</text>
+<text class="f-muted" x="518" y="322" font-size="11" text-anchor="start">Until its first token, mean</text>
+<path class="f-s1" d="M518 332 H630 a4 4 0 0 1 4 4 V340 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="640" y="342" font-size="11" text-anchor="start">9.6</text>
+<path class="f-s2" d="M518 346 H629.4 a4 4 0 0 1 4 4 V354 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="639.4" y="356" font-size="11" text-anchor="start">9.6</text>
+<path class="f-s1" d="M518 368 H557.6 a4 4 0 0 1 4 4 V376 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="567.6" y="378" font-size="11" text-anchor="start">3.6</text>
+<path class="f-s2" d="M518 382 H549.4 a4 4 0 0 1 4 4 V390 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="559.4" y="392" font-size="11" text-anchor="start">2.9</text>
+<path class="f-s1" d="M518 404 H558.9 a4 4 0 0 1 4 4 V412 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="568.9" y="414" font-size="11" text-anchor="start">3.7</text>
+<path class="f-s2" d="M518 418 H563.6 a4 4 0 0 1 4 4 V426 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="573.6" y="428" font-size="11" text-anchor="start">4.1</text>
+<path class="f-s1" d="M518 440 H522.3 a4 4 0 0 1 4 4 V448 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="532.3" y="450" font-size="11" text-anchor="start">0.7</text>
+<path class="f-s2" d="M518 454 H519 a4 4 0 0 1 4 4 V462 a4 4 0 0 1 -4 4 H518 Z"/>
+<text class="f-ink" x="529" y="464" font-size="11" text-anchor="start">0.01</text>
+</svg>

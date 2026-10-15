@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="316" viewBox="0 0 720 316" role="img"><title>Four slots, sixteen requests</title><desc>Rows are the slots of a batch, columns are decode steps. The reply lengths are made up for the drawing.</desc><style>text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif}.f-surface{fill:#fcfcfb}.s-surface{stroke:#fcfcfb}.f-ink{fill:#0b0b0b}.s-ink{stroke:#0b0b0b}.f-ink2{fill:#52514e}.s-ink2{stroke:#52514e}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#e1e0d9}.s-grid{stroke:#e1e0d9}.f-axis{fill:#c3c2b7}.s-axis{stroke:#c3c2b7}.f-s1{fill:#2a78d6}.s-s1{stroke:#2a78d6}.f-s2{fill:#eb6834}.s-s2{stroke:#eb6834}.f-s3{fill:#1baf7a}.s-s3{stroke:#1baf7a}@media(prefers-color-scheme:dark){.f-surface{fill:#1a1a19}.s-surface{stroke:#1a1a19}.f-ink{fill:#f0efec}.s-ink{stroke:#f0efec}.f-ink2{fill:#c3c2b7}.s-ink2{stroke:#c3c2b7}.f-muted{fill:#898781}.s-muted{stroke:#898781}.f-grid{fill:#2c2c2a}.s-grid{stroke:#2c2c2a}.f-axis{fill:#383835}.s-axis{stroke:#383835}.f-s1{fill:#3987e5}.s-s1{stroke:#3987e5}.f-s2{fill:#d95926}.s-s2{stroke:#d95926}.f-s3{fill:#199e70}.s-s3{stroke:#199e70}}</style>
+<rect class="f-surface s-grid" x="0.5" y="0.5" width="719" height="315" rx="8" stroke-width="1"/>
+<text class="f-ink" x="24" y="31" font-size="14" text-anchor="start" font-weight="600">Four slots, sixteen requests</text>
+<text class="f-ink2" x="24" y="50" font-size="12" text-anchor="start">Rows are the slots of a batch, columns are decode steps. The reply lengths are made up for the drawing.</text>
+<text class="f-ink" x="24" y="86" font-size="12" text-anchor="start" font-weight="600">Batches that start and end together</text>
+<rect class="f-s1" x="24" y="96" width="58.5" height="14" rx="2"/>
+<rect class="f-grid" x="84" y="96" width="70.5" height="14" rx="2"/>
+<rect class="f-s1" x="24" y="114" width="130.5" height="14" rx="2"/>
+<rect class="f-s1" x="24" y="132" width="46.5" height="14" rx="2"/>
+<rect class="f-grid" x="72" y="132" width="82.5" height="14" rx="2"/>
+<rect class="f-s1" x="24" y="150" width="94.5" height="14" rx="2"/>
+<rect class="f-grid" x="120" y="150" width="34.5" height="14" rx="2"/>
+<rect class="f-s1" x="156" y="96" width="70.5" height="14" rx="2"/>
+<rect class="f-grid" x="228" y="96" width="70.5" height="14" rx="2"/>
+<rect class="f-s1" x="156" y="114" width="142.5" height="14" rx="2"/>
+<rect class="f-s1" x="156" y="132" width="34.5" height="14" rx="2"/>
+<rect class="f-grid" x="192" y="132" width="106.5" height="14" rx="2"/>
+<rect class="f-s1" x="156" y="150" width="106.5" height="14" rx="2"/>
+<rect class="f-grid" x="264" y="150" width="34.5" height="14" rx="2"/>
+<rect class="f-s1" x="300" y="96" width="82.5" height="14" rx="2"/>
+<rect class="f-grid" x="384" y="96" width="34.5" height="14" rx="2"/>
+<rect class="f-s1" x="300" y="114" width="58.5" height="14" rx="2"/>
+<rect class="f-grid" x="360" y="114" width="58.5" height="14" rx="2"/>
+<rect class="f-s1" x="300" y="132" width="118.5" height="14" rx="2"/>
+<rect class="f-s1" x="300" y="150" width="46.5" height="14" rx="2"/>
+<rect class="f-grid" x="348" y="150" width="70.5" height="14" rx="2"/>
+<rect class="f-s1" x="420" y="96" width="70.5" height="14" rx="2"/>
+<rect class="f-grid" x="492" y="96" width="34.5" height="14" rx="2"/>
+<rect class="f-s1" x="420" y="114" width="94.5" height="14" rx="2"/>
+<rect class="f-grid" x="516" y="114" width="10.5" height="14" rx="2"/>
+<rect class="f-s1" x="420" y="132" width="58.5" height="14" rx="2"/>
+<rect class="f-grid" x="480" y="132" width="46.5" height="14" rx="2"/>
+<rect class="f-s1" x="420" y="150" width="106.5" height="14" rx="2"/>
+<text class="f-ink" x="536" y="134" font-size="12" text-anchor="start">42 steps</text>
+<text class="f-ink" x="24" y="190" font-size="12" text-anchor="start" font-weight="600">A running batch</text>
+<rect class="f-s2" x="24" y="200" width="58.5" height="14" rx="2"/>
+<rect class="f-s2" x="24" y="218" width="130.5" height="14" rx="2"/>
+<rect class="f-s2" x="24" y="236" width="46.5" height="14" rx="2"/>
+<rect class="f-s2" x="24" y="254" width="94.5" height="14" rx="2"/>
+<rect class="f-s2" x="72" y="236" width="70.5" height="14" rx="2"/>
+<rect class="f-s2" x="84" y="200" width="142.5" height="14" rx="2"/>
+<rect class="f-s2" x="120" y="254" width="34.5" height="14" rx="2"/>
+<rect class="f-s2" x="144" y="236" width="106.5" height="14" rx="2"/>
+<rect class="f-s2" x="156" y="218" width="82.5" height="14" rx="2"/>
+<rect class="f-s2" x="156" y="254" width="58.5" height="14" rx="2"/>
+<rect class="f-s2" x="216" y="254" width="118.5" height="14" rx="2"/>
+<rect class="f-s2" x="228" y="200" width="46.5" height="14" rx="2"/>
+<rect class="f-s2" x="240" y="218" width="70.5" height="14" rx="2"/>
+<rect class="f-s2" x="252" y="236" width="94.5" height="14" rx="2"/>
+<rect class="f-s2" x="276" y="200" width="58.5" height="14" rx="2"/>
+<rect class="f-s2" x="312" y="218" width="106.5" height="14" rx="2"/>
+<text class="f-ink" x="428" y="238" font-size="12" text-anchor="start">33 steps</text>
+<circle class="f-s1 s-surface" cx="32" cy="292" r="4" stroke-width="2"/>
+<text class="f-ink2" x="46" y="296" font-size="12" text-anchor="start">writing a reply</text>
+<circle class="f-grid s-surface" cx="172.8" cy="292" r="4" stroke-width="2"/>
+<text class="f-ink2" x="186.8" y="296" font-size="12" text-anchor="start">done, waiting for the others</text>
+<circle class="f-s2 s-surface" cx="401" cy="292" r="4" stroke-width="2"/>
+<text class="f-ink2" x="415" y="296" font-size="12" text-anchor="start">writing a reply, in a running batch</text>
+</svg>

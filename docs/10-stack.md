@@ -103,7 +103,7 @@ side topic [10a](10a-quantization.md) writes such a file and runs it in MLX.
 
 A model becomes useful to other programs behind an HTTP API, and the one
 everyone speaks is OpenAI's chat completions. `scripts/serve.py` implements
-it in 85 lines on the standard library's HTTP server:
+it in 130 lines on the standard library's HTTP server:
 
 ```sh
 uv run scripts/serve.py --model out/sft-words
@@ -120,13 +120,14 @@ data: [DONE]
 
 Any client library for the OpenAI API can be pointed at it.
 
-This server handles one request at a time, which wastes what stage 4
-measured: a second sequence in the batch is almost free. A production server
-is built around that fact. vLLM keeps one batch running and lets requests
-join and leave it between decode steps (continuous batching), allocates the
-KV cache in blocks so that no memory is reserved for text that is never
-written (paged attention), and reuses the cache of a prompt prefix that
-several requests share.
+Requests that arrive together are answered together, since stage 4 measured
+that a second sequence in the batch is almost free. They join a running
+batch between two decode steps and leave it when they end: continuous
+batching, which the side topic [4c](04c-continuous-batching.md) builds and
+measures. A production server such as vLLM adds more around the same loop.
+It allocates the KV cache in blocks, so that no memory is reserved for text
+that is never written (paged attention), and reuses the cache of a prompt
+prefix that several requests share.
 
 ## The map
 
@@ -144,6 +145,7 @@ several requests share.
 | 4 Inference | `inference.py` | vLLM, SGLang, llama.cpp, MLX |
 | 4a Structured output | `constrain.py`, `automaton.py`, `schema.py` | Outlines, XGrammar, llama.cpp's GBNF grammars; guided decoding in vLLM and SGLang |
 | 4b Speculative decoding | `speculative.py` | vLLM, SGLang, TensorRT-LLM, llama.cpp; Medusa and EAGLE drafts built into the model |
+| 4c Continuous batching | `batching.py`, `scripts/serve.py` | the schedulers of vLLM, SGLang, TensorRT-LLM and TGI, with the cache in pages |
 | 5 Pretrained weights | `pretrained.py` | `from_pretrained`, the Hugging Face Hub, `safetensors` |
 | 6 Fine-tuning | `scripts/finetune.py`, `lora.py` | `peft`, `trl`'s `SFTTrainer`, Unsloth |
 | 6a Tool calling | `tools.py`, `scripts/evaluate_tools.py` | each family's own call format, which serving software translates to an API's `tools` and `tool_calls` |
@@ -175,9 +177,9 @@ is in moving weights and samples between the two.
    `mlx_lm`. It has no chat training: what prompt do you have to give it?
 2. Point an OpenAI client library at `scripts/serve.py` and hold a conversation
    with Qwen through it.
-3. Send two requests to the server at once. Measure how long the second one
-   waits. Then sketch what would have to change for both to be generated in
-   one batch.
+3. Send 32 requests to the server at once, started with `--slots 16` and
+   with `--slots 1`. How long does the last request wait for its first
+   token in each case?
 4. Change one line of `config_json` so that the export is wrong in a way that
    still loads: `rope_theta`, or `rms_norm_eps`. Which line of
    `check_export.py` catches it?
