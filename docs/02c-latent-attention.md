@@ -148,11 +148,21 @@ the loss.
 In loss, then, latent attention buys nothing here that multi-query attention
 does not buy with a smaller cache. With 6 heads, sharing their keys cost
 nothing measurable, so there was nothing for keys of their own to win back.
+
 At DeepSeek-V2's scale, sharing did cost. In its ablations, 7B dense models
-trained on 1.33T tokens did clearly better with full multi-head attention
-than with grouped-query or multi-query attention, and mixtures of 16B and
-250B parameters did better with latent attention than with full multi-head
-attention.
+trained on 1.33T tokens scored 45.2% on MMLU with full multi-head attention,
+41.2% with grouped-query attention of 8 groups and 37.9% with multi-query
+attention. Latent attention did better still: mixtures of experts of 16B
+parameters on the same tokens scored 50.0% on MMLU with it against 48.7%
+with full multi-head attention, and of 250B on 420B tokens 59.0% against
+57.5%, with 14% and 4% of its cache.
+
+For latent attention to gain here, the model would first need something to
+lose by sharing keys: enough parameters and training that multi-query
+attention falls measurably behind full multi-head attention, as it did at 7B
+parameters and 1.33T tokens. That is far beyond this laptop. At this size a
+wider latent can only close the 0.009 by which full multi-head attention is
+ahead, which exercise 1 measures.
 
 ## Generation
 
@@ -199,7 +209,9 @@ arrangement.
 
 On this laptop, then, latent attention trades: the loss of grouped-query
 attention, a third of its speed for one sequence, and 1.6 times its speed
-for 1,024.
+for 1,024. For one sequence the time goes to starting operations, so the way
+out is fewer of them: one kernel for the attention against the cached
+latents, as DeepSeek's FlashMLA is for decoding on Nvidia GPUs.
 
 ## Run it
 

@@ -148,7 +148,11 @@ request at once, the running batch takes 1,384 steps and 512 prefills, where
 the batches that end together take 1,648 steps, and it ends later, after 9.8
 seconds instead of 8.2. When the requests arrive over time it still answers
 sooner: the first token after 0.01 seconds instead of 0.69, the whole reply
-after 1.1 instead of 1.7.
+after 1.1 instead of 1.7. To end sooner here too, it would need a prefill
+that costs less than a step per request: the requests admitted at one step
+prefilled together in one pass, which exercise 1 asks for, or the prompt
+prefilled in chunks inside the decoding steps of the others, as
+Sarathi-Serve does (see below).
 
 **In 16-bit floats, a greedy reply depends on its batch.** A greedy reply
 should be the same whichever way it is batched, and for all 512 requests to
@@ -160,6 +164,12 @@ terms are added, and that order depends on the shape of the batch. Where two
 tokens are almost tied, the other one comes out, and the rest of the reply
 follows it. In 32-bit floats on the CPU, the test above gets exactly the
 reply of each request alone.
+
+A server that must give the same reply whatever the batch needs kernels
+whose order of addition does not depend on the batch's shape. He (2025)
+wrote them for vLLM: 1,000 greedy replies of Qwen3-235B to the same prompt
+came out in 80 different versions before and in one after, and 1,000
+requests to Qwen3-8B took 42 seconds instead of 26.
 
 ## The server
 
@@ -200,17 +210,23 @@ reply, since every slot is allocated for that many tokens.
 ## In practice
 
 - **Every inference server** schedules this way, between decode steps: vLLM,
-  SGLang, TensorRT-LLM and Hugging Face's TGI among them.
+  SGLang, TensorRT-LLM and Hugging Face's TGI among them. Orca, which brought
+  it in, served GPT-3 175B at 36.9 times the throughput of NVIDIA's
+  FasterTransformer at the same latency, where FasterTransformer keeps a
+  batch until all of its requests have ended.
 - **The cache is given out in pages.** vLLM's PagedAttention stores a
   sequence's keys and values in blocks of a few tokens, taken from a common
   pool as the sequence grows, where earlier systems reserved room for the
   longest possible reply. In the systems its authors measured before it,
   only 20.4% to 38.2% of the cache memory held keys and values of actual
-  tokens.
+  tokens. With pages, vLLM served 2 to 4 times the throughput of
+  FasterTransformer and Orca at the same latency.
 - **Long prompts are prefilled in chunks.** A prompt of thousands of tokens
   prefilled in one pass stalls every request that is decoding meanwhile.
   Sarathi-Serve splits the prefill into chunks and runs each chunk in the
-  same step as the decoding of the others.
+  same step as the decoding of the others. Within the same latency limits it
+  sustained 2.6 times vLLM's rate of requests for Mistral-7B on one A100
+  GPU, and up to 3.7 times for Yi-34B on two.
 - **Prefill and decode can go to different GPUs**, since one is limited by
   arithmetic and the other by memory, as DistServe does.
 - **Shared prompts are prefilled once.** SGLang keeps the cache of prompt
@@ -223,4 +239,5 @@ reply, since every slot is allocated for that many tokens.
 - Kwon et al. (2023), [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180). vLLM: the cache in fixed-size blocks, and how much memory reserving it in full wastes.
 - Agrawal et al. (2024), [Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve](https://arxiv.org/abs/2403.02310). Chunked prefills, run in the same steps as the decoding of other requests.
 - Zhong et al. (2024), [DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving](https://arxiv.org/abs/2401.09670). Prefill and decoding on different GPUs.
+- He (2025), [Defeating Nondeterminism in LLM Inference](https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/), Thinking Machines Lab. Why a reply depends on its batch, and kernels that give the same result whatever the batch.
 - Zheng et al. (2023), [SGLang: Efficient Execution of Structured Language Model Programs](https://arxiv.org/abs/2312.07104). RadixAttention: the cache of shared prefixes reused across requests.
